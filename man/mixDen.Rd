@@ -1,0 +1,43 @@
+\name{mixDen}
+\alias{mixDen}
+
+\title{ Compute Marginal Density for Multivariate Normal Mixture }
+\description{
+  \code{mixDen} computes the marginal density for each component of
+  a normal mixture at each of the points on a user-specifed grid.
+}
+\usage{
+mixDen(x, p, comps)
+}
+\arguments{
+  \item{x}{ array - ith column gives grid points for ith variable }
+  \item{p}{ vector of mixture component probabilites }
+  \item{comps}{ list of lists of components for normal mixture }
+}
+\details{
+  length(comps) is the number of mixture components.  comps[[j]] is a list of
+  parameters of the jth component. comps[[j]]\$mu is mean vector; comps[[j]]\$rooti
+  is the UL decomp of \eqn{Sigma^{-1}}.
+}
+
+\value{
+  an array of the same dimension as grid with density values.
+}
+\references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
+  by Allenby, McCulloch, and Rossi, Chapter 5. \cr
+  \url{http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html}
+}
+
+\author{ Peter Rossi, Graduate School of Business, University of Chicago
+  \email{Peter.Rossi@ChicagoGsb.edu}.
+}
+
+\section{Warning}{
+  This routine is a utility routine that does \strong{not} check the
+  input arguments for proper dimensions and type.
+}
+
+\seealso{ \code{\link{rnmixGibbs}}  }
+
+\keyword{ models }
+\keyword{ multivariate }

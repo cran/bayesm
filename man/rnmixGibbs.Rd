@@ -1,0 +1,100 @@
+\name{rnmixGibbs}
+\alias{rnmixGibbs}
+\concept{bayes}
+\concept{MCMC}
+\concept{normal mixtures}
+\concept{Gibbs Sampling}
+
+\title{ Gibbs Sampler for Normal Mixtures}
+\description{
+  \code{rnmixGibbs} implements a Gibbs Sampler for normal mixtures.
+}
+\usage{
+rnmixGibbs(Data, Prior, Mcmc)
+}
+\arguments{
+  \item{Data}{ list(y) }
+  \item{Prior}{ list(Mubar,A,nu,V,a,ncomp)}
+  \item{Mcmc}{ list(R,keep) }
+}
+\details{
+  Model: \cr
+        \eqn{y_i} \eqn{\sim}{~} \eqn{N(mu_ind,Sigma_ind)}. \cr
+        ind \eqn{\sim}{~} iid multinomial(p).  p is a ncomp x 1 vector of probs. \cr
+  Priors:\cr
+        \eqn{mu_j} \eqn{\sim}{~} \eqn{N(mubar,Sigma (x) A^{-1})}. \eqn{mubar=vec(Mubar)}. \cr
+        \eqn{Sigma_j} \eqn{\sim}{~} IW(nu,V).\cr
+        note: this is the natural conjugate prior -- a special case of multivariate 
+             regression.\cr
+        \eqn{p} \eqn{\sim}{~} Dirchlet(a).
+
+  Output of the components is in the form of a list of lists. \cr
+  compsdraw[[i]] is ith draw -- list of ncomp lists. \cr
+  compsdraw[[i]][[j]] is list of parms for jth normal component. \cr
+  jcomp=compsdraw[[i]][j]]. Then jth comp \eqn{\sim}{~} \eqn{N(jcomp[[1]],Sigma)}, \eqn{Sigma} = t(R)\%*\%R, \eqn{R^{-1}} = jcomp[[2]].
+}
+\value{
+  a list containing:
+  \item{pdraw}{R/keep x ncomp array of mixture prob draws}
+  \item{zdraw}{R/keep x nobs array of indicators of mixture comp identity for each obs}
+  \item{compsdraw}{R/keep lists of lists of comp parm draws}
+}
+
+\note{
+  In this model, the component normal parameters are not-identified due to label-switching.
+  However, the fitted mixture of normals density is identified as it is invariant to label-switching. 
+  See Allenby et al, chapter 5 for details. Use \code{eMixMargDen} or \code{momMix} to compute
+  posterior expectation or distribution of various identified parameters.
+}
+
+\references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
+  by Allenby, McCulloch, and Rossi, Chapter 5. \cr
+  \url{http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html}
+}
+
+\author{ Peter Rossi, Graduate School of Business, University of Chicago,
+  \email{Peter.Rossi@ChicagoGsb.edu}.
+}
+
+\seealso{ \code{\link{rmixture}}, \code{\link{rmixGibbs}} ,\code{\link{eMixMargDen}}, \code{\link{momMix}}}
+\examples{
+##
+if(nchar(Sys.getenv("LONG_TEST")) != 0) # set env var LONG_TEST to run
+{
+
+set.seed(66)
+dim=5;  k=3   # dimension of simulated data and number of "true" components
+sigma = matrix(rep(0.5,dim^2),nrow=dim);diag(sigma)=1
+sigfac = c(1,1,1);mufac=c(1,2,3); compsmv=list()
+for(i in 1:k) compsmv[[i]] = list(mu=mufac[i]*1:dim,sigma=sigfac[i]*sigma)
+comps = list() # change to "rooti" scale
+for(i in 1:k) comps[[i]] = list(mu=compsmv[[i]][[1]],rooti=solve(chol(compsmv[[i]][[2]])))
+p=(1:k)/sum(1:k)
+
+nobs=5000
+dm = rmixture(nobs,p,comps)
+
+Data=list(y=dm$x)
+ncomp=9
+Prior=list(ncomp=ncomp,a=c(rep(1,ncomp)))
+Mcmc=list(R=2000,keep=1)
+out=rnmixGibbs(Data=Data,Prior=Prior,Mcmc=Mcmc)
+
+tmom=momMix(matrix(p,nrow=1),list(comps))
+pmom=momMix(out$probdraw[500:2000,],out$compdraw[500:2000])
+mat=rbind(tmom$mu,pmom$mu)
+rownames(mat)=c("true","post expect")
+cat(" mu and posterior expectation of mu",fill=TRUE)
+print(mat)
+mat=rbind(tmom$sd,pmom$sd)
+rownames(mat)=c("true","post expect")
+cat(" std dev and posterior expectation of sd",fill=TRUE)
+print(mat)
+mat=rbind(as.vector(tmom$corr),as.vector(pmom$corr))
+rownames(mat)=c("true","post expect")
+cat(" corr and posterior expectation of corr",fill=TRUE)
+print(t(mat))
+
+}
+}
+\keyword{ multivariate }

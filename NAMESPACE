@@ -1,0 +1,14 @@
+useDynLib(bayesm)
+
+export(breg,cgetC,createX,eMixMargDen,mixDen,fsh,llmnl,llmnp,llnhlogit,
+lndIChisq,lndIWishart,lndMvn,lndMvst,mnlHess,momMix,nmat,numEff,rdirichlet,
+rmixture,rmultireg,rmultiregfp,rwishart,rmvst,rtrun,rbprobitGibbs,runireg,
+runiregGibbs,simmnl,simmnp,simmvp,simnhlogit,rmnpGibbs,rmixGibbs,rnmixGibbs,
+rmvpGibbs,rhierLinearModel,rhierMnlRwMixture,simmnlwX,rivGibbs,
+rmnlIndepMetrop,rscaleUsage,ghkvec,condMom,logMargDenNR)
+
+
+
+
+
+
