@@ -1,5 +1,7 @@
 \name{rdirichlet}
 \alias{rdirichlet}
+\concept{dirichlet distribution}
+\concept{simulation}
 
 \title{ Draw From Dirichlet Distribution }
 \description{

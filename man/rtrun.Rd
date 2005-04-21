@@ -1,5 +1,8 @@
 \name{rtrun}
 \alias{rtrun}
+\concept{truncated normal}
+\concept{simulation}
+
 \title{ Draw from Truncated Univariate Normal }
 \description{
   \code{rtrun} draws from a truncated univariate normal distribution

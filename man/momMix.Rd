@@ -1,5 +1,8 @@
 \name{momMix}
 \alias{momMix}
+\concept{mcmc}
+\concept{normal mixture}
+\concept{posterior moments}
 
 \title{ Compute Posterior Expectation of Normal Mixture Model Moments }
 \description{

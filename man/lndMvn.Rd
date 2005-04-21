@@ -1,9 +1,12 @@
 \name{lndMvn}
 \alias{lndMvn}
+\concept{multivariate normal distribution}
+\concept{density}
 
 \title{ Compute Log of Multivariate Normal Density }
 \description{
-  \code{lndIChisq} computes the log of a Multivariate Normal Density.
+  \code{lndMvn} computes the log of a Multivariate Normal Density.
+
 }
 
 \usage{

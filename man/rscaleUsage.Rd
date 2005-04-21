@@ -1,5 +1,11 @@
 \name{rscaleUsage}
 \alias{rscaleUsage}
+\concept{MCMC}
+\concept{bayes}
+\concept{ordinal data}
+\concept{scale usage}
+\concept{hierarchical models}
+
 \title{ MCMC Algorithm for Multivariate Ordinal Data with Scale Usage Heterogeneity.}
 \description{
   \code{rscaleUsage} implements an MCMC algorithm for multivariate ordinal data with scale usage heterogeniety.  

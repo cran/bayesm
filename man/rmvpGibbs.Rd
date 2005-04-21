@@ -2,7 +2,7 @@
 \alias{rmvpGibbs}
 
 \concept{bayes}
-\concept{probit}
+\concept{multivariate probit}
 \concept{MCMC}
 \concept{Gibbs Sampling}
 

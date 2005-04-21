@@ -1,5 +1,8 @@
 \name{mixDen}
 \alias{mixDen}
+\concept{normal mixture}
+\concept{marginal distribution}
+\concept{density}
 
 \title{ Compute Marginal Density for Multivariate Normal Mixture }
 \description{

@@ -1,5 +1,9 @@
 \name{rwishart}
 \alias{rwishart}
+\concept{Wishart distribution}
+\concept{Inverted Wishart}
+\concept{simulation}
+
 \title{ Draw from Wishart and Inverted Wishart Distribution  }
 \description{
   \code{rwishart} draws from the Wishart and Inverted Wishart distributions.
@@ -12,7 +16,7 @@ rwishart(nu, V)
   \item{V}{ pds location matrix}
 }
 \details{
-  In the parameterization used here, eqn{W} \eqn{\sim}{~} \eqn{W(nu,V)}, \eqn{E[W]=nuV}.  \cr
+  In the parameterization used here, \eqn{W} \eqn{\sim}{~} \eqn{W(nu,V)}, \eqn{E[W]=nuV}.  \cr
 
   If you want to use an Inverted Wishart prior, you \emph{must invert the location matrix} 
   before calling \code{rwishart}, e.g. \cr

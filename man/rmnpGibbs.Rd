@@ -1,7 +1,7 @@
 \name{rmnpGibbs}
 \alias{rmnpGibbs}
 \concept{bayes}
-\concept{probit}
+\concept{multinomial probit}
 \concept{MCMC}
 \concept{Gibbs Sampling}
 
@@ -15,7 +15,7 @@ rmnpGibbs(Data, Prior, Mcmc)
 }
 
 \arguments{
-  \item{Data}{ list(X,y)}
+  \item{Data}{ list(p, y, X)}
   \item{Prior}{ list(betabar,A,nu,V)}
   \item{Mcmc}{ list(beta0,sigma0,R,keep)  }
 }
@@ -35,8 +35,9 @@ rmnpGibbs(Data, Prior, Mcmc)
 
   List arguments contain  
   \itemize{
-    \item{\code{X}}{n*(p-1) x k Design Matrix}
+    \item{\code{p}}{number of choices or possible multinomial outcomes}
     \item{\code{y}}{n x 1 vector of multinomial outcomes}
+    \item{\code{X}}{n*(p-1) x k Design Matrix}
     \item{\code{betabar}}{k x 1 prior mean (def: 0)}
     \item{\code{A}}{k x k prior precision matrix (def: .01I)} 
     \item{\code{nu}}{ d.f. parm for IWishart prior (def: (p-1) + 3)}

@@ -1,7 +1,9 @@
 \name{eMixMargDen}
 \alias{eMixMargDen}
 \concept{normal mixtures}
+\concept{bayes}
 \concept{MCMC}
+
 \title{ Compute Marginal Densities of A Normal Mixture Averaged over MCMC Draws }
 \description{
   \code{eMixMargDen} assumes that a multivariate mixture of normals has been fitted

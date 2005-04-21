@@ -21,7 +21,7 @@ rmnlIndepMetrop(Data, Prior, Mcmc)
 
   Prior:   \eqn{beta} \eqn{\sim}{~} \eqn{N(betabar,A^{-1})} \cr
 
-  lists contain:
+  list arguments contain:
   \itemize{
     \item{\code{m}}{number of alternatives}
     \item{\code{X}}{nobs*m x nvar matrix}

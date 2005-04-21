@@ -7,6 +7,7 @@
 \concept{normal mixture}
 \concept{heterogeneity}
 \concept{hierarchical models}
+
 \title{ MCMC Algorithm for Hierarchical Multinomial Logit with Mixture of Normals Heterogeneity}
 \description{
   \code{rhierMnlRwMixture} is a MCMC algorithm for a hierarchical multinomial logit with a mixture of normals 

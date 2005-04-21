@@ -1,5 +1,9 @@
 \name{rmultireg}
 \alias{rmultireg}
+\concept{bayes}
+\concept{multivariate regression}
+\concept{simulation}
+
 
 \title{ Draw from the Posterior of a Multivariate Regression }
 \description{

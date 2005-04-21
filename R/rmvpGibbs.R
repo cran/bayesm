@@ -60,12 +60,12 @@ if(nrow(X) != (n*p)) {pandterm(paste("X has ",nrow(X)," rows; must be = p*n"))}
 # check for prior elements
 #
 if(missing(Prior)) 
-  { betabar=rep(0,k) ; A=diag(rep(.01,k)) ; nu=p+3; V=nu*diag(rep(1,p))}
+  { betabar=rep(0,k) ; A=.01*diag(k) ; nu=p+3; V=nu*diag(p)}
 else 
   {if(is.null(Prior$betabar)) {betabar=rep(0,k)} else {betabar=Prior$betabar}
-   if(is.null(Prior$A)) {A=diag(rep(.01,k))} else {A=Prior$A}
+   if(is.null(Prior$A)) {A=.01*diag(k)} else {A=Prior$A}
    if(is.null(Prior$nu)) {nu=p+3} else {nu=Prior$nu}
-   if(is.null(Prior$V)) {V=nu*diag(rep(1,p))} else {V=Prior$V}}
+   if(is.null(Prior$V)) {V=nu*diag(p)} else {V=Prior$V}}
 if(length(betabar) != k) pandterm("length betabar ne k")
 if(sum(dim(A)==c(k,k)) != 2) pandterm("A is of incorrect dimension")
 if(nu < 1) pandterm("invalid nu value")
@@ -76,7 +76,7 @@ if(sum(dim(V)==c(p,p)) != 2) pandterm("V is of incorrect dimension")
 if(missing(Mcmc)) pandterm("Requires Mcmc argument -- at least R must be included")
 if(is.null(Mcmc$R)) {pandterm("Requires element R of Mcmc")} else {R=Mcmc$R}
 if(is.null(Mcmc$beta0)) {beta0=rep(0,k)} else {beta0=Mcmc$beta0}
-if(is.null(Mcmc$sigma0)) {sigma0=diag(rep(1,p))} else {sigma0=Mcmc$sigma0}
+if(is.null(Mcmc$sigma0)) {sigma0=diag(p)} else {sigma0=Mcmc$sigma0}
 if(length(beta0) != k) pandterm("beta0 is not of length k")
 if(sum(dim(sigma0) == c(p,p)) != 2) pandterm("sigma0 is of incorrect dimension")
 if(is.null(Mcmc$keep)) {keep=1} else {keep=Mcmc$keep}

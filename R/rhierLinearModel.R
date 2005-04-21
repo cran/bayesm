@@ -122,13 +122,13 @@ for (i in 1:nreg)
 # check for Prior
 #
 if(missing(Prior))
-   { Deltabar=matrix(rep(0,nz*nvar),ncol=nvar); A=diag(c(rep(.01,nz)));
+   { Deltabar=matrix(rep(0,nz*nvar),ncol=nvar); A=01*diag(nz);
      nu.e=3; ssq=sapply(regdata,getvar) ; nu=nvar+3 ; V= nu*diag(nvar)}
 else
    {
     if(is.null(Prior$Deltabar)) {Deltabar=matrix(rep(0,nz*nvar),ncol=nvar)} 
        else {Deltabar=Prior$Deltabar}
-    if(is.null(Prior$A)) {A=diag(c(rep(.01,nz)))} 
+    if(is.null(Prior$A)) {A=.01*diag(nz)} 
        else {A=Prior$A}
     if(is.null(Prior$nu.e)) {nu.e=3} 
        else {nu.e=Prior$nu.e}

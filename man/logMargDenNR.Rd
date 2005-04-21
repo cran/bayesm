@@ -1,8 +1,13 @@
 \name{logMargDenNR}
 \alias{logMargDenNR}
+\concept{Newton-Raftery approximation}
+\concept{bayes}
+\concept{marginal likelihood}
+\concept{density}
+
 \title{ Compute Log Marginal Density Using Newton-Raftery Approx }
 \description{
-  \code{logMargDenNR} compute log marginal density Using Newton-Raftery approximation.\cr
+  \code{logMargDenNR} computes log marginal density using the Newton-Raftery approximation.\cr
   Note: this approximation can be influenced by outliers in the vector of log-likelihoods. Use 
   with \strong{care} . 
 }
@@ -21,10 +26,6 @@ logMargDenNR(ll)
 }
 \author{ Peter Rossi, Graduate School of Business, University of Chicago,
   \email{Peter.Rossi@ChicagoGsb.edu}.
-}
-\section{Warning}{
-  This routine is a utility routine that does \strong{not} check the
-  input arguments for proper dimensions and type.
 }
 \section{Warning}{
   This routine is a utility routine that does \strong{not} check the

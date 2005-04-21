@@ -1,5 +1,10 @@
 \name{runiregGibbs}
 \alias{runiregGibbs}
+\concept{bayes}
+\concept{Gibbs Sampler}
+\concept{regression}
+\concept{MCMC}
+
 \title{ Gibbs Sampler for Univariate Regression }
 \description{
  \code{runiregGibbs} implements a Gibbs Sampler to draw from posterior for univariate regression with a conditionally conjugate prior.

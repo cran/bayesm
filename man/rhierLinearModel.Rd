@@ -4,6 +4,7 @@
 \concept{MCMC}
 \concept{Gibbs Sampling}
 \concept{hierarchical models}
+\concept{linear model}
 
 \title{ Gibbs Sampler for Hierarchical Linear Model }
 \description{
@@ -31,6 +32,8 @@ rhierLinearModel(Data, Prior, Mcmc)
               \eqn{Delta, Deltabar} are nz x nvar.  \eqn{A} is nz x nz.  \eqn{V_{beta}} is nvar x nvar.
         
           Note: if you don't have any z vars, set Z=iota (nreg x 1).
+
+  List arguments contain:
   \itemize{
     \item{\code{regdata}}{ list of lists with X,y matrices for each of length(regdata) regressions}
     \item{\code{regdata[[i]]$X}}{ X matrix for equation i }

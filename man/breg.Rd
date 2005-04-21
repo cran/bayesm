@@ -1,5 +1,7 @@
 \name{breg}
 \alias{breg}
+\concept{bayes}
+\concept{regression}
 
 \title{Posterior Draws from a Univariate Regression with Unit Error Variance}
 \description{

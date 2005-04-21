@@ -1,5 +1,6 @@
 \name{numEff}
 \alias{numEff}
+\concept{numerical efficiency}
 
 \title{ Compute Numerical Standard Error and Relative Numerical Efficiency }
 \description{

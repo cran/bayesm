@@ -1,5 +1,8 @@
 \name{mnlHess}
 \alias{mnlHess}
+\concept{multinomial logit}
+\concept{hessian}
+
 
 \title{ Computes -Expected Hessian for Multinomial Logit}
 \description{

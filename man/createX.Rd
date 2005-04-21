@@ -1,5 +1,7 @@
 \name{createX}
 \alias{createX}
+\concept{multinomial logit}
+\concept{multinomial probit}
 
 \title{ Create X Matrix for Use in Multinomial Logit and Probit Routines }
 \description{

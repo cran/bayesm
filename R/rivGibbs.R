@@ -70,17 +70,17 @@ if(n != nrow(z) ) {pandterm("length(y) ne nrow(z)")}
 # check for Prior
 #
 if(missing(Prior))
-   { md=c(rep(0,nins));Ad=diag(rep(.01,dimd)); 
-     mbg=c(rep(0,(1+dimg))); Abg=diag(rep(.01,(1+dimg)))}
+   { md=c(rep(0,nins));Ad=.01*diag(dimd); 
+     mbg=c(rep(0,(1+dimg))); Abg=.01*diag((1+dimg))}
 else
    {
     if(is.null(Prior$md)) {md=c(rep(0,dimd))} 
        else {md=Prior$md}
-    if(is.null(Prior$Ad)) {Ad=diag(rep(.01,dimd))} 
+    if(is.null(Prior$Ad)) {Ad=.01*diag(dimd)} 
        else {Ad=Prior$Ad}
     if(is.null(Prior$mbg)) {mbg=c(rep(0,(1+dimg)))} 
        else {mbg=Prior$mbg}
-    if(is.null(Prior$Abg)) {Abg=diag(rep(.01,(1+dimg)))} 
+    if(is.null(Prior$Abg)) {Abg=.01*diag((1+dimg))} 
        else {Abg=Prior$Abg}
     if(is.null(Prior$nu)) {nu=3}
        else {nu=Prior$nu}

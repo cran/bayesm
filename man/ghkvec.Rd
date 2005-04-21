@@ -1,5 +1,8 @@
 \name{ghkvec}
 \alias{ghkvec}
+\concept{multivariate normal distribution}
+\concept{integral}
+
 \title{ Compute GHK approximation to Multivariate Normal Integrals }
 \description{
   \code{ghkvec} computes the GHK approximation to the integral of a

@@ -1,9 +1,12 @@
 \name{lndMvst}
 \alias{lndMvst}
+\concept{multivariate t distribution}
+\concept{student-t distribution}
+\concept{density}
 
 \title{ Compute Log of Multivariate Student-t Density }
 \description{
-  \code{lndIChisq} computes the log of a Multivariate Student-t Density.
+  \code{lndMvst} computes the log of a Multivariate Student-t Density.
 }
 \usage{
 lndMvst(x, nu, mu, rooti)

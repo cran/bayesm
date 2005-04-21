@@ -1,5 +1,7 @@
 \name{lndIChisq}
 \alias{lndIChisq}
+\concept{Inverted Chi-squared Distribution}
+\concept{density}
 
 \title{ Compute Log of Inverted Chi-Squared Density }
 \description{

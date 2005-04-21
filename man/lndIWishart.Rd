@@ -1,5 +1,7 @@
 \name{lndIWishart}
 \alias{lndIWishart}
+\concept{Inverted Wishart distribution}
+\concept{density}
 
 \title{ Compute Log of Inverted Wishart Density }
 \description{

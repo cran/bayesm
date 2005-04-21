@@ -1,5 +1,9 @@
 \name{rmvst}
 \alias{rmvst}
+\concept{multivariate t distribution}
+\concept{student-t}
+\concept{simulation}
+
 \title{ Draw from Multivariate Student-t }
 \description{
   \code{rmvst} draws from a Multivariate student-t distribution.

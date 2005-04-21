@@ -50,12 +50,12 @@ if(length(y) != (nrow(X)/m) ) {pandterm("length(y) ne nrow(X)/m")}
 # check for Prior
 #
 if(missing(Prior))
-   { betabar=c(rep(0,nvar)); A=diag(rep(.01,nvar))}
+   { betabar=c(rep(0,nvar)); A=.01*diag(nvar)}
 else
    {
     if(is.null(Prior$betabar)) {betabar=c(rep(0,nvar))} 
        else {betabar=Prior$betabar}
-    if(is.null(Prior$A)) {A=diag(rep(.01,nvar))} 
+    if(is.null(Prior$A)) {A=.01*diag(nvar)} 
        else {A=Prior$A}
    }
 #

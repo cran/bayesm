@@ -1,5 +1,8 @@
 \name{condMom}
 \alias{condMom}
+\concept{normal distribution}
+\concept{conditional distribution}
+
 \title{ Computes Conditional Mean/Var of One Element of MVN given All Others }
 \description{
   \code{condMom} compute moments of conditional distribution of ith element of normal given

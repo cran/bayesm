@@ -6,6 +6,7 @@
 \concept{endogeneity}
 \concept{simultaneity}
 \concept{MCMC}
+
 \title{ Gibbs Sampler for Linear "IV" Model}
 \description{
   \code{rivGibbs} is a Gibbs Sampler for a linear structural equation with an arbitrary number of instruments.
@@ -28,6 +29,7 @@ rivGibbs(Data, Prior, Mcmc)
   \eqn{delta} \eqn{\sim}{~} \eqn{N(md,Ad^{-1})}.  \eqn{vec(beta,gamma)} \eqn{\sim}{~} \eqn{N(mbg,Abg^{-1})} \cr
   \eqn{Sigma} \eqn{\sim}{~} IW(nu,V)
 
+  List arguments contain:
   \itemize{
     \item{\code{z}}{ matrix of obs on instruments}
     \item{\code{y}}{ vector of obs on lhs var in structural equation}

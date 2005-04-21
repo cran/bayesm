@@ -73,12 +73,12 @@ if(length(y) != nrow(X) ) {pandterm("y and X not of same row dim")}
 # check for Prior
 #
 if(missing(Prior))
-   { betabar=c(rep(0,nvar)); A=diag(rep(.01,nvar))}
+   { betabar=c(rep(0,nvar)); A=.01*diag(nvar)}
 else
    {
     if(is.null(Prior$betabar)) {betabar=c(rep(0,nvar))} 
        else {Deltabar=Prior$Deltabar}
-    if(is.null(Prior$A)) {A=diag(rep(.01,nvar))} 
+    if(is.null(Prior$A)) {A=.01*diag(nvar)} 
        else {A=Prior$A}
    }
 #

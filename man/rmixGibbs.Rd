@@ -1,9 +1,5 @@
 \name{rmixGibbs}
 \alias{rmixGibbs}
-\concept{bayes}
-\concept{MCMC}
-\concept{Gibbs Sampling}
-\concept{normal mixtures}
 \title{ Gibbs Sampler for Normal Mixtures w/o Error Checking}
 \description{
   \code{rmixGibbs} makes one draw using the Gibbs Sampler for a mixture of multivariate normals.

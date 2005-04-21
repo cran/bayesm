@@ -1,5 +1,9 @@
 \name{runireg}
 \alias{runireg}
+\concept{bayes}
+\concept{regression}
+\concept{simulation}
+
 \title{ Draw from Posterior for Univariate Regression }
 \description{
  \code{runireg} draws from posterior for univariate regression with a natural conjugate prior.

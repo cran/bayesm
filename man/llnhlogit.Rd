@@ -1,5 +1,7 @@
 \name{llnhlogit}
 \alias{llnhlogit}
+\concept{multinomial logit}
+\concept{non-homothetic utility}
 
 \title{ Evaluate Log Likelihood for non-homothetic Logit Model  }
 \description{

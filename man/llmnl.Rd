@@ -1,5 +1,7 @@
 \name{llmnl}
 \alias{llmnl}
+\concept{multinomial logit}
+\concept{likelihood}
 
 \title{ Evaluate Log Likelihood for Multinomial Logit Model  }
 \description{

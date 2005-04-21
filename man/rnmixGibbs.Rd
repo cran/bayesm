@@ -31,11 +31,25 @@ rnmixGibbs(Data, Prior, Mcmc)
   Output of the components is in the form of a list of lists. \cr
   compsdraw[[i]] is ith draw -- list of ncomp lists. \cr
   compsdraw[[i]][[j]] is list of parms for jth normal component. \cr
-  jcomp=compsdraw[[i]][j]]. Then jth comp \eqn{\sim}{~} \eqn{N(jcomp[[1]],Sigma)}, \eqn{Sigma} = t(R)\%*\%R, \eqn{R^{-1}} = jcomp[[2]].
+  jcomp=compsdraw[[i]][j]]. Then jth comp \eqn{\sim}{~} \eqn{N(jcomp[[1]],Sigma)}, 
+  \eqn{Sigma} = t(R)\%*\%R, \eqn{R^{-1}} = jcomp[[2]].
+
+  List arguments contain:
+  \itemize{
+    \item{y}{ n x k array of data (rows are obs) }
+    \item{Mubar}{ k x 1 array with prior mean of normal comp means (def: 0)}
+    \item{A}{ 1 x 1 precision parameter for prior on mean of normal comp (def: .01)}
+    \item{nu}{ d.f. parameter for prior on Sigma (normal comp cov matrix) (def: k+3)}
+    \item{V}{ k x k location matrix of IW prior on Sigma (def: nuI)}
+    \item{a}{ ncomp x 1 vector of Dirichlet prior parms (def: rep(5,ncomp))}
+    \item{ncomp}{ number of normal components to be included }
+    \item{R}{ number of MCMC draws }
+    \item{keep}{ MCMC thinning parm: keep every keepth draw (def: 1)}
+  }
 }
 \value{
   a list containing:
-  \item{pdraw}{R/keep x ncomp array of mixture prob draws}
+  \item{probdraw}{R/keep x ncomp array of mixture prob draws}
   \item{zdraw}{R/keep x nobs array of indicators of mixture comp identity for each obs}
   \item{compsdraw}{R/keep lists of lists of comp parm draws}
 }

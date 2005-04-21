@@ -1,5 +1,7 @@
 \name{llmnp}
 \alias{llmnp}
+\concept{multinomial probit}
+\concept{likelihood}
 
 \title{ Evaluate Log Likelihood for Multinomial Probit Model  }
 \description{

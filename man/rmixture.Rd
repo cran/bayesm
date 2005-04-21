@@ -1,5 +1,7 @@
 \name{rmixture}
 \alias{rmixture}
+\concept{mixture of normals}
+\concept{simulation}
 
 \title{ Draw from Mixture of Normals }
 \description{
