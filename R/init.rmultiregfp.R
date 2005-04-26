@@ -24,5 +24,5 @@ k=ncol(X)
 IR=backsolve(chol(crossprod(X)+A),diag(k))
 RA=chol(A)
 RABbar=RA%*%Bbar
-list(IR=IR,RA=RA,RABbar=RABbar,nu=nu,V=V)
+return(list(IR=IR,RA=RA,RABbar=RABbar,nu=nu,V=V))
 }

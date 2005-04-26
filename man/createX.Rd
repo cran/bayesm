@@ -7,7 +7,7 @@
 \description{
   \code{createX} makes up an X matrix in the form expected by Multinomial
   Logit (\code{\link{rmnlIndepMetrop}}) and Multinomial Probit (\code{\link{rmnpGibbs}})
-  routines.  Requires an array of alternative specfic variables and/or an
+  routines.  Requires an array of alternative specific variables and/or an
   array of "demographics" or variables constant across alternatives which
   may vary across choice occasions. 
 }
