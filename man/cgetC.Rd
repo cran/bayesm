@@ -24,7 +24,7 @@ cgetC(e, k)
   A vector of k+1 cut-offs.
 }
 \references{
- Rossi et al (2001), \dQuote{Overcoming Scale Usage Heterogeneity,} \emph{JASA}.
+ Rossi et al (2001), \dQuote{Overcoming Scale Usage Heterogeneity,} \emph{JASA}96, 20-31.
 }
 
 \author{ Rob McCulloch and Peter Rossi, Graduate School of Business, University of Chicago.

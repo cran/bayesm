@@ -1,5 +1,5 @@
 numEff= 
-function(x,m=max(length(x),(100/sqrt(5000))*sqrt(length(x))))
+function(x,m=as.integer(min(length(x),(100/sqrt(5000))*sqrt(length(x)))))
 {
 #
 # P. Rossi
@@ -20,6 +20,6 @@ wgt=as.vector(seq(m,1,-1))/(m+1)
 z=acf(x,lag.max=m,plot=FALSE)
 f=1+2*wgt%*%as.vector(z$acf[-1])
 stderr=sqrt(var(x)*f/length(x))
-list(stderr=stderr,f=f)
+list(stderr=stderr,f=f,m=m)
 }
 

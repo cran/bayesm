@@ -8,15 +8,15 @@
   \code{rmixture} simulates iid draws from a Multivariate Mixture of Normals
 }
 \usage{
-rmixture(n, p, comps)
+rmixture(n, pvec, comps)
 }
 \arguments{
   \item{n}{ number of observations }
-  \item{p}{ ncomp x 1 vector of prior probabilities for each mixture component }
+  \item{pvec}{ ncomp x 1 vector of prior probabilities for each mixture component }
   \item{comps}{ list of mixture component parameters }
 }
 \details{
-  comps is a list of length(ncomp) = length(p). comps[[j]][[1]] is mean vector for the jth component. 
+  comps is a list of length, ncomp = length(pvec). comps[[j]][[1]] is mean vector for the jth component. 
   comps[[j]][[2]] is the inverse of the cholesky root of Sigma for that component
 }
 \value{

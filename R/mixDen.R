@@ -1,5 +1,5 @@
 mixDen=
-function(x,p,comps) 
+function(x,pvec,comps) 
 {
 # Revision History:
 #   R. McCulloch 11/04
@@ -9,7 +9,7 @@ function(x,p,comps)
 #
 # arguments:
 #     x: ith columns gives evaluations for density of ith variable
-#     p: prior probabilities of normal components
+#     pvec: prior probabilities of normal components
 #     comps: list, each member is a list comp with ith normal component ~ N(comp[[1]],Sigma), 
 #            Sigma = t(R)%*%R, R^{-1} = comp[[2]]
 # Output:
@@ -45,7 +45,7 @@ nc = length(comps)
 mars = ums(comps)
 den = matrix(0.0,nrow(x),ncol(x))
 for(i in 1:ncol(x)) {
-   for(j in 1:nc) den[,i] = den[,i] + dnorm(x[,i],mean = mars$mu[j,i],sd=mars$sigma[j,i])*p[j]
+   for(j in 1:nc) den[,i] = den[,i] + dnorm(x[,i],mean = mars$mu[j,i],sd=mars$sigma[j,i])*pvec[j]
 }
 return(den)
 }

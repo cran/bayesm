@@ -9,7 +9,7 @@
 }
 
 \usage{
-numEff(x, m = max(length(x), (100/sqrt(5000)) * sqrt(length(x))))
+numEff(x, m = as.integer(min(length(x), (100/sqrt(5000)) * sqrt(length(x)))))
 }
 
 \arguments{
@@ -38,7 +38,9 @@ numEff(x, m = max(length(x), (100/sqrt(5000)) * sqrt(length(x))))
   This routine is a utility routine that does \strong{not} check the
   input arguments for proper dimensions and type.
 }
-
+\examples{
+ numEff(rnorm(1000),m=20)
+ numEff(rnorm(1000))
 }
 \keyword{ ts }
 \keyword{ utilities }

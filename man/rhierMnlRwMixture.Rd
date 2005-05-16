@@ -18,29 +18,29 @@
 rhierMnlRwMixture(Data, Prior, Mcmc)
 }
 \arguments{
-  \item{Data}{ list(m,lgtdata,Z) (note: Z is optional) }
-  \item{Prior}{ list(deltabar,Ad,mubar,Amu,nu,V,ncomp) (note: all but ncomp are optional)}
-  \item{Mcmc}{ list(s,c,R,keep) (note: all but R are optional)}
+  \item{Data}{ list(p,lgtdata,Z) ( Z is optional) }
+  \item{Prior}{ list(deltabar,Ad,mubar,Amu,nu,V,ncomp) (all but ncomp are optional)}
+  \item{Mcmc}{ list(s,c,R,keep) (R required)}
 }
 \details{
   Model: \cr
   \eqn{y_i} \eqn{\sim}{~} \eqn{MNL(X_i,theta_i)}.  i=1,\ldots, length(lgtdata). \eqn{theta_i} is nvar x 1.
 
-  \eqn{theta_i}= ZD[i,] + \eqn{u_i}. \cr
-  Note: here ZDelta refers to Z\%*\%D, ZD[i,] is ith row of this product.\cr
-  D is an nvar x nz array. 
+  \eqn{theta_i}= ZDelta[i,] + \eqn{u_i}. \cr
+  Note: here ZDelta refers to Z\%*\%D, ZDelta[i,] is ith row of this product.\cr
+  Delta is an nz x nvar array. 
 
-  \eqn{u_i} \eqn{\sim}{~} \eqn{N(mu_{ind},Sigma_{ind})}. \eqn{ind} \eqn{\sim}{~} multinomial(p). \cr
+  \eqn{u_i} \eqn{\sim}{~} \eqn{N(mu_{ind},Sigma_{ind})}. \eqn{ind} \eqn{\sim}{~} multinomial(pvec). \cr
 
   Priors: \cr
-  \eqn{p} \eqn{\sim}{~} dirichlet (a)\cr
-  \eqn{delta= vec(D)} \eqn{\sim}{~} \eqn{N(deltabar,A_d^{-1})}\cr
-  \eqn{mu_j} \eqn{\sim}{~} \eqn{N(mubar,Amu^{-1}(x)Sigma_j)}\cr
+  \eqn{pvec} \eqn{\sim}{~} dirichlet (a)\cr
+  \eqn{delta= vec(Delta)} \eqn{\sim}{~} \eqn{N(deltabar,A_d^{-1})}\cr
+  \eqn{mu_j} \eqn{\sim}{~} \eqn{N(mubar,Sigma_j (x) Amu^{-1})}\cr
   \eqn{Sigma_j} \eqn{\sim}{~} IW(nu,V) \cr
 
   Lists contain:
   \itemize{
-    \item{\code{m}}{ m is number of choice alternatives}
+    \item{\code{p}}{ p is number of choice alternatives}
     \item{\code{lgtdata}}{list of lists with each cross-section unit MNL data}
     \item{\code{lgtdata[[i]]$y}}{ \eqn{n_i} vector of multinomial outcomes (1,\ldots,m)}
     \item{\code{lgtdata[[i]]$X}}{ \eqn{n_i} by nvar design matrix for ith unit}
@@ -61,7 +61,7 @@ rhierMnlRwMixture(Data, Prior, Mcmc)
   a list containing:
   \item{Deltadraw}{R/keep  x nz*nvar matrix of draws of Delta, first row is initial value}
   \item{betadraw}{ nlgt x nvar x R/keep array of draws of betas}
-  \item{probdraw}{ R/keep x ncomp matrix of draws of probs of mixture components}
+  \item{probdraw}{ R/keep x ncomp matrix of draws of probs of mixture components (pvec)}
   \item{compdraw}{ list of list of lists (length R/keep)}
 }
 \note{
@@ -75,10 +75,11 @@ rhierMnlRwMixture(Data, Prior, Mcmc)
 
   Note: Z does \strong{not} include an intercept and is centered for ease of interpretation.\cr
   
-  Be careful in assessing prior parameter,Amu.  .01 is too small for many applications. See 
+  Be careful in assessing prior parameter, Amu.  .01 is too small for many applications. See 
   Allenby et al, chapter 5 for full discussion.\cr
+ 
+  Large R values may be requires (>20,000).
 
-  R=5000 is used in the example below.  This is too short for reliable results. Use R > 10000 in practice.
 } 
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
   by Allenby, McCulloch, and Rossi, Chapter 5. \cr
@@ -96,7 +97,7 @@ if(nchar(Sys.getenv("LONG_TEST")) != 0) # set env var LONG_TEST to run
 {
 
 set.seed(66)
-m=3                                # num of choice alterns
+p=3                                # num of choice alterns
 ncoef=3  
 nlgt=300                           # num of cross sectional units
 nz=2
@@ -108,16 +109,16 @@ comps=NULL
 comps[[1]]=list(mu=c(0,-1,-2),rooti=diag(rep(1,3)))
 comps[[2]]=list(mu=c(0,-1,-2)*2,rooti=diag(rep(1,3)))
 comps[[3]]=list(mu=c(0,-1,-2)*4,rooti=diag(rep(1,3)))
-p=c(.4,.2,.4)
+pvec=c(.4,.2,.4)
 
 ## simulate data
 simlgtdata=NULL
 ni=rep(50,300)
 for (i in 1:nlgt) 
-{  betai=Delta\%*\%Z[i,]+as.vector(rmixture(1,p,comps)$x)
+{  betai=Delta\%*\%Z[i,]+as.vector(rmixture(1,pvec,comps)$x)
    X=NULL
    for(j in 1:ni[i]) 
-      { Xone=cbind(rbind(c(rep(0,m-1)),diag(m-1)),runif(m,min=-1.5,max=0))
+      { Xone=cbind(rbind(c(rep(0,p-1)),diag(p-1)),runif(p,min=-1.5,max=0))
         X=rbind(X,Xone) }
    outa=simmnlwX(ni[i],X,betai)
    simlgtdata[[i]]=list(y=outa$y,X=X,beta=betai)
@@ -141,11 +142,11 @@ deltabar=rep(0,ncoef*nz)
 Amu=matrix(.01,ncol=1)
 a=rep(5,ncoef)
 
-R=5000 
+R=20000 
 keep=5
 c=2
 s=2.93/sqrt(ncoef)
-Data1=list(m=m,lgtdata=simlgtdata,Z=Z)
+Data1=list(p=p,lgtdata=simlgtdata,Z=Z)
 Prior1=list(ncomp=ncomp,nu=nu,V=V,Amu=Amu,mubar=mubar,a=a,Ad=Ad,deltabar=deltabar)
 Mcmc1=list(s=s,c=c,R=R,keep=keep)
 out=rhierMnlRwMixture(Data=Data1,Prior=Prior1,Mcmc=Mcmc1)
@@ -155,7 +156,7 @@ cat(" Deltadraws ",fill=TRUE)
 mat=apply(out$Deltadraw[begin:end,],2,quantile,probs=c(.01,.05,.5,.95,.99))
 mat=rbind(as.vector(Delta),mat); rownames(mat)[1]="delta"; print(mat)
 
-tmom=momMix(matrix(p,nrow=1),list(comps))
+tmom=momMix(matrix(pvec,nrow=1),list(comps))
 pmom=momMix(out$probdraw[begin:end,],out$compdraw[begin:end])
 mat=rbind(tmom$mu,pmom$mu)
 rownames(mat)=c("true","post expect")
@@ -182,13 +183,13 @@ abline(h=simlgtdata[[100]]$beta[3])
 plot(out$betadraw[101,3,])
 abline(h=simlgtdata[[101]]$beta[3])
 par(mfrow=c(4,1))
-plot(out$deltadraw[,1])
+plot(out$Deltadraw[,1])
 abline(h=Delta[1,1])
-plot(out$deltadraw[,2])
+plot(out$Deltadraw[,2])
 abline(h=Delta[2,1])
-plot(out$deltadraw[,3])
+plot(out$Deltadraw[,3])
 abline(h=Delta[3,1])
-plot(out$deltadraw[,6])
+plot(out$Deltadraw[,6])
 abline(h=Delta[3,2])
 begin=100
 end=1000
@@ -201,7 +202,7 @@ par(mfrow=c(2,ncoef))
 for(i in 1:ncoef)
 {plot(grid[,i],mden[,i],type="l")}
 for(i in 1:ncoef)
-tden=mixDen(grid,p,comps)
+tden=mixDen(grid,pvec,comps)
 for(i in 1:ncoef)
 {plot(grid[,i],tden[,i],type="l")}
 }

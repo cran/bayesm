@@ -17,8 +17,8 @@ rmvpGibbs(Data, Prior, Mcmc)
 }
 \arguments{
   \item{Data}{ list(p,y,X)}
-  \item{Prior}{ list(betabar,A,nu,V)}
-  \item{Mcmc}{ list(beta0,sigma0,R,keep)  }
+  \item{Prior}{ list(betabar,A,nu,V) (optional)}
+  \item{Mcmc}{ list(beta0,sigma0,R,keep) (R required) }
 }
 
 \details{
@@ -36,7 +36,7 @@ rmvpGibbs(Data, Prior, Mcmc)
   \itemize{
     \item{\code{p}}{dimension of multivariate probit}
     \item{\code{X}}{n*p x k Design Matrix}
-    \item{\code{y}}{n x 1 vector of multinomial outcomes}
+    \item{\code{y}}{n*p x 1 vector of 0,1 outcomes}
     \item{\code{betabar}}{k x 1 prior mean (def: 0)}
     \item{\code{A}}{k x k prior precision matrix (def: .01I)} 
     \item{\code{nu}}{ d.f. parm for IWishart prior (def: (p-1) + 3)}
@@ -95,7 +95,7 @@ mat=apply(out$betadraw/sqrt(out$sigmadraw[,ind]),2,quantile,probs=c(.01,.05,.5,.
 mat=rbind(beta,mat); rownames(mat)[1]="beta"; print(mat)
 rdraw=matrix(double((R)*p*p),ncol=p*p)
 rdraw=t(apply(out$sigmadraw,1,nmat))
-cat(" Sigmadraws ",fill=TRUE)
+cat(" Draws of Correlation Matrix ",fill=TRUE)
 mat=apply(rdraw,2,quantile,probs=c(.01,.05,.5,.95,.99))
 mat=rbind(as.vector(Sigma),mat); rownames(mat)[1]="Sigma"; print(mat)
 

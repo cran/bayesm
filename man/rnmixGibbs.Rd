@@ -14,15 +14,16 @@ rnmixGibbs(Data, Prior, Mcmc)
 }
 \arguments{
   \item{Data}{ list(y) }
-  \item{Prior}{ list(Mubar,A,nu,V,a,ncomp)}
-  \item{Mcmc}{ list(R,keep) }
+  \item{Prior}{ list(Mubar,A,nu,V,a,ncomp) (only ncomp required)}
+  \item{Mcmc}{ list(R,keep) (R required) }
 }
 \details{
   Model: \cr
-        \eqn{y_i} \eqn{\sim}{~} \eqn{N(mu_ind,Sigma_ind)}. \cr
-        ind \eqn{\sim}{~} iid multinomial(p).  p is a ncomp x 1 vector of probs. \cr
+        \eqn{y_i} \eqn{\sim}{~} \eqn{N(mu_{ind_i},Sigma_{ind_i})}. \cr
+        ind \eqn{\sim}{~} iid multinomial(p).  p is a ncomp x 1 vector of probs. 
+
   Priors:\cr
-        \eqn{mu_j} \eqn{\sim}{~} \eqn{N(mubar,Sigma (x) A^{-1})}. \eqn{mubar=vec(Mubar)}. \cr
+        \eqn{mu_j} \eqn{\sim}{~} \eqn{N(mubar,Sigma_j (x) A^{-1})}. \eqn{mubar=vec(Mubar)}. \cr
         \eqn{Sigma_j} \eqn{\sim}{~} IW(nu,V).\cr
         note: this is the natural conjugate prior -- a special case of multivariate 
              regression.\cr
@@ -51,7 +52,7 @@ rnmixGibbs(Data, Prior, Mcmc)
   a list containing:
   \item{probdraw}{R/keep x ncomp array of mixture prob draws}
   \item{zdraw}{R/keep x nobs array of indicators of mixture comp identity for each obs}
-  \item{compsdraw}{R/keep lists of lists of comp parm draws}
+  \item{compdraw}{R/keep lists of lists of comp parm draws}
 }
 
 \note{
@@ -83,10 +84,10 @@ sigfac = c(1,1,1);mufac=c(1,2,3); compsmv=list()
 for(i in 1:k) compsmv[[i]] = list(mu=mufac[i]*1:dim,sigma=sigfac[i]*sigma)
 comps = list() # change to "rooti" scale
 for(i in 1:k) comps[[i]] = list(mu=compsmv[[i]][[1]],rooti=solve(chol(compsmv[[i]][[2]])))
-p=(1:k)/sum(1:k)
+pvec=(1:k)/sum(1:k)
 
 nobs=5000
-dm = rmixture(nobs,p,comps)
+dm = rmixture(nobs,pvec,comps)
 
 Data=list(y=dm$x)
 ncomp=9
@@ -94,7 +95,7 @@ Prior=list(ncomp=ncomp,a=c(rep(1,ncomp)))
 Mcmc=list(R=2000,keep=1)
 out=rnmixGibbs(Data=Data,Prior=Prior,Mcmc=Mcmc)
 
-tmom=momMix(matrix(p,nrow=1),list(comps))
+tmom=momMix(matrix(pvec,nrow=1),list(comps))
 pmom=momMix(out$probdraw[500:2000,],out$compdraw[500:2000])
 mat=rbind(tmom$mu,pmom$mu)
 rownames(mat)=c("true","post expect")

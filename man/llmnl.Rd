@@ -17,7 +17,7 @@ llmnl(y, X, beta)
   \item{beta}{ k x 1 coefficient vector }
 }
 \details{
-  Let \eqn{mu_i=X_i}\%*\%\eqn{\beta}, then \eqn{Pr(y=j) = e^{mu_j}/\sum_i{mu_i}}.\cr
+  Let \eqn{mu_i=X_i \beta}, then \eqn{Pr(y_i=j) = exp(mu_{i,j})/\sum_kexp(mu_{i,k})}.\cr
   \eqn{X_i} is the submatrix of X corresponding to the
   ith observation.  X has n*p rows.  
   

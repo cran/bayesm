@@ -1,5 +1,5 @@
 rmixture=
-function(n,p,comps)
+function(n,pvec,comps)
 {
 #
 # R. McCulloch 12/04
@@ -9,7 +9,7 @@ function(n,p,comps)
 # purpose: iid draws from mixture of multivariate normals
 # arguments:
 #     n: number of draws
-#     p: prior probabilities of normal components
+#     pvec: prior probabilities of normal components
 #     comps: list, each member is a list comp with ith normal component
 #                     ~N(comp[[1]],Sigma), Sigma = t(R)%*%R, R^{-1} = comp[[2]]
 # output:
@@ -31,6 +31,6 @@ as.vector(comp[[1]] + t(invUT(comp[[2]]))%*%rnorm(length(comp[[1]])))
 }
 #----------------------------------------------------------------------------------
 #
-z = sample(1:length(p), n, replace = TRUE, prob = p)
+z = sample(1:length(pvec), n, replace = TRUE, prob = pvec)
 return(list(x = t(sapply(comps[z],rcomp)),z=z))
 }

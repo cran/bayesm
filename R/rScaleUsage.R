@@ -218,7 +218,7 @@ nu = p+3
 V= nu*diag(p)
 mubar = matrix(rep(k/2,p),ncol=1)
 Am = .0001*diag(p)
-gs = 500
+gs = 200
 gsigma = 6*(1:gs)/gs
 gl11 = .1 + 5.9*(1:gs)/gs
 gl22 = .1 + 2.0*(1:gs)/gs
@@ -298,7 +298,7 @@ for(rep in 1:ndpost) {
       Si = chol2inv(chol(Sigma))
       Vmi = sum(1/sigma^2)*Si + Am
       R = chol(Vmi)
-      Ri = backsolve(R,diag(rep(1,p)))
+      Ri = backsolve(R,diag(p))
       Vm = chol2inv(chol(Vmi))
       mm = Vm %*% (Si %*% (t(yd) %*% matrix(1/sigma^2,ncol=1)) + Am %*% mubar)
       mu = as.vector(mm + Ri %*% matrix(rnorm(p),ncol=1))

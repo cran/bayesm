@@ -49,7 +49,7 @@ logl=0.0
 above=rep(0,pm1)
 for (j in 1:pm1) {
    muj=mu[,y==j]
-   Aj=diag(rep(-1,pm1))
+   Aj=-diag(pm1)
    Aj[,j]=rep(1,pm1)
    trunpt=as.vector(-Aj%*%muj)
    Lj=t(chol(Aj%*%Sigma%*%t(Aj)))

@@ -10,10 +10,10 @@ function(Data,Prior,Mcmc)
 #   draw from posterior for MNL using Independence Metropolis
 #
 # Arguments:
-#   Data - list of m,X,y  
-#     m is number of alternatives
-#     X is nobs*m x nvar matrix
-#     y is nobs vector of values from 1 to m
+#   Data - list of p,y,X  
+#     p is number of alternatives
+#     X is nobs*p x nvar matrix
+#     y is nobs vector of values from 1 to p
 #   Prior - list of A, betabar
 #     A is nvar x nvar prior preci matrix
 #     betabar is nvar x 1 prior mean
@@ -33,19 +33,19 @@ function(Data,Prior,Mcmc)
 # check arguments
 #
 pandterm=function(message) {stop(message,call.=FALSE)}
-if(missing(Data)) {pandterm("Requires Data argument -- list of y and X")}
+if(missing(Data)) {pandterm("Requires Data argument -- list of p, y, X")}
     if(is.null(Data$X)) {pandterm("Requires Data element X")}
     X=Data$X
     if(is.null(Data$y)) {pandterm("Requires Data element y")}
     y=Data$y
-    if(is.null(Data$m)) {pandterm("Requires Data element m")}
+    if(is.null(Data$p)) {pandterm("Requires Data element p")}
     m=Data$m
 nvar=ncol(X)
 nobs=length(y)
 #
 # check data for validity
 #
-if(length(y) != (nrow(X)/m) ) {pandterm("length(y) ne nrow(X)/m")}
+if(length(y) != (nrow(X)/p) ) {pandterm("length(y) ne nrow(X)/p")}
 #
 # check for Prior
 #
@@ -80,8 +80,8 @@ else
 # print out problem
 #
 cat(" ", fill=TRUE)
-cat("Starting Gibbs Sampler for Multinomial Logit Model",fill=TRUE)
-cat("  with ",m," alternatives",fill=TRUE)
+cat("Starting Independence Metropolis Sampler for Multinomial Logit Model",fill=TRUE)
+cat("  with ",p," alternatives",fill=TRUE)
 cat(" ", fill=TRUE)
 cat("Prior Parms: ",fill=TRUE)
 cat("betabar",fill=TRUE)

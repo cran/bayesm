@@ -7,10 +7,10 @@
   \code{simmnl} simulates from the MNL model.
 }
 \usage{
-simmnl(j, n, beta)
+simmnl(p, n, beta)
 }
 \arguments{
-  \item{j}{ number choice alternatives }
+  \item{p}{ number choice alternatives }
   \item{n}{ number of observations }
   \item{beta}{ MNL coefficient vector }
 }
@@ -19,7 +19,7 @@ simmnl(j, n, beta)
 }
 
 \value{
-  \item{y}{ n x 1 vector of multinomial outcomes (1, \ldots, j)}
+  \item{y}{ n x 1 vector of multinomial outcomes (1, \ldots, p)}
   \item{X} { n x k design matrix }
   \item{beta}{beta vector }
   \item{prob}{n x j array of choice probabilities }

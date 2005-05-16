@@ -15,21 +15,21 @@ rscaleUsage(Data,Prior, Mcmc)
 }
 \arguments{
   \item{Data}{ list(k,x)}
-  \item{Prior}{ list(nu,V,mubar,Am,gsigma,gl11,gl22,gl12,Lambdanu,LambdaV,ge) optional }
-  \item{Mcmc}{ list(R,keep,ndghk,printevery,e,y,mu,Sigma,sigma,tau,Lambda) optional }
+  \item{Prior}{ list(nu,V,mubar,Am,gsigma,gl11,gl22,gl12,Lambdanu,LambdaV,ge) (optional) }
+  \item{Mcmc}{ list(R,keep,ndghk,printevery,e,y,mu,Sigma,sigma,tau,Lambda) (optional) }
 }
 \details{
-  Model: n=nrow(X) individuals respond to m=ncol(X) questions. all questions are on a scale 1, \ldots, k.\cr
-
+  Model: n=nrow(x) individuals respond to m=ncol(x) questions. all questions are on a scale 1, \ldots, k.
   for respondent i and question j, \cr
-  \eqn{x_ij = d}, if \eqn{c_d-1 \le y_i,j \le c_d}. \cr
+  \eqn{x_{ij} = d}, if \eqn{c_{d-1} \le y_{ij} \le c_d}. \cr
   d=1,\ldots,k. \eqn{c_d = a + bd +ed^2}. \cr
 
   \eqn{y_i = mu + tau_i*iota + sigma_i*z_i}.  \eqn{z_i} \eqn{\sim}{~} \eqn{N(0,Sigma)}. \cr
 
-  \eqn{(tau_i,ln(sigma_i))} \eqn{\sim}{~} \eqn{N(phi,Lamda)}.  \eqn{phi=(0,lambda_{22})}. \cr
+
 
   Priors:\cr
+  \eqn{(tau_i,ln(sigma_i))} \eqn{\sim}{~} \eqn{N(phi,Lamda)}.  \eqn{phi=(0,lambda_{22})}. \cr
   mu \eqn{\sim}{~} \eqn{N(mubar, Am{^-1})}.\cr
   Sigma \eqn{\sim}{~} IW(nu,V).\cr
   Lambda \eqn{\sim}{~} IW(Lambdanu,LambdaV).\cr
@@ -37,7 +37,7 @@ rscaleUsage(Data,Prior, Mcmc)
 }
 \value{
   a list containing:
-  \item{drawSigma}{R/keep x m*m array of Sigma draws}
+  \item{Sigmadraw}{R/keep x m*m array of Sigma draws}
   \item{mudraw}{R/keep x m array of mu draws}
   \item{taudraw}{R/keep x n array of tau draws}
   \item{sigmadraw}{R/keep x n array of sigma draws}
@@ -49,6 +49,12 @@ rscaleUsage(Data,Prior, Mcmc)
   \code{Prior} and setting \code{R} in Mcmc and \code{Data} only.  If you wish to change prior settings and/or
   the grids used, please read the case study in Allenby et al carefully.
 }
+\section{Warning}{
+  \eqn{tau_i}, \eqn{sigma_i} are identified from the scale usage patterns in the m questions asked per
+   respondent (\# cols of x).  Do not attempt to use this on data sets with only a small number of
+   total questions!
+  
+}
 
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
   by Allenby, McCulloch, and Rossi, Case Study on Scale Usage Heterogeneity. \cr
@@ -57,5 +63,23 @@ rscaleUsage(Data,Prior, Mcmc)
 
 \author{ Rob McCulloch and Peter Rossi, Graduate School of Business, University of Chicago,
   \email{Peter.Rossi@ChicagoGsb.edu}.
+}
+
+\examples{
+##
+if(nchar(Sys.getenv("LONG_TEST")) != 0)
+{
+data(customerSat)
+surveydat = list(k=10,x=as.matrix(customerSat))
+
+mcmc = list(R=1000)
+set.seed(66)
+out=rscaleUsage(Data=surveydat,Mcmc=mcmc)
+
+cat(" mudraws ",fill=TRUE)
+mat=apply(out$mudraw,2,quantile,probs=c(.01,.05,.5,.95,.99))
+print(mat)
+
+}
 }
 \keyword{ models }

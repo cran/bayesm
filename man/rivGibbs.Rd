@@ -16,8 +16,8 @@ rivGibbs(Data, Prior, Mcmc)
 }
 \arguments{
   \item{Data}{ list(z,w,x,y) }
-  \item{Prior}{ list(md,Ad,mbg,Abg,nu,V) this is an optional parm}
-  \item{Mcmc}{ list(R,keep)}
+  \item{Prior}{ list(md,Ad,mbg,Abg,nu,V) (optional) } 
+  \item{Mcmc}{ list(R,keep) (R required) }
 }
 \details{
   Model:\cr

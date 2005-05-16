@@ -101,10 +101,11 @@ pandterm=function(message) {stop(message,call.=FALSE)}
 if(missing(Data)) {pandterm("Requires Data argument -- list of regdata and Z")}
     if(is.null(Data$regdata)) {pandterm("Requires Data element regdata")}
     regdata=Data$regdata
-    if(is.null(Data$Z)) {pandterm("Requires Data element Z")}
-    Z=Data$Z
-nz=ncol(Z)
 nreg=length(regdata)
+if(is.null(Data$Z)) { cat("Z not specified -- putting in iota",fill=TRUE); fsh() ; Z=matrix(rep(1,nreg),ncol=1)}
+  else {if (nrow(Data$Z) != nreg) {pandterm(paste("Nrow(Z) ",nrow(Z),"ne number regressions ",nlgt))}
+      else {Z=Data$Z}}
+nz=ncol(Z)
 #
 # check data for validity
 #
@@ -164,6 +165,7 @@ else
 cat(" ", fill=TRUE)
 cat("Starting Gibbs Sampler for Linear Hierarchical Model",fill=TRUE)
 cat("   ",nreg," Regressions",fill=TRUE)
+cat("   ",ncol(Z)," Variables in Z (if 1, then only intercept)",fill=TRUE)
 cat(" ", fill=TRUE)
 cat("Prior Parms: ",fill=TRUE)
 cat("Deltabar",fill=TRUE)

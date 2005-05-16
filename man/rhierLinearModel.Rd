@@ -14,9 +14,9 @@
 rhierLinearModel(Data, Prior, Mcmc)
 }
 \arguments{
-  \item{Data}{ list(regdata,Z)}
-  \item{Prior}{ list(Deltabar,A,nu.e,ssq,nu,V)}
-  \item{Mcmc}{ list(R,keep)}
+  \item{Data}{ list(regdata,Z) (Z optional). }
+  \item{Prior}{ list(Deltabar,A,nu.e,ssq,nu,V)  (optional).}
+  \item{Mcmc}{ list(R,keep) (R required).}
 }
 \details{
   Model: length(regdata) regression equations. \cr
@@ -89,7 +89,7 @@ V=nu*diag(c(rep(1,nvar)))
 A=diag(c(rep(.01,nz)),ncol=nz)
 Deltabar=matrix(c(rep(0,nz*nvar)),nrow=nz)
 
-R=1000
+R=2000
 
 Data=list(regdata=regdata,Z=Z)
 Prior=list(Deltabar=Deltabar,A=A,nu.e=nu.e,ssq=ssq,nu=nu,V=V)

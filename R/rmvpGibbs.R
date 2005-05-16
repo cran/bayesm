@@ -101,7 +101,8 @@ cat(" ",fill=TRUE)
 cat("MCMC Parms:",fill=TRUE)
 cat("R= ",R,fill=TRUE)
 cat("initial beta= ",beta0,fill=TRUE)
-cat("initial sigma= ",sigma0,fill=TRUE)
+cat("initial sigma= ",fill=TRUE)
+print(sigma0)
 cat(" ",fill=TRUE)
 
 #

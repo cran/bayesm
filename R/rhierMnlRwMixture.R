@@ -11,13 +11,13 @@ function(Data,Prior,Mcmc)
 #   uses normal approximation to pooled likelihood
 #
 # Arguments:
-#   Data contains a list of (m,lgtdata, and possibly Z)
-#      m is number of choice alternatives
+#   Data contains a list of (p,lgtdata, and possibly Z)
+#      p is number of choice alternatives
 #      lgtdata is a list of lists (one list per unit)
 #          lgtdata[[i]]=list(y,X)
 #             y is a vector indicating alternative chosen
-#               integers 1:m indicate alternative
-#             X is a length(y)*m x nvar matrix of values of
+#               integers 1:p indicate alternative
+#             X is a length(y)*p x nvar matrix of values of
 #               X vars including intercepts
 #             Z is an length(lgtdata) x nz matrix of values of variables
 #               note: Z should NOT contain an intercept
@@ -55,9 +55,9 @@ function(Data,Prior,Mcmc)
 #  check arguments
 #
 pandterm=function(message) { stop(message,call.=FALSE) }
-if(missing(Data)) {pandterm("Requires Data argument -- list of m,lgtdata, and (possibly) Z")}
-  if(is.null(Data$m)) {pandterm("Requires Data element m (# chce alternatives)") }
-  m=Data$m
+if(missing(Data)) {pandterm("Requires Data argument -- list of p,lgtdata, and (possibly) Z")}
+  if(is.null(Data$p)) {pandterm("Requires Data element p (# chce alternatives)") }
+  p=Data$p
   if(is.null(Data$lgtdata)) {pandterm("Requires Data element lgtdata (list of data for each unit)")}
   lgtdata=Data$lgtdata
   nlgt=length(lgtdata)
@@ -65,7 +65,13 @@ if(missing(Data)) {pandterm("Requires Data argument -- list of m,lgtdata, and (p
 if(is.null(Data$Z)) { cat("Z not specified",fill=TRUE); fsh() ; drawdelta=FALSE}
   else {if (nrow(Data$Z) != nlgt) {pandterm(paste("Nrow(Z) ",nrow(Z),"ne number logits ",nlgt))}
       else {Z=Data$Z}}
-  if(drawdelta) nz=ncol(Z)
+  if(drawdelta) {
+     nz=ncol(Z)
+     colmeans=apply(Z,2,mean)
+     if(sum(colmeans) > .00001) 
+       {pandterm(paste("Z does not appear to be de-meaned: colmeans= ",colmeans))}
+  }
+  
 #
 # check lgtdata for validity
 #
@@ -78,7 +84,7 @@ for (i in 1:nlgt)
     if(is.null(lgtdata[[i]]$X)) {pandterm(paste("Requires element X of lgtdata[[",i,"]]"))}
     ypooled=c(ypooled,lgtdata[[i]]$y)
     nrowX=nrow(lgtdata[[i]]$X)
-    if((nrowX/m) !=length(lgtdata[[i]]$y)) {pandterm(paste("nrow(X) ne m*length(yi); exception at unit",i))}
+    if((nrowX/p) !=length(lgtdata[[i]]$y)) {pandterm(paste("nrow(X) ne p*length(yi); exception at unit",i))}
     newncol=ncol(lgtdata[[i]]$X)
     if(newncol != oldncol) {pandterm(paste("All X elements must have same # of cols; exception at unit",i))}
     Xpooled=rbind(Xpooled,lgtdata[[i]]$X)
@@ -86,9 +92,9 @@ for (i in 1:nlgt)
 }
 nvar=ncol(Xpooled)
 levely=as.numeric(levels(as.factor(ypooled)))
-if(length(levely) != m) {pandterm(paste("y takes on ",length(levely)," values -- must be = m"))}
+if(length(levely) != p) {pandterm(paste("y takes on ",length(levely)," values -- must be = p"))}
 bady=FALSE
-for (i in 1:m )
+for (i in 1:p )
 {
     if(levely[i] != i) bady=TRUE
 }
@@ -108,9 +114,9 @@ if(is.null(Prior$Amu)) {Amu=matrix(.01,ncol=1)} else {Amu=matrix(Prior$Amu,ncol=
   if(ncol(Amu) != 1 | nrow(Amu) != 1) {pandterm("Am must be a 1 x 1 array")}
 if(is.null(Prior$nu)) {nu=nvar+3}  else {nu=Prior$nu}
   if(nu < 1) {pandterm("invalid nu value")}
-if(is.null(Prior$V)) {V=nu*diag(rep(1,nvar))} else {V=Prior$V}
+if(is.null(Prior$V)) {V=nu*diag(nvar)} else {V=Prior$V}
   if(sum(dim(V)==c(nvar,nvar)) !=2) pandterm("Invalid V in prior")
-if(is.null(Prior$Ad) & drawdelta) {Ad=.01*diag(rep(1,nvar*nz))} else {Ad=Prior$Ad}
+if(is.null(Prior$Ad) & drawdelta) {Ad=.01*diag(nvar*nz)} else {Ad=Prior$Ad}
 if(drawdelta) {if(ncol(Ad) != nvar*nz | nrow(Ad) != nvar*nz) {pandterm("Ad must be nvar*nz x nvar*nz")}}
 if(is.null(Prior$deltabar)& drawdelta) {deltabar=rep(0,nz*nvar)} else {deltabar=Prior$deltabar}
   if(drawdelta) {if(length(deltabar) != nz*nvar) {pandterm("deltabar must be of length nvar*nz")}}
@@ -137,7 +143,7 @@ else
 cat(" ",fill=TRUE)
 cat("Attempting MCMC Inference for Hierarchical Logit:",fill=TRUE)
 cat("   Normal Mixture with",ncomp,"components for first stage prior",fill=TRUE)
-cat(paste("  ",m," alternatives; ",nvar," variables in X"),fill=TRUE)
+cat(paste("  ",p," alternatives; ",nvar," variables in X"),fill=TRUE)
 cat(paste("   for ",nlgt," cross-sectional units"),fill=TRUE)
 cat(" ",fill=TRUE)
 cat("Prior Parms: ",fill=TRUE)
@@ -167,7 +173,6 @@ cat("",fill=TRUE)
 if(drawdelta) Deltadraw=matrix(double((floor(R/keep))*nz*nvar),ncol=nz*nvar)
 betadraw=array(double((floor(R/keep))*nlgt*nvar),dim=c(nlgt,nvar,floor(R/keep)))
 probdraw=matrix(double((floor(R/keep))*ncomp),ncol=ncomp)
-olddelta=double(nz*nvar)
 oldbetas=matrix(double(nlgt*nvar),ncol=nvar)
 oldll=double(nlgt)
 oldcomp=NULL
@@ -268,7 +273,7 @@ for (i in 1:nlgt)
        lgtdata[[i]]=c(lgtdata[[i]],list(converge=1,betafmle=out$par,hess=hess)) }
    else
      { lgtdata[[i]]=c(lgtdata[[i]],list(converge=0,betafmle=c(rep(0,nvar)),
-        hess=diag(rep(0,nvar)))) }
+        hess=diag(nvar))) }
    oldbetas[i,]=lgtdata[[i]]$betafmle
 }
 #
@@ -285,7 +290,7 @@ if(ncomp != 1) {ind = c(ind,rep(ncomp,nlgt-length(ind)))} else {ind=rep(1,nlgt)}
 #
 # initialize delta
 #
-olddelta=rep(0,nz*nvar)
+if (drawdelta) olddelta=rep(0,nz*nvar)
 #
 # initialize probs
 #
@@ -293,7 +298,7 @@ oldprob=rep(1/ncomp,ncomp)
 #
 # initialize comps
 #
-tcomp=list(list(mu=rep(0,nvar),rooti=diag(rep(1,nvar))))
+tcomp=list(list(mu=rep(0,nvar),rooti=diag(nvar)))
 oldcomp=rep(tcomp,ncomp)
 #
 #

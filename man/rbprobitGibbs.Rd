@@ -21,7 +21,7 @@ rbprobitGibbs(Data, Prior, Mcmc)
 }
 
 \details{
-  Model: \eqn{y = X\beta + e}.  \eqn{e} \eqn{\sim}{~} \eqn{N(0,I)}. 
+  Model: \eqn{z = X\beta + e}.  \eqn{e} \eqn{\sim}{~} \eqn{N(0,I)}. y=1, if z> 0. 
 
   Prior:  \eqn{\beta} \eqn{\sim}{~} \eqn{N(betabar,A^{-1})}. 
 
@@ -51,6 +51,7 @@ rbprobitGibbs(Data, Prior, Mcmc)
 
 \seealso{ \code{\link{rmnpGibbs}} }
 \examples{
+##
 ## rbprobitGibbs example
 ##
 set.seed(66)

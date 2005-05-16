@@ -47,6 +47,8 @@ list(mu=mu,sigma=sigma)
 }
 #---------------------------------------------------------------------------------------
 dim=length(compdraw[[1]][[1]][[1]])
+nc=length(compdraw[[1]])
+dim(probdraw)=c(length(compdraw),nc)
 mu=double(dim)
 sigma=matrix(double(dim*dim),ncol=dim)
 sd=double(dim)

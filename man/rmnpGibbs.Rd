@@ -16,14 +16,14 @@ rmnpGibbs(Data, Prior, Mcmc)
 
 \arguments{
   \item{Data}{ list(p, y, X)}
-  \item{Prior}{ list(betabar,A,nu,V)}
-  \item{Mcmc}{ list(beta0,sigma0,R,keep)  }
+  \item{Prior}{ list(betabar,A,nu,V) (optional)}
+  \item{Mcmc}{ list(beta0,sigma0,R,keep) (R required) }
 }
 
 \details{
   model:  \cr
     \eqn{w_i = X_i\beta + e}.    \eqn{e} \eqn{\sim}{~} \eqn{N(0,Sigma)}.     note: \eqn{w_i, e} are (p-1) x 1.\cr
-    \eqn{y_i = j},  if \eqn{w_{ij} > w_{i,-j}}  j=1,\ldots,p-1.  \eqn{w_{i,-j}} means elements of \eqn{w_i}
+    \eqn{y_i = j},  if \eqn{w_{ij} > max(0,w_{i,-j})}  j=1,\ldots,p-1.  \eqn{w_{i,-j}} means elements of \eqn{w_i}
      other than the jth. \cr
     \eqn{y_i = p},  if all \eqn{w_i < 0}.\cr
   

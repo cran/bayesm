@@ -12,7 +12,7 @@
 condMom(x, mu, sigi, i)
 }
 \arguments{
-  \item{x}{ vector of values to condition on }
+  \item{x}{ vector of values to condition on - ith element not used }
   \item{mu}{ length(x) mean vector }
   \item{sigi}{ length(x)-dim covariance matrix }
   \item{i}{ conditional distribution of ith element }
@@ -20,7 +20,7 @@ condMom(x, mu, sigi, i)
 \details{
   \eqn{x} \eqn{\sim}{~} \eqn{MVN(mu,Sigma)}.
 
-  \code{condMom} computes moments of \eqn{x_i} given \eqn{x_{-1}}.
+  \code{condMom} computes moments of \eqn{x_i} given \eqn{x_{-i}}.
 }
 \value{
   a list containing:

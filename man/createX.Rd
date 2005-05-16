@@ -6,8 +6,9 @@
 \title{ Create X Matrix for Use in Multinomial Logit and Probit Routines }
 \description{
   \code{createX} makes up an X matrix in the form expected by Multinomial
-  Logit (\code{\link{rmnlIndepMetrop}}) and Multinomial Probit (\code{\link{rmnpGibbs}})
-  routines.  Requires an array of alternative specific variables and/or an
+  Logit (\code{\link{rmnlIndepMetrop}} and \code{\link{rhierMnlRwMixture}})
+  and Probit (\code{\link{rmnpGibbs}} and \code{\link{rmvpGibbs}}) routines.  
+  Requires an array of alternative specific variables and/or an
   array of "demographics" or variables constant across alternatives which
   may vary across choice occasions. 
 }
@@ -18,9 +19,9 @@ createX(p, na, nd, Xa, Xd, INT = TRUE, DIFF = FALSE, base = p)
 \arguments{
   \item{p}{ integer - number of choice alternatives }
   \item{na}{ integer - number of alternative-specific vars in Xa  }
-  \item{nd}{ integer - number of "demographics" vars }
+  \item{nd}{ integer - number of non-alternive specific vars }
   \item{Xa}{ n x p*na matrix of alternative-specific vars }
-  \item{Xd}{ n x nd matrix of "demographic" vars }
+  \item{Xd}{ n x nd matrix of non-alternative specific vars }
   \item{INT}{ logical flag for inclusion of intercepts }
   \item{DIFF}{ logical flag for differencing wrt to base alternative }
   \item{base}{ integer - index of base choice alternative }

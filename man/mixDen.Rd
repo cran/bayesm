@@ -10,11 +10,11 @@
   a normal mixture at each of the points on a user-specifed grid.
 }
 \usage{
-mixDen(x, p, comps)
+mixDen(x, pvec, comps)
 }
 \arguments{
   \item{x}{ array - ith column gives grid points for ith variable }
-  \item{p}{ vector of mixture component probabilites }
+  \item{pvec}{ vector of mixture component probabilites }
   \item{comps}{ list of lists of components for normal mixture }
 }
 \details{

@@ -1,6 +1,6 @@
 Package: bayesm
-Version: 0.0-2
-Date: 2005-04-26
+Version: 1.0-1
+Date: 2005-05-16
 Title:Bayesian Inference for Marketing/Micro-econometrics 
 Author: Peter Rossi <peter.rossi@ChicagoGsb.edu>, 
         Rob McCulloch <robert.mcculloch@ChicagoGsb.edu>.
@@ -25,4 +25,4 @@ Description: bayesm covers many important models used
   Marketing by Allenby, McCulloch and Rossi. 
 License: GPL (version 2 or later)
 URL: http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html
-Packaged: Tue Apr 26 16:13:16 2005; per
+Packaged: Wed May 18 17:24:34 2005; per
