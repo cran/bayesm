@@ -46,6 +46,7 @@ runireg(y, X, betabar, A, nu, ssq)
 
 \seealso{ \code{\link{runiregGibbs}} }
 \examples{
+if(nchar(Sys.getenv("LONG_TEST")) != 0) {R=1000} else {R=10}
 set.seed(66)
 n=100
 X=cbind(rep(1,n),runif(n)); beta=c(1,2); sigsq=.25
@@ -54,7 +55,6 @@ y=X\%*\%beta+rnorm(n,sd=sqrt(sigsq))
 A=diag(c(.05,.05)); betabar=c(0,0)
 nu=3; ssq=1.0
 
-R=1000
 betadraw=matrix(double(R*2),ncol=2)
 sigsqdraw=double(R)
 for (rep in 1:R) 

@@ -43,12 +43,13 @@ rmnlIndepMetrop(Data, Prior, Mcmc)
 \examples{
 ##
 
+if(nchar(Sys.getenv("LONG_TEST")) != 0) {R=2000} else {R=10}
+
 set.seed(66)
 n=200; p=3; beta=c(1,-1,1.5,.5)
 simout=simmnl(p,n,beta)
 A=diag(c(rep(.01,length(beta)))); betabar=rep(0,length(beta))
 
-R=2000
 Data=list(y=simout$y,X=simout$X,p=p); Mcmc=list(R=R,keep=1) ; Prior=list(A=A,betabar=betabar)
 out=rmnlIndepMetrop(Data=Data,Prior=Prior,Mcmc=Mcmc)
 cat(" Betadraws ",fill=TRUE)

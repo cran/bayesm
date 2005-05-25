@@ -73,8 +73,7 @@ rhierBinLogit(Data, Prior, Mcmc)
 }
 \examples{
 ##  
-if(nchar(Sys.getenv("LONG_TEST")) != 0)
-{
+if(nchar(Sys.getenv("LONG_TEST")) != 0) {R=10000} else {R=10}
 
 set.seed(66)
 nvar=5                           ## number of coefficients
@@ -103,7 +102,7 @@ for (i in 1:nlgt)
 }
 
 Data=list(Dat=lgtdata,Demo=Z)
-out=rhierBinLogit(Data=list(lgtdata=lgtdata,Z=Z),Mcmc=list(R=5000))
+out=rhierBinLogit(Data=list(lgtdata=lgtdata,Z=Z),Mcmc=list(R=R))
 
 cat(" Deltadraws ",fill=TRUE)
 mat=apply(out$Deltadraw,2,quantile,probs=c(.01,.05,.5,.95,.99))
@@ -123,8 +122,6 @@ matplot(out$Vbetadraw[,c(1,7,13,19,25)],type="l")
 abline(h=1.5)
 matplot(out$Vbetadraw[,-c(1,7,13,19,25)],type="l")
 abline(h=.5)
-}
-
 }
 
 }

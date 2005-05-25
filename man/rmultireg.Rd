@@ -51,6 +51,8 @@ rmultireg(Y, X, Bbar, A, nu, V)
 \seealso{ \code{\link{rmultiregfp}},\code{\link{init.rmultiregfp}}}
 \examples{
 ##
+if(nchar(Sys.getenv("LONG_TEST")) != 0) {R=2000} else {R=10}
+
 set.seed(66)
 n=200
 m=2
@@ -64,7 +66,6 @@ betabar=rep(0,k*m);Bbar=matrix(betabar,ncol=m)
 A=diag(rep(.01,k))
 nu=3; V=nu*diag(m)
 
-R=1000
 betadraw=matrix(double(R*k*m),ncol=k*m)
 Sigmadraw=matrix(double(R*m*m),ncol=m*m)
 for (rep in 1:R) 

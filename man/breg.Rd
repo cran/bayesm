@@ -45,6 +45,10 @@ breg(y, X, betabar, A)
 }
 
 \examples{
+##
+
+if(nchar(Sys.getenv("LONG_TEST")) != 0) {R=1000} else {R=10}
+
 ## simulate data
 set.seed(66)
 n=100
@@ -55,7 +59,6 @@ y=X\%*\%beta+rnorm(n)
 A=diag(c(.05,.05)); betabar=c(0,0)
 ##
 ## make draws from posterior
-R=1000
 betadraw=matrix(double(R*2),ncol=2)
 for (rep in 1:R) {betadraw[rep,]=breg(y,X,betabar,A)}
 ##

@@ -49,6 +49,7 @@ runiregGibbs(Data, Prior, Mcmc)
 
 \seealso{ \code{\link{runireg}} }
 \examples{
+if(nchar(Sys.getenv("LONG_TEST")) != 0) {R=2000} else {R=10}
 set.seed(66)
 n=100
 X=cbind(rep(1,n),runif(n)); beta=c(1,2); sigsq=.25
@@ -57,7 +58,6 @@ y=X\%*\%beta+rnorm(n,sd=sqrt(sigsq))
 A=diag(c(.05,.05)); betabar=c(0,0)
 nu=3; ssq=1.0
 
-R=1000
 Data=list(y=y,X=X); Mcmc=list(R=R,keep=1) ; Prior=list(A=A,betabar=betabar,nu=nu,ssq=ssq)
 out=runiregGibbs(Data=Data,Prior=Prior,Mcmc=Mcmc)
 cat(" Betadraws ",fill=TRUE)

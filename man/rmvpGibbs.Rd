@@ -71,6 +71,7 @@ rmvpGibbs(Data, Prior, Mcmc)
 \seealso{ \code{\link{rmnpGibbs}} }
 \examples{
 ##
+if(nchar(Sys.getenv("LONG_TEST")) != 0) {R=2000} else {R=10}
 
 set.seed(66)
 p=3
@@ -83,7 +84,6 @@ for(i in 2:n) { xadd=rbind(xadd,I2)}; X=xadd
 simout=simmvp(X,p,500,beta,Sigma)
 
 Data=list(p=p,y=simout$y,X=simout$X)
-R=2000
 Mcmc=list(R=R,keep=1)
 out=rmvpGibbs(Data=Data,Mcmc=Mcmc)
 

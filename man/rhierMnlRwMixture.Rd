@@ -93,8 +93,7 @@ rhierMnlRwMixture(Data, Prior, Mcmc)
 \seealso{ \code{\link{rmnlIndepMetrop}} }
 \examples{
 ##
-if(nchar(Sys.getenv("LONG_TEST")) != 0) # set env var LONG_TEST to run
-{
+if(nchar(Sys.getenv("LONG_TEST")) != 0) {R=10000} else {R=10}
 
 set.seed(66)
 p=3                                # num of choice alterns
@@ -142,7 +141,6 @@ deltabar=rep(0,ncoef*nz)
 Amu=matrix(.01,ncol=1)
 a=rep(5,ncoef)
 
-R=20000 
 keep=5
 c=2
 s=2.93/sqrt(ncoef)
@@ -151,7 +149,8 @@ Prior1=list(ncomp=ncomp,nu=nu,V=V,Amu=Amu,mubar=mubar,a=a,Ad=Ad,deltabar=deltaba
 Mcmc1=list(s=s,c=c,R=R,keep=keep)
 out=rhierMnlRwMixture(Data=Data1,Prior=Prior1,Mcmc=Mcmc1)
 
-begin=1000/keep; end=R/keep  
+if(R < 1000) {begin=1} else {begin=1000/keep}
+end=R/keep
 cat(" Deltadraws ",fill=TRUE)
 mat=apply(out$Deltadraw[begin:end,],2,quantile,probs=c(.01,.05,.5,.95,.99))
 mat=rbind(as.vector(Delta),mat); rownames(mat)[1]="delta"; print(mat)
@@ -191,8 +190,8 @@ plot(out$Deltadraw[,3])
 abline(h=Delta[3,1])
 plot(out$Deltadraw[,6])
 abline(h=Delta[3,2])
-begin=100
-end=1000
+begin=1000/keep
+end=R/keep
 ngrid=50
 grid=matrix(0,ngrid,ncoef)
 rgm=matrix(c(-3,-7,-10,3,1,0),ncol=2)
@@ -207,6 +206,5 @@ for(i in 1:ncoef)
 {plot(grid[,i],tden[,i],type="l")}
 }
 
-}
 }
 \keyword{ models }

@@ -65,8 +65,7 @@ rhierLinearModel(Data, Prior, Mcmc)
 }
 \examples{
 ##
-if(nchar(Sys.getenv("LONG_TEST")) != 0) # set env var LONG_TEST to run
-{
+if(nchar(Sys.getenv("LONG_TEST")) != 0) {R=2000} else {R=10}
 
 nreg=100; nobs=100; nvar=3
 Vbeta=matrix(c(1,.5,0,.5,2,.7,0,.7,1),ncol=3)
@@ -89,7 +88,6 @@ V=nu*diag(c(rep(1,nvar)))
 A=diag(c(rep(.01,nz)),ncol=nz)
 Deltabar=matrix(c(rep(0,nz*nvar)),nrow=nz)
 
-R=2000
 
 Data=list(regdata=regdata,Z=Z)
 Prior=list(Deltabar=Deltabar,A=A,nu.e=nu.e,ssq=ssq,nu=nu,V=V)
@@ -102,8 +100,6 @@ mat=rbind(as.vector(Delta),mat); rownames(mat)[1]="delta"; print(mat)
 cat(" Vbetadraws ",fill=TRUE)
 mat=apply(out$Vbetadraw,2,quantile,probs=c(.01,.05,.5,.95,.99))
 mat=rbind(as.vector(Vbeta),mat); rownames(mat)[1]="Vbeta"; print(mat)
-
-}
 
 }
 \keyword{ regression }

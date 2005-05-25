@@ -54,6 +54,8 @@ rivGibbs(Data, Prior, Mcmc)
 }
 \examples{
 ##
+if(nchar(Sys.getenv("LONG_TEST")) != 0) {R=2000} else {R=10}
+
 set.seed(66)
 simIV = function(delta,beta,Sigma,n,z,w,gamma) {
 eps = matrix(rnorm(2*n),ncol=2) \%*\% chol(Sigma)
@@ -69,7 +71,7 @@ simiv = simIV(delta,beta,Sigma,n,z,w,gamma)
 
 Mcmc=list(); Prior=list(); Data = list()
 Data$z = z; Data$w=w; Data$x=simiv$x; Data$y=simiv$y
-Mcmc$R = 5000
+Mcmc$R = R
 Mcmc$keep=1
 out=rivGibbs(Data=Data,Prior=Prior,Mcmc=Mcmc)
 

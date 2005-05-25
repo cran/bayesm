@@ -184,7 +184,7 @@ compdraw=NULL
 llmnlFract=
 function(beta,y,X,betapooled,rootH,w){
 z=as.vector(rootH%*%(beta-betapooled))
-llmnl(y,X,beta)+w*(-5.*(z%*%z))
+llmnl(y,X,beta)+w*(-.5*(z%*%z))
 }
 
 mnlRwMetropOnce=

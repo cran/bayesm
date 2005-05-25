@@ -74,8 +74,7 @@ rnmixGibbs(Data, Prior, Mcmc)
 \seealso{ \code{\link{rmixture}}, \code{\link{rmixGibbs}} ,\code{\link{eMixMargDen}}, \code{\link{momMix}}}
 \examples{
 ##
-if(nchar(Sys.getenv("LONG_TEST")) != 0) # set env var LONG_TEST to run
-{
+if(nchar(Sys.getenv("LONG_TEST")) != 0) {R=2000} else {R=10}
 
 set.seed(66)
 dim=5;  k=3   # dimension of simulated data and number of "true" components
@@ -92,11 +91,12 @@ dm = rmixture(nobs,pvec,comps)
 Data=list(y=dm$x)
 ncomp=9
 Prior=list(ncomp=ncomp,a=c(rep(1,ncomp)))
-Mcmc=list(R=2000,keep=1)
+Mcmc=list(R=R,keep=1)
 out=rnmixGibbs(Data=Data,Prior=Prior,Mcmc=Mcmc)
 
 tmom=momMix(matrix(pvec,nrow=1),list(comps))
-pmom=momMix(out$probdraw[500:2000,],out$compdraw[500:2000])
+if(R < 1000) {begin=1} else {begin=500}
+pmom=momMix(out$probdraw[begin:R,],out$compdraw[begin:R])
 mat=rbind(tmom$mu,pmom$mu)
 rownames(mat)=c("true","post expect")
 cat(" mu and posterior expectation of mu",fill=TRUE)
@@ -110,6 +110,5 @@ rownames(mat)=c("true","post expect")
 cat(" corr and posterior expectation of corr",fill=TRUE)
 print(t(mat))
 
-}
 }
 \keyword{ multivariate }

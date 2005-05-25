@@ -67,12 +67,13 @@ rscaleUsage(Data,Prior, Mcmc)
 
 \examples{
 ##
-if(nchar(Sys.getenv("LONG_TEST")) != 0)
+if(nchar(Sys.getenv("LONG_TEST")) != 0) 
 {
 data(customerSat)
 surveydat = list(k=10,x=as.matrix(customerSat))
 
-mcmc = list(R=1000)
+R=1000
+mcmc = list(R=R)
 set.seed(66)
 out=rscaleUsage(Data=surveydat,Mcmc=mcmc)
 

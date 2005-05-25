@@ -54,6 +54,8 @@ rbprobitGibbs(Data, Prior, Mcmc)
 ##
 ## rbprobitGibbs example
 ##
+if(nchar(Sys.getenv("LONG_TEST")) != 0) {R=2000} else {R=10}
+
 set.seed(66)
 simbprobit=
 function(X,beta) {
@@ -69,7 +71,7 @@ nvar=ncol(X)
 simout=simbprobit(X,beta)
 
 Data=list(X=simout$X,y=simout$y)
-Mcmc=list(R=2000,keep=1)
+Mcmc=list(R=R,keep=1)
 
 out=rbprobitGibbs(Data=Data,Mcmc=Mcmc)
 

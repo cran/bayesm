@@ -39,7 +39,7 @@ if(missing(Data)) {pandterm("Requires Data argument -- list of p, y, X")}
     if(is.null(Data$y)) {pandterm("Requires Data element y")}
     y=Data$y
     if(is.null(Data$p)) {pandterm("Requires Data element p")}
-    m=Data$m
+    p=Data$p
 nvar=ncol(X)
 nobs=length(y)
 #
