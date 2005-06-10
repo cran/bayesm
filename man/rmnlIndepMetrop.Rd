@@ -17,7 +17,7 @@ rmnlIndepMetrop(Data, Prior, Mcmc)
   \item{Mcmc}{ list(R,keep,nu) }
 }
 \details{
-  Model:   y \eqn{\sim} {~} MNL(X,beta). \eqn{Pr(y=j) = exp(x_j'beta)/\sum_k{e^{x_k'beta}}}. \cr
+  Model:   y \eqn{\sim}{~} MNL(X,beta). \eqn{Pr(y=j) = exp(x_j'beta)/\sum_k{e^{x_k'beta}}}. \cr
 
   Prior:   \eqn{beta} \eqn{\sim}{~} \eqn{N(betabar,A^{-1})} \cr
 
@@ -38,7 +38,13 @@ rmnlIndepMetrop(Data, Prior, Mcmc)
   \item{betadraw}{R/keep x nvar array of beta draws}
   \item{acceptr}{acceptance rate of Metropolis draws}
 }
-
+\references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
+  by Allenby, McCulloch, and Rossi, Chapter 5. \cr
+  \url{http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html}
+}
+\author{ Peter Rossi, Graduate School of Business, University of Chicago,
+  \email{Peter.Rossi@ChicagoGsb.edu}.
+}
 \seealso{ \code{\link{rhierMnlRwMixture}} }
 \examples{
 ##

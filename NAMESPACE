@@ -6,7 +6,7 @@ rmixture,rmultireg,rmultiregfp,rwishart,rmvst,rtrun,rbprobitGibbs,runireg,
 runiregGibbs,simmnl,simmnp,simmvp,simnhlogit,rmnpGibbs,rmixGibbs,rnmixGibbs,
 rmvpGibbs,rhierLinearModel,rhierMnlRwMixture,simmnlwX,rivGibbs,
 rmnlIndepMetrop,rscaleUsage,ghkvec,condMom,logMargDenNR,init.rmultiregfp,
-rhierBinLogit)
+rhierBinLogit,rnegbinRw,rhierNegbinRw)
 
 
 

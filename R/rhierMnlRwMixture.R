@@ -245,9 +245,9 @@ cov%*%(xty+Ad%*%deltabar) + t(chol(cov))%*%rnorm(length(deltabar))
 }
 #-------------------------------------------------------------------------------------------------------
 #
-# intialize priors and compute quantities for Metropolis
+# intialize compute quantities for Metropolis
 #
-cat("initializing priors and Metropolis candidate densities ...",fill=TRUE)
+cat("initializing Metropolis candidate densities for ",nlgt," units ...",fill=TRUE)
 fsh()
 #
 #  now go thru and computed fraction likelihood estimates and hessians
@@ -275,6 +275,8 @@ for (i in 1:nlgt)
      { lgtdata[[i]]=c(lgtdata[[i]],list(converge=0,betafmle=c(rep(0,nvar)),
         hess=diag(nvar))) }
    oldbetas[i,]=lgtdata[[i]]$betafmle
+   if(i%%50 ==0) cat("  completed unit #",i,fill=TRUE)
+   fsh()
 }
 #
 #  initialize values

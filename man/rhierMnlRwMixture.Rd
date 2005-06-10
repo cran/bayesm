@@ -93,7 +93,8 @@ rhierMnlRwMixture(Data, Prior, Mcmc)
 \seealso{ \code{\link{rmnlIndepMetrop}} }
 \examples{
 ##
-if(nchar(Sys.getenv("LONG_TEST")) != 0) {R=10000} else {R=10}
+if(nchar(Sys.getenv("LONG_TEST")) != 0) 
+{
 
 set.seed(66)
 p=3                                # num of choice alterns
@@ -141,6 +142,7 @@ deltabar=rep(0,ncoef*nz)
 Amu=matrix(.01,ncol=1)
 a=rep(5,ncoef)
 
+R=10000
 keep=5
 c=2
 s=2.93/sqrt(ncoef)
@@ -204,6 +206,7 @@ for(i in 1:ncoef)
 tden=mixDen(grid,pvec,comps)
 for(i in 1:ncoef)
 {plot(grid[,i],tden[,i],type="l")}
+}
 }
 
 }
