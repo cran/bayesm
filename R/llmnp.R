@@ -54,7 +54,7 @@ for (j in 1:pm1) {
    trunpt=as.vector(-Aj%*%muj)
    Lj=t(chol(Aj%*%Sigma%*%t(Aj)))
 #     note: rob's routine expects lower triangular root
-   logl=logl + sum(log(ghkvec(Lj,trunpt,above,r)))
+   logl=logl + sum(log(ghkvec(Lj,trunpt,above,r)+1.0e-50))
 #     note:  ghkvec does an entire vector of n probs each with different truncation points but the
 #            same cov matrix.  
 }
@@ -64,7 +64,7 @@ for (j in 1:pm1) {
 trunpt=as.vector(-mu[,y==(pm1+1)])
 Lj=t(chol(Sigma))
 above=rep(1,pm1)
-logl=logl+sum(log(ghkvec(Lj,trunpt,above,r)))
+logl=logl+sum(log(ghkvec(Lj,trunpt,above,r)+1.0e-50))
 return(logl)
 
 }

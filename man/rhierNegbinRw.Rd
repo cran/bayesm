@@ -46,7 +46,7 @@ rhierNegbinRw(Data, Prior, Mcmc)
     \item{\code{b}}{ Gamma prior parm (def: .1)}
     \item{\code{R}}{ number of MCMC draws}
     \item{\code{keep}}{ MCMC thinning parm: keep every keepth draw (def: 1)}
-    \item{\code{s\_beta}}{ scaling for beta| alpha RW inc cov (def: 2.93/sqrt(nvar)}
+    \item{\code{s\_beta}}{ scaling for beta| alpha RW inc cov (def: 2.93/sqrt(nvar))}
     \item{\code{s\_alpha}}{ scaling for alpha | beta RW inc cov (def: 2.93)}
     \item{\code{c}}{ fractional likelihood weighting parm (def:2)}
     \item{\code{Vbeta0}}{ starting value for Vbeta (def: I)}

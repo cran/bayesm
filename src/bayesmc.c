@@ -147,10 +147,11 @@ void ghk_oneside(double *L, double* trunpt, int *above, int *dim, int *n, double
         L is lower triangular root of Sigma
 	random vector is assumed to have zero mean
     	n is number of draws to use in GHK	
+	modified 6/05 by rossi to check arg into qnorm
 */
 {
    int i,j,k;
-   double mu,tpz,u,prod,pa,pb;
+   double mu,tpz,u,prod,pa,pb,arg;
    double *z;
    z = (double *)R_alloc(*dim,sizeof(double));
    GetRNGstate();
@@ -168,7 +169,10 @@ void ghk_oneside(double *L, double* trunpt, int *above, int *dim, int *n, double
 	 }
 	 prod *= pb-pa;
 	 u = unif_rand();
-	 z[j] = qnorm(u*pb + (1-u)*pa,0.0,1.0,1,0);
+	 arg=u*pb+(1.-u)*pa;
+	 if(arg > .999999999) arg=.999999999;
+	 if(arg < .0000000001) arg=.0000000001;
+	 z[j] = qnorm(arg,0.0,1.0,1,0);
       }
       *res += prod;
    }
@@ -181,10 +185,11 @@ void ghk(double *L, double* a, double *b, int *dim, int *n, double *res)
         L is lower triangular root of Sigma
 	random vector is assumed to have zero mean
     	n is number of draws to use in GHK	
+	modified 6/05 by rossi to check arg into qnorm
 */
 {
    int i,j,k;
-   double aa,bb,pa,pb,u,prod,mu;
+   double aa,bb,pa,pb,u,prod,mu,arg;
    double *z;
    z = (double *)R_alloc(*dim,sizeof(double));
    GetRNGstate();
@@ -197,7 +202,10 @@ void ghk(double *L, double* a, double *b, int *dim, int *n, double *res)
 	 pa = pnorm(aa,0.0,1.0,1,0); pb = pnorm(bb,0.0,1.0,1,0);
 	 prod *= pb-pa;
 	 u = unif_rand();
-	 z[j] = qnorm(u*pb + (1-u)*pa,0.0,1.0,1,0);
+	 arg=u*pb+(1.-u)*pa;
+	 if(arg > .999999999) arg=.999999999;
+	 if(arg < .0000000001) arg=.0000000001;
+	 z[j] = qnorm(arg,0.0,1.0,1,0);
       }
       *res += prod;
    }

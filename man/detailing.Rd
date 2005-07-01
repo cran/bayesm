@@ -4,7 +4,7 @@
 \title{ Physician Detailing Data from Manchanda et al (2004)}
 \description{
   Monthly data on detailing (sales calls) on 1000 physicians. 23 mos of data
-  for each Physician. Includes physician covariates. Dependent Variable is the
+  for each Physician. Includes physician covariates. Dependent Variable (\code{scripts}) is the
   number of new prescriptions ordered by the physician for the drug detailed.
 }
 \usage{data(detailing)}
@@ -26,7 +26,7 @@
   \ldots\$ mean\_samples: num [1:1000] 0.722 0.491 0.339 3.196 0.348 
 }
 \details{
-  generalphy is dummy for if doc is a "general practitioner," specialist is dummy for
+  generalphys is dummy for if doctor is a "general practitioner," specialist is dummy for
   if the physician is a specialist in the theraputic class for which the drug is 
   intended, mean\_samples is the mean number of free drug samples given the doctor
   over the sample.
