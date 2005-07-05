@@ -27,8 +27,9 @@ double rtrun(double mu, double sigma,double trunpt, int above)
 /*	function to draw truncated normal
 		above=1 means from above b=trunpt, a=-inf
 		above=0 means from below a=trunpt, b= +inf   
+		modified by rossi 6/05 to check arg to qnorm
 */
-	double FA,FB,rnd,result ;
+	double FA,FB,rnd,result,arg ;
 	if (above) {
 		FA=0.0; FB=pnorm(((trunpt-mu)/(sigma)),0.0,1.0,1,0);
 			}
@@ -38,7 +39,10 @@ double rtrun(double mu, double sigma,double trunpt, int above)
 	
 	GetRNGstate();
 	rnd=unif_rand();
-	result = mu + sigma*qnorm((rnd*(FB-FA)+FA),0.0,1.0,1,0);
+	arg=rnd*(FB-FA)+FA;
+	if(arg > .999999999) arg=.999999999;
+	if(arg < .0000000001) arg=.0000000001;
+	result = mu + sigma*qnorm(arg,0.0,1.0,1,0);
 	PutRNGstate();
 	return result;
 }

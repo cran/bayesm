@@ -4,6 +4,7 @@ function(X,y,beta,Sigma,r)
 #
 # revision history:
 #   edited by rossi 2/8/05
+#   adde 1.0e-50 before taking log to avoid -Inf 6/05
 #
 # purpose:
 #   function to evaluate MNP likelihood using GHK
