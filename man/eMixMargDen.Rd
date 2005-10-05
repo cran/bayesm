@@ -33,7 +33,7 @@ eMixMargDen(grid, probdraw, compdraw)
   an array of the same dimension as grid with density values.
 }
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
-  by Allenby, McCulloch, and Rossi. \cr
+  by Rossi, Allenby and McCulloch. \cr
   \url{http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html}
 }
 

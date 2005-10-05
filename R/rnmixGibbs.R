@@ -4,6 +4,8 @@ function(Data,Prior,Mcmc)
 #
 # Revision History: 
 #   P. Rossi 3/05
+#   add check to see if Mubar is a vector  9/05
+#   fixed bugging in saving comps draw comps[[mkeep]]=  9/05
 #
 # purpose: do Gibbs sampling inference for a mixture of multivariate normals
 #
@@ -50,13 +52,13 @@ dimy=ncol(y)
 #
 # check for Prior
 #
-if(missing(Prior)) {pandterm("requires Prior argument <min of Prior$ncomp>")}
+if(missing(Prior)) {pandterm("requires Prior argument ")}
 else
    {
     if(is.null(Prior$ncomp)) {pandterm("requires number of mix comps -- Prior$ncomp")}
        else {ncomp=Prior$ncomp}
     if(is.null(Prior$Mubar)) {Mubar=matrix(rep(0,dimy),nrow=1)} 
-       else {Mubar=Prior$Mubar}
+       else {Mubar=Prior$Mubar; if(is.vector(Mubar)) {Mubar=matrix(Mubar,nrow=1)}}
     if(is.null(Prior$A)) {A=matrix(c(.01),ncol=1)} 
        else {A=Prior$A}
     if(is.null(Prior$nu)) {nu=dimy+2} 
@@ -153,7 +155,7 @@ for(rep in 1:R)
       mkeep=rep/keep
       pdraw[mkeep,]=p
       zdraw[mkeep,]=z
-      compdraw[[rep]]=compsd
+      compdraw[[mkeep]]=compsd
       }
 }
 return(list(probdraw=pdraw,zdraw=zdraw,compdraw=compdraw))

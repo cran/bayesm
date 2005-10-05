@@ -29,7 +29,7 @@ rwishart(nu, V)
   \item{CI }{ inv(C), \eqn{W^{-1}} = CICI'}
 }
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
-  by Allenby, McCulloch, and Rossi, Chapter 2. \cr
+  by Rossi, Allenby and McCulloch, Chapter 2. \cr
   \url{http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html}
 }
 

@@ -25,7 +25,7 @@ rmnlIndepMetrop(Data, Prior, Mcmc)
   \itemize{
     \item{\code{p}}{number of alternatives}
     \item{\code{y}}{ nobs vector of multinomial outcomes (1,\ldots, p)}
-    \item{\code{X}}{nobs*m x nvar matrix}
+    \item{\code{X}}{nobs*p x nvar matrix}
     \item{\code{A}}{ nvar x nvar pds prior prec matrix (def: .01I)}
     \item{\code{betabar}}{ nvar x 1 prior mean (def: 0)}
     \item{\code{R}}{ number of MCMC draws}
@@ -39,7 +39,7 @@ rmnlIndepMetrop(Data, Prior, Mcmc)
   \item{acceptr}{acceptance rate of Metropolis draws}
 }
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
-  by Allenby, McCulloch, and Rossi, Chapter 5. \cr
+  by Rossi, Allenby and McCulloch, Chapter 5. \cr
   \url{http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html}
 }
 \author{ Peter Rossi, Graduate School of Business, University of Chicago,

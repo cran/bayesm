@@ -19,7 +19,7 @@ createX(p, na, nd, Xa, Xd, INT = TRUE, DIFF = FALSE, base = p)
 \arguments{
   \item{p}{ integer - number of choice alternatives }
   \item{na}{ integer - number of alternative-specific vars in Xa  }
-  \item{nd}{ integer - number of non-alternive specific vars }
+  \item{nd}{ integer - number of non-alternative specific vars }
   \item{Xa}{ n x p*na matrix of alternative-specific vars }
   \item{Xd}{ n x nd matrix of non-alternative specific vars }
   \item{INT}{ logical flag for inclusion of intercepts }
@@ -33,7 +33,7 @@ createX(p, na, nd, Xa, Xd, INT = TRUE, DIFF = FALSE, base = p)
 }
 
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
-  by Allenby, McCulloch, and Rossi. \cr
+  by Rossi, Allenby and McCulloch. \cr
   \url{http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html}
 }
 

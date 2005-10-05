@@ -1,24 +1,22 @@
-llmnp=
-function(beta,Sigma,X,y,r) 
+mnpProb=
+function(beta,Sigma,X,r=100) 
 {
 #
 # revision history:
-#   edited by rossi 2/8/05
-#   adde 1.0e-50 before taking log to avoid -Inf 6/05
-#   changed order of arguments to put beta first 9/05
+#  written by Rossi 9/05
 #
 # purpose:
-#   function to evaluate MNP likelihood using GHK
+#   function to MNP probabilities for a given X matrix (corresponding
+#   to "one" observation
 #
 # arguments: 
-#   X is n*(p-1) x k array of covariates (including intercepts)
+#   X is p-1 x k array of covariates (including intercepts)
 #      note: X is from the "differenced" system
-#   y is vector of n indicators of multinomial response
 #   beta is k x 1  with k = ncol(X)
 #   Sigma is p-1 x p-1 
 #   r is the number of random draws to use in GHK
 #
-# output -- value of log-likelihood
+# output -- probabilities
 # for each observation w = Xbeta + e   e ~N(0,Sigma)
 #   if y=j (j<p)
 #      w_j > max(w_-j) and w_j >0
@@ -42,31 +40,25 @@ ghkvec = function(L,trunpt,above,r){
    .C('ghk_vec',as.integer(n),as.double(L),as.double(trunpt),as.integer(above),as.integer(dim),
    as.integer(r),res=double(n))$res}
 #   
-# compute means for each observation
-#
 pm1=ncol(Sigma)
 k=length(beta)
 mu=matrix(X%*%beta,nrow=pm1)
-logl=0.0
 above=rep(0,pm1)
+prob=double(pm1+1)
 for (j in 1:pm1) {
-   muj=mu[,y==j]
    Aj=-diag(pm1)
    Aj[,j]=rep(1,pm1)
-   trunpt=as.vector(-Aj%*%muj)
+   trunpt=as.vector(-Aj%*%mu)
    Lj=t(chol(Aj%*%Sigma%*%t(Aj)))
 #     note: rob's routine expects lower triangular root
-   logl=logl + sum(log(ghkvec(Lj,trunpt,above,r)+1.0e-50))
+   prob[j]=ghkvec(Lj,trunpt,above,r)
 #     note:  ghkvec does an entire vector of n probs each with different truncation points but the
 #            same cov matrix.  
 }
 #
-# now do obs for y=p
+# now do pth alternative
 #
-trunpt=as.vector(-mu[,y==(pm1+1)])
-Lj=t(chol(Sigma))
-above=rep(1,pm1)
-logl=logl+sum(log(ghkvec(Lj,trunpt,above,r)+1.0e-50))
-return(logl)
+prob[pm1+1]=1-sum(prob[1:pm1])
+return(prob)
 
 }

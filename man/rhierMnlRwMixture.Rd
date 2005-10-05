@@ -63,6 +63,7 @@ rhierMnlRwMixture(Data, Prior, Mcmc)
   \item{betadraw}{ nlgt x nvar x R/keep array of draws of betas}
   \item{probdraw}{ R/keep x ncomp matrix of draws of probs of mixture components (pvec)}
   \item{compdraw}{ list of list of lists (length R/keep)}
+  \item{loglike}{ log-likelihood for each kept draw (length R/keep)}
 }
 \note{
   More on \code{compdraw} component of return value list: \cr
@@ -82,7 +83,7 @@ rhierMnlRwMixture(Data, Prior, Mcmc)
 
 } 
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
-  by Allenby, McCulloch, and Rossi, Chapter 5. \cr
+  by Rossi, Allenby and McCulloch, Chapter 5. \cr
   \url{http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html}
 }
 

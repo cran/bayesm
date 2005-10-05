@@ -5,6 +5,7 @@ function(probdraw,compdraw)
 # Revision History:
 #   R. McCulloch 11/04
 #   P. Rossi 3/05  put in backsolve fixed documentation
+#   P. Rossi 9/05 fixed error in mom -- return var not sigma
 #
 # purpose: compute moments of normal mixture averaged over MCMC draws
 #
@@ -43,7 +44,7 @@ for(i in 1:nc) {
    sigma=t(root)%*%root
    var=var+prob[i]*sigma+prob[i]*(mui-mu)%o%(mui-mu)
 }
-list(mu=mu,sigma=sigma)
+list(mu=mu,sigma=var)
 }
 #---------------------------------------------------------------------------------------
 dim=length(compdraw[[1]][[1]][[1]])

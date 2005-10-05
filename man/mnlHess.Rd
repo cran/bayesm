@@ -9,12 +9,12 @@
   \code{mnlHess} computes -Expected[Hessian] for Multinomial Logit Model
 }
 \usage{
-mnlHess(y, X, beta)
+mnlHess(beta,y, X)
 }
 \arguments{
+  \item{beta}{ k x 1 vector of coefficients }
   \item{y}{ n x 1 vector of choices, (1, \ldots,p) }
   \item{X}{ n*p x k Design matrix }
-  \item{beta}{ k x 1 vector of coefficients }
 }
 \details{
   See \code{\link{llmnl}} for information on structure of X array.  Use \code{\link{createX}} to make X.
@@ -23,7 +23,7 @@ mnlHess(y, X, beta)
   k x k matrix
 }
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
-  by Allenby, McCulloch, and Rossi, Chapter 3. \cr
+  by Rossi, Allenby and McCulloch, Chapter 3. \cr
   \url{http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html}
 }
 
@@ -39,6 +39,6 @@ mnlHess(y, X, beta)
 \seealso{ \code{\link{llmnl}}, \code{\link{createX}}, \code{\link{rmnlIndepMetrop}} }
 \examples{
 ##
-\dontrun{mnlHess(y,X,beta)}
+\dontrun{mnlHess(beta,y,X)}
 }
 \keyword{ models }

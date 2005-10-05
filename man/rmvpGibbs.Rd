@@ -60,7 +60,7 @@ rmvpGibbs(Data, Prior, Mcmc)
 } 
 
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
-  by Allenby, McCulloch, and Rossi, Chapter 4. \cr
+  by Rossi, Allenby and McCulloch, Chapter 4. \cr
   \url{http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html}
 }
 

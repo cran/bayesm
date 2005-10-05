@@ -57,7 +57,7 @@ rscaleUsage(Data,Prior, Mcmc)
 }
 
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
-  by Allenby, McCulloch, and Rossi, Case Study on Scale Usage Heterogeneity. \cr
+  by Rossi, Allenby, and McCulloch, Case Study on Scale Usage Heterogeneity. \cr
   \url{http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html}
 }
 
@@ -67,12 +67,11 @@ rscaleUsage(Data,Prior, Mcmc)
 
 \examples{
 ##
-if(nchar(Sys.getenv("LONG_TEST")) != 0) 
+if(nchar(Sys.getenv("LONG_TEST")) != 0) {R=1000} else {R=5} 
 {
 data(customerSat)
 surveydat = list(k=10,x=as.matrix(customerSat))
 
-R=1000
 mcmc = list(R=R)
 set.seed(66)
 out=rscaleUsage(Data=surveydat,Mcmc=mcmc)

@@ -38,7 +38,7 @@ rnmixGibbs(Data, Prior, Mcmc)
   List arguments contain:
   \itemize{
     \item{y}{ n x k array of data (rows are obs) }
-    \item{Mubar}{ k x 1 array with prior mean of normal comp means (def: 0)}
+    \item{Mubar}{ 1 x k array with prior mean of normal comp means (def: 0)}
     \item{A}{ 1 x 1 precision parameter for prior on mean of normal comp (def: .01)}
     \item{nu}{ d.f. parameter for prior on Sigma (normal comp cov matrix) (def: k+3)}
     \item{V}{ k x k location matrix of IW prior on Sigma (def: nuI)}
@@ -63,7 +63,7 @@ rnmixGibbs(Data, Prior, Mcmc)
 }
 
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
-  by Allenby, McCulloch, and Rossi, Chapter 5. \cr
+  by Rossi, Allenby and McCulloch, Chapter 3. \cr
   \url{http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html}
 }
 
@@ -71,7 +71,9 @@ rnmixGibbs(Data, Prior, Mcmc)
   \email{Peter.Rossi@ChicagoGsb.edu}.
 }
 
-\seealso{ \code{\link{rmixture}}, \code{\link{rmixGibbs}} ,\code{\link{eMixMargDen}}, \code{\link{momMix}}}
+\seealso{ \code{\link{rmixture}}, \code{\link{rmixGibbs}} ,\code{\link{eMixMargDen}}, \code{\link{momMix}},
+ \code{\link{mixDen}}, \code{\link{mixDenBi}}}
+
 \examples{
 ##
 if(nchar(Sys.getenv("LONG_TEST")) != 0) {R=2000} else {R=10}
@@ -90,7 +92,7 @@ dm = rmixture(nobs,pvec,comps)
 
 Data=list(y=dm$x)
 ncomp=9
-Prior=list(ncomp=ncomp,a=c(rep(1,ncomp)))
+Prior=list(ncomp=ncomp)
 Mcmc=list(R=R,keep=1)
 out=rnmixGibbs(Data=Data,Prior=Prior,Mcmc=Mcmc)
 
@@ -109,6 +111,49 @@ mat=rbind(as.vector(tmom$corr),as.vector(pmom$corr))
 rownames(mat)=c("true","post expect")
 cat(" corr and posterior expectation of corr",fill=TRUE)
 print(t(mat))
+
+if(0){
+##
+## plotting examples
+##
+## check true and estimated marginal densities
+grid=NULL
+for (i in 1:dim){
+  rgi=range(dm$x[,i])
+  gr=seq(from=rgi[1],to=rgi[2],length.out=50)
+  grid=cbind(grid,gr)
+}
+
+tmden=mixDen(grid,pvec,comps)
+pmden=eMixMargDen(grid,out$probdraw[begin:end,],out$compdraw[begin:end])
+
+## plot the marginal on third variable
+plot(range(grid[,3]),c(0,1.1*max(tmden[,3],pmden[,3])),type="n",xlab="",ylab="density")
+lines(grid[,3],tmden[,3],col="blue",lwd=2)
+lines(grid[,3],pmden[,3],col="red",lwd=2)
+
+## compute implied bivariate marginal distributions
+i=1
+j=2
+rxi=range(dm$x[,1])
+rxj=range(dm$x[,2])
+xi=seq(from=rxi[1],to=rxi[2],length.out=50)
+xj=seq(from=rxj[1],to=rxj[2],length.out=50)
+den=matrix(0,ncol=length(xi),nrow=length(xj))
+for(ind in as.integer(seq(from=begin,to=end,length.out=100))){
+  den=den+mixDenBi(i,j,xi,xj,out$probdraw[ind,],out$compdraw[[ind]])
+}
+tden=matrix(0,ncol=length(xi),nrow=length(xj))
+tden=mixDenBi(i,j,xi,xj,pvec,comps)
+
+par(mfrow=c(2,1))
+image(xi,xj,tden,col=terrain.colors(100),xlab="",ylab="")
+contour(xi,xj,den,add=TRUE,drawlabels=FALSE)
+title("True Bivariate Marginal")
+image(xi,xj,den,col=terrain.colors(100),xlab="",ylab="")
+contour(xi,xj,den,add=TRUE,drawlabels=FALSE)
+title("Posterior Mean of Bivariate Marginal")
+}
 
 }
 \keyword{ multivariate }

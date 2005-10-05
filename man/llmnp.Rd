@@ -1,6 +1,7 @@
 \name{llmnp}
 \alias{llmnp}
 \concept{multinomial probit}
+\concept{GHK method}
 \concept{likelihood}
 
 \title{ Evaluate Log Likelihood for Multinomial Probit Model  }
@@ -9,14 +10,14 @@
 }
 
 \usage{
-llmnp(X, y, beta, Sigma, r)
+llmnp(beta, Sigma, X, y, r)
 }
 
 \arguments{
-  \item{X}{ X is n*(p-1) x k array. X is from differenced system. }
-  \item{y}{ y is vector of n indicators of multinomial response (1, \ldots, p). }
   \item{beta}{ k x 1 vector of coefficients }
   \item{Sigma}{ (p-1) x (p-1) Covariance matrix of errors }
+  \item{X}{ X is n*(p-1) x k array. X is from differenced system. }
+  \item{y}{ y is vector of n indicators of multinomial response (1, \ldots, p). }
   \item{r}{ number of draws used in GHK }
 }
 
@@ -43,7 +44,7 @@ llmnp(X, y, beta, Sigma, r)
   value of log-likelihood (sum of log prob of observed multinomial outcomes).
 }
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
-  by Allenby, McCulloch, and Rossi, Chapters 2 and 4. \cr
+  by Rossi, Allenby and McCulloch, Chapters 2 and 4. \cr
   \url{http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html}
 }
 
@@ -60,7 +61,7 @@ llmnp(X, y, beta, Sigma, r)
 
 \examples{
 ##
-\dontrun{ll=llmnp(X,y,beta,Sigma,r)}
+\dontrun{ll=llmnp(beta,Sigma,X,y,r)}
 }
 
 \keyword{ models }

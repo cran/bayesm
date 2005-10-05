@@ -11,6 +11,9 @@ function(y,Bbar,A,nu,V,a,p,z,comps)
 # arguments:
 #     y: data, rows are observations, assumed to be iid draws from normal mixture
 #     Bbar,A,nu,V: common prior for mean and variance of each normal component
+#
+#     note: Bbar should be a matrix. usually with only one row
+#
 #        beta ~ N(betabar,Sigma (x) A^-1)
 #                   betabar=vec(Bbar)
 #          Sigma ~ IW(nu,V) or Sigma^-1 ~ W(nu, V^-1)

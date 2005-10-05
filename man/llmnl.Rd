@@ -8,13 +8,13 @@
   \code{llmnl} evaluates log-likelihood for the multinomial logit model.
 }
 \usage{
-llmnl(y, X, beta)
+llmnl(beta,y, X)
 }
 
 \arguments{
+  \item{beta}{ k x 1 coefficient vector }
   \item{y}{ n x 1 vector of obs on y (1,\ldots, p) }
   \item{X}{ n*p x k Design matrix (use \code{createX} to make) }
-  \item{beta}{ k x 1 coefficient vector }
 }
 \details{
   Let \eqn{mu_i=X_i \beta}, then \eqn{Pr(y_i=j) = exp(mu_{i,j})/\sum_kexp(mu_{i,k})}.\cr
@@ -27,7 +27,7 @@ llmnl(y, X, beta)
   value of log-likelihood (sum of log prob of observed multinomial outcomes).
 }
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
-  by Allenby, McCulloch, and Rossi. \cr
+  by Rossi, Allenby and McCulloch. \cr
   \url{http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html}
 }
 
@@ -44,7 +44,7 @@ llmnl(y, X, beta)
 
 \examples{
 ##
-\dontrun{ll=llmnl(y,X,beta)}
+\dontrun{ll=llmnl(beta,y,X)}
 }
 
 \keyword{ models }

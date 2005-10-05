@@ -5,7 +5,7 @@
 \concept{hierarchical models}
 \concept{binary logit}
 
-\title{ MCMC Algorithm for Hierachical Binary Logit }
+\title{ MCMC Algorithm for Hierarchical Binary Logit }
 \description{
   \code{rhierBinLogit} implements an MCMC algorithm for hierarchical binary logits with
   a normal heterogeneity distribution.  This is a hybrid sampler with a RW Metropolis step
@@ -64,7 +64,7 @@ rhierBinLogit(Data, Prior, Mcmc)
 \note{ Some experimentation with the Metropolis scaling paramter (sbeta) may be required. }
 
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
-  by Allenby, McCulloch, and Rossi, Chapter 5. \cr
+  by Rossi, Allenby and McCulloch, Chapter 5. \cr
   \url{http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html}
 }
 

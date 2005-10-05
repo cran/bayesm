@@ -1,7 +1,8 @@
 llmnl= 
-function(y,X,beta) 
+function(beta,y,X) 
 {
 #    p. rossi 2004
+#    changed order of arguments to put beta first 9/05
 #
 # Purpose:evaluate log-like for MNL
 #

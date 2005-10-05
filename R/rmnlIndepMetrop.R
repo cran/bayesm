@@ -5,6 +5,7 @@ function(Data,Prior,Mcmc)
 # revision history:
 #   p. rossi 1/05
 #   2/9/05 fixed error in Metrop eval
+#   changed to reflect new argument order in llmnl,mnlHess 9/05
 #
 # purpose: 
 #   draw from posterior for MNL using Independence Metropolis
@@ -46,6 +47,9 @@ nobs=length(y)
 # check data for validity
 #
 if(length(y) != (nrow(X)/p) ) {pandterm("length(y) ne nrow(X)/p")}
+if(sum(y %in% (1:p)) < nobs) {pandterm("invalid values in y vector -- must be integers in 1:p")}
+cat(" table of y values",fill=TRUE)
+print(table(y))
 #
 # check for Prior
 #
@@ -101,7 +105,7 @@ beta=c(rep(0,nvar))
 mle=optim(beta,llmnl,X=X,y=y,method="BFGS",hessian=TRUE,control=list(fnscale=-1))
 beta=mle$par
 betastar=mle$par
-mhess=mnlHess(y,X,beta)
+mhess=mnlHess(beta,y,X)
 candcov=chol2inv(chol(mhess))
 root=chol(candcov)
 rooti=backsolve(root,diag(nvar))
@@ -116,7 +120,7 @@ itime=proc.time()[3]
 cat("MCMC Iteration (est time to end - min) ",fill=TRUE)
 fsh()
 
-oldlpost=llmnl(y,X,beta)+lndMvn(beta,betabar,rootpi)
+oldlpost=llmnl(beta,y,X)+lndMvn(beta,betabar,rootpi)
 oldlimp=lndMvst(beta,nu,betastar,rooti)
 #       note: we don't need the determinants as they cancel in
 #       computation of acceptance prob
@@ -125,7 +129,7 @@ naccept=0
 for (rep in 1:R) 
 {
    betac=rmvst(nu,betastar,root)
-   clpost=llmnl(y,X,betac)+lndMvn(betac,betabar,rootpi)
+   clpost=llmnl(betac,y,X)+lndMvn(betac,betabar,rootpi)
    climp=lndMvst(betac,nu,betastar,rooti)
    ldiff=clpost+oldlimp-oldlpost-climp
    alpha=min(1,exp(ldiff))

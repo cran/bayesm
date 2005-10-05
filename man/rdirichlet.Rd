@@ -18,7 +18,7 @@ rdirichlet(alpha)
   Vector of draws from Dirichlet
 }
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
-  by Allenby, McCulloch, and Rossi. \cr
+  by Rossi, Allenby and McCulloch, Chapter 2. \cr
   \url{http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html}
 }
 

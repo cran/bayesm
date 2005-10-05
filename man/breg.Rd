@@ -31,7 +31,7 @@ breg(y, X, betabar, A)
 }
 
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
-  by Allenby, McCulloch, and Rossi. \cr
+  by Rossi,Allenby and McCulloch. \cr
   \url{http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html}
 }
 
@@ -42,6 +42,9 @@ breg(y, X, betabar, A)
 \section{Warning}{
   This routine is a utility routine that does \strong{not} check the
   input arguments for proper dimensions and type.
+
+  In particular, X must be a matrix. If you have a vector for X, coerce it
+  into a matrix with one column
 }
 
 \examples{

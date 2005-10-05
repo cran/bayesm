@@ -21,7 +21,7 @@ logMargDenNR(ll)
   approximation to log marginal density value.
 }
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
-  by Allenby, McCulloch, and Rossi, Chapter 6. \cr
+  by Rossi, Allenby and McCulloch, Chapter 6. \cr
   \url{http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html}
 }
 \author{ Peter Rossi, Graduate School of Business, University of Chicago,

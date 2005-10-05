@@ -4,6 +4,7 @@ function(Data, Prior, Mcmc) {
 #   Revision History
 #	  Sridhar Narayanan - 05/2005
 #         P. Rossi 6/05
+#         fixed error with nobs not specified and changed llnegbinFract 9/05
 #
 #   Model
 #       (y_i|lambda_i,alpha) ~ Negative Binomial(Mean = lambda_i, Overdispersion par = alpha)
@@ -45,7 +46,7 @@ function(Data, Prior, Mcmc) {
 #
 
 llnegbin = 
-function(par,X,y, nvar, nreg) {
+function(par,X,y, nvar) {
 # Computes the log-likelihood
     beta = par[1:nvar]
     alpha = exp(par[nvar+1])
@@ -53,11 +54,11 @@ function(par,X,y, nvar, nreg) {
 }
 
 llnegbinFract = 
-function(par,X,y,Xpooled, ypooled, power, nvar, nreg) {
+function(par,X,y,Xpooled, ypooled, power, nvar,lnalpha)  {
 # Computes the fractional log-likelihood at the unit level
 #    = l_i * l_bar^power
-    par = c(par,mle$par[nvar+1])
-    llnegbin(par,X,y,nvar,nreg) + power*llnegbin(par,Xpooled,ypooled, nvar, nreg) 
+    theta = c(par,lnalpha)
+    llnegbin(theta,X,y,nvar) + power*llnegbin(theta,Xpooled,ypooled, nvar) 
 }
 
 lpostbetai = 
@@ -124,6 +125,7 @@ for (i in 1:nreg) {
     ypooled = c(ypooled,regdata[[i]]$y)
     Xpooled = rbind(Xpooled,regdata[[i]]$X)
 }
+nobs= length(ypooled)
 
 nvar=ncol(Xpooled)
 #
@@ -165,7 +167,7 @@ if(is.null(Mcmc$s_beta)) {cat("Using default s_beta = 2.93/sqrt(nvar)",fill=TRUE
 if(is.null(Mcmc$c)) {cat("Using default c = 2"); c=2} 
     else {c = Mcmc$c}
 
-#
+#out = rhierNegbinRw(Data, Prior, Mcmc)
 # print out problem
 #
 cat(" ",fill=TRUE)
@@ -197,7 +199,8 @@ cat(" ",fill=TRUE)
 par = rep(0,(nvar+1))
 cat("initializing Metropolis candidate densities for ",nreg,"units ...",fill=TRUE)
 fsh()
-mle = optim(par,llnegbin, X=Xpooled, y=ypooled, nvar=nvar, nreg=nreg, method="L-BFGS-B", upper=c(Inf,Inf,Inf,log(100000000)), hessian=TRUE, control=list(fnscale=-1))
+mle = optim(par,llnegbin, X=Xpooled, y=ypooled, nvar=nvar, 
+      method="L-BFGS-B", upper=c(Inf,Inf,Inf,log(100000000)), hessian=TRUE, control=list(fnscale=-1))
 fsh()
 beta_mle=mle$par[1:nvar]
 alpha_mle = exp(mle$par[nvar+1])
@@ -217,7 +220,9 @@ hess_i=NULL
 # Find the individual candidate hessian
 for (i in 1:nreg) {
     power = length(regdata[[i]]$y)/(c*nobs)
-    mle2 = optim(mle$par[1:nvar],llnegbinFract, X=regdata[[i]]$X, y=regdata[[i]]$y, Xpooled=Xpooled, ypooled=ypooled, power=power, nvar=nvar, nreg=nreg, method="BFGS", hessian=TRUE, control=list(fnscale=-1, trace=0))
+    mle2 = optim(mle$par[1:nvar],llnegbinFract, X=regdata[[i]]$X, y=regdata[[i]]$y, Xpooled=Xpooled, 
+           ypooled=ypooled, power=power, nvar=nvar, lnalpha=mle$par[nvar+1], 
+           method="BFGS", hessian=TRUE, control=list(fnscale=-1, trace=0))
     if (mle2$convergence==0)
         hess_i[[i]] = list(hess=-mle2$hessian)
     else

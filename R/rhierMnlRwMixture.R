@@ -5,6 +5,7 @@ function(Data,Prior,Mcmc)
 # revision history:
 #   changed 12/17/04 by rossi to fix bug in drawdelta when there is zero/one unit
 #   in a mixture component
+#   added loglike output, changed to reflect new argument order in llmnl, mnlHess 9/05
 #
 # purpose: run hierarchical mnl logit model with mixture of normals 
 #   using RW and cov(RW inc) = (hess_i + Vbeta^-1)^-1
@@ -32,6 +33,7 @@ function(Data,Prior,Mcmc)
 #   probdraw is R/keep x ncomp matrix of draws of probs of mixture components
 #   compdraw is a list of list of lists (length R/keep)
 #      compdraw[[rep]] is the repth draw of components for mixtures
+#   loglike  log-likelikelhood at each kept draw
 #
 # Priors:
 #    beta_i = D %*% z[i,] + u_i
@@ -175,6 +177,7 @@ betadraw=array(double((floor(R/keep))*nlgt*nvar),dim=c(nlgt,nvar,floor(R/keep)))
 probdraw=matrix(double((floor(R/keep))*ncomp),ncol=ncomp)
 oldbetas=matrix(double(nlgt*nvar),ncol=nvar)
 oldll=double(nlgt)
+loglike=double(floor(R/keep))
 oldcomp=NULL
 compdraw=NULL
 #--------------------------------------------------------------------------------------------------
@@ -184,7 +187,7 @@ compdraw=NULL
 llmnlFract=
 function(beta,y,X,betapooled,rootH,w){
 z=as.vector(rootH%*%(beta-betapooled))
-llmnl(y,X,beta)+w*(-.5*(z%*%z))
+llmnl(beta,y,X)+w*(-.5*(z%*%z))
 }
 
 mnlRwMetropOnce=
@@ -200,7 +203,7 @@ function(y,X,oldbeta,oldll,s,inc.root,betabar,rootpi){
 # oldbeta is the current
      stay=0
      betac=oldbeta + s*t(inc.root)%*%(matrix(rnorm(ncol(X)),ncol=1))
-     cll=llmnl(y,X,betac)
+     cll=llmnl(betac,y,X)
      clpost=cll+lndMvn(betac,betabar,rootpi)
      ldiff=clpost-oldll-lndMvn(oldbeta,betabar,rootpi)
      alpha=min(1,exp(ldiff))
@@ -261,7 +264,7 @@ betainit=c(rep(0,nvar))
 out=optim(betainit,llmnl,method="BFGS",control=list( fnscale=-1,trace=0,reltol=1e-6), 
      X=Xpooled,y=ypooled)
 betapooled=out$par
-H=mnlHess(ypooled,Xpooled,betapooled)
+H=mnlHess(betapooled,ypooled,Xpooled)
 rootH=chol(H)
 for (i in 1:nlgt) 
 {
@@ -269,7 +272,7 @@ for (i in 1:nlgt)
    out=optim(betapooled,llmnlFract,method="BFGS",control=list( fnscale=-1,trace=0,reltol=1e-4), 
    X=lgtdata[[i]]$X,y=lgtdata[[i]]$y,betapooled=betapooled,rootH=rootH,w=w)
    if(out$convergence == 0) 
-     { hess=mnlHess(lgtdata[[i]]$y,lgtdata[[i]]$X,out$par)
+     { hess=mnlHess(out$par,lgtdata[[i]]$y,lgtdata[[i]]$X)
        lgtdata[[i]]=c(lgtdata[[i]],list(converge=1,betafmle=out$par,hess=hess)) }
    else
      { lgtdata[[i]]=c(lgtdata[[i]],list(converge=0,betafmle=c(rep(0,nvar)),
@@ -336,7 +339,7 @@ for(rep in 1:R)
          else {
             betabar=oldcomp[[ind[lgt]]]$mu }
          if (rep == 1) 
-            { oldll[lgt]=llmnl(lgtdata[[lgt]]$y,lgtdata[[lgt]]$X,oldbetas[lgt,])}  
+            { oldll[lgt]=llmnl(oldbetas[lgt,],lgtdata[[lgt]]$y,lgtdata[[lgt]]$X)}  
          #   compute inc.root
          inc.root=chol(chol2inv(chol(lgtdata[[lgt]]$hess+rootpi%*%t(rootpi))))
          metropout=mnlRwMetropOnce(lgtdata[[lgt]]$y,lgtdata[[lgt]]$X,oldbetas[lgt,],
@@ -360,12 +363,15 @@ for(rep in 1:R)
    if((mkeep*keep) == (floor(mkeep)*keep))
       { betadraw[,,mkeep]=oldbetas 
         probdraw[mkeep,]=oldprob
+        loglike[mkeep]=sum(oldll)
         if(drawdelta) Deltadraw[mkeep,]=olddelta
         compdraw[[mkeep]]=oldcomp }
         
 }
 ctime=proc.time()[3]
 cat(" Total Time Elapsed: ",round((ctime-itime)/60,2),fill=TRUE)
-return(if(drawdelta) {list(Deltadraw=Deltadraw,betadraw=betadraw,probdraw=probdraw,compdraw=compdraw)} 
-else {list(betadraw=betadraw,probdraw=probdraw,compdraw=compdraw)})
+return(if(drawdelta) 
+   {list(Deltadraw=Deltadraw,betadraw=betadraw,probdraw=probdraw,compdraw=compdraw,loglike=loglike)} 
+else 
+   {list(betadraw=betadraw,probdraw=probdraw,compdraw=compdraw,loglike=loglike)})
 }

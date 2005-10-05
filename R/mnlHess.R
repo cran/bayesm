@@ -1,14 +1,15 @@
 mnlHess =
-function(y,X,beta) 
+function(beta,y,X) 
 {
 #   p.rossi 2004
+#   changed argument order 9/05
 #
 # Purpose: compute mnl -Expected[Hessian]  
 #
 # Arguments:
+#   beta is k vector of coefs
 #   y is n vector with element = 1,...,j indicating which alt chosen
 #   X is nj x k matrix of xvalues for each of j alt on each of n occasions
-#   beta is k vector of coefs
 #
 # Output:  -Hess evaluated at beta
 #

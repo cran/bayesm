@@ -50,7 +50,7 @@ if(nobs != nrow(X) ) {pandterm("length(y) ne nrow(X)")}
 # check for Prior
 #
 if(missing(Prior))
-   { betabar=c(rep(0,nvar)); A=.01*diag(nvar)}
+   { betabar=c(rep(0,nvar)); A=.01*diag(nvar); nu=3; ssq=var(y)}
 else
    {
     if(is.null(Prior$betabar)) {betabar=c(rep(0,nvar))} 

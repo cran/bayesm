@@ -1,6 +1,7 @@
 \name{ghkvec}
 \alias{ghkvec}
 \concept{multivariate normal distribution}
+\concept{GHK method}
 \concept{integral}
 
 \title{ Compute GHK approximation to Multivariate Normal Integrals }
@@ -28,7 +29,7 @@ ghkvec(L, trunpt, above, r)
   example below for an example with two integrals at different truncation points.
 }
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
-  by Allenby, McCulloch, and Rossi, Chapter 3. \cr
+  by Rossi,Allenby and McCulloch,  Chapter 2. \cr
   \url{http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html}
 }
 

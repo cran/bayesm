@@ -23,7 +23,7 @@ rmixGibbs(y, Bbar, A, nu, V, a, p, z, comps)
 }
 \value{
   a list containing:
-  \item{p}{draw mixture probilities }
+  \item{p}{draw mixture probabilities }
   \item{z}{draw of indicators of each component}
   \item{comps}{new draw of normal component parameters }
 }

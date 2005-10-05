@@ -52,6 +52,14 @@ rivGibbs(Data, Prior, Mcmc)
   \item{gammadraw}{R/keep x dim(gamma) array of gamma draws }
   \item{Sigmadraw}{R/keep x 4 array of Sigma draws}
 }
+\references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
+  by Rossi, Allenby and McCulloch, Chapter 5. \cr
+  \url{http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html}
+}
+
+\author{ Rob McCulloch and Peter Rossi, Graduate School of Business, University of Chicago,
+  \email{Peter.Rossi@ChicagoGsb.edu}.
+}
 \examples{
 ##
 if(nchar(Sys.getenv("LONG_TEST")) != 0) {R=2000} else {R=10}
