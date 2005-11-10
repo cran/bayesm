@@ -20,7 +20,7 @@ rhierMnlRwMixture(Data, Prior, Mcmc)
 \arguments{
   \item{Data}{ list(p,lgtdata,Z) ( Z is optional) }
   \item{Prior}{ list(deltabar,Ad,mubar,Amu,nu,V,ncomp) (all but ncomp are optional)}
-  \item{Mcmc}{ list(s,c,R,keep) (R required)}
+  \item{Mcmc}{ list(s,w,R,keep) (R required)}
 }
 \details{
   Model: \cr
@@ -52,7 +52,7 @@ rhierMnlRwMixture(Data, Prior, Mcmc)
     \item{\code{V}}{ pds location parm for IW prior on norm comp Sigma (def: nuI)}
     \item{\code{ncomp}}{ number of components used in normal mixture }
     \item{\code{s}}{ scaling parm for RW Metropolis (def: 2.93/sqrt(nvar))}
-    \item{\code{c}}{ fraction likelihood weighting parm (def: 2)}
+    \item{\code{w}}{ fractional likelihood weighting parm (def: .1)}
     \item{\code{R}}{ number of MCMC draws}
     \item{\code{keep}}{ MCMC thinning parm: keep every keepth draw (def: 1)}
   }
@@ -77,9 +77,16 @@ rhierMnlRwMixture(Data, Prior, Mcmc)
   Note: Z does \strong{not} include an intercept and is centered for ease of interpretation.\cr
   
   Be careful in assessing prior parameter, Amu.  .01 is too small for many applications. See 
-  Allenby et al, chapter 5 for full discussion.\cr
+  Rossi et al, chapter 5 for full discussion.\cr
+
+  Note: as of version 2.0-2 of \code{bayesm}, the fractional weight parameter has been changed
+  to a weight between 0 and 1.  w is the fractional weight on the normalized pooled likelihood.
+  This differs from what is in Rossi et al chapter 5, i.e.
+
+  \eqn{like_i^(1-w) x like_pooled^(n_i/N)*w}
+
  
-  Large R values may be requires (>20,000).
+  Large R values may be required (>20,000).
 
 } 
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
@@ -145,11 +152,11 @@ a=rep(5,ncoef)
 
 R=10000
 keep=5
-c=2
+w=.1
 s=2.93/sqrt(ncoef)
 Data1=list(p=p,lgtdata=simlgtdata,Z=Z)
 Prior1=list(ncomp=ncomp,nu=nu,V=V,Amu=Amu,mubar=mubar,a=a,Ad=Ad,deltabar=deltabar)
-Mcmc1=list(s=s,c=c,R=R,keep=keep)
+Mcmc1=list(s=s,w=w,R=R,keep=keep)
 out=rhierMnlRwMixture(Data=Data1,Prior=Prior1,Mcmc=Mcmc1)
 
 if(R < 1000) {begin=1} else {begin=1000/keep}

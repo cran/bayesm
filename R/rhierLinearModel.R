@@ -4,6 +4,7 @@ function(Data,Prior,Mcmc)
 #
 # Revision History
 #     1/17/05  P. Rossi
+#     10/05  fixed error in setting prior if Prior argument is missing Rossi
 #
 # Purpose:
 #   run hiearchical regression model
@@ -123,7 +124,7 @@ for (i in 1:nreg)
 # check for Prior
 #
 if(missing(Prior))
-   { Deltabar=matrix(rep(0,nz*nvar),ncol=nvar); A=01*diag(nz);
+   { Deltabar=matrix(rep(0,nz*nvar),ncol=nvar); A=0.01*diag(nz);
      nu.e=3; ssq=sapply(regdata,getvar) ; nu=nvar+3 ; V= nu*diag(nvar)}
 else
    {

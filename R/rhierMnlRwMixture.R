@@ -187,7 +187,7 @@ compdraw=NULL
 llmnlFract=
 function(beta,y,X,betapooled,rootH,w){
 z=as.vector(rootH%*%(beta-betapooled))
-llmnl(beta,y,X)+w*(-.5*(z%*%z))
+return(llmnl(beta,y,X)+w*(-.5*(z%*%z)))
 }
 
 mnlRwMetropOnce=
@@ -212,7 +212,7 @@ function(y,X,oldbeta,oldll,s,inc.root,betabar,rootpi){
              {betadraw=betac; oldll=cll}
            else
              {betadraw=oldbeta; stay=1}
-list(betadraw=betadraw,stay=stay,oldll=oldll)             
+return(list(betadraw=betadraw,stay=stay,oldll=oldll))
 }
 drawDelta=
 function(x,y,z,comps,deltabar,Ad){
@@ -244,7 +244,7 @@ xty = matrix(xty,ncol=1)
 
 # then vec(t(D)) ~ N(V^{-1}(xty + Ad*deltabar),V^{-1}) V = (xtx+Ad)
 cov=chol2inv(chol(xtx+Ad))
-cov%*%(xty+Ad%*%deltabar) + t(chol(cov))%*%rnorm(length(deltabar))
+return(cov%*%(xty+Ad%*%deltabar) + t(chol(cov))%*%rnorm(length(deltabar)))
 }
 #-------------------------------------------------------------------------------------------------------
 #
@@ -370,8 +370,8 @@ for(rep in 1:R)
 }
 ctime=proc.time()[3]
 cat(" Total Time Elapsed: ",round((ctime-itime)/60,2),fill=TRUE)
-return(if(drawdelta) 
-   {list(Deltadraw=Deltadraw,betadraw=betadraw,probdraw=probdraw,compdraw=compdraw,loglike=loglike)} 
+if(drawdelta) 
+   {return(list(Deltadraw=Deltadraw,betadraw=betadraw,probdraw=probdraw,compdraw=compdraw,loglike=loglike))} 
 else 
-   {list(betadraw=betadraw,probdraw=probdraw,compdraw=compdraw,loglike=loglike)})
+   {return(list(betadraw=betadraw,probdraw=probdraw,compdraw=compdraw,loglike=loglike))}
 }
