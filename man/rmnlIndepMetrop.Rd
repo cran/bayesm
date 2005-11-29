@@ -36,6 +36,7 @@ rmnlIndepMetrop(Data, Prior, Mcmc)
 \value{
   a list containing: 
   \item{betadraw}{R/keep x nvar array of beta draws}
+  \item{loglike}{R/keep vector of loglike values for each draw}
   \item{acceptr}{acceptance rate of Metropolis draws}
 }
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}

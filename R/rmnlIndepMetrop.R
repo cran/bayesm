@@ -6,6 +6,7 @@ function(Data,Prior,Mcmc)
 #   p. rossi 1/05
 #   2/9/05 fixed error in Metrop eval
 #   changed to reflect new argument order in llmnl,mnlHess 9/05
+#   added return for log-like  11/05
 #
 # purpose: 
 #   draw from posterior for MNL using Independence Metropolis
@@ -98,6 +99,7 @@ cat("R= ",R," keep= ",keep," nu (df for st candidates) = ",nu,fill=TRUE)
 cat(" ",fill=TRUE)
 
 betadraw=matrix(double(floor(R/keep)*nvar),ncol=nvar)
+loglike=double(floor(R/keep))
 #
 # compute required quantities for indep candidates
 #
@@ -119,8 +121,8 @@ rootpi=backsolve(rootp,diag(nvar))
 itime=proc.time()[3]
 cat("MCMC Iteration (est time to end - min) ",fill=TRUE)
 fsh()
-
-oldlpost=llmnl(beta,y,X)+lndMvn(beta,betabar,rootpi)
+oldloglike=llmnl(beta,y,X)
+oldlpost=oldloglike+lndMvn(beta,betabar,rootpi)
 oldlimp=lndMvst(beta,nu,betastar,rooti)
 #       note: we don't need the determinants as they cancel in
 #       computation of acceptance prob
@@ -129,13 +131,15 @@ naccept=0
 for (rep in 1:R) 
 {
    betac=rmvst(nu,betastar,root)
-   clpost=llmnl(betac,y,X)+lndMvn(betac,betabar,rootpi)
+   cloglike=llmnl(betac,y,X)
+   clpost=cloglike+lndMvn(betac,betabar,rootpi)
    climp=lndMvst(betac,nu,betastar,rooti)
    ldiff=clpost+oldlimp-oldlpost-climp
    alpha=min(1,exp(ldiff))
    if(alpha < 1) {unif=runif(1)} else {unif=0}
    if (unif <= alpha)
       { beta=betac
+        oldloglike=cloglike
         oldlpost=clpost
         oldlimp=climp
         naccept=naccept+1}
@@ -149,9 +153,9 @@ for (rep in 1:R)
     fsh()}
 
   if(rep%%keep == 0) 
-    {mkeep=rep/keep; betadraw[mkeep,]=beta}
+    {mkeep=rep/keep; betadraw[mkeep,]=beta; loglike[mkeep]=oldloglike}
 }
 ctime = proc.time()[3]
 cat('  Total Time Elapsed: ',round((ctime-itime)/60,2),'\n')
-return(list(betadraw=betadraw,acceptr=naccept/R))
+return(list(betadraw=betadraw,loglike=loglike,acceptr=naccept/R))
 }
