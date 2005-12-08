@@ -6,6 +6,7 @@ function(Data,Prior,Mcmc)
 #   changed 12/17/04 by rossi to fix bug in drawdelta when there is zero/one unit
 #   in a mixture component
 #   added loglike output, changed to reflect new argument order in llmnl, mnlHess 9/05
+#   changed weighting scheme to (1-w)logl_i + w*Lbar (normalized) 12/05
 #
 # purpose: run hierarchical mnl logit model with mixture of normals 
 #   using RW and cov(RW inc) = (hess_i + Vbeta^-1)^-1
@@ -49,8 +50,8 @@ function(Data,Prior,Mcmc)
 # MCMC parameters
 #   s is the scaling parameter for the RW inc covariance matrix; s^2 Var is inc cov
 #      matrix
-#   c is parameter for weighting function in fractional likelihood
-#      weight= n_i/(cN)
+#   w is parameter for weighting function in fractional likelihood
+#      w is the weight on the normalized pooled likelihood 
 #   R is number of draws
 #   keep is thinning parameter, keep every keepth draw
 #
@@ -135,7 +136,7 @@ if(missing(Mcmc))
 else 
    { 
     if(is.null(Mcmc$s)) {s=2.93/sqrt(nvar)} else {s=Mcmc$s}
-    if(is.null(Mcmc$c)) {c=2}  else {c=Mcmc$c}
+    if(is.null(Mcmc$w)) {w=.1}  else {w=Mcmc$w}
     if(is.null(Mcmc$keep)) {keep=1} else {keep=Mcmc$keep}
     if(is.null(Mcmc$R)) {pandterm("Requires R argument in Mcmc list")} else {R=Mcmc$R}
     }
@@ -167,7 +168,7 @@ if(drawdelta)
 }
 cat(" ",fill=TRUE)
 cat("MCMC Parms: ",fill=TRUE)
-cat(paste("s=",round(s,3)," c= ",c," R= ",R," keep= ",keep),fill=TRUE)
+cat(paste("s=",round(s,3)," w= ",w," R= ",R," keep= ",keep),fill=TRUE)
 cat("",fill=TRUE)
 #
 # allocate space for draws
@@ -185,9 +186,9 @@ compdraw=NULL
 #  create functions needed
 #
 llmnlFract=
-function(beta,y,X,betapooled,rootH,w){
+function(beta,y,X,betapooled,rootH,w,wgt){
 z=as.vector(rootH%*%(beta-betapooled))
-return(llmnl(beta,y,X)+w*(-.5*(z%*%z)))
+return((1-w)*llmnl(beta,y,X)+w*wgt*(-.5*(z%*%z)))
 }
 
 mnlRwMetropOnce=
@@ -255,7 +256,9 @@ fsh()
 #
 #  now go thru and computed fraction likelihood estimates and hessians
 #
-#       Lbar_i=L_i x L^w
+#       Lbar=log(pooled likelihood^(n_i/N))
+#
+#       fraction loglike = (1-w)*loglike_i + w*Lbar
 #
 betainit=c(rep(0,nvar))
 #
@@ -268,9 +271,9 @@ H=mnlHess(betapooled,ypooled,Xpooled)
 rootH=chol(H)
 for (i in 1:nlgt) 
 {
-   w=length(lgtdata[[i]]$y)/(c*length(ypooled))
+   wgt=length(lgtdata[[i]]$y)/length(ypooled)
    out=optim(betapooled,llmnlFract,method="BFGS",control=list( fnscale=-1,trace=0,reltol=1e-4), 
-   X=lgtdata[[i]]$X,y=lgtdata[[i]]$y,betapooled=betapooled,rootH=rootH,w=w)
+   X=lgtdata[[i]]$X,y=lgtdata[[i]]$y,betapooled=betapooled,rootH=rootH,w=w,wgt=wgt)
    if(out$convergence == 0) 
      { hess=mnlHess(out$par,lgtdata[[i]]$y,lgtdata[[i]]$X)
        lgtdata[[i]]=c(lgtdata[[i]],list(converge=1,betafmle=out$par,hess=hess)) }

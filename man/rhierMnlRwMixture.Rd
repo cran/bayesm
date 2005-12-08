@@ -83,7 +83,7 @@ rhierMnlRwMixture(Data, Prior, Mcmc)
   to a weight between 0 and 1.  w is the fractional weight on the normalized pooled likelihood.
   This differs from what is in Rossi et al chapter 5, i.e.
 
-  \eqn{like_i^(1-w) x like_pooled^(n_i/N)*w}
+  \eqn{like_i^(1-w) x like_pooled^((n_i/N)*wi)}
 
  
   Large R values may be required (>20,000).
