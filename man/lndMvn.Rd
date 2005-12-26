@@ -16,11 +16,10 @@ lndMvn(x, mu, rooti)
 \arguments{
   \item{x}{ density ordinate }
   \item{mu}{ mu vector }
-  \item{rooti}{ inv of Cholesky root of Sigma }
+  \item{rooti}{ inv of Upper Triangular Cholesky root of Sigma }
 }
 \details{
   \eqn{z} \eqn{\sim}{~} \eqn{N(mu,\Sigma)}
-  note: does not include full normalizing constant 
 }
 \value{
   log density value

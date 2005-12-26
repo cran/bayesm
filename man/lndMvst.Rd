@@ -9,7 +9,7 @@
   \code{lndMvst} computes the log of a Multivariate Student-t Density.
 }
 \usage{
-lndMvst(x, nu, mu, rooti)
+lndMvst(x, nu, mu, rooti,NORMC)
 }
 
 \arguments{
@@ -17,11 +17,11 @@ lndMvst(x, nu, mu, rooti)
   \item{nu}{ d.f. parameter }
   \item{mu}{ mu vector }
   \item{rooti}{ inv of Cholesky root of Sigma }
+  \item{NORMC}{ include normalizing constant, def: FALSE }
 }
 
 \details{
   \eqn{z} \eqn{\sim}{~} \eqn{MVst(mu,nu,\Sigma)}
-  note: does not include full normalizing constant 
 }
 \value{
   log density value

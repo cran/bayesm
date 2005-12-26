@@ -8,15 +8,16 @@
   \code{lndIWishart} computes the log of an Inverted Wishart density.
 }
 \usage{
-lndIWishart(nu, S, IW)
+lndIWishart(nu, V, IW)
 }
 \arguments{
   \item{nu}{ d.f. parameter }
-  \item{S}{ "location" parameter  }
+  \item{V}{ "location" parameter  }
   \item{IW}{ ordinate for density evaluation }
 }
 \details{
-  \eqn{Z = Wishart(nu,V^{-1})^{-1}}, \eqn{Z} \eqn{\sim}{~} Inverted Wishart(nu,V).    \cr
+  \eqn{Z} \eqn{\sim}{~} Inverted Wishart(nu,V).    \cr
+   in this parameterization, \eqn{E[Z]=1/(nu-k-1) V}, V is a k x k matirx
   \code{lndIWishart} computes the complete log-density, including normalizing constants.
 }
 \value{
