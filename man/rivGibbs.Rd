@@ -24,6 +24,8 @@ rivGibbs(Data, Prior, Mcmc)
   \eqn{x=z'delta + e1}. \cr
   \eqn{y=beta*x + w'gamma + e2}. \cr
   \eqn{e1,e2} \eqn{\sim}{~} \eqn{N(0,Sigma)}. 
+  
+  Note: if intercepts are desired in either equation, include vector of ones in z or w
 
   Priors:\cr
   \eqn{delta} \eqn{\sim}{~} \eqn{N(md,Ad^{-1})}.  \eqn{vec(beta,gamma)} \eqn{\sim}{~} \eqn{N(mbg,Abg^{-1})} \cr

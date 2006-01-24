@@ -5,6 +5,7 @@ function(Data,Prior,Mcmc)
 # revision history:
 #    R. McCulloch original version 2/05 
 #    p. rossi 3/05 
+#    p. rossi 1/06 -- fixed error in nins
 #
 # purpose: 
 #   draw from posterior for linear I.V. model
@@ -70,7 +71,7 @@ if(n != nrow(z) ) {pandterm("length(y) ne nrow(z)")}
 # check for Prior
 #
 if(missing(Prior))
-   { md=c(rep(0,nins));Ad=.01*diag(dimd); 
+   { md=c(rep(0,dimd));Ad=.01*diag(dimd); 
      mbg=c(rep(0,(1+dimg))); Abg=.01*diag((1+dimg))}
 else
    {
@@ -116,6 +117,7 @@ cat(" ",fill=TRUE)
 cat("Starting Gibbs Sampler for Linear IV Model",fill=TRUE)
 cat(" ",fill=TRUE)
 cat(" nobs= ",n,"; ",ncol(z)," instruments; ",ncol(w)," included exog vars",fill=TRUE)
+cat("     Note: the numbers above include intercepts if in z or w",fill=TRUE)
 cat(" ",fill=TRUE)
 cat("Prior Parms: ",fill=TRUE)
 cat("mean of delta ",fill=TRUE)
