@@ -6,6 +6,7 @@ function(Data,Prior,Mcmc)
 #    R. McCulloch original version 2/05 
 #    p. rossi 3/05 
 #    p. rossi 1/06 -- fixed error in nins
+#    p. rossi 1/06 -- fixed def Prior settings for nu,V
 #
 # purpose: 
 #   draw from posterior for linear I.V. model
@@ -72,7 +73,8 @@ if(n != nrow(z) ) {pandterm("length(y) ne nrow(z)")}
 #
 if(missing(Prior))
    { md=c(rep(0,dimd));Ad=.01*diag(dimd); 
-     mbg=c(rep(0,(1+dimg))); Abg=.01*diag((1+dimg))}
+     mbg=c(rep(0,(1+dimg))); Abg=.01*diag((1+dimg));
+     nu=3; V=diag(2)}
 else
    {
     if(is.null(Prior$md)) {md=c(rep(0,dimd))} 

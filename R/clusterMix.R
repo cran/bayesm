@@ -97,7 +97,7 @@ if(!SILENT){
 Pmean=matrix(0,nrow=nobs,ncol=nobs)
 R=nrow(zdraw)
 for (r in 1:R) {
-   Pmean=Pmean+ztoSim(out$zdraw[r,])
+   Pmean=Pmean+ztoSim(zdraw[r,])
    if(!SILENT) {if(r%%100 == 0) {cat("  ",r,fill=TRUE); fsh()}}
 }
 Pmean=Pmean/R
@@ -112,7 +112,7 @@ if(!SILENT){
 }
 loss=double(R)
 for (r in 1:R){
-  loss[r]=sum(abs(Pmean-ztoSim(out$zdraw[r,]))) 
+  loss[r]=sum(abs(Pmean-ztoSim(zdraw[r,]))) 
   if(!SILENT) {if(r%%100 == 0) {cat("  ",r,fill=TRUE);fsh()}}
 }
 index=which(loss==min(loss))
