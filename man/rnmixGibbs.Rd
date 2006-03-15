@@ -87,7 +87,7 @@ comps = list() # change to "rooti" scale
 for(i in 1:k) comps[[i]] = list(mu=compsmv[[i]][[1]],rooti=solve(chol(compsmv[[i]][[2]])))
 pvec=(1:k)/sum(1:k)
 
-nobs=5000
+nobs=500
 dm = rmixture(nobs,pvec,comps)
 
 Data=list(y=dm$x)
@@ -117,6 +117,7 @@ if(0){
 ## plotting examples
 ##
 ## check true and estimated marginal densities
+end=R
 grid=NULL
 for (i in 1:dim){
   rgi=range(dm$x[,i])
@@ -148,7 +149,7 @@ tden=mixDenBi(i,j,xi,xj,pvec,comps)
 
 par(mfrow=c(2,1))
 image(xi,xj,tden,col=terrain.colors(100),xlab="",ylab="")
-contour(xi,xj,den,add=TRUE,drawlabels=FALSE)
+contour(xi,xj,tden,add=TRUE,drawlabels=FALSE)
 title("True Bivariate Marginal")
 image(xi,xj,den,col=terrain.colors(100),xlab="",ylab="")
 contour(xi,xj,den,add=TRUE,drawlabels=FALSE)
