@@ -17,7 +17,7 @@ lndIWishart(nu, V, IW)
 }
 \details{
   \eqn{Z} \eqn{\sim}{~} Inverted Wishart(nu,V).    \cr
-   in this parameterization, \eqn{E[Z]=1/(nu-k-1) V}, V is a k x k matirx
+   in this parameterization, \eqn{E[Z]=1/(nu-k-1) V}, V is a k x k matrix
   \code{lndIWishart} computes the complete log-density, including normalizing constants.
 }
 \value{
@@ -25,7 +25,7 @@ lndIWishart(nu, V, IW)
 }
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
   by Rossi, Allenby and McCulloch, Chapter 2. \cr
-  \url{http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html}
+  \url{http://faculty.chicagogsb.edu/peter.rossi/research/bsm.html}
 }
 
 \author{ Peter Rossi, Graduate School of Business, University of Chicago,

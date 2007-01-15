@@ -12,7 +12,7 @@ init.rmultiregfp(X, A, Bbar, nu, V)
 }
 \arguments{
   \item{X}{ Design matrix }
-  \item{A}{ Prior Precision matrix (m x k) }
+  \item{A}{ Prior Precision matrix (m x m) }
   \item{Bbar}{ Prior mean matrix (m x k) }
   \item{nu}{ degrees of freedom parmeter for Sigma prior }
   \item{V}{ location parameter for Sigma prior }
@@ -33,7 +33,7 @@ init.rmultiregfp(X, A, Bbar, nu, V)
 }
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
   by Rossi, Allenby and McCulloch, Chapter 2. \cr
-  \url{http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html}
+  \url{http://faculty.chicagogsb.edu/peter.rossi/research/bsm.html}
 }
 
 \author{ Peter Rossi, Graduate School of Business, University of Chicago,

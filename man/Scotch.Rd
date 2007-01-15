@@ -40,7 +40,7 @@
 }
 \references{
   Chapter 4, \emph{Bayesian Statistics and Marketing} by Rossi et al.\cr 
-  \url{http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html}
+  \url{http://faculty.chicagogsb.edu/peter.rossi/research/bsm.html}
 }
 \examples{
 data(Scotch)

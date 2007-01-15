@@ -24,9 +24,9 @@ rhierMnlRwMixture(Data, Prior, Mcmc)
 }
 \details{
   Model: \cr
-  \eqn{y_i} \eqn{\sim}{~} \eqn{MNL(X_i,theta_i)}.  i=1,\ldots, length(lgtdata). \eqn{theta_i} is nvar x 1.
+  \eqn{y_i} \eqn{\sim}{~} \eqn{MNL(X_i,beta_i)}.  i=1,\ldots, length(lgtdata). \eqn{theta_i} is nvar x 1.
 
-  \eqn{theta_i}= ZDelta[i,] + \eqn{u_i}. \cr
+  \eqn{beta_i}= ZDelta[i,] + \eqn{u_i}. \cr
   Note: here ZDelta refers to Z\%*\%D, ZDelta[i,] is ith row of this product.\cr
   Delta is an nz x nvar array. 
 
@@ -83,7 +83,7 @@ rhierMnlRwMixture(Data, Prior, Mcmc)
   to a weight between 0 and 1.  w is the fractional weight on the normalized pooled likelihood.
   This differs from what is in Rossi et al chapter 5, i.e.
 
-  \eqn{like_i^(1-w) x like_pooled^((n_i/N)*wi)}
+  \eqn{like_i^(1-w) x like_pooled^((n_i/N)*w)}
 
  
   Large R values may be required (>20,000).
@@ -91,7 +91,7 @@ rhierMnlRwMixture(Data, Prior, Mcmc)
 } 
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
   by Rossi, Allenby and McCulloch, Chapter 5. \cr
-  \url{http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html}
+  \url{http://faculty.chicagogsb.edu/peter.rossi/research/bsm.html}
 }
 
 \author{ Peter Rossi, Graduate School of Business, University of Chicago,
@@ -148,7 +148,7 @@ Ad=.01*(diag(rep(1,nz*ncoef)))
 mubar=matrix(rep(0,ncoef),nrow=1)
 deltabar=rep(0,ncoef*nz)
 Amu=matrix(.01,ncol=1)
-a=rep(5,ncoef)
+a=rep(5,ncomp)
 
 R=10000
 keep=5

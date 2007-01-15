@@ -3,6 +3,7 @@ function(i,j,xi,xj,pvec,comps)
 {
 # Revision History:
 #   P. Rossi 6/05
+#   vectorized evaluation of bi-variate normal density 12/06
 #
 # purpose: compute marg bivariate density implied by mixture of multivariate normals specified
 #			by pvec,comps
@@ -45,30 +46,17 @@ for(comp in 1:nc) {
 }
 return(result)
 }
-normden=
-function(x,mu,rooti)
-{
-#
-# function to evaluate MV NOrmal density with  mean mu, var Sigma
-# and with sigma^-1=rooti%*%t(rooti)   
-# rooti is in the inverse of upper triangular chol root of sigma
-#          note: this is the UL decomp of sigmai not LU!
-#                Sigma=root'root   root=inv(rooti)
-#
-z=as.vector(t(rooti)%*%(x-mu))
-exp(-.5*length(x)*log(2*pi)-.5*(z%*%z) + sum(log(diag(rooti))))
-}
 # ----------------------------------------------------------------------------------------------
 nc = length(comps)
 marmoms=bivcomps(i,j,comps)
-den = matrix(0.0,nrow=length(xi),ncol=length(xj))
-for(indi in 1:length(xi)) {
-   for(indj in 1:length(xj)) {
-      for(comp in 1:nc) {
-          den[indi,indj] = den[indi,indj] + normden(c(xi[indi],xj[indj]),marmoms[[comp]]$mu,
-                                marmoms[[comp]]$rooti)*pvec[comp]
-      }
-    } 
+ngridxi=length(xi); ngridxj=length(xj)
+z=cbind(rep(xi,ngridxj),rep(xj,each=ngridxi))
+den = matrix(0.0,nrow=ngridxi,ncol=ngridxj)
+for(comp in 1:nc) {
+  quads=colSums((crossprod(marmoms[[comp]]$rooti,(t(z)-marmoms[[comp]]$mu)))^2)
+  dencomp=exp(-(2/2)*log(2*pi)+sum(log(diag(marmoms[[comp]]$rooti)))-.5*quads) 
+  dim(dencomp)=c(ngridxi,ngridxj)
+  den=den+dencomp*pvec[comp]
 }
 return(den)
 }

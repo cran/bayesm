@@ -4,7 +4,7 @@ function(Data,Prior,Mcmc)
 #
 # Revision History
 #     1/17/05  P. Rossi
-#     10/05  fixed error in setting prior if Prior argument is missing Rossi
+#     10/05  fixed error in setting prior if Prior argument is missing 
 #
 # Purpose:
 #   run hiearchical regression model

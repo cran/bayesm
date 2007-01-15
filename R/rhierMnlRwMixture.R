@@ -144,7 +144,7 @@ else
 # print out problem
 #
 cat(" ",fill=TRUE)
-cat("Attempting MCMC Inference for Hierarchical Logit:",fill=TRUE)
+cat("Starting MCMC Inference for Hierarchical Logit:",fill=TRUE)
 cat("   Normal Mixture with",ncomp,"components for first stage prior",fill=TRUE)
 cat(paste("  ",p," alternatives; ",nvar," variables in X"),fill=TRUE)
 cat(paste("   for ",nlgt," cross-sectional units"),fill=TRUE)

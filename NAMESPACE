@@ -7,7 +7,7 @@ runiregGibbs,simmnl,simmnp,simmvp,simnhlogit,rmnpGibbs,rmixGibbs,rnmixGibbs,
 rmvpGibbs,rhierLinearModel,rhierMnlRwMixture,simmnlwX,rivGibbs,
 rmnlIndepMetrop,rscaleUsage,ghkvec,condMom,logMargDenNR,init.rmultiregfp,
 rhierBinLogit,rnegbinRw,rhierNegbinRw,rbiNormGibbs,clusterMix,rsurGibbs,
-mixDenBi,mnpProb)
+mixDenBi,mnpProb,rhierLinearMixture)
 
 
 

@@ -8,7 +8,7 @@
 
 \title{ Gibbs Sampler for Hierarchical Linear Model }
 \description{
-  \code{rhierLinearModel} implements a Gibbs Sampler for hierarchical linear models.
+  \code{rhierLinearModel} implements a Gibbs Sampler for hierarchical linear models with a normal prior.
 }
 \usage{
 rhierLinearModel(Data, Prior, Mcmc)
@@ -57,7 +57,7 @@ rhierLinearModel(Data, Prior, Mcmc)
 }
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
   by Rossi, Allenby and McCulloch, Chapter 3. \cr
-  \url{http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html}
+  \url{http://faculty.chicagogsb.edu/peter.rossi/research/bsm.html}
 }
 
 \author{ Peter Rossi, Graduate School of Business, University of Chicago,

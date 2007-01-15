@@ -28,7 +28,7 @@ llmnl(beta,y, X)
 }
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
   by Rossi, Allenby and McCulloch. \cr
-  \url{http://gsbwww.uchicago.edu/fac/peter.rossi/research/bsm.html}
+  \url{http://faculty.chicagogsb.edu/peter.rossi/research/bsm.html}
 }
 
 \author{ Peter Rossi, Graduate School of Business, University of Chicago,

@@ -248,19 +248,21 @@ if(nrow(mubar) != p) { pandterm(paste('mubar must have length',p)) }
 #++++++++++++++++++++++++++++++++++++++++
 
 #print out run info -------------------------
-cat('   n,p,k: ', n,p,k,'\n')
+#
+# note in the documentation and in BSM, m is used instead of p
+#    for print-out purposes I'm using m   P. Rossi 12/06
+cat('   n,m,k: ', n,p,k,'\n')
 cat('   R,keep,ndghk,printevery: ', R,keep,ndghk,printevery,'\n')
 cat('\n')
 cat('   Data:\n')
-cat('      x11,n1,1p,np: ',x[1,1],x[n,1],x[1,p],x[n,p],'\n\n')
+cat('      x[1,1],x[n,1],x[1,m],x[n,m]: ',x[1,1],x[n,1],x[1,p],x[n,p],'\n\n')
 cat('   Prior:\n')
 cat('      ','nu: ',nu,'\n')
-cat('      ','V11,pp/nu: ',V[1,1]/nu,V[p,p]/nu,'\n')
-cat('      ','mubar1,p: ',mubar[1],mubar[p],'\n')
-cat('      ','Am11,pp: ',Am[1,1],Am[p,p],'\n')
+cat('      ','V[1,1]/nu,V[m,m]/nu: ',V[1,1]/nu,V[p,p]/nu,'\n')
+cat('      ','mubar[1],mubar[m]: ',mubar[1],mubar[p],'\n')
+cat('      ','Am[1,1],Am[m,m]: ',Am[1,1],Am[p,p],'\n')
 cat('      ','Lambdanu: ',nuL,'\n')
 cat('      ','LambdaV11,22/(Lambdanu-3): ',VL[1,1]/(nuL-3),VL[2,2]/(nuL-3),'\n')
-cat('      ','mubar1,p: ',mubar[1],mubar[p],'\n')
 cat('      ','sigma grid, 1,',length(gsigma),': ',gsigma[1],', ',gsigma[length(gsigma)],'\n')
 cat('      ','Lambda11 grid, 1,',length(gl11),': ',gl11[1],', ',gl11[length(gl11)],'\n')
 cat('      ','Lambda12 grid, 1,',length(gl12),': ',gl12[1],', ',gl12[length(gl12)],'\n')
