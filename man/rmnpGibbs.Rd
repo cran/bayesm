@@ -79,23 +79,41 @@ n=500
 beta=c(-1,1,1,2)
 Sigma=matrix(c(1,.5,.5,1),ncol=2)
 k=length(beta)
-x1=runif(n*(p-1),min=-1,max=1); x2=runif(n*(p-1),min=-1,max=1)
-I2=diag(rep(1,p-1)); xadd=rbind(I2)
-for(i in 2:n) { xadd=rbind(xadd,I2)}
-X=cbind(xadd,x1,x2)
+X1=matrix(runif(n*p,min=0,max=2),ncol=p); X2=matrix(runif(n*p,min=0,max=2),ncol=p)
+X=createX(p,na=2,nd=NULL,Xa=cbind(X1,X2),Xd=NULL,DIFF=TRUE,base=p)
+
+simmnp= function(X,p,n,beta,sigma) {
+  indmax=function(x) {which(max(x)==x)}
+  Xbeta=X\%*\%beta
+  w=as.vector(crossprod(chol(sigma),matrix(rnorm((p-1)*n),ncol=n)))+ Xbeta
+  w=matrix(w,ncol=(p-1),byrow=TRUE)
+  maxw=apply(w,1,max)
+  y=apply(w,1,indmax)
+  y=ifelse(maxw < 0,p,y)
+  return(list(y=y,X=X,beta=beta,sigma=sigma))
+}
+
 simout=simmnp(X,p,500,beta,Sigma)
 
-Data=list(p=p,y=simout$y,X=simout$X)
-Mcmc=list(R=R,keep=1)
+Data1=list(p=p,y=simout$y,X=simout$X)
+Mcmc1=list(R=R,keep=1)
 
-out=rmnpGibbs(Mcmc=Mcmc,Data=Data)
+out=rmnpGibbs(Data=Data1,Mcmc=Mcmc1)
 
-cat(" Betadraws ",fill=TRUE)
-mat=apply(out$betadraw/sqrt(out$sigmadraw[,1]),2,quantile,probs=c(.01,.05,.5,.95,.99))
-mat=rbind(beta,mat); rownames(mat)[1]="beta"; print(mat)
-cat(" Sigmadraws ",fill=TRUE)
-mat=apply(out$sigmadraw/out$sigmadraw[,1],2,quantile,probs=c(.01,.05,.5,.95,.99))
-mat=rbind(as.vector(Sigma),mat); rownames(mat)[1]="sigma"; print(mat)
+cat(" Summary of Betadraws ",fill=TRUE)
+betatilde=out$betadraw/sqrt(out$sigmadraw[,1])
+attributes(betatilde)$class="bayesm.mat"
+summary(betatilde,tvalues=beta)
 
+cat(" Summary of Sigmadraws ",fill=TRUE)
+sigmadraw=out$sigmadraw/out$sigmadraw[,1]
+attributes(sigmadraw)$class="bayesm.var"
+summary(sigmadraw,tvalues=as.vector(Sigma[upper.tri(Sigma,diag=TRUE)]))
+
+
+if(0){
+## plotting examples
+plot(betatilde,tvalues=beta)
+}
 }
 \keyword{ models }

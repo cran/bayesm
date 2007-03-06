@@ -4,6 +4,7 @@ function(x,pvec,comps)
 # Revision History:
 #   R. McCulloch 11/04
 #   P. Rossi 3/05 -- put in backsolve
+#   P. Rossi 1/06 -- put in crossprod
 #
 # purpose: compute marginal densities for multivariate mixture of normals (given by p and comps) at x
 #
@@ -36,7 +37,7 @@ for(i in 1:nc) {
    mu[i,] = comps[[i]][[1]]
 #   root = solve(comps[[i]][[2]])
    root= backsolve(comps[[i]][[2]],diag(rep(1,dim)))
-   sigma[i,] = sqrt(diag(t(root)%*%root))
+   sigma[i,] = sqrt(diag(crossprod(root)))
 }
 return(list(mu=mu,sigma=sigma))
 }

@@ -7,6 +7,7 @@ function(Data,Prior,Mcmc)
 #   in a mixture component
 #   added loglike output, changed to reflect new argument order in llmnl, mnlHess 9/05
 #   changed weighting scheme to (1-w)logl_i + w*Lbar (normalized) 12/05
+#   3/07 added classes
 #
 # purpose: run hierarchical mnl logit model with mixture of normals 
 #   using RW and cov(RW inc) = (hess_i + Vbeta^-1)^-1
@@ -373,8 +374,14 @@ for(rep in 1:R)
 }
 ctime=proc.time()[3]
 cat(" Total Time Elapsed: ",round((ctime-itime)/60,2),fill=TRUE)
+if(drawdelta){
+   attributes(Deltadraw)$class=c("bayesm.mat","mcmc")
+   attributes(Deltadraw)$mcpar=c(1,R,keep)}
+attributes(betadraw)$class=c("bayesm.hcoef")
+nmix=list(probdraw=probdraw,zdraw=NULL,compdraw=compdraw)
+attributes(nmix)$class="bayesm.nmix"
 if(drawdelta) 
-   {return(list(Deltadraw=Deltadraw,betadraw=betadraw,probdraw=probdraw,compdraw=compdraw,loglike=loglike))} 
+   {return(list(Deltadraw=Deltadraw,betadraw=betadraw,nmix=nmix,loglike=loglike))} 
 else 
-   {return(list(betadraw=betadraw,probdraw=probdraw,compdraw=compdraw,loglike=loglike))}
+   {return(list(betadraw=betadraw,nmix=nmix,loglike=loglike))}
 }

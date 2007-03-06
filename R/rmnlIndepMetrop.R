@@ -86,8 +86,10 @@ else
 #
 cat(" ", fill=TRUE)
 cat("Starting Independence Metropolis Sampler for Multinomial Logit Model",fill=TRUE)
-cat("  with ",p," alternatives",fill=TRUE)
+cat("  ",length(y)," obs with ",p," alternatives",fill=TRUE)
 cat(" ", fill=TRUE)
+cat("Table of y Values",fill=TRUE)
+print(table(y))
 cat("Prior Parms: ",fill=TRUE)
 cat("betabar",fill=TRUE)
 print(betabar)
@@ -157,5 +159,7 @@ for (rep in 1:R)
 }
 ctime = proc.time()[3]
 cat('  Total Time Elapsed: ',round((ctime-itime)/60,2),'\n')
+attributes(betadraw)$class=c("bayesm.mat","mcmc")
+attributes(betadraw)$mcpar=c(1,R,keep)
 return(list(betadraw=betadraw,loglike=loglike,acceptr=naccept/R))
 }

@@ -4,6 +4,7 @@ function(Data,Prior,Mcmc)
 #
 # Revision History:
 #   modified by rossi 12/18/04 to include error checking
+#   3/07 added classes
 #
 # purpose:  Gibbs MVP model with full covariance matrix
 #
@@ -189,6 +190,13 @@ for (rep in 1:R)
    wold=wnew
    betaold=betanew
    }
+ctime = proc.time()[3]
+cat('  Total Time Elapsed: ',round((ctime-itime)/60,2),'\n')
+
+attributes(betadraw)$class=c("bayesm.mat","mcmc")
+attributes(betadraw)$mcpar=c(1,R,keep)
+attributes(sigmadraw)$class=c("bayesm.var","bayesm.mat","mcmc")
+attributes(sigmadraw)$mcpar=c(1,R,keep)
 
 return(list(betadraw=betadraw,sigmadraw=sigmadraw))
 }

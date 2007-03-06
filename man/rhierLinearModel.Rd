@@ -63,6 +63,7 @@ rhierLinearModel(Data, Prior, Mcmc)
 \author{ Peter Rossi, Graduate School of Business, University of Chicago,
   \email{Peter.Rossi@ChicagoGsb.edu}.
 }
+\seealso{ \code{\link{rhierLinearMixture}} }
 \examples{
 ##
 if(nchar(Sys.getenv("LONG_TEST")) != 0) {R=2000} else {R=10}
@@ -80,26 +81,20 @@ regdata=NULL
 for (reg in 1:nreg) { X=cbind(iota,matrix(runif(nobs*(nvar-1)),ncol=(nvar-1)))
 	y=X\%*\%Beta[reg,]+sqrt(tau)*rnorm(nobs); regdata[[reg]]=list(y=y,X=X) }
 
-nu.e=3
-ssq=NULL
-for(reg in 1:nreg) {ssq[reg]=var(regdata[[reg]]$y)}
-nu=nvar+3
-V=nu*diag(c(rep(1,nvar)))
-A=diag(c(rep(.01,nz)),ncol=nz)
-Deltabar=matrix(c(rep(0,nz*nvar)),nrow=nz)
+Data1=list(regdata=regdata,Z=Z)
+Mcmc1=list(R=R,keep=1)
+out=rhierLinearModel(Data=Data1,Mcmc=Mcmc1)
 
+cat("Summary of Delta draws",fill=TRUE)
+summary(out$Deltadraw,tvalues=as.vector(Delta))
+cat("Summary of Vbeta draws",fill=TRUE)
+summary(out$Vbetadraw,tvalues=as.vector(Vbeta[upper.tri(Vbeta,diag=TRUE)]))
 
-Data=list(regdata=regdata,Z=Z)
-Prior=list(Deltabar=Deltabar,A=A,nu.e=nu.e,ssq=ssq,nu=nu,V=V)
-Mcmc=list(R=R,keep=1)
-out=rhierLinearModel(Data=Data,Mcmc=Mcmc)
-
-cat(" Deltadraws ",fill=TRUE)
-mat=apply(out$Deltadraw,2,quantile,probs=c(.01,.05,.5,.95,.99))
-mat=rbind(as.vector(Delta),mat); rownames(mat)[1]="delta"; print(mat)
-cat(" Vbetadraws ",fill=TRUE)
-mat=apply(out$Vbetadraw,2,quantile,probs=c(.01,.05,.5,.95,.99))
-mat=rbind(as.vector(Vbeta),mat); rownames(mat)[1]="Vbeta"; print(mat)
+if(0){
+## plotting examples
+plot(out$betadraw)
+plot(out$Deltadraw)
+}
 
 }
 \keyword{ regression }

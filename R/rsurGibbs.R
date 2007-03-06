@@ -4,6 +4,7 @@ function(Data,Prior,Mcmc)
 # 
 # revision history:
 #          P. Rossi 9/05
+#          3/07 added classes
 # Purpose:
 #   implement Gibbs Sampler for SUR
 # 
@@ -93,8 +94,7 @@ if(length(betabar) != nvar)
 if(missing(Mcmc)) {pandterm("requires Mcmc argument")}
 else
    {
-    if(is.null(Mcmc$R)) 
-       {pandterm("requires Mcmc element R")} else {R=Mcmc$R}
+    if(is.null(Mcmc$R)) {pandterm("requires Mcmc element R")} else {R=Mcmc$R}
     if(is.null(Mcmc$keep)) {keep=1} else {keep=Mcmc$keep}
    }
 #
@@ -178,6 +178,10 @@ for (rep in 1:R)
 ctime = proc.time()[3]
 cat('  Total Time Elapsed: ',round((ctime-itime)/60,2),'\n')
 
+attributes(betadraw)$class=c("bayesm.mat","mcmc")
+attributes(betadraw)$mcpar=c(1,R,keep)
+attributes(Sigmadraw)$class=c("bayesm.var","bayesm.mat","mcmc")
+attributes(Sigmadraw)$mcpar=c(1,R,keep)
 
 return(list(betadraw=betadraw,Sigmadraw=Sigmadraw))
 }

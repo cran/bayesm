@@ -70,13 +70,17 @@ beta=c(0,1,-1)
 nvar=ncol(X)
 simout=simbprobit(X,beta)
 
-Data=list(X=simout$X,y=simout$y)
-Mcmc=list(R=R,keep=1)
+Data1=list(X=simout$X,y=simout$y)
+Mcmc1=list(R=R,keep=1)
 
-out=rbprobitGibbs(Data=Data,Mcmc=Mcmc)
+out=rbprobitGibbs(Data=Data1,Mcmc=Mcmc1)
 
-cat(" Betadraws ",fill=TRUE)
-mat=apply(out$betadraw,2,quantile,probs=c(.01,.05,.5,.95,.99))
-mat=rbind(beta,mat); rownames(mat)[1]="beta"; print(mat)
+summary(out$betadraw,tvalues=beta)
+
+if(0){
+## plotting example
+plot(out$betadraw,tvalues=beta)
+}
+
 }
 \keyword{ models }

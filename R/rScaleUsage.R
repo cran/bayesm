@@ -5,6 +5,7 @@ function(Data,Prior,Mcmc)
 # purpose: run scale-usage mcmc
 #    draws y,Sigma,mu,tau,sigma,Lambda,e
 #                                R. McCulloch 12/28/04
+#    added classes 3/07
 # 
 # arguments:
 #    Data:
@@ -420,8 +421,24 @@ for(rep in 1:ndpost) {
 }
 ctime = proc.time()[3]
 cat('  Total Time Elapsed: ',round((ctime-itime)/60,2),'\n')
-return(list(Sigmadraw=drSigma,mudraw=drmu,taudraw = drtau,
- sigmadraw=drsigma,Lambdadraw=drLamda,edraw=dre))
+
+R=ndpost
+mudraw=drmu; taudraw=drtau; sigmadraw=drsigma; Lambdadraw=drLamda;
+edraw=dre; Sigmadraw=drSigma
+attributes(mudraw)$class=c("bayesm.mat","mcmc")
+attributes(mudraw)$mcpar=c(1,R,keep)
+attributes(taudraw)$class=c("bayesm.mat","mcmc")
+attributes(taudraw)$mcpar=c(1,R,keep)
+attributes(sigmadraw)$class=c("bayesm.mat","mcmc")
+attributes(sigmadraw)$mcpar=c(1,R,keep)
+attributes(Lambdadraw)$class=c("bayesm.mat","mcmc")
+attributes(Lambdadraw)$mcpar=c(1,R,keep)
+attributes(edraw)$class=c("bayesm.mat","mcmc")
+attributes(edraw)$mcpar=c(1,R,keep)
+attributes(Sigmadraw)$class=c("bayesm.var","bayesm.mat","mcmc")
+attributes(Sigmadraw)$mcpar=c(1,R,keep)
+return(list(Sigmadraw=Sigmadraw,mudraw=mudraw,taudraw = taudraw,
+ sigmadraw=sigmadraw,Lambdadraw=Lambdadraw,edraw=edraw))
 }
 
 

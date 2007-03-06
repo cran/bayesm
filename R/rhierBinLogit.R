@@ -6,6 +6,8 @@ function(Data,Prior,Mcmc){
 #
 # revision history: 
 #	changed 5/12/05 by Rossi to add error checking
+#       1/07 removed init.rmultiregfp
+#       3/07 added classes
 #
 # purpose: run binary heterogeneous logit model 
 #
@@ -17,7 +19,7 @@ function(Data,Prior,Mcmc){
 #      Z is a matrix of demographic variables nlgt*nz that have been 
 #	  mean centered so that the intercept is interpretable
 #   Prior contains a list of (nu,V,Deltabar,ADelta)
-#      beta_i ~ N(Delta,Vbeta)
+#      beta_i ~ N(Z%*%Delta,Vbeta)
 #      vec(Delta) ~ N(vec(Deltabar),Vbeta (x) ADelta^-1)
 #      Vbeta ~ IW(nu,V)
 #   Mcmc is a list of (sbeta,R,keep)
@@ -158,11 +160,6 @@ betan = array(0,dim=c(nvar))
 reject = array(0,dim=c(R/keep))
 llike=array(0,dim=c(R/keep))
 
-#
-# set up fixed parm for the draw of Vbeta, Delta=Delta
-#
-Fparm=init.rmultiregfp(Z,ADelta,Deltabar,nu,V)
-
 itime=proc.time()[3]
 cat("MCMC Iteration (est time to end - min)",fill=TRUE)
 fsh()
@@ -195,7 +192,7 @@ logkold = -.5*(t(betad)-Z[i,]%*%oldDelta) %*% oldVbetai %*% (betad-t(Z[i,]%*%old
 			rej = rej+1  }
 		}
 #	Draw B-bar and V as a multivariate regression
-	out=rmultiregfp(oldbetas,Z,Fparm)
+	out=rmultireg(oldbetas,Z,Deltabar,ADelta,nu,V)
 	oldDelta=out$B
 	oldVbeta=out$Sigma
 	oldVbetai=chol2inv(chol(oldVbeta))
@@ -217,6 +214,13 @@ logkold = -.5*(t(betad)-Z[i,]%*%oldDelta) %*% oldVbetai %*% (betad-t(Z[i,]%*%old
 }
 ctime=proc.time()[3]
 cat(" Total Time Elapsed: ",round((ctime-itime)/60,2),fill=TRUE)
+
+
+attributes(betadraw)$class=c("bayesm.hcoef")
+attributes(Deltadraw)$class=c("bayesm.mat","mcmc")
+attributes(Deltadraw)$mcpar=c(1,R,keep)
+attributes(Vbetadraw)$class=c("bayesm.var","bayesm.mat","mcmc")
+attributes(Vbetadraw)$mcpar=c(1,R,keep)
 
 return(list(betadraw=betadraw,Vbetadraw=Vbetadraw,Deltadraw=Deltadraw,llike=llike,reject=reject))
 }

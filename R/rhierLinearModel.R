@@ -5,6 +5,7 @@ function(Data,Prior,Mcmc)
 # Revision History
 #     1/17/05  P. Rossi
 #     10/05  fixed error in setting prior if Prior argument is missing 
+#     3/07 added classes
 #
 # Purpose:
 #   run hiearchical regression model
@@ -204,8 +205,6 @@ betas=matrix(double(nreg*nvar),ncol=nvar)
 #                           "k" = nz
 #			general model: Beta = Z Delta + U
 #
-Fparm=init.rmultiregfp(Z,A,Deltabar,nu,V)
-#
 #       Create XpX elements of regdata and initialize tau
 #
 regdata=lapply(regdata,append)
@@ -235,7 +234,7 @@ for(rep in 1:R)
 #
 #          draw Vbeta, Delta | {beta_i}
 #
-   rmregout=rmultiregfp(betas,Z,Fparm)
+   rmregout=rmultireg(betas,Z,Deltabar,A,nu,V)
    Vbeta=as.vector(rmregout$Sigma)
    Delta=as.vector(rmregout$B)
 #
@@ -258,6 +257,14 @@ for(rep in 1:R)
 }
 ctime = proc.time()[3]
 cat('  Total Time Elapsed: ',round((ctime-itime)/60,2),'\n')
+
+attributes(taudraw)$class=c("bayesm.mat","mcmc")
+attributes(taudraw)$mcpar=c(1,R,keep)
+attributes(Deltadraw)$class=c("bayesm.mat","mcmc")
+attributes(Deltadraw)$mcpar=c(1,R,keep)
+attributes(Vbetadraw)$class=c("bayesm.var","bayesm.mat","mcmc")
+attributes(Vbetadraw)$mcpar=c(1,R,keep)
+attributes(betadraw)$class=c("bayesm.hcoef")
 
 return(list(Vbetadraw=Vbetadraw,Deltadraw=Deltadraw,betadraw=betadraw,taudraw=taudraw))
 }

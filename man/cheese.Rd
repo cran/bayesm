@@ -34,7 +34,7 @@ print(mat)
 ##
 ## example of processing for use with rhierLinearModel
 ##
-if(nchar(Sys.getenv("LONG_TEST")) != 0)
+if(0)
 {
 
 retailer=levels(cheese$RETAILER)
@@ -64,32 +64,18 @@ R=2000
 Data=list(regdata=regdata,Z=Z)
 Mcmc=list(R=R,keep=1)
 
-betamean=array(double(nreg*nvar),dim=c(nreg,nvar))
-burnin=100
-
 set.seed(66)
 out=rhierLinearModel(Data=Data,Mcmc=Mcmc)
 
-for (k in 1:nvar) { betamean[,k]=apply(out$betadraw[,k,burnin:R],1,mean)}
-print(betamean)
-cat(" Deltadraws ",fill=TRUE)
-mat=apply(out$Deltadraw,2,quantile,probs=c(.01,.05,.5,.95,.99))
-print(mat)
-cat(" Vbetadraws ",fill=TRUE)
-mat=apply(out$Vbetadraw,2,quantile,probs=c(.01,.05,.5,.95,.99))
-print(mat)
+cat("Summary of Delta Draws",fill=TRUE)
+summary(out$Deltadraw)
+cat("Summary of Vbeta Draws",fill=TRUE)
+summary(out$Vbetadraw)
 
 if(0){
-coefn=c("Intercept","Display","LnPrice")
-colors=c("blue","green","red","yellow")
-par(mfrow=c(nvar,1),mar=c(5.1,15,4.1,13))
-for (n in 1:nvar) 
-{
-   plot(range(betamean[,n]),range(betamean[,n]),
-     type="n",main=coefn[n],xlab="ls coef",ylab="post mean")
-        points(lscoef[,n],betamean[,n],pch=17,col="blue",cex=1.2) 
-   abline(c(0,1))
-}
+#
+# plot hier coefs
+plot(out$betadraw)
 }
 
 }

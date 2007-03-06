@@ -79,21 +79,20 @@ Sigma = matrix(c(1,rho,rho,1),ncol=2)
 delta = c(1,4); beta = .5; gamma = c(1)
 simiv = simIV(delta,beta,Sigma,n,z,w,gamma)
 
-Mcmc=list(); Prior=list(); Data = list()
-Data$z = z; Data$w=w; Data$x=simiv$x; Data$y=simiv$y
-Mcmc$R = R
-Mcmc$keep=1
-out=rivGibbs(Data=Data,Prior=Prior,Mcmc=Mcmc)
+Mcmc1=list();  Data1 = list()
+Data1$z = z; Data1$w=w; Data1$x=simiv$x; Data1$y=simiv$y
+Mcmc1$R = R
+Mcmc1$keep=1
+out=rivGibbs(Data=Data1,Mcmc=Mcmc1)
 
-cat(" deltadraws ",fill=TRUE)
-mat=apply(out$deltadraw,2,quantile,probs=c(.01,.05,.5,.95,.99))
-mat=rbind(delta,mat); rownames(mat)[1]="delta"; print(mat)
-cat(" betadraws ",fill=TRUE)
-qout=quantile(out$betadraw,probs=c(.01,.05,.5,.95,.99))
-mat=matrix(qout,ncol=1)
-mat=rbind(beta,mat); rownames(mat)=c("beta",names(qout)); print(mat)
-cat(" Sigma draws",fill=TRUE)
-mat=apply(out$Sigmadraw,2,quantile,probs=c(.01,.05,.5,.95,.99))
-mat=rbind(as.vector(Sigma),mat); rownames(mat)[1]="Sigma"; print(mat)
+cat("Summary of Beta draws",fill=TRUE)
+summary(out$betadraw,tvalues=beta)
+cat("Summary of Sigma draws",fill=TRUE)
+summary(out$Sigmadraw,tvalues=as.vector(Sigma[upper.tri(Sigma,diag=TRUE)]))
+
+if(0){
+## plotting examples
+plot(out$betadraw)
+}
 }
 \keyword{ models }

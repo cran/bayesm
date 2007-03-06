@@ -4,6 +4,7 @@ function(Data, Prior, Mcmc) {
 #   Revision History
 #	  Sridhar Narayanan - 05/2005
 #         P. Rossi 6/05
+#         3/07 added classes
 #
 #   Model
 #       (y|lambda,alpha) ~ Negative Binomial(Mean = lambda, Overdispersion par = alpha)
@@ -203,8 +204,13 @@ if(r%%keep == 0) {
 }
 
 ctime = proc.time()[3]
-    
 cat('  Total Time Elapsed: ',round((ctime-itime)/60,2),'\n')
+
+
+attributes(betadraw)$class=c("bayesm.mat","mcmc")
+attributes(betadraw)$mcpar=c(1,R,keep)
+attributes(alphadraw)$class=c("bayesm.mat","mcmc")
+attributes(alphadraw)$mcpar=c(1,R,keep)
 return(list(llike=llike,betadraw=betadraw,alphadraw=alphadraw,
      acceptrbeta=nacceptbeta/R*100,acceptralpha=nacceptalpha/R*100))
 }

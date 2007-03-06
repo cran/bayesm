@@ -101,27 +101,18 @@ for (i in 1:nlgt)
   lgtdata[[i]]=list(y=y,X=X,beta=beta)
 }
 
-Data=list(Dat=lgtdata,Demo=Z)
 out=rhierBinLogit(Data=list(lgtdata=lgtdata,Z=Z),Mcmc=list(R=R))
 
-cat(" Deltadraws ",fill=TRUE)
-mat=apply(out$Deltadraw,2,quantile,probs=c(.01,.05,.5,.95,.99))
-mat=rbind(as.vector(Delta),mat); rownames(mat)[1]="delta"; print(mat)
-cat(" Vbetadraws ",fill=TRUE)
-mat=apply(out$Vbetadraw,2,quantile,probs=c(.01,.05,.5,.95,.99))
-mat=rbind(as.vector(Vbeta),mat); rownames(mat)[1]="Vbeta"; print(mat)
+cat("Summary of Delta draws",fill=TRUE)
+summary(out$Deltadraw,tvalues=as.vector(Delta))
+cat("Summary of Vbeta draws",fill=TRUE)
+summary(out$Vbetadraw,tvalues=as.vector(Vbeta[upper.tri(Vbeta,diag=TRUE)]))
 
 if(0){
-td=as.vector(Delta)
-par(mfrow=c(2,2))
-matplot(out$Deltadraw[,(1:nvar)],type="l")
-abline(h=td[1:nvar],col=(1:nvar))
-matplot(out$Deltadraw[,((nvar+1):(2*nvar))],type="l")
-abline(h=td[(nvar+1):(2*nvar)],col=(1:nvar))
-matplot(out$Vbetadraw[,c(1,7,13,19,25)],type="l")
-abline(h=1.5)
-matplot(out$Vbetadraw[,-c(1,7,13,19,25)],type="l")
-abline(h=.5)
+## plotting examples
+plot(out$Deltadraw,tvalues=as.vector(Delta))
+plot(out$betadraw)
+plot(out$Vbetadraw,tvalues=as.vector(Vbeta[upper.tri(Vbeta,diag=TRUE)]))
 }
 
 }

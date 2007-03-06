@@ -50,7 +50,7 @@ print(mat)
 ##
 ## use Scotch data to run Multivariate Probit Model
 ##
-if(nchar(Sys.getenv("LONG_TEST")) != 0){
+if(0){
 ##
 
 y=as.matrix(Scotch)
@@ -72,13 +72,13 @@ out=rmvpGibbs(Data=Data,Mcmc=Mcmc)
 ind=(0:(p-1))*p + (1:p)
 cat(" Betadraws ",fill=TRUE)
 mat=apply(out$betadraw/sqrt(out$sigmadraw[,ind]),2,quantile,probs=c(.01,.05,.5,.95,.99))
-print(mat)
+attributes(mat)$class="bayesm.mat"
+summary(mat)
 rdraw=matrix(double((R)*p*p),ncol=p*p)
 rdraw=t(apply(out$sigmadraw,1,nmat))
+attributes(rdraw)$class="bayesm.var"
 cat(" Draws of Correlation Matrix ",fill=TRUE)
-mat=apply(rdraw,2,quantile,probs=c(.01,.05,.5,.95,.99))
-## correlation matrix too large to print -- summarize
-quantile(round(mat,digits=2))
+summary(rdraw)
 
 }
 

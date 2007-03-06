@@ -6,6 +6,7 @@ function(Data,Prior,Mcmc)
 #   changed 12/17/04 by rossi to fix bug in drawdelta when there is zero/one unit
 #   in a mixture component
 #   adapted to linear model by Vicky Chen 6/06
+#   put in classes 3/07
 #
 # purpose: run hierarchical linear model with mixture of normals 
 #
@@ -300,7 +301,6 @@ for(rep in 1:R)
       tau[reg]=regout$sigmasqdraw
       }
    #
-   #
    #       print time to completion and draw # every 100th draw
    #
    if(((rep/100)*100) ==(floor(rep/100)*100))
@@ -322,8 +322,16 @@ for(rep in 1:R)
 }
 ctime=proc.time()[3]
 cat(" Total Time Elapsed: ",round((ctime-itime)/60,2),fill=TRUE)
+attributes(taudraw)$class=c("bayesm.mat","mcmc")
+attributes(taudraw)$mcpar=c(1,R,keep)
+if(drawdelta){
+   attributes(Deltadraw)$class=c("bayesm.mat","mcmc")
+   attributes(Deltadraw)$mcpar=c(1,R,keep)}
+attributes(betadraw)$class=c("bayesm.hcoef")
+nmix=list(probdraw=probdraw,zdraw=NULL,compdraw=compdraw)
+attributes(nmix)$class="bayesm.nmix"
 if(drawdelta) 
-   {return(list(taudraw=taudraw,Deltadraw=Deltadraw,betadraw=betadraw,probdraw=probdraw,compdraw=compdraw))} 
+   {return(list(taudraw=taudraw,Deltadraw=Deltadraw,betadraw=betadraw,nmix=nmix))} 
 else 
-   {return(list(taudraw=taudraw,betadraw=betadraw,probdraw=probdraw,compdraw=compdraw))}
+   {return(list(taudraw=taudraw,betadraw=betadraw,nmix=nmix))}
 }

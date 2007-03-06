@@ -4,6 +4,7 @@ function(Data,Prior,Mcmc)
 #
 # revision history:
 #   p. rossi 1/05
+#   3/07 added validity check of values of y and classes
 #
 # purpose: 
 #   draw from posterior for binary probit using Gibbs Sampler
@@ -69,6 +70,7 @@ nobs=length(y)
 # check data for validity
 #
 if(length(y) != nrow(X) ) {pandterm("y and X not of same row dim")}
+if(sum(unique(y) %in% c(0:1)) < length(unique(y))) {pandterm("Invalid y, must be 0,1")}
 #
 # check for Prior
 #
@@ -103,6 +105,9 @@ else
 #
 cat(" ", fill=TRUE)
 cat("Starting Gibbs Sampler for Binary Probit Model",fill=TRUE)
+cat("   with ",length(y)," observations",fill=TRUE)
+cat("Table of y Values",fill=TRUE)
+print(table(y))
 cat(" ", fill=TRUE)
 cat("Prior Parms: ",fill=TRUE)
 cat("betabar",fill=TRUE)
@@ -148,5 +153,7 @@ for (rep in 1:R)
 }
 ctime = proc.time()[3]
 cat('  Total Time Elapsed: ',round((ctime-itime)/60,2),'\n')
+attributes(betadraw)$class=c("bayesm.mat","mcmc")
+attributes(betadraw)$mcpar=c(1,R,keep)
 return(list(betadraw=betadraw))
 }

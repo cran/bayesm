@@ -81,8 +81,7 @@ rhierNegbinRw(Data, Prior, Mcmc)
 }
 \examples{
 ##
-if(nchar(Sys.getenv("LONG_TEST")) != 0) 
-{
+if(nchar(Sys.getenv("LONG_TEST")) != 0) {R=2000} else {R=10}
 ##
 set.seed(66)
 simnegbin = 
@@ -119,37 +118,23 @@ for (i in 1:nreg) {
 Beta = NULL
 for (i in 1:nreg) {Beta=rbind(Beta,matrix(simnegbindata[[i]]$beta,nrow=1))}
     
-Data = list(regdata=simnegbindata, Z=Z)
-Deltabar = matrix(rep(0,nvar*nz),nrow=nz)
-Vdelta = 0.01 * diag(nvar)
-nu = nvar+3
-V = 0.01*diag(nvar)
-a = 0.5
-b = 0.1
-Prior = list(Deltabar=Deltabar, Vdelta=Vdelta, nu=nu, V=V, a=a, b=b)
+Data1 = list(regdata=simnegbindata, Z=Z)
+Mcmc1 = list(R=R)
 
-R=10000
-keep =1
-s_beta=2.93/sqrt(nvar)
-s_alpha=2.93
-c=2
-Mcmc = list(R=R, keep = keep, s_beta=s_beta, s_alpha=s_alpha, c=c)
-out = rhierNegbinRw(Data, Prior, Mcmc)
+out = rhierNegbinRw(Data=Data1, Mcmc=Mcmc1)
 
-# Unit level mean beta parameters
-Mbeta = matrix(rep(0,nreg*nvar),nrow=nreg)
-ndraws = length(out$alphadraw)
-for (i in 1:nreg) { Mbeta[i,] = rowSums(out$Betadraw[i, , ])/ndraws }
+cat("Summary of Delta draws",fill=TRUE)
+summary(out$Deltadraw,tvalues=as.vector(Delta))
+cat("Summary of Vbeta draws",fill=TRUE)
+summary(out$Vbetadraw,tvalues=as.vector(Vbeta[upper.tri(Vbeta,diag=TRUE)]))
+cat("Summary of alpha draws",fill=TRUE)
+summary(out$alpha,tvalues=alpha)
 
-cat(" Deltadraws ",fill=TRUE)
-mat=apply(out$Deltadraw,2,quantile,probs=c(.01,.05,.5,.95,.99))
-mat=rbind(as.vector(Delta),mat); rownames(mat)[1]="Delta"; print(mat)
-cat(" Vbetadraws ",fill=TRUE)
-mat=apply(out$Vbetadraw,2,quantile,probs=c(.01,.05,.5,.95,.99))
-mat=rbind(as.vector(Vbeta),mat); rownames(mat)[1]="Vbeta"; print(mat)
-cat(" alphadraws ",fill=TRUE)
-mat=apply(matrix(out$alphadraw),2,quantile,probs=c(.01,.05,.5,.95,.99))
-mat=rbind(as.vector(alpha),mat); rownames(mat)[1]="alpha"; print(mat)    
+if(0){
+## plotting examples
+plot(out$betadraw)
+plot(out$alpha,tvalues=alpha)
+plot(out$Deltadraw,tvalues=as.vector(Delta))
 }
 }
 

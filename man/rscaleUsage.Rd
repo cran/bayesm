@@ -72,13 +72,11 @@ if(nchar(Sys.getenv("LONG_TEST")) != 0) {R=1000} else {R=5}
 data(customerSat)
 surveydat = list(k=10,x=as.matrix(customerSat))
 
-mcmc = list(R=R)
+Mcmc1 = list(R=R)
 set.seed(66)
-out=rscaleUsage(Data=surveydat,Mcmc=mcmc)
+out=rscaleUsage(Data=surveydat,Mcmc=Mcmc1)
 
-cat(" mudraws ",fill=TRUE)
-mat=apply(out$mudraw,2,quantile,probs=c(.01,.05,.5,.95,.99))
-print(mat)
+summary(out$mudraw)
 
 }
 }

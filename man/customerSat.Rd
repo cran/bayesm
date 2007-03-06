@@ -1,7 +1,7 @@
 \name{customerSat}
 \alias{customerSat}
 \docType{data}
-\title{ Customer Satifaction Data}
+\title{ Customer Satisfaction Data}
 \description{
   Responses to a satisfaction survey for a Yellow Pages advertising product.
   All responses are on a 10 point scale from 1 to 10 (10 is "Excellent"

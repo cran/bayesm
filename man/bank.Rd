@@ -69,13 +69,13 @@ print(mat)
 
 ## example of processing for use with rhierBinLogit
 ##
-if(nchar(Sys.getenv("LONG_TEST")) != 0)
+if(0)
 {
 choiceAtt=bank$choiceAtt
 Z=bank$demo
 
 ## center demo data so that mean of random-effects
-## distribution can be interpretted as the average respondents
+## distribution can be interpreted as the average respondent
 
 Z[,1]=rep(1,nrow(Z))
 Z[,2]=Z[,2]-mean(Z[,2])
@@ -101,13 +101,27 @@ Mcmc=list(R=10000,sbeta=0.2,keep=20)
 set.seed(66)
 out=rhierBinLogit(Data=Data,Mcmc=Mcmc)
 
-cat(" Deltadraws ",fill=TRUE)
-mat=apply(out$Deltadraw,2,quantile,probs=c(.01,.05,.5,.95,.99))
-print(mat)
-cat(" Vbetadraws ",fill=TRUE)
-mat=apply(out$Vbetadraw,2,quantile,probs=c(.01,.05,.5,.95,.99))
-print(mat)
-}
+begin=5000/20
+end=10000/20
 
+summary(out$Deltadraw,burnin=begin)
+summary(out$Vbetadraw,burnin=begin)
+
+if(0){
+## plotting examples
+
+## plot grand means of random effects distribution (first row of Delta)
+index=4*c(0:13)+1
+matplot(out$Deltadraw[,index],type="l",xlab="Iterations/20",ylab="",
+main="Average Respondent Part-Worths")
+
+## plot hierarchical coefs
+plot(out$betadraw)
+
+## plot log-likelihood
+plot(out$llike,type="l",xlab="Iterations/20",ylab="",main="Log Likelihood")
+
+}
+}
 }
 \keyword{datasets}

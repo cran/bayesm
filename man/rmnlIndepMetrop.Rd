@@ -54,14 +54,40 @@ if(nchar(Sys.getenv("LONG_TEST")) != 0) {R=2000} else {R=10}
 
 set.seed(66)
 n=200; p=3; beta=c(1,-1,1.5,.5)
-simout=simmnl(p,n,beta)
-A=diag(c(rep(.01,length(beta)))); betabar=rep(0,length(beta))
 
-Data=list(y=simout$y,X=simout$X,p=p); Mcmc=list(R=R,keep=1) ; Prior=list(A=A,betabar=betabar)
-out=rmnlIndepMetrop(Data=Data,Prior=Prior,Mcmc=Mcmc)
-cat(" Betadraws ",fill=TRUE)
-mat=apply(out$betadraw,2,quantile,probs=c(.01,.05,.5,.95,.99))
-mat=rbind(beta,mat); rownames(mat)[1]="beta"; print(mat)
+simmnl= function(p,n,beta) {
+  #   note: create X array with 2 alt.spec vars
+  k=length(beta)
+  X1=matrix(runif(n*p,min=-1,max=1),ncol=p)
+  X2=matrix(runif(n*p,min=-1,max=1),ncol=p)
+  X=createX(p,na=2,nd=NULL,Xd=NULL,Xa=cbind(X1,X2),base=1)
+  Xbeta=X\%*\%beta # now do probs
+  p=nrow(Xbeta)/n
+  Xbeta=matrix(Xbeta,byrow=TRUE,ncol=p)
+  Prob=exp(Xbeta)
+  iota=c(rep(1,p))
+  denom=Prob\%*\%iota
+  Prob=Prob/as.vector(denom)
+  # draw y
+  y=vector("double",n)
+  ind=1:p
+  for (i in 1:n) 
+        { yvec=rmultinom(1,1,Prob[i,]); y[i]=ind\%*\%yvec }
+   return(list(y=y,X=X,beta=beta,prob=Prob))
+}
+
+simout=simmnl(p,n,beta)
+
+Data1=list(y=simout$y,X=simout$X,p=p); Mcmc1=list(R=R,keep=1)
+out=rmnlIndepMetrop(Data=Data1,Mcmc=Mcmc1)
+
+cat("Summary of beta draws",fill=TRUE)
+summary(out$betadraw,tvalues=beta)
+
+if(0){
+## plotting examples
+plot(out$betadraw)
+}
 
 }
 \keyword{ models }

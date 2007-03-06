@@ -55,16 +55,18 @@ n=100
 X=cbind(rep(1,n),runif(n)); beta=c(1,2); sigsq=.25
 y=X\%*\%beta+rnorm(n,sd=sqrt(sigsq))
 
-A=diag(c(.05,.05)); betabar=c(0,0)
-nu=3; ssq=1.0
+Data1=list(y=y,X=X); Mcmc1=list(R=R) 
 
-Data=list(y=y,X=X); Mcmc=list(R=R,keep=1) ; Prior=list(A=A,betabar=betabar,nu=nu,ssq=ssq)
-out=runiregGibbs(Data=Data,Prior=Prior,Mcmc=Mcmc)
-cat(" betadraws ",fill=TRUE)
-mat=apply(out$betadraw,2,quantile,probs=c(.01,.05,.5,.95,.99))
-mat=rbind(beta,mat); rownames(mat)[1]="beta"; print(mat)
-cat(" Sigma-sq draws",fill=TRUE)
-cat(" sigma-sq= ",sigsq,fill=TRUE)
-print(quantile(out$sigmasqdraw,probs=c(.01,.05,.5,.95,.99)))
+out=runiregGibbs(Data=Data1,Mcmc=Mcmc1)
+
+cat("Summary of beta and Sigma draws",fill=TRUE)
+summary(out$betadraw,tvalues=beta)
+summary(out$sigmasqdraw,tvalues=sigsq)
+
+if(0){
+## plotting examples
+plot(out$betadraw)
+}
+
 }
 \keyword{ regression }

@@ -5,6 +5,7 @@ function(Data, Prior, Mcmc) {
 #	  Sridhar Narayanan - 05/2005
 #         P. Rossi 6/05
 #         fixed error with nobs not specified and changed llnegbinFract 9/05
+#         3/07 added classes
 #
 #   Model
 #       (y_i|lambda_i,alpha) ~ Negative Binomial(Mean = lambda_i, Overdispersion par = alpha)
@@ -49,7 +50,7 @@ llnegbin =
 function(par,X,y, nvar) {
 # Computes the log-likelihood
     beta = par[1:nvar]
-    alpha = exp(par[nvar+1])
+    alpha = exp(par[nvar+1])+1.0e-50
     ll = sum(log(dnbinom(y,size=alpha,mu=exp(X%*%beta))))
 }
 
@@ -310,6 +311,14 @@ for (r in 1:R)
   }
 }
 ctime = proc.time()[3]
+
+attributes(alphadraw)$class=c("bayesm.mat","mcmc")
+attributes(alphadraw)$mcpar=c(1,R,keep)
+attributes(Deltadraw)$class=c("bayesm.mat","mcmc")
+attributes(Deltadraw)$mcpar=c(1,R,keep)
+attributes(Vbetadraw)$class=c("bayesm.var","bayesm.mat","mcmc")
+attributes(Vbetadraw)$mcpar=c(1,R,keep)
+attributes(Betadraw)$class=c("bayesm.hcoef")
     
 cat('  Total Time Elapsed: ',round((ctime-itime)/60,2),'\n')
 return(list(llike=llike,Betadraw=Betadraw,alphadraw=alphadraw, Vbetadraw=Vbetadraw, Deltadraw=Deltadraw,

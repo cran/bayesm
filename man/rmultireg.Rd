@@ -48,7 +48,6 @@ rmultireg(Y, X, Bbar, A, nu, V)
   input arguments for proper dimensions and type.
 }
 
-\seealso{ \code{\link{rmultiregfp}},\code{\link{init.rmultiregfp}}}
 \examples{
 ##
 if(nchar(Sys.getenv("LONG_TEST")) != 0) {R=2000} else {R=10}

@@ -49,13 +49,15 @@ rnmixGibbs(Data, Prior, Mcmc)
   }
 }
 \value{
-  a list containing:
-  \item{probdraw}{R/keep x ncomp array of mixture prob draws}
-  \item{zdraw}{R/keep x nobs array of indicators of mixture comp identity for each obs}
-  \item{compdraw}{R/keep lists of lists of comp parm draws}
+  \item{nmix} {a list containing: probdraw,zdraw,compdraw}
 }
 
 \note{
+  more details on contents of nmix: \cr
+  \item{probdraw}{R/keep x ncomp array of mixture prob draws}
+  \item{zdraw}{R/keep x nobs array of indicators of mixture comp identity for each obs}
+  \item{compdraw}{R/keep lists of lists of comp parm draws}
+
   In this model, the component normal parameters are not-identified due to label-switching.
   However, the fitted mixture of normals density is identified as it is invariant to label-switching. 
   See Allenby et al, chapter 5 for details. Use \code{eMixMargDen} or \code{momMix} to compute
@@ -90,71 +92,25 @@ pvec=(1:k)/sum(1:k)
 nobs=500
 dm = rmixture(nobs,pvec,comps)
 
-Data=list(y=dm$x)
+Data1=list(y=dm$x)
 ncomp=9
-Prior=list(ncomp=ncomp)
-Mcmc=list(R=R,keep=1)
-out=rnmixGibbs(Data=Data,Prior=Prior,Mcmc=Mcmc)
+Prior1=list(ncomp=ncomp)
+Mcmc1=list(R=R,keep=1)
+out=rnmixGibbs(Data=Data1,Prior=Prior1,Mcmc=Mcmc1)
 
+cat("Summary of Normal Mixture Distribution",fill=TRUE)
+summary(out)
 tmom=momMix(matrix(pvec,nrow=1),list(comps))
-if(R < 1000) {begin=1} else {begin=500}
-pmom=momMix(out$probdraw[begin:R,],out$compdraw[begin:R])
-mat=rbind(tmom$mu,pmom$mu)
-rownames(mat)=c("true","post expect")
-cat(" mu and posterior expectation of mu",fill=TRUE)
+mat=rbind(tmom$mu,tmom$sd)
+cat(" True Mean/Std Dev",fill=TRUE)
 print(mat)
-mat=rbind(tmom$sd,pmom$sd)
-rownames(mat)=c("true","post expect")
-cat(" std dev and posterior expectation of sd",fill=TRUE)
-print(mat)
-mat=rbind(as.vector(tmom$corr),as.vector(pmom$corr))
-rownames(mat)=c("true","post expect")
-cat(" corr and posterior expectation of corr",fill=TRUE)
-print(t(mat))
 
 if(0){
 ##
 ## plotting examples
 ##
-## check true and estimated marginal densities
-end=R
-grid=NULL
-for (i in 1:dim){
-  rgi=range(dm$x[,i])
-  gr=seq(from=rgi[1],to=rgi[2],length.out=50)
-  grid=cbind(grid,gr)
+plot(out$nmix)
 }
-
-tmden=mixDen(grid,pvec,comps)
-pmden=eMixMargDen(grid,out$probdraw[begin:end,],out$compdraw[begin:end])
-
-## plot the marginal on third variable
-plot(range(grid[,3]),c(0,1.1*max(tmden[,3],pmden[,3])),type="n",xlab="",ylab="density")
-lines(grid[,3],tmden[,3],col="blue",lwd=2)
-lines(grid[,3],pmden[,3],col="red",lwd=2)
-
-## compute implied bivariate marginal distributions
-i=1
-j=2
-rxi=range(dm$x[,1])
-rxj=range(dm$x[,2])
-xi=seq(from=rxi[1],to=rxi[2],length.out=50)
-xj=seq(from=rxj[1],to=rxj[2],length.out=50)
-den=matrix(0,ncol=length(xi),nrow=length(xj))
-for(ind in as.integer(seq(from=begin,to=end,length.out=100))){
-  den=den+mixDenBi(i,j,xi,xj,out$probdraw[ind,],out$compdraw[[ind]])
-}
-tden=matrix(0,ncol=length(xi),nrow=length(xj))
-tden=mixDenBi(i,j,xi,xj,pvec,comps)
-
-par(mfrow=c(2,1))
-image(xi,xj,tden,col=terrain.colors(100),xlab="",ylab="")
-contour(xi,xj,tden,add=TRUE,drawlabels=FALSE)
-title("True Bivariate Marginal")
-image(xi,xj,den,col=terrain.colors(100),xlab="",ylab="")
-contour(xi,xj,den,add=TRUE,drawlabels=FALSE)
-title("Posterior Mean of Bivariate Marginal")
-}
-
+ 
 }
 \keyword{ multivariate }

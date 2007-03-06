@@ -2,12 +2,23 @@ useDynLib(bayesm)
 
 export(breg,cgetC,createX,eMixMargDen,mixDen,fsh,llmnl,llmnp,llnhlogit,
 lndIChisq,lndIWishart,lndMvn,lndMvst,mnlHess,momMix,nmat,numEff,rdirichlet,
-rmixture,rmultireg,rmultiregfp,rwishart,rmvst,rtrun,rbprobitGibbs,runireg,
-runiregGibbs,simmnl,simmnp,simmvp,simnhlogit,rmnpGibbs,rmixGibbs,rnmixGibbs,
-rmvpGibbs,rhierLinearModel,rhierMnlRwMixture,simmnlwX,rivGibbs,
-rmnlIndepMetrop,rscaleUsage,ghkvec,condMom,logMargDenNR,init.rmultiregfp,
+rmixture,rmultireg,rwishart,rmvst,rtrun,rbprobitGibbs,runireg,
+runiregGibbs,simnhlogit,rmnpGibbs,rmixGibbs,rnmixGibbs,
+rmvpGibbs,rhierLinearModel,rhierMnlRwMixture,rivGibbs,
+rmnlIndepMetrop,rscaleUsage,ghkvec,condMom,logMargDenNR,
 rhierBinLogit,rnegbinRw,rhierNegbinRw,rbiNormGibbs,clusterMix,rsurGibbs,
-mixDenBi,mnpProb,rhierLinearMixture)
+mixDenBi,mnpProb,rhierLinearMixture,summary.bayesm.mat,plot.bayesm.mat,
+plot.bayesm.hcoef,plot.bayesm.nmix,rordprobitGibbs)
+
+
+## register S3 methods
+S3method(plot, bayesm.mat)
+S3method(plot, bayesm.nmix)
+S3method(plot, bayesm.hcoef)
+S3method(summary, bayesm.mat)
+S3method(summary, bayesm.var)
+S3method(summary, bayesm.nmix)
+
 
 
 

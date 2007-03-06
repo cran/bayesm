@@ -5,6 +5,7 @@ function(Data,Prior,Mcmc)
 # revision history:
 #          P. Rossi 1/17/05
 #          revised 9/05 to put in Data,Prior,Mcmc calling convention
+#          3/07 added classes
 # Purpose:
 #   perform iid draws from posterior of regression model using
 #     conjugate prior
@@ -140,5 +141,11 @@ beta = btilde + as.vector(sqrt(sigmasq))*IR%*%rnorm(nvar)
 }
 ctime = proc.time()[3]
 cat('  Total Time Elapsed: ',round((ctime-itime)/60,2),'\n')
+
+attributes(betadraw)$class=c("bayesm.mat","mcmc")
+attributes(betadraw)$mcpar=c(1,R,keep)
+attributes(sigmasqdraw)$class=c("bayesm.mat","mcmc")
+attributes(sigmasqdraw)$mcpar=c(1,R,keep)
+
 return(list(betadraw=betadraw,sigmasqdraw=sigmasqdraw))
 }

@@ -112,5 +112,7 @@ if(continue != "n" & continue != "No" & continue != "no"){
    title(paste("IID draws: Rho =",rho))
    points(idraws,pch=20,col="magenta",cex=.7)
 }
+attributes(draws)$class=c("bayesm.mat","mcmc")
+attributes(draws)$mcpar=c(1,R,1)
 return(draws)
 }

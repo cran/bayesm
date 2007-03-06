@@ -1,23 +1,24 @@
 Package: bayesm
-Version: 2.0-9
-Date: 2007-01-15
+Version: 2.1-0
+Date: 2007-03-6
 Title:Bayesian Inference for Marketing/Micro-econometrics 
 Author: Peter Rossi <peter.rossi@ChicagoGsb.edu>, 
         Rob McCulloch <robert.mcculloch@ChicagoGsb.edu>.
 Maintainer: Peter Rossi <peter.rossi@chicagosb.edu>
-Depends: R (>= 1.8.1)
+Depends: R (>= 2.2.0)
 Description: bayesm covers many important models used
   in marketing and micro-econometrics applications. 
   The package includes:
   Bayes Regression (univariate or multivariate dep var),
   Bayes Seemingly Unrelated Regression (SUR),
+  Binary and Ordinal Probit,
   Multinomial Logit (MNL) and Multinomial Probit (MNP),
   Multivariate Probit,
   Negative Binomial (Poisson) Regression,
   Multivariate Mixtures of Normals (including clustering),
   Hierarchical Linear Models with normal prior and covariates,
-  Hierarchical Linear Models with mixture of normals prior and covariates,
-  Hierarchical Multinomial Logits with mixture of normals prior
+  Hierarchical Linear Models with a mixture of normals prior and covariates,
+  Hierarchical Multinomial Logits with a mixture of normals prior
      and covariates,
   Hierarchical Negative Binomial Regression Models,
   Bayesian analysis of choice-based conjoint data,
@@ -29,4 +30,4 @@ Description: bayesm covers many important models used
   Marketing by Rossi, Allenby and McCulloch. 
 License: GPL (version 2 or later)
 URL: http://faculty.chicagogsb.edu/peter.rossi/research/bsm.html
-Packaged: Wed Jan 17 16:27:59 2007; per
+Packaged: Tue Mar  6 14:17:05 2007; per

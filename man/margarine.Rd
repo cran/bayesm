@@ -68,7 +68,7 @@ print(mat)
 ##
 ## example of processing for use with rhierMnlRwMixture
 ##
-if(nchar(Sys.getenv("LONG_TEST")) != 0)
+if(0)
 {
 select= c(1:5,7)  ## select brands
 chPr=as.matrix(margarine$choicePrice)
@@ -119,18 +119,14 @@ R=20000
 mcmc1=list(keep=keep,R=R)
 out=rhierMnlRwMixture(Data=list(p=p,lgtdata=lgtdata,Z=Z),Prior=list(ncomp=1),Mcmc=mcmc1)
 
-begin=100/keep; end=R/keep  
-cat(" Posterior Mean of Delta ",fill=TRUE)
-mat=apply(out$Deltadraw[begin:end,],2,mean)
-print(matrix(mat,ncol=6))
-pmom=momMix(out$probdraw[begin:end,],out$compdraw[begin:end])
-cat(" posterior expectation of mu",fill=TRUE)
-print(pmom$mu)
-cat(" posterior expectation of sd",fill=TRUE)
-print(pmom$sd)
-cat(" posterior expectation of correlations",fill=TRUE)
-print(pmom$corr)
+summary(out$Deltadraw)
+summary(out$nmix)
 
+if(0){
+## plotting examples
+plot(out$nmix)
+plot(out$Deltadraw)}
 }
+
 }
 \keyword{datasets}

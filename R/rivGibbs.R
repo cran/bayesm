@@ -7,6 +7,7 @@ function(Data,Prior,Mcmc)
 #    p. rossi 3/05 
 #    p. rossi 1/06 -- fixed error in nins
 #    p. rossi 1/06 -- fixed def Prior settings for nu,V
+#    3/07 added classes
 #
 # purpose: 
 #   draw from posterior for linear I.V. model
@@ -209,6 +210,19 @@ for(rep in 1:R) {
       Sigmadraw[mkeep,]=Sigma
       }
 }
+
+ctime = proc.time()[3]
+cat('  Total Time Elapsed: ',round((ctime-itime)/60,2),'\n')
+
+attributes(deltadraw)$class=c("bayesm.mat","mcmc")
+attributes(deltadraw)$mcpar=c(1,R,keep)
+attributes(betadraw)$class=c("bayesm.mat","mcmc")
+attributes(betadraw)$mcpar=c(1,R,keep)
+attributes(gammadraw)$class=c("bayesm.mat","mcmc")
+attributes(gammadraw)$mcpar=c(1,R,keep)
+attributes(Sigmadraw)$class=c("bayesm.var","bayesm.mat","mcmc")
+attributes(Sigmadraw)$mcpar=c(1,R,keep)
+
 
 return(list(deltadraw=deltadraw,betadraw=betadraw,gammadraw=gammadraw,Sigmadraw=Sigmadraw))
 }

@@ -64,17 +64,16 @@ rhierLinearMixture(Data, Prior, Mcmc)
   \item{taudraw}{R/keep x nreg array of error variance draws}
   \item{betadraw}{nreg x nvar x R/keep array of individual regression coef draws}
   \item{Deltadraw}{R/keep x nz x nvar array of Deltadraws}
-  \item{probdraw}{ R/keep x ncomp matrix of draws of probs of mixture components (pvec)}
-  \item{compdraw}{ list of list of lists (length R/keep)}
+  \item{nmix}{list of three elements, (probdraw, NULL, compdraw)}
 }
 \note{
-  More on \code{compdraw} component of return value list: \cr
-  \itemize{
+  More on \code{probdraw} component of nmix return value list: \cr
+  this is an R/keep by ncomp array of draws of mixture component probs (pvec)\cr
+  More on \code{compdraw} component of nmix return value list: \cr
   \item{compdraw[[i]]}{ the ith draw of components for mixtures}
   \item{compdraw[[i]][[j]]}{ ith draw of the jth normal mixture comp}
   \item{compdraw[[i]][[j]][[1]]}{ ith draw of jth normal mixture comp mean vector}
   \item{compdraw[[i]][[j]][[2]]}{ ith draw of jth normal mixture cov parm (rooti) }
-  }
 
   Note: Z should \strong{not} include an intercept and should be centered for ease of interpretation.\cr
   
@@ -117,8 +116,6 @@ regdata=NULL						  # simulated data with Z
 betas=matrix(double(nreg*nvar),ncol=nvar)
 tind=double(nreg)
 
-# simulate datasets with/without Z, using same components and tau
-
 for (reg in 1:nreg) {
 tempout=rmixture(1,tpvec,tcomps)
 betas[reg,]=Delta\%*\%Z[reg,]+as.vector(tempout$x)
@@ -131,110 +128,23 @@ regdata[[reg]]=list(y=y,X=X,beta=betas[reg,],tau=tau)
 
 ## run rhierLinearMixture
 
-Data=list(regdata=regdata,Z=Z)
-Prior=list(ncomp=3)
-Mcmc=list(R=R,keep=1)
+Data1=list(regdata=regdata,Z=Z)
+Prior1=list(ncomp=3)
+Mcmc1=list(R=R,keep=1)
 
-out1=rhierLinearMixture(Data=Data,Prior=Prior,Mcmc=Mcmc)
+out1=rhierLinearMixture(Data=Data1,Prior=Prior1,Mcmc=Mcmc1)
 
-if(R>1000) {begin=501} else {begin=1}
-
-apply(out1$Deltadraw[begin:R,],2,mean)
-cat(" Deltadraws ",fill=TRUE)
-mat=apply(out1$Deltadraw,2,quantile,probs=c(.01,.05,.5,.95,.99))
-mat=rbind(as.vector(Delta),mat)
-rownames(mat)[1]="delta"
-print(mat)
+cat("Summary of Delta draws",fill=TRUE)
+summary(out1$Deltadraw,tvalues=as.vector(Delta))
+cat("Summary of Normal Mixture Distribution",fill=TRUE)
+summary(out1$nmix)
 
 if(0){
 ## plotting examples 
-## plot histograms of draws of betas for nth regression
-
-betahist=function(n)
-{
-par(mfrow=c(1,3))
-hist(out1$betadraw[n,1,begin:R],breaks=30,main="beta1 with Z",xlab=" ",ylab=" ")
-abline(v=hhbetamean1[n,1],col="red",lwd=2)
-abline(v=regdata[[n]]$beta[1],col="blue",lwd=2)
-hist(out1$betadraw[n,2,begin:R],breaks=30,main="beta2 with Z",xlab=" ",ylab=" ")
-abline(v=hhbetamean1[n,2],col="red",lwd=2)
-abline(v=regdata[[n]]$beta[2],col="blue",lwd=2)
-hist(out1$betadraw[n,3,begin:R],breaks=30,main="beta3 with Z",xlab=" ",ylab=" ")
-abline(v=hhbetamean1[n,3],col="red",lwd=2)
-abline(v=regdata[[n]]$beta[3],col="blue",lwd=2)
+plot(out1$betadraw)
+plot(out1$nmix)
+plot(out1$Deltadraw)
 }
 
-
-betahist(10)	## plot betas for 10th regression, using regdata
-betahist(20)
-betahist(30)
-
-## plot univariate marginal density of betas
-
-grid=NULL
-for (i in 1:nvar){
-  rgi=range(betas[,i])
-  gr=seq(from=rgi[1],to=rgi[2],length.out=50)
-  grid=cbind(grid,gr)
-}
-
-tmden=mixDen(grid,tpvec,tcomps)
-pmden=eMixMargDen(grid,as.matrix(out1$probdraw[begin:R,]),out1$compdraw[begin:R])
-
-par(mfrow=c(1,3))
-
-for (i in 1:nvar){
-plot(range(grid[,i]),c(0,1.1*max(tmden[,i],pmden[,i])),type="n",xlab="",ylab="density")
-lines(grid[,i],tmden[,i],col="blue",lwd=2)
-lines(grid[,i],pmden[,i],col="red",lwd=2)
-}
-
-
-# plot bivariate marginal density of betas
-
-end=R
-rx1=range(betas[,1])
-rx2=range(betas[,2])
-rx3=range(betas[,3])
-x1=seq(from=rx1[1],to=rx1[2],length.out=50)
-x2=seq(from=rx2[1],to=rx2[2],length.out=50)
-x3=seq(from=rx3[1],to=rx3[2],length.out=50)
-den12=matrix(0,ncol=length(x1),nrow=length(x2))
-den23=matrix(0,ncol=length(x2),nrow=length(x3))
-den13=matrix(0,ncol=length(x1),nrow=length(x3))
-
-for(ind in as.integer(seq(from=begin,to=end,length.out=100))){
-den12=den12+mixDenBi(1,2,x1,x2,as.matrix(out1$probdraw[ind,]),out1$compdraw[[ind]])
-den23=den23+mixDenBi(2,3,x2,x3,as.matrix(out1$probdraw[ind,]),out1$compdraw[[ind]])
-den13=den13+mixDenBi(1,3,x1,x3,as.matrix(out1$probdraw[ind,]),out1$compdraw[[ind]])
-}
-
-tden12=matrix(0,ncol=length(x1),nrow=length(x2))
-tden23=matrix(0,ncol=length(x2),nrow=length(x3))
-tden13=matrix(0,ncol=length(x1),nrow=length(x3))
-tden12=mixDenBi(1,2,x1,x2,tpvec,tcomps)
-tden23=mixDenBi(2,3,x2,x3,tpvec,tcomps)
-tden13=mixDenBi(1,3,x1,x3,tpvec,tcomps)
-
-par(mfrow=c(2,3))
-image(x1,x2,tden12,col=terrain.colors(100),xlab="",ylab="")
-contour(x1,x2,tden12,add=TRUE,drawlabels=FALSE)
-title("True vars 1&2")
-image(x2,x3,tden23,col=terrain.colors(100),xlab="",ylab="")
-contour(x2,x3,tden23,add=TRUE,drawlabels=FALSE)
-title("True vars 2&3")
-image(x1,x3,tden13,col=terrain.colors(100),xlab="",ylab="")
-contour(x1,x3,tden13,add=TRUE,drawlabels=FALSE)
-title("True vars 1&3")
-image(x1,x2,den12,col=terrain.colors(100),xlab="",ylab="")
-contour(x1,x2,den12,add=TRUE,drawlabels=FALSE)
-title("Posterior vars 1&2")
-image(x2,x3,den23,col=terrain.colors(100),xlab="",ylab="")
-contour(x2,x3,den23,add=TRUE,drawlabels=FALSE)
-title("Posterior vars 2&3")
-image(x1,x3,den13,col=terrain.colors(100),xlab="",ylab="")
-contour(x1,x3,den13,add=TRUE,drawlabels=FALSE)
-title("Posterior vars 1&3")
-}
 }
 \keyword{ regression }

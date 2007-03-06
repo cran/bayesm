@@ -81,18 +81,20 @@ y2=X2\%*\%beta2+E[,2]
 regdata=NULL
 regdata[[1]]=list(y=y1,X=X1)
 regdata[[2]]=list(y=y2,X=X2)
-Mcmc=list(R=R)
-out=rsurGibbs(Data=list(regdata=regdata),Mcmc=Mcmc)
-##
-## summarize GS output
-if(R < 100) {begin=1} else {begin=100}
-end=Mcmc$R
-cat(" betadraws ",fill=TRUE)
-mat=apply(out$betadraw[begin:end,],2,quantile,probs=c(.01,.05,.5,.95,.99))
-mat=rbind(c(beta1,beta2),mat); rownames(mat)[1]="beta"; print(mat)
-cat(" Sigmadraws ",fill=TRUE)
-mat=apply(out$Sigmadraw[begin:end,],2,quantile,probs=c(.01,.05,.5,.95,.99))
-mat=rbind(as.vector(Sigma),mat); rownames(mat)[1]="sigma"; print(mat)
+
+Mcmc1=list(R=R)
+
+out=rsurGibbs(Data=list(regdata=regdata),Mcmc=Mcmc1)
+
+cat("Summary of beta draws",fill=TRUE)
+summary(out$betadraw,tvalues=c(beta1,beta2))
+cat("Summary of Sigmadraws",fill=TRUE)
+summary(out$Sigmadraw,tvalues=as.vector(Sigma[upper.tri(Sigma,diag=TRUE)]))
+
+if(0){
+plot(out$betadraw,tvalues=c(beta1,beta2))
+}
+
 }
 
 \keyword{ regression}

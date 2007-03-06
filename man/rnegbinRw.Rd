@@ -93,23 +93,21 @@ simnegbindata = NULL
 beta = c(0.6,0.2)
 X = cbind(rep(1,nobs),rnorm(nobs,mean=2,sd=0.5))
 simnegbindata = list(y=simnegbin(X,beta,alpha), X=X, beta=beta)
-Data = simnegbindata
-betabar = rep(0,nvar)
-A = 0.01 * diag(nvar)
-a = 0.5; b = 0.1
-Prior = list(betabar=betabar, A=A, a=a, b=b)
 
-keep =1
-s_beta=2.93/sqrt(nvar); s_alpha=2.93
-Mcmc = list(R=R, keep = keep, s_beta=s_beta, s_alpha=s_alpha)
-out = rnegbinRw(Data, Prior, Mcmc)
+Data1 = simnegbindata
+Mcmc1 = list(R=R)
 
-cat(" betadraws ",fill=TRUE)
-mat=apply(out$betadraw,2,quantile,probs=c(.01,.05,.5,.95,.99))
-mat=rbind(beta,mat); rownames(mat)[1]="beta"; print(mat)
-cat(" alphadraws ",fill=TRUE)
-mat=apply(matrix(out$alphadraw),2,quantile,probs=c(.01,.05,.5,.95,.99))
-mat=rbind(as.vector(alpha),mat); rownames(mat)[1]="alpha"; print(mat)    
+out = rnegbinRw(Data=Data1,Mcmc=Mcmc1)
+
+cat("Summary of alpha/beta draw",fill=TRUE)
+summary(out$alphadraw,tvalues=alpha)
+summary(out$betadraw,tvalues=beta)
+
+if(0){
+## plotting examples
+plot(out$betadraw)
+}
+
 }
 
 \keyword{ models }

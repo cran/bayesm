@@ -7,6 +7,7 @@ function(Data,Prior,Mcmc)
 #   add check to see if Mubar is a vector  9/05
 #   fixed bug in saving comps draw comps[[mkeep]]=  9/05
 #   fixed so that ncomp can be =1; added check that nobs >= 2*ncomp   12/06
+#   3/07 added classes
 #
 # purpose: do Gibbs sampling inference for a mixture of multivariate normals
 #
@@ -164,5 +165,8 @@ for(rep in 1:R)
 }
 ctime = proc.time()[3]
 cat('  Total Time Elapsed: ',round((ctime-itime)/60,2),'\n')
-return(list(probdraw=pdraw,zdraw=zdraw,compdraw=compdraw))
+
+nmix=list(probdraw=pdraw,zdraw=zdraw,compdraw=compdraw)
+attributes(nmix)$class="bayesm.nmix"
+return(nmix)
 }

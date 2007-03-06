@@ -46,9 +46,8 @@ print(mat)
 ##
 ## example of processing for use with rhierNegbinRw
 ##
-if(nchar(Sys.getenv("LONG_TEST")) != 0)
+if(0)
 {
-
 data(detailing)
 counts = detailing$counts
 Z = detailing$demo
@@ -100,14 +99,19 @@ ndraws = length(out$alphadraw)
 for (i in 1:nreg) { Mbeta[i,] = rowSums(out$Betadraw[i, , ])/ndraws }
 
 cat(" Deltadraws ",fill=TRUE)
-mat=apply(out$Deltadraw,2,quantile,probs=c(.01,.05,.5,.95,.99))
-print(mat)
+summary(out$Deltadraw)
 cat(" Vbetadraws ",fill=TRUE)
-mat=apply(out$Vbetadraw,2,quantile,probs=c(.01,.05,.5,.95,.99))
-print(mat)
+summary(out$Vbetadraw)
 cat(" alphadraws ",fill=TRUE)
-mat=apply(matrix(out$alphadraw),2,quantile,probs=c(.01,.05,.5,.95,.99))
-print(mat)
+summary(out$alphadraw)
+
+if(0){
+## plotting examples
+plot(out$betadraw)
+plot(out$alphadraw)
+plot(out$Deltadraw)
 }
+}
+
 }
 \keyword{datasets}

@@ -81,23 +81,39 @@ Sigma=matrix(c(1,.5,.5,.5,1,.5,.5,.5,1),ncol=3)
 k=length(beta)
 I2=diag(rep(1,p)); xadd=rbind(I2)
 for(i in 2:n) { xadd=rbind(xadd,I2)}; X=xadd
+
+simmvp= function(X,p,n,beta,sigma) {
+  w=as.vector(crossprod(chol(sigma),matrix(rnorm(p*n),ncol=n)))+ X\%*\%beta
+  y=ifelse(w<0,0,1)
+  return(list(y=y,X=X,beta=beta,sigma=sigma))
+}
+
 simout=simmvp(X,p,500,beta,Sigma)
 
-Data=list(p=p,y=simout$y,X=simout$X)
-Mcmc=list(R=R,keep=1)
-out=rmvpGibbs(Data=Data,Mcmc=Mcmc)
+Data1=list(p=p,y=simout$y,X=simout$X)
+Mcmc1=list(R=R,keep=1)
+out=rmvpGibbs(Data=Data1,Mcmc=Mcmc1)
 
 ind=seq(from=0,by=p,length=k)
 inda=1:3
 ind=ind+inda
 cat(" Betadraws ",fill=TRUE)
-mat=apply(out$betadraw/sqrt(out$sigmadraw[,ind]),2,quantile,probs=c(.01,.05,.5,.95,.99))
-mat=rbind(beta,mat); rownames(mat)[1]="beta"; print(mat)
+betatilde=out$betadraw/sqrt(out$sigmadraw[,ind])
+attributes(betatilde)$class="bayesm.mat"
+summary(betatilde,tvalues=beta/sqrt(diag(Sigma)))
+
 rdraw=matrix(double((R)*p*p),ncol=p*p)
 rdraw=t(apply(out$sigmadraw,1,nmat))
+attributes(rdraw)$class="bayesm.var"
+tvalue=nmat(as.vector(Sigma))
+dim(tvalue)=c(p,p)
+tvalue=as.vector(tvalue[upper.tri(tvalue,diag=TRUE)])
 cat(" Draws of Correlation Matrix ",fill=TRUE)
-mat=apply(rdraw,2,quantile,probs=c(.01,.05,.5,.95,.99))
-mat=rbind(as.vector(Sigma),mat); rownames(mat)[1]="Sigma"; print(mat)
+summary(rdraw,tvalues=tvalue)
+
+if(0){
+plot(betatilde,tvalues=beta/sqrt(diag(Sigma)))
+}
 
 }
 \keyword{ models }

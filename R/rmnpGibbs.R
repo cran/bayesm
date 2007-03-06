@@ -3,7 +3,8 @@ function(Data,Prior,Mcmc)
 {
 #
 # Revision History:
-#   modified by rossi 12/18/04 to include error checking`
+#   modified by rossi 12/18/04 to include error checking
+#   3/07 added classes
 #
 # purpose:  Gibbs MNP model with full covariance matrix
 #
@@ -94,6 +95,8 @@ cat("Starting Gibbs Sampler for MNP",fill=TRUE)
 cat("  ",n," obs; ",p," choice alternatives; ",k," indep vars (including intercepts)",fill=TRUE)
 cat("  ",R," reps; keeping every ",keep,"th draw",fill=TRUE)
 cat(" ",fill=TRUE)
+cat("Table of y values",fill=TRUE)
+print(table(y))
 cat("Prior Parms:",fill=TRUE)
 cat("betabar",fill=TRUE)
 print(betabar)
@@ -192,6 +195,12 @@ for (rep in 1:R)
    wold=wnew
    betaold=betanew
    }
+ctime = proc.time()[3]
+cat('  Total Time Elapsed: ',round((ctime-itime)/60,2),'\n')
 
+attributes(betadraw)$class=c("bayesm.mat","mcmc")
+attributes(betadraw)$mcpar=c(1,R,keep)
+attributes(sigmadraw)$class=c("bayesm.var","bayesm.mat","mcmc")
+attributes(sigmadraw)$mcpar=c(1,R,keep)
 list(betadraw=betadraw,sigmadraw=sigmadraw)
 }
