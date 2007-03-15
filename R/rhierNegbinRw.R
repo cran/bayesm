@@ -51,7 +51,11 @@ function(par,X,y, nvar) {
 # Computes the log-likelihood
     beta = par[1:nvar]
     alpha = exp(par[nvar+1])+1.0e-50
-    ll = sum(log(dnbinom(y,size=alpha,mu=exp(X%*%beta))))
+    mean=exp(X%*%beta)
+    prob=alpha/(alpha+mean)
+    prob=ifelse(prob<1.0e-100,1.0e-100,prob)
+     out=.Internal(dnbinom(y,alpha,prob,TRUE))
+     return(sum(out))
 }
 
 llnegbinFract = 

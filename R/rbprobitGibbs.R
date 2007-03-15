@@ -5,6 +5,7 @@ function(Data,Prior,Mcmc)
 # revision history:
 #   p. rossi 1/05
 #   3/07 added validity check of values of y and classes
+#   3/07 fixed error with betabar supplied
 #
 # purpose: 
 #   draw from posterior for binary probit using Gibbs Sampler
@@ -79,7 +80,7 @@ if(missing(Prior))
 else
    {
     if(is.null(Prior$betabar)) {betabar=c(rep(0,nvar))} 
-       else {Deltabar=Prior$Deltabar}
+       else {betabar=Prior$betabar}
     if(is.null(Prior$A)) {A=.01*diag(nvar)} 
        else {A=Prior$A}
    }

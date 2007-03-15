@@ -37,7 +37,7 @@ plot.bayesm.nmix=function(x,names,burnin=trunc(.1*nrow(probdraw)),Grid,bi.sel,ns
 
   if(missing(names)) {names=as.character(1:nx)}
   for(index in 1:nx){
-        if(index == 2) par(ask=dev.interactive)
+        if(index == 2) par(ask=dev.interactive())
         plot(range(Grid[,index]),c(0,1.1*max(mden[,index])),type="n",xlab="",ylab="density")
         title(names[index])
         lines(Grid[,index],mden[,index],col="black",lwd=1.5)

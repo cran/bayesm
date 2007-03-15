@@ -46,7 +46,7 @@ rordprobitGibbs(Data, Prior, Mcmc)
 \value{
   \item{betadraw }{R/keep x k matrix of betadraws}
   \item{cutdraw }{R/keep x (k-1) matrix of cutdraws}
-  \item{dstardraws }{R/keep x (k-2) matrix of dstardraws}
+  \item{dstardraw }{R/keep x (k-2) matrix of dstardraws}
   \item{accept }{a value of acceptance rate in RW Metropolis}
 }
 \note{ 

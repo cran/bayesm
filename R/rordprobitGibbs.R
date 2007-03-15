@@ -4,6 +4,7 @@ rordprobitGibbs=
 #
 # revision history:
 #   3/07  Hsiu-Wen Liu
+#   3/07  fixed naming of dstardraw rossi
 #    
 # purpose: 
 #   draw from posterior for ordered probit using Gibbs Sampler
@@ -210,9 +211,8 @@ cat(" ",fill=TRUE)
 
 betadraw=matrix(double(floor(R/keep)*nvar),ncol=nvar)
 cutdraw=matrix(double(floor(R/keep)*ncuts),ncol=ncuts)
-dstardraws=matrix(double(floor(R/keep)*ndstar),ncol=ndstar)
+dstardraw=matrix(double(floor(R/keep)*ndstar),ncol=ndstar)
 staydraw=array(0,dim=c(R/keep))
-dstardraw=c(rep(0,ndstar))
 
 sigma=c(rep(1,nrow(X)))
 root=chol(chol2inv(chol((crossprod(X,X)+A))))
@@ -263,14 +263,14 @@ for (rep in 1:R)
 
 #    print time to completion and draw # every 100th draw
 
-  if(rep%%1000 == 0)
+  if(rep%%100 == 0)
     {ctime=proc.time()[3]
     timetoend=((ctime-itime)/rep)*(R-rep)
     cat(" ",rep," (",round(timetoend/60,1),")",fill=TRUE)
     fsh()}
 
   if(rep%%keep == 0) 
-    {mkeep=rep/keep; cutdraw[mkeep,]=cutoffs; dstardraws[mkeep,]=olddstar;betadraw[mkeep,]=beta;staydraw[mkeep]=stay }
+    {mkeep=rep/keep; cutdraw[mkeep,]=cutoffs; dstardraw[mkeep,]=olddstar;betadraw[mkeep,]=beta;staydraw[mkeep]=stay }
                 
 }
     accept=1-sum(staydraw)/(R/keep)
@@ -284,7 +284,7 @@ attributes(betadraw)$class="bayesm.mat"
 attributes(dstardraw)$class="bayesm.mat"
 attributes(cutdraw)$mcpar=c(1,R,keep)
 attributes(betadraw)$mcpar=c(1,R,keep)
-attributes(betadraw)$mcpar=c(1,R,keep)
+attributes(dstardraw)$mcpar=c(1,R,keep)
 
-return(list(cutdraw=cutdraw,betadraw=betadraw, dstardraws=dstardraws, accept=accept))
+return(list(cutdraw=cutdraw,betadraw=betadraw, dstardraw=dstardraw, accept=accept))
 }
