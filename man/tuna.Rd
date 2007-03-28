@@ -1,10 +1,11 @@
 \name{tuna}
 \alias{tuna}
 \docType{data}
-\title{Sales Data on Canned Tuna Sales}
+\title{Data on Canned Tuna Sales}
 \description{
   Volume of canned tuna sales as well as a measure of display activity, log price and log wholesale price.  
-  Weekly data aggregated to the chain level.
+  Weekly data aggregated to the chain level.  This data is extracted from the Dominick's Finer Foods database
+  maintained by the University of Chicago \url{http://http://research.chicagogsb.edu/marketing/databases/dominicks/dataset.aspx}.
   Brands are seven of the top 10 UPCs in the canned tuna product category.
 }
 \usage{data(tuna)}

@@ -3,7 +3,8 @@ plot.bayesm.nmix=function(x,names,burnin=trunc(.1*nrow(probdraw)),Grid,bi.sel,ns
 # S3 method to plot normal mixture marginal and bivariate densities
 #     nmixlist is a list of 3 components, nmixlist[[1]]: array of mix comp prob draws,
 #     mmixlist[[2]] is not used, nmixlist[[3]] is list of draws of components
-#     P. Rossi 2/08
+#     P. Rossi 2/07
+#     P. Rossi 3/07 fixed problem with dropping dimensions on probdraw (if ncomp=1)
 #
   nmixlist=x
   if(mode(nmixlist) != "list") stop(" Argument must be a list \n")
@@ -15,10 +16,11 @@ plot.bayesm.nmix=function(x,names,burnin=trunc(.1*nrow(probdraw)),Grid,bi.sel,ns
   R=nrow(probdraw)
   if(R < 100) {cat(" fewer than 100 draws submitted \n"); return(invisible())}
   datad=length(compdraw[[1]][[1]]$mu)
+  OneDimData=(datad==1)
   if(missing(bi.sel)) bi.sel=list(c(1,2))  # default to the first pair of variables
   ind=as.integer(seq(from=(burnin+1),to=R,length.out=max(200,trunc(.05*R))))
   if(missing(Grid)){
-     out=momMix(probdraw[ind,],compdraw[ind])
+     out=momMix(probdraw[ind,,drop=FALSE],compdraw[ind])
      mu=out$mu
      sd=out$sd
      Grid=matrix(0,nrow=50,ncol=datad)
@@ -27,7 +29,7 @@ plot.bayesm.nmix=function(x,names,burnin=trunc(.1*nrow(probdraw)),Grid,bi.sel,ns
   #
   #  plot posterior mean of marginal densities
   #
-  mden=eMixMargDen(Grid,probdraw[ind,],compdraw[ind])
+  mden=eMixMargDen(Grid,probdraw[ind,,drop=FALSE],compdraw[ind])
   nx=datad
   if(nx==1) par(mfrow=c(1,1)) 
   if(nx==2) par(mfrow=c(2,1))
@@ -46,6 +48,7 @@ plot.bayesm.nmix=function(x,names,burnin=trunc(.1*nrow(probdraw)),Grid,bi.sel,ns
   #
   # now plot bivariates in list bi.sel
   #
+  if(!OneDimData){
   par(ask=dev.interactive())
   nsel=length(bi.sel)
   ngrid=50
@@ -60,7 +63,7 @@ plot.bayesm.nmix=function(x,names,burnin=trunc(.1*nrow(probdraw)),Grid,bi.sel,ns
       xj=seq(from=rxj[1],to=rxj[2],length.out=ngrid)
       lstxixj[[sel]]=list(xi,xj)
       for(elt in ind){
-         den[sel,,]=den[sel,,]+mixDenBi(i,j,xi,xj,probdraw[elt,],compdraw[[elt]])
+         den[sel,,]=den[sel,,]+mixDenBi(i,j,xi,xj,probdraw[elt,,drop=FALSE],compdraw[[elt]])
       }
    }     
   nx=nsel
@@ -73,6 +76,7 @@ plot.bayesm.nmix=function(x,names,burnin=trunc(.1*nrow(probdraw)),Grid,bi.sel,ns
         ylabtxt=paste("Var ",bi.sel[[index]][2],sep="")
         image(xi,xj,den[index,,],col=terrain.colors(100),xlab=xlabtxt,ylab=ylabtxt)
         contour(xi,xj,den[index,,],add=TRUE,drawlabels=FALSE)
+  }
   }
 
   invisible()

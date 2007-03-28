@@ -27,7 +27,7 @@ summary.bayesm.mat=function(object,names,burnin=trunc(.1*nrow(X)),tvalues,QUANTI
   rownames(mat)[2]="std dev"
   rownames(mat)[3]="num se"
   rownames(mat)[4]="rel eff"
-  rownames(mat)[5]="s size"
+  rownames(mat)[5]="sam size"
   if(!missing(tvalues))
     {if(mode(tvalues)!="numeric") stop("true values arguments must be numeric \n")
      if(length(tvalues) != nx) stop("true values argument is wrong length \n")
