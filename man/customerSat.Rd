@@ -23,7 +23,6 @@
     \item{\code{q10}}{Distribution to Right Geographic Areas}
   }
 }
-}
 \source{
   Rossi et al (2001), "Overcoming Scale Usage Heterogeneity,"
   \emph{JASA} 96, 20-31.

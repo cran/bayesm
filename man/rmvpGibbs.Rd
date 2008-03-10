@@ -11,7 +11,6 @@
   \code{rmvpGibbs} implements the Edwards/Allenby Gibbs Sampler for the multivariate probit model.
 }
   
-}
 \usage{
 rmvpGibbs(Data, Prior, Mcmc)
 }

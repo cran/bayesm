@@ -43,7 +43,7 @@ rivDP(Data, Prior, Mcmc)
   These parameters are collected together in the list \code{lambda}.  It is highly
        recommended that you use the default settings for these hyper-parameters.\cr
 
-  \eqn{alpha} \eqn{\sim}{~} \eqn{(1-(alpha-alpha_{min})/(alpha_{max}-alpha{min}))^{omega}} \cr
+  \eqn{alpha} \eqn{\sim}{~} \eqn{(1-(alpha-alpha_{min})/(alpha_{max}-alpha{min}))^{power}} \cr
    where \eqn{alpha_{min}} and \eqn{alpha_{max}} are set using the arguments in the reference
    below.  It is highly recommended that you use the default values for the hyperparameters
    of the prior on alpha
@@ -65,6 +65,16 @@ rivDP(Data, Prior, Mcmc)
     \item{\code{SCALE}}{ scale data, def: TRUE}
     \item{\code{gridsize}}{ gridsize parm for alpha draws (def: 20)} 
   }
+
+  output includes object \code{nmix} of class "bayesm.nmix" which contains draws of predictive distribution of 
+  errors (a Bayesian analogue of a density estimate for the error terms).\cr
+  nmix:\cr
+  \itemize{
+    \item{\code{probdraw}}{ not used}
+    \item{\code{zdraw}}{ not used}
+    \item{\code{compdraw}}{ list R/keep of draws from bivariate predictive for the errors}
+  }
+  note: in compdraw list, there is only one component per draw
 }
 \value{
   a list containing:
@@ -73,7 +83,7 @@ rivDP(Data, Prior, Mcmc)
   \item{gammadraw}{R/keep x dim(gamma) array of gamma draws }
   \item{Istardraw}{R/keep x 1 array of drawsi of the number of unique normal components}
   \item{alphadraw}{R/keep x 1 array of draws of Dirichlet Process tightness parameter}
-  \item{densitymix}{R/keep x list of draws for predictive distribution of errors}
+  \item{nmix}{R/keep x list of draws for predictive distribution of errors}
 }
 \references{ For further discussion, see "A Semi-Parametric Bayesian Approach to the Instrumental
   Variable Problem," by Conley, Hansen, McCulloch and Rossi, Journal of Econometrics (2008).\cr
@@ -140,7 +150,7 @@ summary(out$betadraw,tvalues=tbeta)
 if(0){
 ## plotting examples
 plot(out$betadraw,tvalues=tbeta)
-plot(out$densitymix)  ## plot "fitted" density of the errors
+plot(out$nmix)  ## plot "fitted" density of the errors
 ##
 
 }

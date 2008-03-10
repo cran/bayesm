@@ -8,9 +8,9 @@
 \title{ Density Estimation with Dirichlet Process Prior and Normal Base }
 \description{
     \code{rDPGibbs} implements a Gibbs Sampler to draw from the posterior for a normal mixture problem
-    with a Dirichlet Process prior.  The base distribution is a multivariate normal distribution. A natural 
-    conjugate base prior is used with priors on the hyper parameters of this distribution. One interpretation
-    of this model is as a normal mixture with a random number of components. 
+    with a Dirichlet Process prior.  A natural conjugate base prior is used along with priors on the hyper 
+    parameters of this distribution. One interpretation
+    of this model is as a normal mixture with a random number of components that can grow with the sample size. 
 }
 
 \usage{
@@ -31,62 +31,61 @@ Model: \cr
 Priors:\cr
         \eqn{theta_i=(mu_i,Sigma_i)} \eqn{\sim}{~} \eqn{DP(G_0(lambda),alpha)}\cr
         \eqn{G_0(lambda):}\cr
-        \eqn{mu_i given Sigma_i} \eqn{\sim}{~} \eqn{N(0,Sigma_i (x) a^{-1})}\cr
+        \eqn{mu_i | Sigma_i} \eqn{\sim}{~} \eqn{N(0,Sigma_i (x) a^{-1})}\cr
         \eqn{Sigma_i} \eqn{\sim}{~} \eqn{IW(nu,nu*v*I)}
         
         \eqn{lambda(a,nu,v):}\cr
-        \eqn{a} \eqn{sim}{~} \eqn{uniform on grid[alim[1],alimb[2]]}\cr
-        \eqn{nu} \eqn{sim}{~} \eqn{uniform on grid[dim(data)-1 + exp(nulim[1]),dim(data)-1 +exp(nulim[2])]}\cr
-        \eqn{v} \eqn{sim}{~} \eqn{uniform on grid[vlim[1],vlim[2]]}
+        \eqn{a} \eqn{\sim}{~} uniform on grid[alim[1],alimb[2]]\cr
+        \eqn{nu} \eqn{\sim}{~} uniform on grid[dim(data)-1 + exp(nulim[1]),dim(data)-1 +exp(nulim[2])]\cr
+        \eqn{v} \eqn{\sim}{~} uniform on grid[vlim[1],vlim[2]]
        
-        \eqn{alpha} \eqn{sim}{~} \eqn{(1-(alpha-alphamin)/(alphamax-alphamin))^power} \cr
-        alpha= alphamin then expected number of compoents = Istarmin \cr
-        alpha= alphamax then expected number of compoents = Istarmax \cr
+        \eqn{alpha} \eqn{\sim}{~} \eqn{(1-(alpha-alphamin)/(alphamax-alphamin))^power} \cr
+        alpha= alphamin then expected number of components = Istarmin \cr
+        alpha= alphamax then expected number of components = Istarmax \cr
 
 list arguments
 
 Data:\cr
   \itemize{
-    \item{y}{N x k matrix of observations on k dimensional data}
+    \item{\code{y}}{N x k matrix of observations on k dimensional data}
   }
 
 Prioralpha:\cr
  \itemize{
-  \item{Istarmin}{expected number of components at lower bound of support of alpha}
-  \item{Istarmax}{expected number of components at upper bound of support of alpha}
-  \item{power}{power parameter for alpha prior}
+  \item{\code{Istarmin}}{expected number of components at lower bound of support of alpha}
+  \item{\code{Istarmax}}{expected number of components at upper bound of support of alpha}
+  \item{\code{power}}{power parameter for alpha prior}
   }
  
 lambda\_hyper:\cr
   \itemize{
-   \item{alim}{defines support of a distribution,def:c(.01,10) }
-   \item{nulim}{defines support of nu distribution, def:c(.01,3)} 
-   \item{vlim}{defines support of v distribution, def:c(.1,4)} 
+   \item{\code{alim}}{defines support of a distribution,def:c(.01,10) }
+   \item{\code{nulim}}{defines support of nu distribution, def:c(.01,3)} 
+   \item{\code{vlim}}{defines support of v distribution, def:c(.1,4)} 
   }
 Mcmc:\cr
  \itemize{
-   \item{R}{number of mcmc draws}
-   \item{keep}{thinning parm, keep every keepth draw}
-   \item{maxuniq}{storage constraint on the number of unique components}
-   \item{SCALE}{should data be scaled by mean,std deviation before posterior draws, def: TRUE}
-   \item{gridsize}{number of discrete points for hyperparameter priors,def: 20}
+   \item{\code{R}}{number of mcmc draws}
+   \item{\code{keep}}{thinning parm, keep every keepth draw}
+   \item{\code{maxuniq}}{storage constraint on the number of unique components}
+   \item{\code{SCALE}}{should data be scaled by mean,std deviation before posterior draws, def: TRUE}
+   \item{\code{gridsize}}{number of discrete points for hyperparameter priors,def: 20}
   }
 
 output:\cr
-
 the basic output are draws from the predictive distribution of the data in the object, \code{nmix}. 
 The average of these draws is the Bayesian analogue of a density estimate.
 
 nmix:\cr
   \itemize{
-   \item{probdraw}{R/keep x 1 matrix of 1s}
-   \item{zdraw}{R/keep x N matrix of draws of indicators of which component each obs is assigned to}
-   \item{compdraw}{R/keep list of draws of normals}
+   \item{\code{probdraw}}{R/keep x 1 matrix of 1s}
+   \item{\code{zdraw}}{R/keep x N matrix of draws of indicators of which component each obs is assigned to}
+   \item{\code{compdraw}}{R/keep list of draws of normals}
   }
   Output of the components is in the form of a list of lists. \cr
   compdraw[[i]] is ith draw -- list of lists. \cr
-  compdraw[[i]][[1]] is list of parms for normal component. \cr
-  compdraw[[i]][1]][[1]] is the mean vector.
+  compdraw[[i]][[1]] is list of parms for a draw from predictive. \cr
+  compdraw[[i]][1]][[1]] is the mean vector. compdraw[[i]][[1]][[2]] is the inverse of Cholesky root.
   \eqn{Sigma} = t(R)\%*\%R, \eqn{R^{-1}} = compdraw[[i]][[1]][[2]].
 }
 
@@ -131,9 +130,9 @@ nmix:\cr
           \code{\link{eMixMargDen}}, \code{\link{momMix}}, \code{\link{mixDen}}, \code{\link{mixDenBi}}}
 
 \examples{
-## simulate univariate data from Chi-Sq
-
 if(nchar(Sys.getenv("LONG_TEST")) != 0) {R=2000} else {R=10}
+
+## simulate univariate data from Chi-Sq
 
 set.seed(66)
 N=200
@@ -143,7 +142,7 @@ chisqdf=8; y1=as.matrix(rchisq(N,df=chisqdf))
 
 Data1=list(y=y1)
 Prioralpha=list(Istarmin=1,Istarmax=10,power=.8)
-Prior1=list(alpha=1,Prioralpha=Prioralpha)
+Prior1=list(Prioralpha=Prioralpha)
 
 Mcmc=list(R=R,keep=1,maxuniq=200)
 
@@ -181,8 +180,7 @@ y2=banana(A=A,B=B,C1=C1,C2=C2,1000)
 
 Data2=list(y=y2)
 Prioralpha=list(Istarmin=1,Istarmax=10,power=.8)
-Prior2=list(alpha=1,Prioralpha=Prioralpha)
-R=2000
+Prior2=list(Prioralpha=Prioralpha)
 Mcmc=list(R=R,keep=1,maxuniq=200)
 
 out2=rDPGibbs(Prior=Prior2,Data=Data2,Mcmc)

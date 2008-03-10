@@ -667,12 +667,12 @@ if(SCALE){
 ctime = proc.time()[3]
 cat('  Total Time Elapsed: ',round((ctime-itime)/60,2),'\n')
 
-densitymix=list(matrix(c(rep(1,length(thetaNp1draw))),ncol=1),list("gunk"),thetaNp1draw)
+nmix=list(probdraw=matrix(c(rep(1,length(thetaNp1draw))),ncol=1),zdraw=NULL,compdraw=thetaNp1draw)
 #
 # densitymix is in the format to be used with the generic mixture of normals plotting
 # methods (plot.bayesm.nmix)
 #
-attributes(densitymix)$class=c("bayesm.nmix")
+attributes(nmix)$class=c("bayesm.nmix")
 
 attributes(deltadraw)$class=c("bayesm.mat","mcmc")
 attributes(deltadraw)$mcpar=c(1,R,keep)
@@ -688,10 +688,10 @@ if(isgamma){
 
 if(isgamma) 
    { return(list(deltadraw=deltadraw,betadraw=betadraw,alphadraw=alphadraw,Istardraw=Istardraw,
-                 gammadraw=gammadraw,densitymix=densitymix))}
+                 gammadraw=gammadraw,nmix=nmix))}
    else
    { return(list(deltadraw=deltadraw,betadraw=betadraw,alphadraw=alphadraw,Istardraw=Istardraw,
-                 densitymix=densitymix))}
+                 nmix=nmix))}
 }
 
 

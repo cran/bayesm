@@ -9,7 +9,6 @@
 \usage{
 fsh()
 }
-}
 \value{
   No value is returned.
 }

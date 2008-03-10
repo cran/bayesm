@@ -1,6 +1,6 @@
 Package: bayesm
-Version: 2.2-0
-Date: 2008-03-28
+Version: 2.2-1
+Date: 2008-03-10
 Title:Bayesian Inference for Marketing/Micro-econometrics 
 Author: Peter Rossi <peter.rossi@ChicagoGsb.edu>, 
         Rob McCulloch <robert.mcculloch@ChicagoGsb.edu>.
@@ -16,7 +16,7 @@ Description: bayesm covers many important models used
   Multivariate Probit,
   Negative Binomial (Poisson) Regression,
   Multivariate Mixtures of Normals (including clustering),
-  Dirichlet Process Prior Density Estimation with normal base
+  Dirichlet Process Prior Density Estimation with normal base,
   Hierarchical Linear Models with normal prior and covariates,
   Hierarchical Linear Models with a mixture of normals prior and covariates,
   Hierarchical Multinomial Logits with a mixture of normals prior
@@ -31,4 +31,4 @@ Description: bayesm covers many important models used
   Marketing by Rossi, Allenby and McCulloch. 
 License: GPL (version 2 or later)
 URL: http://faculty.chicagogsb.edu/peter.rossi/research/bsm.html
-Packaged: Fri Mar  7 11:04:01 2008; per
+Packaged: Mon Mar 10 13:57:35 2008; per
