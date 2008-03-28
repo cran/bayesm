@@ -109,7 +109,7 @@ if(0){
 ##
 ## plotting examples
 ##
-plot(out)
+plot(out,Data=dm$x)
 }
  
 }

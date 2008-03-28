@@ -6,6 +6,7 @@ function(Data, Prior, Mcmc) {
 #         P. Rossi 6/05
 #         fixed error with nobs not specified and changed llnegbinFract 9/05
 #         3/07 added classes
+#         3/08 fixed fractional likelihood
 #
 #   Model
 #       (y_i|lambda_i,alpha) ~ Negative Binomial(Mean = lambda_i, Overdispersion par = alpha)
@@ -37,7 +38,7 @@ function(Data, Prior, Mcmc) {
 #           keep is thinning parameter (def = 1)
 #           s_beta - scaling parameter for beta RW (def = 2.93/sqrt(nvar))
 #           s_alpha - scaling parameter for alpha RW (def = 2.93)
-#           c - fractional weighting parameter (def = 2)
+#           w - fractional weighting parameter (def = .1)
 #           Vbeta0, Delta0 - initial guesses for parameters, if not supplied default values are used
 #
 
@@ -59,11 +60,10 @@ function(par,X,y, nvar) {
 }
 
 llnegbinFract = 
-function(par,X,y,Xpooled, ypooled, power, nvar,lnalpha)  {
+function(par,X,y,Xpooled, ypooled, w,wgt, nvar,lnalpha)  {
 # Computes the fractional log-likelihood at the unit level
-#    = l_i * l_bar^power
     theta = c(par,lnalpha)
-    llnegbin(theta,X,y,nvar) + power*llnegbin(theta,Xpooled,ypooled, nvar) 
+    (1-w)*llnegbin(theta,X,y,nvar) + w*wgt*llnegbin(theta,Xpooled,ypooled, nvar) 
 }
 
 lpostbetai = 
@@ -165,12 +165,12 @@ if(sum(dim(Vbeta0) == c(nvar,nvar)) !=2) pandterm("Vbeta0 is not of dimension nv
 if(is.null(Mcmc$Delta0)) {Delta0=matrix(rep(0,nz*nvar),nrow=nz)} else {Delta0=Mcmc$Delta0}
 if(sum(dim(Delta0) == c(nz,nvar)) !=2) pandterm("Delta0 is not of dimension nvar by nz")
 if(is.null(Mcmc$keep)) {keep=1} else {keep=Mcmc$keep}
-if(is.null(Mcmc$s_alpha)) {cat("Using default s_alpha = 2.93",fill=TRUE); s_alpha=2.93} 
+if(is.null(Mcmc$s_alpha)) { s_alpha=2.93} 
     else {s_alpha= Mcmc$s_alpha }
-if(is.null(Mcmc$s_beta)) {cat("Using default s_beta = 2.93/sqrt(nvar)",fill=TRUE); s_beta=2.93/sqrt(nvar)} 
+if(is.null(Mcmc$s_beta)) { s_beta=2.93/sqrt(nvar)} 
     else {s_beta=Mcmc$s_beta }
-if(is.null(Mcmc$c)) {cat("Using default c = 2"); c=2} 
-    else {c = Mcmc$c}
+if(is.null(Mcmc$w)) { w=.1} 
+    else {w = Mcmc$w}
 
 #out = rhierNegbinRw(Data, Prior, Mcmc)
 # print out problem
@@ -198,7 +198,7 @@ cat("MCMC Parameters:",fill=TRUE)
 cat(R," reps; keeping every ",keep,"th draw",fill=TRUE)
 cat("s_alpha = ",s_alpha,fill=TRUE)
 cat("s_beta = ",s_beta,fill=TRUE)
-cat("Fractional Scaling c = ",c,fill=TRUE)
+cat("Fractional Likelihood Weight Parameter = ",w,fill=TRUE)
 cat(" ",fill=TRUE)
 
 par = rep(0,(nvar+1))
@@ -222,16 +222,21 @@ alphacroot = sqrt(alphacvar)
 #fsh()
 
 hess_i=NULL
+if(nobs > 1000){
+  sind=sample(c(1:nobs),size=1000)
+  ypooleds=ypooled[sind]
+  Xpooleds=Xpooled[sind,]
+  }
 # Find the individual candidate hessian
 for (i in 1:nreg) {
-    power = length(regdata[[i]]$y)/(c*nobs)
-    mle2 = optim(mle$par[1:nvar],llnegbinFract, X=regdata[[i]]$X, y=regdata[[i]]$y, Xpooled=Xpooled, 
-           ypooled=ypooled, power=power, nvar=nvar, lnalpha=mle$par[nvar+1], 
+    wgt = length(regdata[[i]]$y)/length(ypooleds)
+    mle2 = optim(mle$par[1:nvar],llnegbinFract, X=regdata[[i]]$X, y=regdata[[i]]$y, Xpooled=Xpooleds, 
+           ypooled=ypooleds, w=w,wgt=wgt, nvar=nvar, lnalpha=mle$par[nvar+1], 
            method="BFGS", hessian=TRUE, control=list(fnscale=-1, trace=0))
     if (mle2$convergence==0)
         hess_i[[i]] = list(hess=-mle2$hessian)
     else
-        hess_i[[i]] = diag(rep(0,nvar))
+        hess_i[[i]] = diag(rep(1,nvar))
    if(i%%50 ==0) cat("  completed unit #",i,fill=TRUE)	
    fsh()
 }

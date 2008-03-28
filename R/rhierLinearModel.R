@@ -56,7 +56,10 @@ function(Data,Prior,Mcmc)
 #------------------------------------------------------------------------------
 append=function(l) { l=c(l,list(XpX=crossprod(l$X),Xpy=crossprod(l$X,l$y)))}
 #
-getvar=function(l) { var(l$y)}
+getvar=function(l) { 
+     v=var(l$y)
+     if(is.na(v)) return(1)
+     if(v>0) return (v) else return (1)}
 #
 runiregG=
 function(y,X,XpX,Xpy,sigmasq,A,betabar,nu,ssq){
@@ -105,7 +108,7 @@ if(missing(Data)) {pandterm("Requires Data argument -- list of regdata and Z")}
     regdata=Data$regdata
 nreg=length(regdata)
 if(is.null(Data$Z)) { cat("Z not specified -- putting in iota",fill=TRUE); fsh() ; Z=matrix(rep(1,nreg),ncol=1)}
-  else {if (nrow(Data$Z) != nreg) {pandterm(paste("Nrow(Z) ",nrow(Z),"ne number regressions ",nlgt))}
+  else {if (nrow(Data$Z) != nreg) {pandterm(paste("Nrow(Z) ",nrow(Z),"ne number regressions ",nreg))}
       else {Z=Data$Z}}
 nz=ncol(Z)
 #

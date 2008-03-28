@@ -10,15 +10,20 @@
     are produced.
 }
 \usage{
-\method{plot}{bayesm.nmix}(x,names,burnin,Grid,bi.sel,nstd, ...)
+\method{plot}{bayesm.nmix}(x,names,burnin,Grid,bi.sel,nstd,marg,Data,ngrid,ndraw, ...)
 }
 \arguments{
-  \item{x}{ An object of either S3 class, bayesm.nmix, or S3 class, mcmc }
+  \item{x}{ An object of  S3 class bayesm.nmix }
   \item{names}{optional character vector of names for each of the dimensions}
   \item{burnin}{number of draws to discard for burn-in, def: .1*nrow(X)}
-  \item{Grid}{matrix of grid points for densities, def: mean +/- nstd std deviations}
+  \item{Grid}{matrix of grid points for densities, def: mean +/- nstd std deviations (if Data no supplied), 
+               range of Data if supplied)}
   \item{bi.sel}{list of vectors, each giving pairs for bivariate distributions, def: list(c(1,2))}
   \item{nstd}{number of standard deviations for default Grid, def: 2}
+  \item{marg}{logical, if TRUE display marginals, def: TRUE}
+  \item{Data}{matrix of data points, used to paint histograms on marginals and for grid  }
+  \item{ngrid}{number of grid points for density estimates, def:50}
+  \item{ndraw}{number of draws to average Mcmc estimates over, def:200}
   \item{...}{ standard graphics parameters }
 }
 \details{
@@ -33,13 +38,14 @@
 \author{ Peter Rossi, Graduate School of Business, University of Chicago,
   \email{Peter.Rossi@ChicagoGsb.edu}.
 }
-\seealso{ \code{\link{rnmixGibbs}}, \code{\link{rhierMnlRwMixture}}, \code{\link{rhierLinearMixture}}}
+\seealso{ \code{\link{rnmixGibbs}}, \code{\link{rhierMnlRwMixture}}, \code{\link{rhierLinearMixture}},
+           \code{\link{rDPGibbs}}}
 \examples{
 ##
 ## not run
-#  out=rnmix(Data,Prior,Mcmc)
+#  out=rnmixGibbs(Data,Prior,Mcmc)
 #  plot(out,bi.sel=list(c(1,2),c(3,4),c(1,3)))
-#        plot bivariate distributions for dimension 1,2; 3,4; and 1,3
+#        # plot bivariate distributions for dimension 1,2; 3,4; and 1,3
 #
 
 }

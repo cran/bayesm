@@ -25,9 +25,9 @@ for(i in (burnin+1):R){
 cat("\nNormal Mixture Moments\n Mean\n")
 attributes(mumat)$class="bayesm.mat"
 attributes(sigmat)$class="bayesm.var"
-summary(mumat,names,QUANTILES=FALSE,TRAILER=FALSE)
+summary(mumat,names,burnin=burnin,QUANTILES=FALSE,TRAILER=FALSE)
 cat(" \n")
-summary(sigmat)
+summary(sigmat,burnin=burnin)
 cat("note: 1st and 2nd Moments for a Normal Mixture \n")
 cat("      may not be interpretable, consider plots\n")
 invisible()

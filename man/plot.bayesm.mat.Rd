@@ -9,7 +9,7 @@
    array correspond to parameters and the rows to MCMC draws.
 }
 \usage{
-\method{plot}{bayesm.mat}(x,names,burnin,tvalues,TRACEPLOT,DEN,INT, ...)
+\method{plot}{bayesm.mat}(x,names,burnin,tvalues,TRACEPLOT,DEN,INT,CHECK_NDRAWS, ...)
 }
 \arguments{
   \item{x}{ An object of either S3 class, bayesm.mat, or S3 class, mcmc }
@@ -19,6 +19,7 @@
   \item{TRACEPLOT}{ logical, TRUE provide sequence plots of draws and acfs, def: TRUE }
   \item{DEN}{ logical, TRUE use density scale on histograms, def: TRUE }
   \item{INT}{ logical, TRUE put various intervals and points on graph, def: TRUE }
+  \item{CHECK_NDRAWS}{ logical, TRUE check that there are at least 100 draws, def: TRUE }
   \item{...}{ standard graphics parameters }
 }
 \details{

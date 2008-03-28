@@ -1,4 +1,5 @@
-plot.bayesm.mat=function(x,names,burnin=trunc(.1*nrow(X)),tvalues,TRACEPLOT=TRUE,DEN=TRUE,INT=TRUE,...){
+plot.bayesm.mat=function(x,names,burnin=trunc(.1*nrow(X)),tvalues,TRACEPLOT=TRUE,DEN=TRUE,INT=TRUE,
+      CHECK_NDRAWS=TRUE,...){
 #
 #  S3 method to print matrices of draws the object X is of class "bayesm.mat"
 #
@@ -11,7 +12,7 @@ plot.bayesm.mat=function(x,names,burnin=trunc(.1*nrow(X)),tvalues,TRACEPLOT=TRUE
   on.exit(par(op))
   if(is.null(attributes(X)$dim)) X=as.matrix(X)
   nx=ncol(X)
-  if(nrow(X) < 100) {cat("fewer than 100 draws submitted \n"); return(invisible())}
+  if(nrow(X) < 100 & CHECK_NDRAWS) {cat("fewer than 100 draws submitted \n"); return(invisible())}
   if(!missing(tvalues)){ 
         if(mode(tvalues) !="numeric") {stop("tvalues must be a numeric vector \n")} 
       else 

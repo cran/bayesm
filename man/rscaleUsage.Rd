@@ -67,7 +67,7 @@ rscaleUsage(Data,Prior, Mcmc)
 
 \examples{
 ##
-if(nchar(Sys.getenv("LONG_TEST")) != 0) {R=1000} else {R=5} 
+if(nchar(Sys.getenv("LONG_TEST")) != 0) {R=1000} else {R=1} 
 {
 data(customerSat)
 surveydat = list(k=10,x=as.matrix(customerSat))

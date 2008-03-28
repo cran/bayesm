@@ -57,7 +57,10 @@ function(Data,Prior,Mcmc)
 #
 append=function(l) { l=c(l,list(XpX=crossprod(l$X),Xpy=crossprod(l$X,l$y)))}
 #
-getvar=function(l) { var(l$y)}
+getvar=function(l) { 
+     v=var(l$y)
+     if(is.na(v)) return(1)
+     if(v>0) return (v) else return (1)}
 #
 runiregG=
 function(y,X,XpX,Xpy,sigmasq,rooti,betabar,nu,ssq){

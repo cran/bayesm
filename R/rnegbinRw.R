@@ -75,6 +75,7 @@ if(is.null(Data$y)) {pandterm("Requires Data element y")} else {y=Data$y}
 nvar = ncol(X)
 
 if (length(y) != nrow(X)) {pandterm("Mismatch in the number of observations in X and y")}
+nobs=length(y)
 
 #
 # check for prior elements

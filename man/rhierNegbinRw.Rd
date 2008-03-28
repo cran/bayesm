@@ -103,9 +103,9 @@ nz=2              # Number of Z variables
 # Construct the Z matrix
 Z = cbind(rep(1,nreg),rnorm(nreg,mean=1,sd=0.125))
 
-Delta = cbind(c(0.4,0.2), c(0.1,0.05))
+Delta = cbind(c(4,2), c(0.1,-1))
 alpha = 5
-Vbeta = rbind(c(0.1,0),c(0,0.1))
+Vbeta = rbind(c(2,1),c(1,2))
 
 # Construct the regdata (containing X)
 simnegbindata = NULL

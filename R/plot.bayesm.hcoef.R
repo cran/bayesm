@@ -38,6 +38,6 @@ plot.bayesm.hcoef=function(x,burnin=trunc(.1*R),...){
   names=as.character(1:nvar)
   attributes(pmeans)$class="bayesm.mat"
   for(i in 1:nvar) names[i]=paste("Posterior Means of Coef ",i,sep="")
-  plot(pmeans,names,TRACEPLOT=FALSE,INT=FALSE,DEN=FALSE,...)
+  plot(pmeans,names,TRACEPLOT=FALSE,INT=FALSE,DEN=FALSE,CHECK_NDRAWS=FALSE,...)
 invisible()
 }
