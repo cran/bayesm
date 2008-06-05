@@ -59,7 +59,7 @@ Prioralpha:\cr
  
 lambda\_hyper:\cr
   \itemize{
-   \item{\code{alim}}{defines support of a distribution,def:c(.01,10) }
+   \item{\code{alim}}{defines support of a distribution,def:c(.01,2) }
    \item{\code{nulim}}{defines support of nu distribution, def:c(.01,3)} 
    \item{\code{vlim}}{defines support of v distribution, def:c(.1,4)} 
   }

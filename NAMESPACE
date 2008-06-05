@@ -8,7 +8,8 @@ rmvpGibbs,rhierLinearModel,rhierMnlRwMixture,rivGibbs,
 rmnlIndepMetrop,rscaleUsage,ghkvec,condMom,logMargDenNR,
 rhierBinLogit,rnegbinRw,rhierNegbinRw,rbiNormGibbs,clusterMix,rsurGibbs,
 mixDenBi,mnpProb,rhierLinearMixture,summary.bayesm.mat,plot.bayesm.mat,
-plot.bayesm.hcoef,plot.bayesm.nmix,rordprobitGibbs,rivGibbs,rivDP,rDPGibbs)
+plot.bayesm.hcoef,plot.bayesm.nmix,rordprobitGibbs,rivGibbs,rivDP,rDPGibbs,
+rhierMnlDP)
 
 
 ## register S3 methods
