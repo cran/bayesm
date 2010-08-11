@@ -34,11 +34,11 @@ createX(p, na, nd, Xa, Xd, INT = TRUE, DIFF = FALSE, base = p)
 
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
   by Rossi, Allenby and McCulloch. \cr
-  \url{http://faculty.chicagogsb.edu/peter.rossi/research/bsm.html}
+  \url{http://www.perossi.org/home/bsm-1}
 }
 
-\author{ Peter Rossi, Graduate School of Business, University of Chicago,
-  \email{Peter.Rossi@ChicagoGsb.edu}.
+\author{ Peter Rossi, Anderson School, UCLA,
+  \email{perossichi@gmail.com}.
 }
 
 \seealso{ \code{\link{rmnlIndepMetrop}}, \code{\link{rmnpGibbs}} }

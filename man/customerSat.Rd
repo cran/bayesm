@@ -29,7 +29,7 @@
 }
 \references{
   Case Study 3, \emph{Bayesian Statistics and Marketing} by Rossi et al.\cr 
-  \url{http://faculty.chicagogsb.edu/peter.rossi/research/bsm.html}
+  \url{http://www.perossi.org/home/bsm-1*}
 }
 \examples{
 data(customerSat)

@@ -13,8 +13,8 @@ fsh()
   No value is returned.
 }
 
-\author{ Peter Rossi, Graduate School of Business, University of Chicago, 
-  \email{Peter.Rossi@ChicagoGsb.edu}.
+\author{ Peter Rossi, Anderson School, UCLA, 
+  \email{perossichi@gmail.com}.
 }
 
 \keyword{ utilities }

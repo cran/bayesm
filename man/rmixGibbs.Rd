@@ -29,11 +29,11 @@ rmixGibbs(y, Bbar, A, nu, V, a, p, z, comps)
 }
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
   by Allenby, McCulloch, and Rossi, Chapter 5. \cr
-  \url{http://faculty.chicagogsb.edu/peter.rossi/research/bsm.html}
+  \url{http://www.perossi.org/home/bsm-1}
 }
 
-\author{ Rob McCulloch and Peter Rossi, Graduate School of Business, University of Chicago,
-  \email{Peter.Rossi@ChicagoGsb.edu}.
+\author{ Rob McCulloch and Peter Rossi, Anderson School, UCLA,
+  \email{perossichi@gmail.com}.
 }
 
 \section{Warning}{

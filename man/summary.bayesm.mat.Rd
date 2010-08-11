@@ -26,8 +26,8 @@
   \code{summary.bayesm.mat} is also exported for direct use as a standard function, as in 
         \code{summary.bayesm.mat(matrix)}.
 }
-\author{ Peter Rossi, Graduate School of Business, University of Chicago,
-  \email{Peter.Rossi@ChicagoGsb.edu}.
+\author{ Peter Rossi, Anderson School, UCLA,
+  \email{perossichi@gmail.com}.
 }
 \seealso{ \code{\link{summary.bayesm.var}}, \code{\link{summary.bayesm.nmix}}}
 \examples{

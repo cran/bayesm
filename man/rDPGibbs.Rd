@@ -59,7 +59,7 @@ Prioralpha:\cr
  
 lambda\_hyper:\cr
   \itemize{
-   \item{\code{alim}}{defines support of a distribution,def:c(.01,2) }
+   \item{\code{alim}}{defines support of a distribution,def:c(.01,10) }
    \item{\code{nulim}}{defines support of nu distribution, def:c(.01,3)} 
    \item{\code{vlim}}{defines support of v distribution, def:c(.1,4)} 
   }
@@ -122,8 +122,8 @@ nmix:\cr
  \item{vdraw}{vector of draws of base prior hyperparameter}
 }
 
-\author{ Peter Rossi, Graduate School of Business, University of Chicago,
-  \email{Peter.Rossi@ChicagoGsb.edu}.
+\author{ Peter Rossi, Anderson School, UCLA,
+  \email{perossichi@gmail.com}.
 }
 
 \seealso{ \code{\link{rnmixGibbs}},\code{\link{rmixture}}, \code{\link{rmixGibbs}} ,

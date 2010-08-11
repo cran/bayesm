@@ -1,35 +1,32 @@
 Package: bayesm
-Version: 2.2-2
-Date: 2008-06-05
-Title:Bayesian Inference for Marketing/Micro-econometrics 
-Author: Peter Rossi <peter.rossi@ChicagoGsb.edu>, 
-        Rob McCulloch <robert.mcculloch@ChicagoGsb.edu>.
-Maintainer: Peter Rossi <peter.rossi@chicagosb.edu>
+Version: 2.2-3
+Date: 2010-08-11
+Title: Bayesian Inference for Marketing/Micro-econometrics
+Author: Peter Rossi <perossi@gmail.com>.
+Maintainer: Peter Rossi <perossichi@gmail.com>
 Depends: R (>= 2.5.1)
-Description: bayesm covers many important models used
-  in marketing and micro-econometrics applications. 
-  The package includes:
-  Bayes Regression (univariate or multivariate dep var),
-  Bayes Seemingly Unrelated Regression (SUR),
-  Binary and Ordinal Probit,
-  Multinomial Logit (MNL) and Multinomial Probit (MNP),
-  Multivariate Probit,
-  Negative Binomial (Poisson) Regression,
-  Multivariate Mixtures of Normals (including clustering),
-  Dirichlet Process Prior Density Estimation with normal base,
-  Hierarchical Linear Models with normal prior and covariates,
-  Hierarchical Linear Models with a mixture of normals prior and covariates,
-  Hierarchical Multinomial Logits with a mixture of normals prior
-     and covariates,
-  Hierarchical Multinomial Logits with a Dirichlet Process prior and covariates,
-  Hierarchical Negative Binomial Regression Models,
-  Bayesian analysis of choice-based conjoint data,
-  Bayesian treatment of linear instrumental variables models,
-  and
-  Analyis of Multivariate Ordinal survey data with scale
-     usage heterogeneity (as in Rossi et al, JASA (01)).
-  For further reference, consult our book, Bayesian Statistics and
-  Marketing by Rossi, Allenby and McCulloch. 
-License: GPL (version 2 or later)
-URL: http://faculty.chicagogsb.edu/peter.rossi/research/bsm.html
-Packaged: Mon Jun  9 08:59:32 2008; hornik
+Description: bayesm covers many important models used in marketing and
+        micro-econometrics applications. The package includes: Bayes
+        Regression (univariate or multivariate dep var), Bayes
+        Seemingly Unrelated Regression (SUR), Binary and Ordinal
+        Probit, Multinomial Logit (MNL) and Multinomial Probit (MNP),
+        Multivariate Probit, Negative Binomial (Poisson) Regression,
+        Multivariate Mixtures of Normals (including clustering),
+        Dirichlet Process Prior Density Estimation with normal base,
+        Hierarchical Linear Models with normal prior and covariates,
+        Hierarchical Linear Models with a mixture of normals prior and
+        covariates, Hierarchical Multinomial Logits with a mixture of
+        normals prior and covariates, Hierarchical Multinomial Logits
+        with a Dirichlet Process prior and covariates, Hierarchical
+        Negative Binomial Regression Models, Bayesian analysis of
+        choice-based conjoint data, Bayesian treatment of linear
+        instrumental variables models, and Analysis of Multivariate
+        Ordinal survey data with scale usage heterogeneity (as in Rossi
+        et al, JASA (01)). For further reference, consult our book,
+        Bayesian Statistics and Marketing by Rossi, Allenby and
+        McCulloch.
+License: GPL (>= 2)
+URL: http://www.perossi.org/home/bsm-1
+Packaged: 2010-08-11 19:29:22 UTC; perossichi
+Repository: CRAN
+Date/Publication: 2010-08-11 20:01:11

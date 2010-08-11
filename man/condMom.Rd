@@ -30,11 +30,11 @@ condMom(x, mu, sigi, i)
 }
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
   by Rossi, Allenby and McCulloch. \cr
-  \url{http://faculty.chicagogsb.edu/peter.rossi/research/bsm.html}
+  \url{http://www.perossi.org/home/bsm-1}
 }
 
-\author{ Peter Rossi, Graduate School of Business, University of Chicago,
-  \email{Peter.Rossi@ChicagoGsb.edu}.
+\author{ Peter Rossi, Anderson School, UCLA,
+  \email{perossichi@gmail.com}.
 }
 
 \section{Warning}{

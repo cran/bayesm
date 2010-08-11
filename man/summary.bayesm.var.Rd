@@ -27,8 +27,8 @@
   \cr
   The posterior mean of the vector of standard deviations and the correlation matrix are also displayed
 }
-\author{ Peter Rossi, Graduate School of Business, University of Chicago,
-  \email{Peter.Rossi@ChicagoGsb.edu}.
+\author{ Peter Rossi, Anderson School, UCLA,
+  \email{perossichi@gmail.com}.
 }
 \seealso{ \code{\link{summary.bayesm.mat}}, \code{\link{summary.bayesm.nmix}}}
 \examples{

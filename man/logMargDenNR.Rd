@@ -22,10 +22,10 @@ logMargDenNR(ll)
 }
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
   by Rossi, Allenby and McCulloch, Chapter 6. \cr
-  \url{http://faculty.chicagogsb.edu/peter.rossi/research/bsm.html}
+  \url{http://www.perossi.org/home/bsm-1l}
 }
-\author{ Peter Rossi, Graduate School of Business, University of Chicago,
-  \email{Peter.Rossi@ChicagoGsb.edu}.
+\author{ Peter Rossi, Anderson School, UCLA,
+  \email{perossichi@gmail.com}.
 }
 \section{Warning}{
   This routine is a utility routine that does \strong{not} check the

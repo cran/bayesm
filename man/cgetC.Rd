@@ -28,7 +28,7 @@ cgetC(e, k)
 }
 
 \author{ Rob McCulloch and Peter Rossi, Graduate School of Business, University of Chicago.
-  \email{Peter.Rossi@ChicagoGsb.edu}.
+  \email{perossichi@gmail.com}.
 }
 
 \seealso{ \code{\link{rscaleUsage}} }

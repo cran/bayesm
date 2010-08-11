@@ -69,25 +69,27 @@ rhierLinearMixture(Data, Prior, Mcmc)
 \note{
   More on \code{probdraw} component of nmix return value list: \cr
   this is an R/keep by ncomp array of draws of mixture component probs (pvec)\cr
-  More on \code{compdraw} component of nmix return value list: \cr
-  \item{compdraw[[i]]}{ the ith draw of components for mixtures}
-  \item{compdraw[[i]][[j]]}{ ith draw of the jth normal mixture comp}
-  \item{compdraw[[i]][[j]][[1]]}{ ith draw of jth normal mixture comp mean vector}
-  \item{compdraw[[i]][[j]][[2]]}{ ith draw of jth normal mixture cov parm (rooti) }
+  More on \code{compdraw} component of nmix return value list: 
+  \describe{
+  \item{compdraw[[i]]}{the ith draw of components for mixtures}
+  \item{compdraw[[i]][[j]]}{ith draw of the jth normal mixture comp}
+  \item{compdraw[[i]][[j]][[1]]}{ith draw of jth normal mixture comp mean vector}
+  \item{compdraw[[i]][[j]][[2]]}{ith draw of jth normal mixture cov parm (rooti)}
+  }
 
   Note: Z should \strong{not} include an intercept and should be centered for ease of interpretation.\cr
   
-  Be careful in assessing prior parameter, Amu.  .01 can be too small for some applications. See 
+  Be careful in assessing the prior parameter, Amu.  .01 can be too small for some applications. See 
   Rossi et al, chapter 5 for full discussion.\cr
 
 } 
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
   by Rossi, Allenby and McCulloch, Chapter 3. \cr
-  \url{http://faculty.chicagogsb.edu/peter.rossi/research/bsm.html}
+  \url{http://www.perossi.org/home/bsm-1}
 }
 
-\author{ Peter Rossi, Graduate School of Business, University of Chicago,
-  \email{Peter.Rossi@ChicagoGsb.edu}.
+\author{ Peter Rossi, Anderson School, UCLA,
+  \email{perossichi@gmail.com}.
 }
 \seealso{ \code{\link{rhierLinearModel}} }
 \examples{

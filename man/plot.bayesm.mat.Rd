@@ -38,8 +38,8 @@
   \code{plot.bayesm.mat} is also exported for use as a standard function, as in
       \code{plot.bayesm.mat(matrix)}
 }
-\author{ Peter Rossi, Graduate School of Business, University of Chicago,
-  \email{Peter.Rossi@ChicagoGsb.edu}.
+\author{ Peter Rossi, Anderson School, UCLA,
+  \email{perossichi@gmail.com}.
 }
 \examples{
 ##

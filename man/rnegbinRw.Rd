@@ -61,11 +61,11 @@ rnegbinRw(Data, Prior, Mcmc)
 
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
   by Rossi, Allenby, McCulloch. \cr
-  \url{http://faculty.chicagogsb.edu/peter.rossi/research/bsm.html}
+  \url{http://www.perossi.org/home/bsm-1}
 }
 
-\author{ Sridhar Narayanam & Peter Rossi, Graduate School of Business, University of Chicago,
-  \email{Peter.Rossi@ChicagoGsb.edu}.
+\author{ Sridhar Narayanam & Peter Rossi, Anderson School, UCLA,
+  \email{perossichi@gmail.com}.
 }
 
 \examples{

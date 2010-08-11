@@ -8,6 +8,7 @@ function(Data,Prior,Mcmc)
 #   fixed bug in saving comps draw comps[[mkeep]]=  9/05
 #   fixed so that ncomp can be =1; added check that nobs >= 2*ncomp   12/06
 #   3/07 added classes
+#   added log-likelihood  9/08
 #
 # purpose: do Gibbs sampling inference for a mixture of multivariate normals
 #
@@ -42,6 +43,21 @@ function(Data,Prior,Mcmc)
 #  check arguments
 #
 pandterm=function(message) {stop(message,call.=FALSE)}
+#
+# -----------------------------------------------------------------------------------------
+llnmix=function(Y,z,comps){
+#
+# evaluate likelihood for mixture of normals
+#
+zu=unique(z)
+ll=0.0
+for(i in 1:length(zu)){
+    Ysel=Y[z==zu[i],,drop=FALSE]
+    ll=ll+sum(apply(Ysel,1,lndMvn,mu=comps[[zu[i]]]$mu,rooti=comps[[zu[i]]]$rooti))
+}
+return(ll)
+}
+# -----------------------------------------------------------------------------------------
 if(missing(Data)) {pandterm("Requires Data argument -- list of y")}
     if(is.null(Data$y)) {pandterm("Requires Data element y")}
     y=Data$y
@@ -88,15 +104,20 @@ if(ncol(V) != nrow(V) || ncol(V) != dimy)
    {pandterm(paste("bad dimensions for V",dim(V)))}
 if(length(a) != ncomp)
    {pandterm(paste("a wrong length, length= ",length(a)))}
+bada=FALSE
+for(i in 1:ncomp){if(a[i] < 0) bada=TRUE}
+if(bada) pandterm("invalid values in a vector")
 #
 # check MCMC argument
 #
+
 if(missing(Mcmc)) {pandterm("requires Mcmc argument")}
 else
    {
     if(is.null(Mcmc$R)) 
        {pandterm("requires Mcmc element R")} else {R=Mcmc$R}
     if(is.null(Mcmc$keep)) {keep=1} else {keep=Mcmc$keep}
+    if(is.null(Mcmc$LogLike)) {LogLike=FALSE} else {LogLike=Mcmc$LogLike}
    }
 
 #
@@ -117,12 +138,13 @@ print(V)
 cat("  Dirichlet parameters ",fill=TRUE)
 print(a)
 cat(" ",fill=TRUE)
-cat(" Mcmc Parms: R= ",R," keep= ",keep,fill=TRUE)
+cat(" Mcmc Parms: R= ",R," keep= ",keep," LogLike= ",LogLike,fill=TRUE)
 
 pdraw=matrix(double(floor(R/keep)*ncomp),ncol=ncomp)
 zdraw=matrix(double(floor(R/keep)*nobs),ncol=nobs)
 compdraw=list()
 compsd=list()
+if(LogLike) ll=double(floor(R/keep))
 
 #
 # set initial values of z
@@ -161,6 +183,7 @@ for(rep in 1:R)
       pdraw[mkeep,]=p
       zdraw[mkeep,]=z
       compdraw[[mkeep]]=compsd
+      if(LogLike) ll[mkeep]=llnmix(y,z,compsd)
       }
 }
 ctime = proc.time()[3]
@@ -168,5 +191,8 @@ cat('  Total Time Elapsed: ',round((ctime-itime)/60,2),'\n')
 
 nmix=list(probdraw=pdraw,zdraw=zdraw,compdraw=compdraw)
 attributes(nmix)$class="bayesm.nmix"
-return(nmix)
+if(LogLike) 
+	{return(list(ll=ll,nmix=nmix))}
+else
+	{return(list(nmix=nmix))}
 }

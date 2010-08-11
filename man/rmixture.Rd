@@ -25,8 +25,8 @@ rmixture(n, pvec, comps)
   \item{z}{ A n x 1 vector of indicators of which component each draw is taken from }
 }
 
-\author{ Peter Rossi, Graduate School of Business, University of Chicago,
-  \email{Peter.Rossi@ChicagoGsb.edu}.
+\author{ Peter Rossi, Anderson School, UCLA,
+  \email{perossichi@gmail.com}.
 }
 
 \section{Warning}{

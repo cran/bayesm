@@ -15,7 +15,7 @@ rnmixGibbs(Data, Prior, Mcmc)
 \arguments{
   \item{Data}{ list(y) }
   \item{Prior}{ list(Mubar,A,nu,V,a,ncomp) (only ncomp required)}
-  \item{Mcmc}{ list(R,keep) (R required) }
+  \item{Mcmc}{ list(R,keep,Loglike) (R required) }
 }
 \details{
   Model: \cr
@@ -46,17 +46,21 @@ rnmixGibbs(Data, Prior, Mcmc)
     \item{ncomp}{ number of normal components to be included }
     \item{R}{ number of MCMC draws }
     \item{keep}{ MCMC thinning parm: keep every keepth draw (def: 1)}
+    \item{LogLike}{ logical flag for compute log-likelihood (def: FALSE)}
   }
 }
 \value{
-  \item{nmix} {a list containing: probdraw,zdraw,compdraw}
+  \item{nmix}{a list containing: probdraw,zdraw,compdraw}
+  \item{ll}{vector of log-likelihood values}
 }
 
 \note{
   more details on contents of nmix: \cr
+  \describe{
   \item{probdraw}{R/keep x ncomp array of mixture prob draws}
   \item{zdraw}{R/keep x nobs array of indicators of mixture comp identity for each obs}
   \item{compdraw}{R/keep lists of lists of comp parm draws}
+  }
 
   In this model, the component normal parameters are not-identified due to label-switching.
   However, the fitted mixture of normals density is identified as it is invariant to label-switching. 
@@ -66,11 +70,11 @@ rnmixGibbs(Data, Prior, Mcmc)
 
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
   by Rossi, Allenby and McCulloch, Chapter 3. \cr
-  \url{http://faculty.chicagogsb.edu/peter.rossi/research/bsm.html}
+  \url{http://www.perossi.org/home/bsm-1}
 }
 
-\author{ Peter Rossi, Graduate School of Business, University of Chicago,
-  \email{Peter.Rossi@ChicagoGsb.edu}.
+\author{ Peter Rossi, Anderson School, UCLA,
+  \email{perossichi@gmail.com}.
 }
 
 \seealso{ \code{\link{rmixture}}, \code{\link{rmixGibbs}} ,\code{\link{eMixMargDen}}, \code{\link{momMix}},
@@ -109,7 +113,7 @@ if(0){
 ##
 ## plotting examples
 ##
-plot(out,Data=dm$x)
+plot(out$nmix,Data=dm$x)
 }
  
 }

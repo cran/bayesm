@@ -50,11 +50,11 @@ rsurGibbs(Data, Prior, Mcmc)
 }
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
   by Rossi, Allenby and McCulloch, Chapter 3. \cr
-  \url{http://faculty.chicagogsb.edu/peter.rossi/research/bsm.html}
+  \url{http://www.perossi.org/home/bsm-1}
 }
 
-\author{ Peter Rossi, Graduate School of Business, University of Chicago,
-  \email{Peter.Rossi@ChicagoGsb.edu}.
+\author{ Peter Rossi, Anderson School, UCLA,
+  \email{perossichi@gmail.com}.
 }
 
 \seealso{ \code{\link{rmultireg}} }
@@ -73,7 +73,7 @@ X1=cbind(iota,runif(nobs))
 X2=cbind(iota,runif(nobs),runif(nobs))
 Sigma=matrix(c(.5,.2,.2,.5),ncol=2)
 U=chol(Sigma)
-E=matrix(rnorm(2*nobs),ncol=2)%*%U
+E=matrix(rnorm(2*nobs),ncol=2)\%*\%U
 y1=X1\%*\%beta1+E[,1]
 y2=X2\%*\%beta2+E[,2]
 ##

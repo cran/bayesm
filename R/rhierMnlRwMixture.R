@@ -8,6 +8,7 @@ function(Data,Prior,Mcmc)
 #   added loglike output, changed to reflect new argument order in llmnl, mnlHess 9/05
 #   changed weighting scheme to (1-w)logl_i + w*Lbar (normalized) 12/05
 #   3/07 added classes
+#   9/08 changed Dirichlet a check
 #
 # purpose: run hierarchical mnl logit model with mixture of normals 
 #   using RW and cov(RW inc) = (hess_i + Vbeta^-1)^-1
@@ -127,7 +128,7 @@ if(is.null(Prior$deltabar)& drawdelta) {deltabar=rep(0,nz*nvar)} else {deltabar=
 if(is.null(Prior$a)) { a=rep(5,ncomp)} else {a=Prior$a}
 if(length(a) != ncomp) {pandterm("Requires dim(a)= ncomp (no of components)")}
 bada=FALSE
-   for(i in 1:ncomp) { if(a[i] < 1) bada=TRUE}
+   for(i in 1:ncomp) { if(a[i] < 0) bada=TRUE}
   if(bada) pandterm("invalid values in a vector")
 #
 # check on Mcmc

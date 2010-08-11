@@ -7,6 +7,7 @@ function(Data,Prior,Mcmc)
 #   in a mixture component
 #   adapted to linear model by Vicky Chen 6/06
 #   put in classes 3/07
+#   changed a check 9/08
 #
 # purpose: run hierarchical linear model with mixture of normals 
 #
@@ -185,7 +186,7 @@ if(is.null(Prior$deltabar)& drawdelta) {deltabar=rep(0,nz*nvar)} else {deltabar=
 if(is.null(Prior$a)) { a=rep(5,ncomp)} else {a=Prior$a}
 if(length(a) != ncomp) {pandterm("Requires dim(a)= ncomp (no of components)")}
 bada=FALSE
-   for(i in 1:ncomp) { if(a[i] < 1) bada=TRUE}
+   for(i in 1:ncomp) { if(a[i] < 0) bada=TRUE}
   if(bada) pandterm("invalid values in a vector")
 #
 # check on Mcmc

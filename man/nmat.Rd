@@ -17,8 +17,8 @@ nmat(vec)
 \value{
   k*k x 1 vector with correlation matrix
 }
-\author{ Peter Rossi, Graduate School of Business, University of Chicago,
-  \email{Peter.Rossi@ChicagoGsb.edu}.
+\author{ Peter Rossi, Anderson School, UCLA,
+  \email{perossichi@gmail.com}.
 }
 
 \section{Warning}{

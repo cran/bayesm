@@ -20,12 +20,14 @@
 }
 \details{
   an object of class "bayesm.nmix" is a list of three components: 
+  \describe{
   \item{probdraw}{ a matrix of R/keep rows by dim of normal mix of mixture prob draws}
   \item{second comp}{ not used}
   \item{compdraw}{ list of list of lists with draws of mixture comp parms}
+  }
 }
-\author{ Peter Rossi, Graduate School of Business, University of Chicago,
-  \email{Peter.Rossi@ChicagoGsb.edu}.
+\author{ Peter Rossi, Anderson School, UCLA,
+  \email{perossichi@gmail.com}.
 }
 \seealso{ \code{\link{summary.bayesm.mat}}, \code{\link{summary.bayesm.var}}}
 \examples{
@@ -35,4 +37,4 @@
 #  summary(out)
 #
 }
-\keyword{  hplot }
+\keyword{  plot }

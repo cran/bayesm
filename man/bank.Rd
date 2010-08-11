@@ -54,7 +54,7 @@
 }
 \references{ Appendix A, \emph{Bayesian Statistics and Marketing}
   by Rossi,Allenby and McCulloch. \cr
-  \url{http://faculty.chicagogsb.edu/peter.rossi/research/bsm.html}
+  \url{http://www.perossi.org/home/bsm-1l}
 }
 \examples{
 data(bank)

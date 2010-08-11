@@ -35,8 +35,8 @@
   \cr
   \code{plot.bayesm.nmix} can also be used as a standard function, as in \code{plot.bayesm.nmix(list)}.
 }
-\author{ Peter Rossi, Graduate School of Business, University of Chicago,
-  \email{Peter.Rossi@ChicagoGsb.edu}.
+\author{ Peter Rossi, Anderson School, UCLA,
+  \email{perossichi@gmail.com}.
 }
 \seealso{ \code{\link{rnmixGibbs}}, \code{\link{rhierMnlRwMixture}}, \code{\link{rhierLinearMixture}},
            \code{\link{rDPGibbs}}}

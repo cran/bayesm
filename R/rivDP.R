@@ -7,6 +7,7 @@ function(Data,Prior,Mcmc)
 #   added draw of alpha 2/06
 #   added automatic scaling 2/06
 #   removed reqfun  7/07 -- now functions are in rthetaDP
+#   fixed initialization of theta 3/09
 #
 # purpose: 
 #   draw from posterior for linear I.V. model with DP process for errors
@@ -144,7 +145,7 @@ else
    {lmxz = lm(x~z,data.frame(x=x,z=z))
     delta = lmxz$coef[2:(ncol(z)+1)]}
 if(!is.null(Mcmc$theta))
-  {theta=Mcmc$delta }
+  {theta=Mcmc$theta }
 else
   {onecomp=list(mu=c(0,0),rooti=diag(2))
    theta=vector("list",length(y))
