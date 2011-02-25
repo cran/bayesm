@@ -6,6 +6,7 @@
 
 /* modified by rossi 7/06 to remove thetaStar argument and copy */
 /* modified by rossi 7/06 to remove theta copy and modify directly */
+/* modified by rossi 8/10 to fix error in allocation of size of newrow */
 
 /* function to make multinomial draws */
 
@@ -77,7 +78,7 @@ SEXP  thetadraw( SEXP y,  SEXP ydenmatO, SEXP indicO, SEXP q0v, SEXP p,
    PROTECT(ydim=GET_DIM(y));
    ncol=INTEGER_POINTER(ydim)[1];
    PROTECT(yrow=NEW_NUMERIC(ncol));
-   PROTECT(newrow=NEW_NUMERIC(ncol));
+   PROTECT(newrow=NEW_NUMERIC(n));
    PROTECT(ydenmat=NEW_NUMERIC(maxuniq*n));
    PROTECT(ydendim=NEW_INTEGER(2));
    INTEGER_POINTER(ydendim)[0]=maxuniq;

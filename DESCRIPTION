@@ -1,10 +1,10 @@
 Package: bayesm
-Version: 2.2-3
-Date: 2010-08-11
+Version: 2.2-4
+Date: 2011-02-25
 Title: Bayesian Inference for Marketing/Micro-econometrics
-Author: Peter Rossi <perossi@gmail.com>.
+Author: Peter Rossi <perossichi@gmail.com>.
 Maintainer: Peter Rossi <perossichi@gmail.com>
-Depends: R (>= 2.5.1)
+Depends: R (>= 2.12.1)
 Description: bayesm covers many important models used in marketing and
         micro-econometrics applications. The package includes: Bayes
         Regression (univariate or multivariate dep var), Bayes
@@ -27,6 +27,6 @@ Description: bayesm covers many important models used in marketing and
         McCulloch.
 License: GPL (>= 2)
 URL: http://www.perossi.org/home/bsm-1
-Packaged: 2010-08-11 19:29:22 UTC; perossichi
+Packaged: 2011-02-26 20:38:56 UTC; perossichi
 Repository: CRAN
-Date/Publication: 2010-08-11 20:01:11
+Date/Publication: 2011-02-27 18:05:01

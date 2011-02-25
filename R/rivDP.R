@@ -72,7 +72,7 @@ if(missing(Data)) {pandterm("Requires Data argument -- list of z,w,x,y")}
 #
 n=length(y)
 if(isgamma)
-   {if(is.matrix(w)) {pandterm("w is not a matrix")}
+   {if(!is.matrix(w)) {pandterm("w is not a matrix")}
    dimg=ncol(w)
    if(n != nrow(w) ) {pandterm("length(y) ne nrow(w)")}}
 
