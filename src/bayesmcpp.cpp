@@ -1,4 +1,5 @@
 // R.McCulloch, 12/04  code for scale usage R function (rScaleUsage)
+//  changed to R error function, P. Rossi 05/12
 #include <iostream>
 #include <algorithm>
 
@@ -30,7 +31,7 @@ void getC(double *ep,int *kp, double *m1p, double *m2p, double *c)
 
    //get a and b
    double det = bq*bq - 4*aq*cq;
-   if(det<0) std::cout << "error: no solution for c's given e and m1, m2" << std::endl;
+   if(det<0) error("no solution for c's given e and m1, m2 \n");
    double b=(-bq+sqrt(det))/(2.0*aq);
    double a=(m1-b*s1-e*s2)/s0;
 

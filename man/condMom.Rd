@@ -14,7 +14,7 @@ condMom(x, mu, sigi, i)
 \arguments{
   \item{x}{ vector of values to condition on - ith element not used }
   \item{mu}{ length(x) mean vector }
-  \item{sigi}{ length(x)-dim covariance matrix }
+  \item{sigi}{ length(x) dim inverse of covariance matrix }
   \item{i}{ conditional distribution of ith element }
 }
 \details{

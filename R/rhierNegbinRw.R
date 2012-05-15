@@ -55,7 +55,7 @@ function(par,X,y, nvar) {
     mean=exp(X%*%beta)
     prob=alpha/(alpha+mean)
     prob=ifelse(prob<1.0e-100,1.0e-100,prob)
-     out=.Internal(dnbinom(y,alpha,prob,TRUE))
+     out=dnbinom(y,size=alpha,prob=prob,log=TRUE)
      return(sum(out))
 }
 

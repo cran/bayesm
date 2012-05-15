@@ -26,14 +26,16 @@ plot.bayesm.nmix=function(x,names,burnin=trunc(.1*nrow(probdraw)),Grid,bi.sel,ns
   if(!missing(Data)){
      if(!is.matrix(Data)) stop("Data argument must be a matrix \n")
      if(ncol(Data)!= datad) stop("Data matrix is of wrong dimension \n")      
-     }
+  }
+  if(mode(bi.sel) != "list") stop("bi.sel must be as list, e.g. bi.sel=list(c(1,2),c(3,4)) \n")
 
   if(missing(Grid)){
      Grid=matrix(0,nrow=ngrid,ncol=datad)
      if(!missing(Data))
 	{for(i in 1:datad) Grid[,i]=c(seq(from=range(Data[,i])[1],to=range(Data[,i])[2],length=ngrid))}
      else
-        {out=momMix(probdraw[ind,,drop=FALSE],compdraw[ind])
+        {
+	     out=momMix(probdraw[ind,,drop=FALSE],compdraw[ind])
          mu=out$mu
          sd=out$sd
          for(i in 1:datad ) Grid[,i]=c(seq(from=(mu[i]-nstd*sd[i]),

@@ -43,6 +43,6 @@ summary.bayesm.mat=function(object,names,burnin=trunc(.1*nrow(X)),tvalues,QUANTI
      cat("\nQuantiles \n")
      print(t(qmat),digits=2)}
   if(TRAILER) cat(paste("   based on ",nrow(X)," valid draws (burn-in=",burnin,") \n",sep=""))
-  invisible()
+  invisible(t(mat))
 }
 

@@ -17,7 +17,7 @@ eMixMargDen(grid, probdraw, compdraw)
 }
 
 \arguments{
-  \item{grid}{  array of grid points, grid[,i] are ordinates for ith component }
+  \item{grid}{  array of grid points, grid[,i] are ordinates for ith dimension of the density }
   \item{probdraw}{ array - each row of which contains a draw of probabilities of mixture comp }
   \item{compdraw}{ list of lists of draws of mixture comp moments }
 }

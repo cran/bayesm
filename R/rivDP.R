@@ -8,6 +8,7 @@ function(Data,Prior,Mcmc)
 #   added automatic scaling 2/06
 #   removed reqfun  7/07 -- now functions are in rthetaDP
 #   fixed initialization of theta 3/09
+#   fixed error in assigning user defined prior parms
 #
 # purpose: 
 #   draw from posterior for linear I.V. model with DP process for errors
@@ -108,7 +109,7 @@ if(missing(Prior))
 else  
    { 
     if(is.null(Prior$md)) md=c(rep(0,dimd)) else md=Prior$md
-    if(is.null(Prior$Ad)) Ad=diag(0.01,dimd) else md=Prior$Ad
+    if(is.null(Prior$Ad)) Ad=diag(0.01,dimd) else Ad=Prior$Ad
     if(isgamma) dimbg=1+dimg else dimbg=1
     if(is.null(Prior$mbg)) mbg=c(rep(0,dimbg)) else md=Prior$mbg
     if(is.null(Prior$Abg)) Abg=diag(0.01,dimbg) else md=Prior$Abg

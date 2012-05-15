@@ -10,10 +10,11 @@
    Arrays are of class bayesm.hcoef with dimensions: cross-sectional unit x coef x MCMC draw. 
 }
 \usage{
-\method{plot}{bayesm.hcoef}(x,burnin,...)
+\method{plot}{bayesm.hcoef}(x,names,burnin,...)
 }
 \arguments{
   \item{x}{ An object of S3 class, bayesm.hcoef }
+  \item{names}{ a list of names for the variables in the hierarchical model}
   \item{burnin}{ no draws to burnin, def: .1*R }
   \item{...}{ standard graphics parameters }
 }

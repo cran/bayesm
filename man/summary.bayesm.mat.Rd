@@ -25,6 +25,9 @@
   \cr
   \code{summary.bayesm.mat} is also exported for direct use as a standard function, as in 
         \code{summary.bayesm.mat(matrix)}.
+   \cr
+   \code{summary.bayesm.mat(matrix)} returns (invisibly) the array of the various summary statistics for further use.  To 
+   assess this array use\code{stats=summary(Drawmat)}.
 }
 \author{ Peter Rossi, Anderson School, UCLA,
   \email{perossichi@gmail.com}.

@@ -36,7 +36,9 @@ createX(p, na, nd, Xa, Xd, INT = TRUE, DIFF = FALSE, base = p)
   by Rossi, Allenby and McCulloch. \cr
   \url{http://www.perossi.org/home/bsm-1}
 }
-
+\note{
+  \code{\link{rmnpGibbs}} assumes that the base alternative is the default.
+}
 \author{ Peter Rossi, Anderson School, UCLA,
   \email{perossichi@gmail.com}.
 }

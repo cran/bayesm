@@ -43,7 +43,7 @@ rhierMnlRwMixture(Data, Prior, Mcmc)
     \item{\code{p}}{ p is number of choice alternatives}
     \item{\code{lgtdata}}{list of lists with each cross-section unit MNL data}
     \item{\code{lgtdata[[i]]$y}}{ \eqn{n_i} vector of multinomial outcomes (1,\ldots,m)}
-    \item{\code{lgtdata[[i]]$X}}{ \eqn{n_i} by nvar design matrix for ith unit}
+    \item{\code{lgtdata[[i]]$X}}{ \eqn{n_i}*p by nvar design matrix for ith unit}
     \item{\code{a}}{vector of length ncomp of Dirichlet prior parms (def: rep(5,ncomp))}
     \item{\code{deltabar}}{nz*nvar vector of prior means (def: 0)}
     \item{\code{Ad}}{ prior prec matrix for vec(D) (def: .01I)}
