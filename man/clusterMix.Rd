@@ -8,19 +8,20 @@
   component mixture model to cluster observations based on a similarity matrix.
 }
 \usage{
-clusterMix(zdraw, cutoff = 0.9, SILENT = FALSE)
+clusterMix(zdraw, cutoff = 0.9, SILENT = FALSE, nprint = BayesmConstant.nprint)
 }
 \arguments{
   \item{zdraw}{ R x nobs array of draws of indicators }
-  \item{cutoff}{ cutoff probability for similarity  (def=.9)}
-  \item{SILENT}{ logical flag for silent operation (def= FALSE) }
+  \item{cutoff}{ cutoff probability for similarity  (def: .9)}
+  \item{SILENT}{ logical flag for silent operation (def: FALSE) }
+  \item{nprint}{ print every nprint'th draw (def: 100) }
 }
 \details{
 
-   define a similarity matrix, Sim, Sim[i,j]=1 if observations i and j are in same component.
+   Define a similarity matrix, Sim, Sim[i,j]=1 if observations i and j are in same component.
    Compute the posterior mean of Sim over indicator draws.
 
-   clustering is achieved by two means:
+   Clustering is achieved by two means:
 
    Method A:
    Find the indicator draw whose similarity matrix minimizes, loss(E[Sim]-Sim(z)),  
@@ -39,8 +40,7 @@ clusterMix(zdraw, cutoff = 0.9, SILENT = FALSE)
   \url{http://www.perossi.org/home/bsm-1}
 }
 
-\author{ Peter Rossi, Graduate School of Business, University of Chicago
-  \email{perossichi@gmail.com}.
+\author{ Peter Rossi, Anderson School, UCLA, <perossichi@gmail.com>.
 }
 
 \section{Warning}{
@@ -76,7 +76,7 @@ out=rnmixGibbs(Data=Data,Prior=Prior,Mcmc=Mcmc)
 begin=500
 end=R
 ## find clusters
-outclusterMix=clusterMix(out$zdraw[begin:end,])
+outclusterMix=clusterMix(out$nmix$zdraw[begin:end,])
 ##
 ## check on clustering versus "truth"
 ##  note: there could be switched labels

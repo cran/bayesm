@@ -9,7 +9,7 @@
   \code{mnlHess} computes -Expected[Hessian] for Multinomial Logit Model
 }
 \usage{
-mnlHess(beta,y, X)
+mnlHess(beta,y,X)
 }
 \arguments{
   \item{beta}{ k x 1 vector of coefficients }
@@ -24,7 +24,7 @@ mnlHess(beta,y, X)
 }
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
   by Rossi, Allenby and McCulloch, Chapter 3. \cr
-  \url{http://www.perossi.org/home/bsm-1l}
+  \url{http://www.perossi.org/home/bsm-1}
 }
 
 \author{ Peter Rossi, Anderson School, UCLA,

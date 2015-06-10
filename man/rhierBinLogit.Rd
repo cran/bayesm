@@ -8,7 +8,7 @@
 \title{ MCMC Algorithm for Hierarchical Binary Logit }
 \description{
   \code{rhierBinLogit} implements an MCMC algorithm for hierarchical binary logits with
-  a normal heterogeneity distribution.  This is a hybrid sampler with a RW Metropolis step
+  a normal heterogeneity distribution. This is a hybrid sampler with a RW Metropolis step
   for unit-level logit parameters.
 
   \code{rhierBinLogit} is designed for use on choice-based conjoint data with partial profiles.
@@ -25,10 +25,10 @@ rhierBinLogit(Data, Prior, Mcmc)
 }
 \details{
   Model: \cr
-  \eqn{y_{hi} = 1} with \eqn{pr=exp(x_{hi}'beta_h)/(1+exp(x_{hi}'beta_h)}.  \eqn{beta_h} is nvar x 1.\cr
+  \eqn{y_{hi} = 1} with \eqn{\Pr=exp(x_{hi}'\beta_h)/(1+exp(x_{hi}'\beta_h)}.  \eqn{\beta_h} is nvar x 1.\cr
   h=1,\ldots,length(lgtdata) units or "respondents" for survey data.
 
-  \eqn{beta_h}= ZDelta[h,] + \eqn{u_h}. \cr
+  \eqn{\beta_h}= ZDelta[h,] + \eqn{u_h}. \cr
   Note: here ZDelta refers to Z\%*\%Delta, ZDelta[h,] is hth row of this product.\cr
   Delta is an nz x nvar array. 
 

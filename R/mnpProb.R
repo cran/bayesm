@@ -4,6 +4,7 @@ function(beta,Sigma,X,r=100)
 #
 # revision history:
 #  written by Rossi 9/05
+#  W. Taylor 4/15 - replaced ghkvec call with rcpp version
 #
 # purpose:
 #   function to MNP probabilities for a given X matrix (corresponding
@@ -32,14 +33,6 @@ function(beta,Sigma,X,r=100)
 # for p, e < - mu
 #
 #
-# define functions needed
-#
-ghkvec = function(L,trunpt,above,r){
-   dim=length(above)
-   n=length(trunpt)/dim
-   .C('ghk_vec',as.integer(n),as.double(L),as.double(trunpt),as.integer(above),as.integer(dim),
-   as.integer(r),res=double(n))$res}
-#   
 pm1=ncol(Sigma)
 k=length(beta)
 mu=matrix(X%*%beta,nrow=pm1)

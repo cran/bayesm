@@ -21,7 +21,7 @@ rbiNormGibbs(initx = 2, inity = -2, rho, burnin = 100, R = 500)
   \item{R}{ number of MCMC draws (def:500) }
 }
 \details{
-  (theta1,theta2) ~ N((0,0), Sigma=matrix(c(1,rho,rho,1),ncol=2))
+  \eqn{(\theta_1,\theta_2) ~ N((0,0)}, \eqn{\Sigma}=matrix(c(1,rho,rho,1),ncol=2))
 }
 \value{
  R x 2 array of draws

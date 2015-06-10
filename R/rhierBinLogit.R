@@ -48,7 +48,6 @@ sum(log(prob))
 #
 #  check arguments
 #
-pandterm=function(message) { stop(message,call.=FALSE) }
 if(missing(Data)) {pandterm("Requires Data argument -- list of m,lgtdata, and (possibly) Z")}
   if(is.null(Data$lgtdata)) {pandterm("Requires Data element lgtdata (list of data for each unit)")}
   lgtdata=Data$lgtdata

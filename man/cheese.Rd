@@ -14,7 +14,7 @@
     \item{\code{RETAILER}}{a list of 88 retailers}
     \item{\code{VOLUME}}{unit sales}
     \item{\code{DISP}}{a measure of display activity -- per cent ACV on display}
-    \item{\code{PRICE}}{in \$}
+    \item{\code{PRICE}}{in $}
   }
 }
 \source{
@@ -22,8 +22,8 @@
   \emph{JASA} 94, 1063-1073.
 }
 \references{
- Chapter 3, \emph{Bayesian Statistics and Marketing} by Rossi et al. \cr
- \url{http://www.perossi.org/home/bsm-1l}
+ Chapter 3, \emph{Bayesian Statistics and Marketing} by Rossi, Allenby and McCulloch. \cr
+ \url{http://www.perossi.org/home/bsm-1}
 }
 \examples{
 data(cheese)

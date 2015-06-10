@@ -15,7 +15,7 @@
 \arguments{
   \item{x}{ An object of S3 class, bayesm.hcoef }
   \item{names}{ a list of names for the variables in the hierarchical model}
-  \item{burnin}{ no draws to burnin, def: .1*R }
+  \item{burnin}{ no draws to burnin (def: .1*R)}
   \item{...}{ standard graphics parameters }
 }
 \details{

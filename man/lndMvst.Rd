@@ -16,8 +16,8 @@ lndMvst(x, nu, mu, rooti,NORMC)
   \item{x}{ density ordinate }
   \item{nu}{ d.f. parameter }
   \item{mu}{ mu vector }
-  \item{rooti}{ inv of Cholesky root of Sigma }
-  \item{NORMC}{ include normalizing constant, def: FALSE }
+  \item{rooti}{ inv of Cholesky root of \eqn{\Sigma} }
+  \item{NORMC}{ include normalizing constant (def: FALSE) }
 }
 
 \details{

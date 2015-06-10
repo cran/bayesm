@@ -32,6 +32,6 @@ summary.bayesm.var=function(object,names,burnin=trunc(.1*nrow(Vard)),tvalues,QUA
   plabels=paste(labels[,1],labels[,2],sep=",")
   uppertri=as.matrix(Vard[,ind])
   attributes(uppertri)$class="bayesm.mat"
-  summary(uppertri,names=plabels,tvalues=tvalues,QUANTILES=QUANTILES)
+  summary(uppertri,names=plabels,burnin=burnin,tvalues=tvalues,QUANTILES=QUANTILES)
   invisible()
 }

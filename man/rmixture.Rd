@@ -17,7 +17,7 @@ rmixture(n, pvec, comps)
 }
 \details{
   comps is a list of length, ncomp = length(pvec). comps[[j]][[1]] is mean vector for the jth component. 
-  comps[[j]][[2]] is the inverse of the cholesky root of Sigma for that component
+  comps[[j]][[2]] is the inverse of the cholesky root of \eqn{\Sigma} for that component
 }
 \value{
   A list containing \ldots

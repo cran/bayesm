@@ -18,7 +18,7 @@ condMom(x, mu, sigi, i)
   \item{i}{ conditional distribution of ith element }
 }
 \details{
-  \eqn{x} \eqn{\sim}{~} \eqn{MVN(mu,Sigma)}.
+  \eqn{x} \eqn{\sim}{~} \eqn{MVN(mu,sigi^{-1})}.
 
   \code{condMom} computes moments of \eqn{x_i} given \eqn{x_{-i}}.
 }

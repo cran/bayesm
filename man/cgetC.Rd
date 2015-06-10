@@ -27,7 +27,7 @@ cgetC(e, k)
  Rossi et al (2001), \dQuote{Overcoming Scale Usage Heterogeneity,} \emph{JASA}96, 20-31.
 }
 
-\author{ Rob McCulloch and Peter Rossi, Graduate School of Business, University of Chicago.
+\author{ Rob McCulloch and Peter Rossi, Anderson School, UCLA.
   \email{perossichi@gmail.com}.
 }
 

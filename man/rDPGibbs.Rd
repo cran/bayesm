@@ -18,32 +18,32 @@ rDPGibbs(Prior, Data, Mcmc)
 }
 
 \arguments{
-  \item{Prior}{ list(Prioralpha,lambda\_hyper) }
+  \item{Prior}{ list(Prioralpha,lambda_hyper) }
   \item{Data}{ list(y) }
-  \item{Mcmc}{ list(R,keep,maxuniq,SCALE,gridsize) }
+  \item{Mcmc}{ list(R,keep,nprint,maxuniq,SCALE,gridsize) }
 }
 
 \details{
 
 Model: \cr
-        \eqn{y_i} \eqn{\sim}{~} \eqn{N(mu_i,Sigma_i)}. \cr
+        \eqn{y_i} \eqn{\sim}{~} \eqn{N(\mu_i,\Sigma_i)}. \cr
 
 Priors:\cr
-        \eqn{theta_i=(mu_i,Sigma_i)} \eqn{\sim}{~} \eqn{DP(G_0(lambda),alpha)}\cr
-        \eqn{G_0(lambda):}\cr
-        \eqn{mu_i | Sigma_i} \eqn{\sim}{~} \eqn{N(0,Sigma_i (x) a^{-1})}\cr
-        \eqn{Sigma_i} \eqn{\sim}{~} \eqn{IW(nu,nu*v*I)}
+        \eqn{\theta_i=(\mu_i,\Sigma_i)} \eqn{\sim}{~} \eqn{DP(G_0(\lambda),alpha)}\cr
+        \eqn{G_0(\lambda):}\cr
+        \eqn{\mu_i | \Sigma_i} \eqn{\sim}{~} \eqn{N(0,\Sigma_i (x) a^{-1})}\cr
+        \eqn{\Sigma_i} \eqn{\sim}{~} \eqn{IW(nu,nu*v*I)}
         
-        \eqn{lambda(a,nu,v):}\cr
+        \eqn{\lambda(a,nu,v):}\cr
         \eqn{a} \eqn{\sim}{~} uniform on grid[alim[1],alimb[2]]\cr
         \eqn{nu} \eqn{\sim}{~} uniform on grid[dim(data)-1 + exp(nulim[1]),dim(data)-1 +exp(nulim[2])]\cr
         \eqn{v} \eqn{\sim}{~} uniform on grid[vlim[1],vlim[2]]
        
-        \eqn{alpha} \eqn{\sim}{~} \eqn{(1-(alpha-alphamin)/(alphamax-alphamin))^power} \cr
-        alpha= alphamin then expected number of components = Istarmin \cr
-        alpha= alphamax then expected number of components = Istarmax \cr
+        \eqn{alpha} \eqn{\sim}{~} \eqn{(1-(\alpha-alphamin)/(alphamax-alphamin))^{power}} \cr
+        \eqn{alpha}= alphamin then expected number of components = Istarmin \cr
+        \eqn{alpha}= alphamax then expected number of components = Istarmax \cr
 
-list arguments
+List arguments contain:
 
 Data:\cr
   \itemize{
@@ -52,46 +52,46 @@ Data:\cr
 
 Prioralpha:\cr
  \itemize{
-  \item{\code{Istarmin}}{expected number of components at lower bound of support of alpha}
-  \item{\code{Istarmax}}{expected number of components at upper bound of support of alpha}
-  \item{\code{power}}{power parameter for alpha prior}
+  \item{\code{Istarmin}}{ expected number of components at lower bound of support of alpha (def: 1)}
+  \item{\code{Istarmax}}{ expected number of components at upper bound of support of alpha}
+  \item{\code{power}}{ power parameter for alpha prior (def: .8)}
   }
  
-lambda\_hyper:\cr
+lambda_hyper:\cr
   \itemize{
-   \item{\code{alim}}{defines support of a distribution,def:c(.01,10) }
-   \item{\code{nulim}}{defines support of nu distribution, def:c(.01,3)} 
-   \item{\code{vlim}}{defines support of v distribution, def:c(.1,4)} 
+   \item{\code{alim}}{ defines support of a distribution (def: (.01,10))}
+   \item{\code{nulim}}{ defines support of nu distribution (def: (.01,3))} 
+   \item{\code{vlim}}{ defines support of v distribution (def: (.1,4))} 
   }
 Mcmc:\cr
  \itemize{
-   \item{\code{R}}{number of mcmc draws}
-   \item{\code{keep}}{thinning parm, keep every keepth draw}
-   \item{\code{maxuniq}}{storage constraint on the number of unique components}
-   \item{\code{SCALE}}{should data be scaled by mean,std deviation before posterior draws, def: TRUE}
-   \item{\code{gridsize}}{number of discrete points for hyperparameter priors,def: 20}
+   \item{\code{R}}{ number of mcmc draws}
+   \item{\code{keep}}{ thinning parm, keep every keepth draw}
+   \item{\code{nprint}}{ print the estimated time remaining for every nprint'th draw (def: 100)}
+   \item{\code{maxuniq}}{ storage constraint on the number of unique components (def: 200)}
+   \item{\code{SCALE}}{ should data be scaled by mean,std deviation before posterior draws, (def: TRUE)}
+   \item{\code{gridsize}}{ number of discrete points for hyperparameter priors,def: 20}
   }
 
-output:\cr
 the basic output are draws from the predictive distribution of the data in the object, \code{nmix}. 
 The average of these draws is the Bayesian analogue of a density estimate.
 
 nmix:\cr
   \itemize{
-   \item{\code{probdraw}}{R/keep x 1 matrix of 1s}
-   \item{\code{zdraw}}{R/keep x N matrix of draws of indicators of which component each obs is assigned to}
-   \item{\code{compdraw}}{R/keep list of draws of normals}
+   \item{\code{probdraw}}{ R/keep x 1 matrix of 1s}
+   \item{\code{zdraw}}{ R/keep x N matrix of draws of indicators of which component each obs is assigned to}
+   \item{\code{compdraw}}{ R/keep list of draws of normals}
   }
   Output of the components is in the form of a list of lists. \cr
   compdraw[[i]] is ith draw -- list of lists. \cr
   compdraw[[i]][[1]] is list of parms for a draw from predictive. \cr
   compdraw[[i]][1]][[1]] is the mean vector. compdraw[[i]][[1]][[2]] is the inverse of Cholesky root.
-  \eqn{Sigma} = t(R)\%*\%R, \eqn{R^{-1}} = compdraw[[i]][[1]][[2]].
+  \eqn{\Sigma} = t(R)\%*\%R, \eqn{R^{-1}} = compdraw[[i]][[1]][[2]].
 }
 
 
 \note{
-    we parameterize the prior on \eqn{Sigma_i} such that \eqn{mode(Sigma)= nu/(nu+2) vI}.
+    we parameterize the prior on \eqn{\Sigma_i} such that \eqn{mode(\Sigma)= nu/(nu+2) vI}.
     The support of nu enforces valid IW density; \eqn{nulim[1] > 0}
 
     We use the structure for \code{nmix} that is compatible with the \code{bayesm} routines for finite mixtures of normals.
@@ -115,11 +115,11 @@ nmix:\cr
 
 
 \value{
- \item{nmix}{a list containing: probdraw,zdraw,compdraw}
- \item{alphadraw}{vector of draws of DP process tightness parameter}
- \item{nudraw}{vector of draws of base prior hyperparameter}
- \item{adraw}{vector of draws of base prior hyperparameter}
- \item{vdraw}{vector of draws of base prior hyperparameter}
+ \item{nmix}{ a list containing: probdraw,zdraw,compdraw}
+ \item{alphadraw}{ vector of draws of DP process tightness parameter}
+ \item{nudraw}{ vector of draws of base prior hyperparameter}
+ \item{adraw}{ vector of draws of base prior hyperparameter}
+ \item{vdraw}{ vector of draws of base prior hyperparameter}
 }
 
 \author{ Peter Rossi, Anderson School, UCLA,
@@ -154,9 +154,11 @@ rgi=c(0,20); grid=matrix(seq(from=rgi[1],to=rgi[2],length.out=50),ncol=1)
 deltax=(rgi[2]-rgi[1])/nrow(grid)
 plot(out1$nmix,Grid=grid,Data=y1)
 ## plot true density with historgram
-plot(range(grid[,1]),1.5*range(dchisq(grid[,1],df=chisqdf)),type="n",xlab=paste("Chisq ; ",N," obs",sep=""), ylab="")
+plot(range(grid[,1]),1.5*range(dchisq(grid[,1],df=chisqdf)),
+  type="n",xlab=paste("Chisq ; ",N," obs",sep=""), ylab="")
 hist(y1,xlim=rgi,freq=FALSE,col="yellow",breaks=20,add=TRUE)
-lines(grid[,1],dchisq(grid[,1],df=chisqdf)/(sum(dchisq(grid[,1],df=chisqdf))*deltax),col="blue",lwd=2)
+lines(grid[,1],dchisq(grid[,1],df=chisqdf)/
+  (sum(dchisq(grid[,1],df=chisqdf))*deltax),col="blue",lwd=2)
 }
 
 
@@ -199,7 +201,8 @@ plot(out2$nmix,Grid=grid,Data=y2)
 ## plot true bivariate density
 tden=matrix(double(50*50),ncol=50)
 for (i in 1:50){ for (j in 1:50) 
-      {tden[i,j]=exp(-0.5*(A*(x1[i]^2)*(x2[j]^2)+(x1[i]^2)+(x2[j]^2)-2*B*x1[i]*x2[j]-2*C1*x1[i]-2*C2*x2[j]))}
+      {tden[i,j]=exp(-0.5*(A*(x1[i]^2)*(x2[j]^2)+
+      (x1[i]^2)+(x2[j]^2)-2*B*x1[i]*x2[j]-2*C1*x1[i]-2*C2*x2[j]))}
 }
 tden=tden/sum(tden)
 image(x1,x2,tden,col=terrain.colors(100),xlab="",ylab="")

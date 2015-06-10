@@ -8,15 +8,15 @@
   \code{lndIChisq} computes the log of an Inverted Chi-Squared Density.
 }
 \usage{
-lndIChisq(nu, ssq, x)
+lndIChisq(nu, ssq, X)
 }
 \arguments{
   \item{nu}{ d.f. parameter }
   \item{ssq}{ scale parameter }
-  \item{x}{ ordinate for density evaluation }
+  \item{X}{ ordinate for density evaluation (this must be a matrix)}
 }
 \details{
-  \eqn{Z= \nu*ssq/\chi^2_{\nu}}, \eqn{Z} \eqn{\sim}{~} Inverted Chi-Squared.  \cr
+  \eqn{Z= nu*ssq/\chi^2_{nu}}, \eqn{Z} \eqn{\sim}{~} Inverted Chi-Squared.  \cr
   \code{lndIChisq} computes the complete log-density, including normalizing constants.
 }
 \value{
@@ -39,6 +39,6 @@ lndIChisq(nu, ssq, x)
 \seealso{ \code{\link{dchisq}} }
 \examples{
 ##
-lndIChisq(3,1,2)
+lndIChisq(3,1,matrix(2))
 }
 \keyword{ distribution }

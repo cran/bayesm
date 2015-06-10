@@ -13,11 +13,6 @@ llnhlogit=function(theta,choice,lnprices,Xexpend)
 #           gamma  (k x 1)   expenditure function coefficients
 #           tau   scaling of v
 #	    
-root=function(c1,c2,tol,iterlim) {
-   u=double(length(c1))
-   .C("callroot",as.integer(length(c1)),as.double(c1),as.double(c2),as.double(tol),
-       as.integer(iterlim),r=as.double(u))$r}
-
    m=ncol(lnprices)
    n=length(choice)
    d=ncol(Xexpend)
@@ -27,8 +22,8 @@ root=function(c1,c2,tol,iterlim) {
    tau=theta[length(theta)]
    iotam=c(rep(1,m))
    c1=as.vector(Xexpend%*%gamma)%x%iotam-as.vector(t(lnprices))+alpha
-   c2=c(rep(exp(k),n))   
-   u=root(c1,c2,.0000001,20)
+   c2=c(rep(exp(k),n))
+   u=callroot(c1,c2,.0000001,20)
    v=alpha - u*exp(k)-as.vector(t(lnprices))
    vmat=matrix(v,ncol=m,byrow=TRUE)
    vmat=tau*vmat

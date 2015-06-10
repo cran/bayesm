@@ -31,7 +31,6 @@ function(p,na,nd,Xa,Xd,INT=TRUE,DIFF=FALSE,base=p)
 #
 # check arguments
 #
-pandterm=function(message) {stop(message,call.=FALSE)}
 if(missing(p)) pandterm("requires p (# choice alternatives)")
 if(missing(na)) pandterm("requires na arg (use na=NULL if none)")
 if(missing(nd)) pandterm("requires nd arg (use nd=NULL if none)")

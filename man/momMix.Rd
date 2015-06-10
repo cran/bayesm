@@ -22,7 +22,7 @@ momMix(probdraw, compdraw)
   compdraw is a list of lists of lists with mixture components.  \cr
   compdraw[[i]] is ith draw. \cr
   compdraw[[i]][[j]][[1]] is the mean parameter vector for the jth component, ith MCMC draw. \cr
-  compdraw[[i]][[j]][[2]] is the UL decomposition of \eqn{Sigma^{-1}} for the jth component, ith MCMC draw. 
+  compdraw[[i]][[j]][[2]] is the UL decomposition of \eqn{\Sigma^{-1}} for the jth component, ith MCMC draw. 
  
 }
 \value{

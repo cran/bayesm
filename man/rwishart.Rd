@@ -20,7 +20,7 @@ rwishart(nu, V)
 
   If you want to use an Inverted Wishart prior, you \emph{must invert the location matrix} 
   before calling \code{rwishart}, e.g. \cr
-  \eqn{Sigma} \eqn{\sim}{~} IW(nu,V);  \eqn{Sigma^{-1}} \eqn{\sim}{~} \eqn{W(nu,V^{-1})}.
+  \eqn{\Sigma} \eqn{\sim}{~} IW(nu,V);  \eqn{\Sigma^{-1}} \eqn{\sim}{~} \eqn{W(nu,V^{-1})}.
 }
 \value{
   \item{W}{ Wishart draw }

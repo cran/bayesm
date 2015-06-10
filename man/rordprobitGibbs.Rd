@@ -17,7 +17,7 @@ rordprobitGibbs(Data, Prior, Mcmc)
 \arguments{
   \item{Data}{ list(X, y, k)}
   \item{Prior}{ list(betabar, A, dstarbar, Ad)}
-  \item{Mcmc}{ list(R, keep, s, change, draw)  }
+  \item{Mcmc}{ list(R, keep, nprint s, change, draw)  }
 }
 
 \details{
@@ -40,6 +40,7 @@ rordprobitGibbs(Data, Prior, Mcmc)
     \item{\code{s}}{ scaling parm for RW Metropolis (def: 2.93/sqrt(nvar))}
     \item{\code{R}}{ number of MCMC draws }
     \item{\code{keep}}{ thinning parameter - keep every keepth draw (def: 1)}
+    \item{\code{nprint}}{ print the estimated time remaining for every nprint'th draw (def: 100)}
   }
 }
 

@@ -17,7 +17,7 @@ rbprobitGibbs(Data, Prior, Mcmc)
 \arguments{
   \item{Data}{ list(X,y)}
   \item{Prior}{ list(betabar,A)}
-  \item{Mcmc}{ list(R,keep)  }
+  \item{Mcmc}{ list(R,keep,nprint)  }
 }
 
 \details{
@@ -33,6 +33,7 @@ rbprobitGibbs(Data, Prior, Mcmc)
     \item{\code{A}}{k x k prior precision matrix (def: .01I)} 
     \item{\code{R}}{ number of MCMC draws }
     \item{\code{keep}}{ thinning parameter - keep every keepth draw (def: 1)}
+    \item{\code{nprint}}{ print the estimated time remaining for every nprint'th draw (def: 100)}
   }
 }
 

@@ -31,7 +31,7 @@ breg(y, X, betabar, A)
 }
 
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
-  by Rossi,Allenby and McCulloch. \cr
+  by Rossi, Allenby and McCulloch. \cr
   \url{http://www.perossi.org/home/bsm-1}
 }
 

@@ -18,13 +18,13 @@ rnegbinRw(Data, Prior, Mcmc)
 \arguments{
   \item{Data}{ list(y,X) }
   \item{Prior}{ list(betabar,A,a,b) }
-  \item{Mcmc}{ list(R,keep,s\_beta,s\_alpha,beta0 }
+  \item{Mcmc}{ list(R,keep,s_beta,s_alpha,beta0 }
 }
 \details{
-  Model:   \eqn{y} \eqn{\sim}{~} \eqn{NBD(mean=lambda, over-dispersion=alpha)}.  \cr
-           \eqn{lambda=exp(x'beta)}
+  Model:   \eqn{y} \eqn{\sim}{~} \eqn{NBD(mean=\lambda, over-dispersion=alpha)}.  \cr
+           \eqn{\lambda=exp(x'\beta)}
 
-  Prior:   \eqn{beta} \eqn{\sim}{~} \eqn{N(betabar,A^{-1})} \cr
+  Prior:   \eqn{\beta} \eqn{\sim}{~} \eqn{N(betabar,A^{-1})} \cr
            \eqn{alpha} \eqn{\sim}{~} \eqn{Gamma(a,b)}. \cr
             note: prior mean of \eqn{alpha = a/b}, \eqn{variance = a/(b^2)}
 
@@ -38,8 +38,9 @@ rnegbinRw(Data, Prior, Mcmc)
     \item{\code{b}}{ Gamma prior parm (def: .1)}
     \item{\code{R}}{ number of MCMC draws}
     \item{\code{keep}}{ MCMC thinning parm: keep every keepth draw (def: 1)}
-    \item{\code{s\_beta}}{ scaling for beta| alpha RW inc cov matrix (def: 2.93/sqrt(nvar)}
-    \item{\code{s\_alpha}}{ scaling for alpha | beta RW inc cov matrix (def: 2.93)}
+    \item{\code{nprint}}{ print the estimated time remaining for every nprint'th draw (def: 100)}
+    \item{\code{s_beta}}{ scaling for beta| alpha RW inc cov matrix (def: 2.93/sqrt(nvar))}
+    \item{\code{s_alpha}}{ scaling for alpha | beta RW inc cov matrix (def: 2.93)}
   }
 }
 \value{

@@ -22,8 +22,8 @@ mixDenBi(i, j, xi, xj, pvec, comps)
 }
 \details{
   length(comps) is the number of mixture components.  comps[[j]] is a list of
-  parameters of the jth component. comps[[j]]\$mu is mean vector; comps[[j]]\$rooti
-  is the UL decomp of \eqn{Sigma^{-1}}.
+  parameters of the jth component. comps[[j]]$mu is mean vector; comps[[j]]$rooti
+  is the UL decomp of \eqn{\Sigma^{-1}}.
 }
 
 \value{

@@ -18,34 +18,35 @@ rhierMnlDP(Data, Prior, Mcmc)
 }
 \arguments{
   \item{Data}{ list(p,lgtdata,Z) ( Z is optional) }
-  \item{Prior}{ list(deltabar,Ad,Prioralpha,lambda\_hyper) (all are optional)}
-  \item{Mcmc}{ list(s,w,R,keep) (R required)}
+  \item{Prior}{ list(deltabar,Ad,Prioralpha,lambda_hyper) (all are optional)}
+  \item{Mcmc}{ list(s,w,R,keep,nprint) (R required)}
 }
 \details{
   Model: \cr
-  \eqn{y_i} \eqn{\sim}{~} \eqn{MNL(X_i,beta_i)}.  i=1,\ldots, length(lgtdata). \eqn{theta_i} is nvar x 1.
+  \eqn{y_i} \eqn{\sim}{~} \eqn{MNL(X_i,\beta_i)}.  i=1,\ldots, length(lgtdata). \eqn{\theta_i} is nvar x 1.
 
-  \eqn{beta_i}= ZDelta[i,] + \eqn{u_i}. \cr
-  Note: here ZDelta refers to Z\%*\%D, ZDelta[i,] is ith row of this product.\cr
+  \eqn{\beta_i}= Z\eqn{\Delta}[i,] + \eqn{u_i}. \cr
+  Note:  Z\eqn{\Delta} is the matrix Z * \eqn{\Delta}; [i,] refers to ith row of this product.\cr
   Delta is an nz x nvar array. 
 
-  \eqn{beta_i} \eqn{\sim}{~} \eqn{N(mu_i,Sigma_i)}. \cr
+  \eqn{\beta_i} \eqn{\sim}{~} \eqn{N(\mu_i,\Sigma_i)}. \cr
 
   Priors: \cr
-        \eqn{theta_i=(mu_i,Sigma_i)} \eqn{\sim}{~} \eqn{DP(G_0(lambda),alpha)}\cr
-        \eqn{G_0(lambda):}\cr
-        \eqn{mu_i | Sigma_i} \eqn{\sim}{~} \eqn{N(0,Sigma_i (x) a^{-1})}\cr
-        \eqn{Sigma_i} \eqn{\sim}{~} \eqn{IW(nu,nu*v*I)}
+        \eqn{\theta_i=(\mu_i,\Sigma_i)} \eqn{\sim}{~} \eqn{DP(G_0(\lambda),alpha)}\cr
+        \eqn{G_0(\lambda):}\cr
+        \eqn{\mu_i | \Sigma_i} \eqn{\sim}{~} \eqn{N(0,\Sigma_i (x) a^{-1})}\cr
+        \eqn{\Sigma_i} \eqn{\sim}{~} \eqn{IW(nu,nu*v*I)}\cr
+        \eqn{delta= vec(\Delta)} \eqn{\sim}{~} \eqn{N(deltabar,A_d^{-1})}\cr
         
-        \eqn{lambda(a,nu,v):}\cr
+        \eqn{\lambda(a,nu,v):}\cr
         \eqn{a} \eqn{\sim}{~} uniform[alim[1],alimb[2]]\cr
         \eqn{nu} \eqn{\sim}{~}  dim(data)-1 + exp(z) \cr
         \eqn{z} \eqn{\sim}{~}  uniform[dim(data)-1+nulim[1],nulim[2]]\cr
         \eqn{v} \eqn{\sim}{~} uniform[vlim[1],vlim[2]]
        
-        \eqn{alpha} \eqn{\sim}{~} \eqn{(1-(alpha-alphamin)/(alphamax-alphamin))^power} \cr
-        alpha= alphamin then expected number of components = Istarmin \cr
-        alpha= alphamax then expected number of components = Istarmax \cr
+        \eqn{alpha} \eqn{\sim}{~} \eqn{(1-(alpha-alphamin)/(alphamax-alphamin))^{power}} \cr
+        alpha = alphamin then expected number of components = Istarmin \cr
+        alpha = alphamax then expected number of components = Istarmax \cr
 
 
   Lists contain: \cr
@@ -69,19 +70,20 @@ Prioralpha:\cr
   \item{\code{power}}{power parameter for alpha prior (def: .8)}
   }
  
-lambda\_hyper:\cr
+lambda_hyper:\cr
   \itemize{
-   \item{\code{alim}}{defines support of a distribution,def:c(.01,2) }
-   \item{\code{nulim}}{defines support of nu distribution, def:c(.01,3)} 
-   \item{\code{vlim}}{defines support of v distribution, def:c(.1,4)} 
+   \item{\code{alim}}{defines support of a distribution (def: (.01,2))}
+   \item{\code{nulim}}{defines support of nu distribution (def: (.01,3))} 
+   \item{\code{vlim}}{defines support of v distribution (def: (.1,4))} 
   }
 
 Mcmc:\cr
  \itemize{
-   \item{\code{R}}{number of mcmc draws}
-   \item{\code{keep}}{thinning parm, keep every keepth draw}
-   \item{\code{maxuniq}}{storage constraint on the number of unique components}
-   \item{\code{gridsize}}{number of discrete points for hyperparameter priors,def: 20}
+   \item{\code{R}}{ number of mcmc draws}
+   \item{\code{keep}}{ thinning parm, keep every keepth draw}
+   \item{\code{nprint}}{ print the estimated time remaining for every nprint'th draw (def: 100)}
+   \item{\code{maxuniq}}{ storage constraint on the number of unique components}
+   \item{\code{gridsize}}{ number of discrete points for hyperparameter priors,def: 20}
   }
 
 }
@@ -100,14 +102,14 @@ Mcmc:\cr
 \note{
 
   As is well known, Bayesian density estimation involves computing the predictive distribution of a "new" unit parameter,
-  \eqn{theta_{n+1}} (here "n"=nlgt). This is done by averaging the normal base distribution over draws from the distribution of \eqn{theta_{n+1}} given \eqn{theta_1}, ..., \eqn{theta_n},alpha,lambda,Data.
-  To facilitate this, we store those draws from the predictive distribution of \eqn{theta_{n+1}} in a list structure compatible  with other \code{bayesm} routines that implement a finite mixture of normals.
+  \eqn{\theta_{n+1}} (here "n"=nlgt). This is done by averaging the normal base distribution over draws from the distribution of \eqn{\theta_{n+1}} given \eqn{\theta_1}, ..., \eqn{\theta_n},alpha,lambda,Data.
+  To facilitate this, we store those draws from the predictive distribution of \eqn{\theta_{n+1}} in a list structure compatible  with other \code{bayesm} routines that implement a finite mixture of normals.
 
   More on nmix list:\cr 
   contains the draws from the predictive distribution of a "new" observations parameters.  These are simply the parameters of one normal distribution.  We enforce compatibility with a mixture of k components in order to utilize generic summary 
   plotting functions.  
 
-  Therefore,\code{probdraw} is a vector of ones.  \code{zdraw} (indicator draws) is omitted as it is not necessary for density estimation. \code{compdraw} contains the draws of the \eqn{theta_{n+1}} as a list of list of lists.
+  Therefore,\code{probdraw} is a vector of ones.  \code{zdraw} (indicator draws) is omitted as it is not necessary for density estimation. \code{compdraw} contains the draws of the \eqn{\theta_{n+1}} as a list of list of lists.
 
   More on \code{compdraw} component of return value list:
   \itemize{
@@ -117,7 +119,7 @@ Mcmc:\cr
   \item{compdraw[[i]][[1]][[2]]}{ith draw of parm (rooti)}
   }
 
-  We parameterize the prior on \eqn{Sigma_i} such that \eqn{mode(Sigma)= nu/(nu+2) vI}.
+  We parameterize the prior on \eqn{\Sigma_i} such that \eqn{mode(\Sigma)= nu/(nu+2) vI}.
     The support of nu enforces a non-degenerate IW density; \eqn{nulim[1] > 0}.
 
     The default choices of alim,nulim, and vlim determine the location and approximate size of candidate
@@ -134,7 +136,7 @@ Mcmc:\cr
    "lumpy" density estimate somewhat like the classical Kernel density estimates. Of course, this is not advised 
    if you have a prior belief that densities are relatively smooth.
 
-  Note: Z should \strong{not} include an intercept and is centered for ease of interpretation.\cr
+  Note: Z should \strong{not} include an intercept and is centered for ease of interpretation. The mean of each of the \code{nlgt} \eqn{\beta} s is the mean of the normal mixture.  Use \code{summary()} to compute this mean from the \code{compdraw} output.\cr
   
   Large R values may be required (>20,000).
 

@@ -23,11 +23,11 @@ rmultireg(Y, X, Bbar, A, nu, V)
   \item{V}{ m x m pdf location parameter for prior on Sigma }
 }
 \details{
-  Model: \eqn{Y=XB+U}.  \eqn{cov(u_i) = Sigma}.  \eqn{B} is k x m matrix of coefficients. \eqn{Sigma} is m x m covariance.
+  Model: \eqn{Y=XB+U}.  \eqn{cov(u_i) = \Sigma}.  \eqn{B} is k x m matrix of coefficients. \eqn{\Sigma} is m x m covariance.
 
-  Priors:  \eqn{beta} given \eqn{Sigma}  \eqn{\sim}{~} \eqn{N(betabar,Sigma (x) A^{-1})}. 
-  \eqn{betabar=vec(Bbar)};  \eqn{beta = vec(B)} \cr
-          \eqn{Sigma} \eqn{\sim}{~} IW(nu,V). 
+  Priors:  \eqn{\beta} given \eqn{\Sigma}  \eqn{\sim}{~} \eqn{N(betabar,\Sigma (x) A^{-1})}. 
+  \eqn{betabar=vec(Bbar)};  \eqn{\beta = vec(B)} \cr
+          \eqn{\Sigma} \eqn{\sim}{~} IW(nu,V). 
 }
 \value{
   A list of the components of a draw from the posterior

@@ -20,25 +20,26 @@ rhierLinearMixture(Data, Prior, Mcmc)
 \arguments{
   \item{Data}{ list(regdata,Z) (Z optional). }
   \item{Prior}{ list(deltabar,Ad,mubar,Amu,nu,V,nu.e,ssq,ncomp)  (all but ncomp are optional).}
-  \item{Mcmc}{ list(R,keep) (R required).}
+  \item{Mcmc}{ list(R,keep,nprint) (R required).}
 }
 \details{
   Model: length(regdata) regression equations. \cr
-        \eqn{y_i = X_ibeta_i + e_i}. \eqn{e_i} \eqn{\sim}{~} \eqn{N(0,tau_i)}.  nvar X vars in each equation. 
+        \eqn{y_i = X_i\beta_i + e_i}. \eqn{e_i} \eqn{\sim}{~} \eqn{N(0,\tau_i)}.  \code{nvar} is the number of X vars in each equation. 
 
  Priors:\cr
-        \eqn{tau_i} \eqn{\sim}{~} nu.e*\eqn{ssq_i/\chi^2_{nu.e}}.  \eqn{tau_i} is the variance of \eqn{e_i}.\cr
+        \eqn{\tau_i} \eqn{\sim}{~} \eqn{nu.e*ssq_i/\chi^2_{nu.e}}.  \eqn{\tau_i} is the variance of \eqn{e_i}.\cr
+        \eqn{B = Z\Delta + U} or \cr
+        \eqn{\beta_i = \Delta' Z[i,]' + u_i}. \cr
+        \eqn{\Delta} is an nz x nvar array. \cr
 
-        \eqn{beta_i}= ZDelta[i,] + \eqn{u_i}. \cr
-        Note: here ZDelta refers to Z\%*\%D, ZDelta[i,] is ith row of this product.\cr
-        Delta is an nz x nvar array. 
 
-        \eqn{u_i} \eqn{\sim}{~} \eqn{N(mu_{ind},Sigma_{ind})}. \eqn{ind} \eqn{\sim}{~} multinomial(pvec). \cr
+        \eqn{u_i} \eqn{\sim}{~} \eqn{N(\mu_{ind},\Sigma_{ind})}\cr
+        \eqn{ind} \eqn{\sim}{~} \eqn{multinomial(pvec)} \cr
 
-        \eqn{pvec} \eqn{\sim}{~} dirichlet (a)\cr
-        \eqn{delta= vec(Delta)} \eqn{\sim}{~} \eqn{N(deltabar,A_d^{-1})}\cr
-        \eqn{mu_j} \eqn{\sim}{~} \eqn{N(mubar,Sigma_j (x) Amu^{-1})}\cr
-        \eqn{Sigma_j} \eqn{\sim}{~} IW(nu,V) \cr
+        \eqn{pvec} \eqn{\sim}{~} \eqn{dirichlet(a)}\cr
+        \eqn{delta= vec(\Delta)} \eqn{\sim}{~} \eqn{N(deltabar,A_d^{-1})}\cr
+        \eqn{\mu_j} \eqn{\sim}{~} \eqn{N(mubar,\Sigma_j (x) Amu^{-1})}\cr
+        \eqn{\Sigma_j} \eqn{\sim}{~} \eqn{IW(nu,V)} \cr
 
 
   List arguments contain:
@@ -54,9 +55,11 @@ rhierLinearMixture(Data, Prior, Mcmc)
     \item{\code{V}}{ pds location parm for IW prior on norm comp Sigma (def: nuI)}
     \item{\code{nu.e}}{ d.f. parm for regression error variance prior (def: 3)}
     \item{\code{ssq}}{ scale parm for regression error var prior (def: var(\eqn{y_i}))}
+    \item{\code{a}}{ Dirichlet prior parameter (def: 5)}
     \item{\code{ncomp}}{ number of components used in normal mixture }
     \item{\code{R}}{ number of MCMC draws}
     \item{\code{keep}}{ MCMC thinning parm: keep every keepth draw (def: 1)}
+    \item{\code{nprint}}{ print the estimated time remaining for every nprint'th draw (def: 100)}
    }
 }
 \value{
@@ -77,7 +80,8 @@ rhierLinearMixture(Data, Prior, Mcmc)
   \item{compdraw[[i]][[j]][[2]]}{ith draw of jth normal mixture cov parm (rooti)}
   }
 
-  Note: Z should \strong{not} include an intercept and should be centered for ease of interpretation.\cr
+  Note: Z should \strong{not} include an intercept and should be centered for ease of interpretation. The mean of each of the \code{nreg} \eqn{\beta} s is the mean of the normal mixture.  Use \code{summary()} to compute this mean from the \code{compdraw} output.  
+  
   
   Be careful in assessing the prior parameter, Amu.  .01 can be too small for some applications. See 
   Rossi et al, chapter 5 for full discussion.\cr

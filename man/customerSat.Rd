@@ -16,7 +16,7 @@
     \item{\code{q3}}{Holding Price Increase to a Minimum}
     \item{\code{q4}}{Appropriate Pricing given Volume}
     \item{\code{q5}}{Demonstrating Effectiveness of Purchase}
-    \item{\code{q6}}{Reach a Large \# of Customers}
+    \item{\code{q6}}{Reach a Large # of Customers}
     \item{\code{q7}}{Reach of Advertising}
     \item{\code{q8}}{Long-term Exposure}
     \item{\code{q9}}{Distribution}
@@ -29,7 +29,7 @@
 }
 \references{
   Case Study 3, \emph{Bayesian Statistics and Marketing} by Rossi et al.\cr 
-  \url{http://www.perossi.org/home/bsm-1*}
+  \url{http://www.perossi.org/home/bsm-1}
 }
 \examples{
 data(customerSat)

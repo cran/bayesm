@@ -19,15 +19,16 @@ rhierNegbinRw(Data, Prior, Mcmc)
 \arguments{
   \item{Data}{ list(regdata,Z) }
   \item{Prior}{ list(Deltabar,Adelta,nu,V,a,b) }
-  \item{Mcmc}{ list(R,keep,s\_beta,s\_alpha,c,Vbeta0,Delta0) }
+  \item{Mcmc}{ list(R,keep,nprint,s_beta,s_alpha,c,Vbeta0,Delta0) }
 }
 \details{
-  Model:   \eqn{y_i} \eqn{\sim}{~} NBD(mean=lambda, over-dispersion=alpha).  \cr
-           \eqn{lambda=exp(X_ibeta_i)}
+  Model:   \eqn{y_i} \eqn{\sim}{~} NBD(mean=\eqn{\lambda}, over-dispersion=alpha).  \cr
+           
+           \eqn{\lambda=exp(X_i\beta_i)}
 
-  Prior:   \eqn{beta_i} \eqn{\sim}{~} \eqn{N(Delta'z_i,Vbeta)}.
+  Prior:   \eqn{\beta_i} \eqn{\sim}{~} \eqn{N(\Delta'z_i,Vbeta)}.
 
-           \eqn{vec(Delta|Vbeta)} \eqn{\sim}{~} \eqn{N(vec(Deltabar),Vbeta (x) Adelta)}. \cr
+           \eqn{vec(\Delta|Vbeta)} \eqn{\sim}{~} \eqn{N(vec(Deltabar),Vbeta (x) Adelta)}. \cr
            \eqn{Vbeta} \eqn{\sim}{~} \eqn{IW(nu,V)}. \cr
            \eqn{alpha} \eqn{\sim}{~} \eqn{Gamma(a,b)}. \cr
             note: prior mean of \eqn{alpha = a/b}, \eqn{variance = a/(b^2)}
@@ -46,8 +47,9 @@ rhierNegbinRw(Data, Prior, Mcmc)
     \item{\code{b}}{ Gamma prior parm (def: .1)}
     \item{\code{R}}{ number of MCMC draws}
     \item{\code{keep}}{ MCMC thinning parm: keep every keepth draw (def: 1)}
-    \item{\code{s\_beta}}{ scaling for beta| alpha RW inc cov (def: 2.93/sqrt(nvar))}
-    \item{\code{s\_alpha}}{ scaling for alpha | beta RW inc cov (def: 2.93)}
+    \item{\code{nprint}}{ print the estimated time remaining for every nprint'th draw (def: 100)}
+    \item{\code{s_beta}}{ scaling for beta| alpha RW inc cov (def: 2.93/sqrt(nvar))}
+    \item{\code{s_alpha}}{ scaling for alpha | beta RW inc cov (def: 2.93)}
     \item{\code{c}}{ fractional likelihood weighting parm (def:2)}
     \item{\code{Vbeta0}}{ starting value for Vbeta (def: I)}
     \item{\code{Delta0}}{ starting value for Delta (def: 0)}

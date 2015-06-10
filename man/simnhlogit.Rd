@@ -15,7 +15,7 @@ simnhlogit(theta, lnprices, Xexpend)
   \item{Xexpend}{ n x k array of values of expenditure variables}
 }
 \details{
-  For detail on parameterization, see \code{llnhlogit}.
+  For details on parameterization, see \code{llnhlogit}.
 }
 \value{
   a list containing: 
@@ -41,5 +41,16 @@ simnhlogit(theta, lnprices, Xexpend)
 }
 
 \seealso{ \code{\link{llnhlogit}} }
+
+\examples{
+##
+N=1000
+p=3
+k=1
+theta = c(rep(1,p),seq(from=-1,to=1,length=p),rep(2,k),.5)
+lnprices = matrix(runif(N*p),ncol=p)
+Xexpend = matrix(runif(N*k),ncol=k)
+simdata = simnhlogit(theta,lnprices,Xexpend)
+}
 
 \keyword{ models }

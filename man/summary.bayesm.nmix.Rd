@@ -15,7 +15,7 @@
 \arguments{
   \item{object}{ an object of class "bayesm.nmix" -- a list of lists of draws}
   \item{names}{ optional character vector of names fo reach dimension of the density}
-  \item{burnin}{ number of draws to burn-in, def: .1*nrow(probdraw)}
+  \item{burnin}{ number of draws to burn-in (def: .1*nrow(probdraw))}
   \item{...}{ parms to send to summary} 
 }
 \details{

@@ -1,6 +1,4 @@
-simnhlogit=
-function(theta,lnprices,Xexpend) 
-{
+simnhlogit=function(theta,lnprices,Xexpend) {
 #   function to simulate non-homothetic logit model
 #       creates y  a n x 1 vector with indicator of choice (1,...,m)
 #	lnprices is n x m array of log-prices faced
@@ -14,11 +12,6 @@ function(theta,lnprices,Xexpend)
 #           gamma  (k x 1)   expenditure function coefficients
 #           tau   -- scaling of v
 #	    
-root=function(c1,c2,tol,iterlim) {
-   u=double(length(c1))
-   .C("callroot",as.integer(length(c1)),as.double(c1),as.double(c2),as.double(tol),
-       as.integer(iterlim),r=as.double(u))$r}
-
    m=ncol(lnprices)
    n=nrow(lnprices)
    d=ncol(Xexpend)
@@ -29,7 +22,7 @@ root=function(c1,c2,tol,iterlim) {
    iotam=c(rep(1,m))
    c1=as.vector(Xexpend%*%gamma)%x%iotam-as.vector(t(lnprices))+alpha
    c2=c(rep(exp(k),n))   
-   u=root(c1,c2,.0000001,20)
+   u=callroot(c1,c2,.0000001,20)
    v=alpha - u*exp(k)-as.vector(t(lnprices))
    vmat=matrix(v,ncol=m,byrow=TRUE)
    vmat=tau*vmat
@@ -48,4 +41,3 @@ root=function(c1,c2,tol,iterlim) {
 return(list(y=y,Xexpend=Xexpend,lnprices=lnprices,theta=theta,prob=Prob))
 
 }
-

@@ -11,45 +11,45 @@
  This R object is a list of two data frames, list(yx,storedemo).\cr
 
  List of 2 \cr
- \$ yx       :'data.frame':	106139 obs. of  19 variables:\cr
-  \ldots \$ store   : int [1:106139] 2 2 2 2 2 2 2 2 2 2 \cr
-  \ldots \$ brand   : int [1:106139] 1 1 1 1 1 1 1 1 1 1 \cr
-  \ldots \$ week    : int [1:106139] 40 46 47 48 50 51 52 53 54 57 \cr
-  \ldots \$ logmove : num [1:106139] 9.02 8.72 8.25 8.99 9.09 \cr
-  \ldots \$ constant: int [1:106139] 1 1 1 1 1 1 1 1 1 1 \cr
-  \ldots \$ price1  : num [1:106139] 0.0605 0.0605 0.0605 0.0605 0.0605 \cr
-  \ldots \$ price2  : num [1:106139] 0.0605 0.0603 0.0603 0.0603 0.0603 \cr
-  \ldots \$ price3  : num [1:106139] 0.0420 0.0452 0.0452 0.0498 0.0436 \cr
-  \ldots \$ price4  : num [1:106139] 0.0295 0.0467 0.0467 0.0373 0.0311 \cr
-  \ldots \$ price5  : num [1:106139] 0.0495 0.0495 0.0373 0.0495 0.0495 \cr
-  \ldots \$ price6  : num [1:106139] 0.0530 0.0478 0.0530 0.0530 0.0530 \cr
-  \ldots \$ price7  : num [1:106139] 0.0389 0.0458 0.0458 0.0458 0.0466 \cr
-  \ldots \$ price8  : num [1:106139] 0.0414 0.0280 0.0414 0.0414 0.0414 \cr
-  \ldots \$ price9  : num [1:106139] 0.0289 0.0430 0.0481 0.0423 0.0423 \cr
-  \ldots \$ price10 : num [1:106139] 0.0248 0.0420 0.0327 0.0327 0.0327 \cr
-  \ldots \$ price11 : num [1:106139] 0.0390 0.0390 0.0390 0.0390 0.0382 \cr
-  \ldots \$ deal    : int [1:106139] 1 0 0 0 0 0 1 1 1 1 \cr
-  \ldots \$ feat    : num [1:106139] 0 0 0 0 0 0 0 0 0 0 \cr
-  \ldots \$ profit  : num [1:106139] 38.0 30.1 30.0 29.9 29.9 \cr
+ $ yx       :'data.frame':	106139 obs. of  19 variables:\cr
+  \ldots $ store   : int [1:106139] 2 2 2 2 2 2 2 2 2 2 \cr
+  \ldots $ brand   : int [1:106139] 1 1 1 1 1 1 1 1 1 1 \cr
+  \ldots $ week    : int [1:106139] 40 46 47 48 50 51 52 53 54 57 \cr
+  \ldots $ logmove : num [1:106139] 9.02 8.72 8.25 8.99 9.09 \cr
+  \ldots $ constant: int [1:106139] 1 1 1 1 1 1 1 1 1 1 \cr
+  \ldots $ price1  : num [1:106139] 0.0605 0.0605 0.0605 0.0605 0.0605 \cr
+  \ldots $ price2  : num [1:106139] 0.0605 0.0603 0.0603 0.0603 0.0603 \cr
+  \ldots $ price3  : num [1:106139] 0.0420 0.0452 0.0452 0.0498 0.0436 \cr
+  \ldots $ price4  : num [1:106139] 0.0295 0.0467 0.0467 0.0373 0.0311 \cr
+  \ldots $ price5  : num [1:106139] 0.0495 0.0495 0.0373 0.0495 0.0495 \cr
+  \ldots $ price6  : num [1:106139] 0.0530 0.0478 0.0530 0.0530 0.0530 \cr
+  \ldots $ price7  : num [1:106139] 0.0389 0.0458 0.0458 0.0458 0.0466 \cr
+  \ldots $ price8  : num [1:106139] 0.0414 0.0280 0.0414 0.0414 0.0414 \cr
+  \ldots $ price9  : num [1:106139] 0.0289 0.0430 0.0481 0.0423 0.0423 \cr
+  \ldots $ price10 : num [1:106139] 0.0248 0.0420 0.0327 0.0327 0.0327 \cr
+  \ldots $ price11 : num [1:106139] 0.0390 0.0390 0.0390 0.0390 0.0382 \cr
+  \ldots $ deal    : int [1:106139] 1 0 0 0 0 0 1 1 1 1 \cr
+  \ldots $ feat    : num [1:106139] 0 0 0 0 0 0 0 0 0 0 \cr
+  \ldots $ profit  : num [1:106139] 38.0 30.1 30.0 29.9 29.9 \cr
 
      1 Tropicana Premium 64 oz;   2 Tropicana Premium 96 oz;  3 Florida's Natural 64 oz; \cr   
      4 Tropicana 64 oz;           5 Minute Maid 64 oz;        6 Minute Maid 96 oz; \cr
      7 Citrus Hill 64 oz;         8 Tree Fresh 64 oz;         9 Florida Gold 64 oz; \cr       
      10 Dominicks 64 oz;          11 Dominicks 128 oz.  \cr
 
- \$ storedemo:'data.frame':	83 obs. of  12 variables:\cr
-  \ldots \$ STORE   : int [1:83] 2 5 8 9 12 14 18 21 28 32 \cr
-  \ldots \$ AGE60   : num [1:83] 0.233 0.117 0.252 0.269 0.178 \cr
-  \ldots \$ EDUC    : num [1:83] 0.2489 0.3212 0.0952 0.2222 0.2534 \cr
-  \ldots \$ ETHNIC  : num [1:83] 0.1143 0.0539 0.0352 0.0326 0.3807 \cr
-  \ldots \$ INCOME  : num [1:83] 10.6 10.9 10.6 10.8 10.0 \cr
-  \ldots \$ HHLARGE : num [1:83] 0.1040 0.1031 0.1317 0.0968 0.0572 \cr
-  \ldots \$ WORKWOM : num [1:83] 0.304 0.411 0.283 0.359 0.391 \cr
-  \ldots \$ HVAL150 : num [1:83] 0.4639 0.5359 0.0542 0.5057 0.3866 \cr
-  \ldots \$ SSTRDIST: num [1:83] 2.11 3.80 2.64 1.10 9.20 \cr
-  \ldots \$ SSTRVOL : num [1:83] 1.143 0.682 1.500 0.667 1.111 \cr
-  \ldots \$ CPDIST5 : num [1:83] 1.93 1.60 2.91 1.82 0.84 \cr
-  \ldots \$ CPWVOL5 : num [1:83] 0.377 0.736 0.641 0.441 0.106 \cr
+ $ storedemo:'data.frame':	83 obs. of  12 variables:\cr
+  \ldots $ STORE   : int [1:83] 2 5 8 9 12 14 18 21 28 32 \cr
+  \ldots $ AGE60   : num [1:83] 0.233 0.117 0.252 0.269 0.178 \cr
+  \ldots $ EDUC    : num [1:83] 0.2489 0.3212 0.0952 0.2222 0.2534 \cr
+  \ldots $ ETHNIC  : num [1:83] 0.1143 0.0539 0.0352 0.0326 0.3807 \cr
+  \ldots $ INCOME  : num [1:83] 10.6 10.9 10.6 10.8 10.0 \cr
+  \ldots $ HHLARGE : num [1:83] 0.1040 0.1031 0.1317 0.0968 0.0572 \cr
+  \ldots $ WORKWOM : num [1:83] 0.304 0.411 0.283 0.359 0.391 \cr
+  \ldots $ HVAL150 : num [1:83] 0.4639 0.5359 0.0542 0.5057 0.3866 \cr
+  \ldots $ SSTRDIST: num [1:83] 2.11 3.80 2.64 1.10 9.20 \cr
+  \ldots $ SSTRVOL : num [1:83] 1.143 0.682 1.500 0.667 1.111 \cr
+  \ldots $ CPDIST5 : num [1:83] 1.93 1.60 2.91 1.82 0.84 \cr
+  \ldots $ CPWVOL5 : num [1:83] 0.377 0.736 0.641 0.441 0.106 \cr
 }
 \details{
   \describe{
@@ -68,7 +68,7 @@
     \item{\code{INCOME}}{median income}
     \item{\code{HHLARGE}}{percentage of households with 5 or more persons}
     \item{\code{WORKWOM}}{percentage of women with full-time jobs}
-    \item{\code{HVAL150}}{percentage of households worth more than \$150,000}
+    \item{\code{HVAL150}}{percentage of households worth more than $150,000}
     \item{\code{SSTRDIST}}{distance to the nearest warehouse store}
     \item{\code{SSTRVOL}}{ratio of sales of this store to the nearest warehouse store}
     \item{\code{CPDIST5}}{average distance in miles to the nearest 5 supermarkets}

@@ -14,12 +14,12 @@
 \arguments{
   \item{x}{ An object of either S3 class, bayesm.mat, or S3 class, mcmc }
   \item{names}{optional character vector of names for coefficients}
-  \item{burnin}{number of draws to discard for burn-in, def: .1*nrow(X)}
+  \item{burnin}{number of draws to discard for burn-in (def: .1*nrow(X))}
   \item{tvalues}{vector of true values}
-  \item{TRACEPLOT}{ logical, TRUE provide sequence plots of draws and acfs, def: TRUE }
-  \item{DEN}{ logical, TRUE use density scale on histograms, def: TRUE }
-  \item{INT}{ logical, TRUE put various intervals and points on graph, def: TRUE }
-  \item{CHECK_NDRAWS}{ logical, TRUE check that there are at least 100 draws, def: TRUE }
+  \item{TRACEPLOT}{ logical, TRUE provide sequence plots of draws and acfs (def: TRUE)}
+  \item{DEN}{ logical, TRUE use density scale on histograms (def: TRUE)}
+  \item{INT}{ logical, TRUE put various intervals and points on graph (def: TRUE)}
+  \item{CHECK_NDRAWS}{ logical, TRUE check that there are at least 100 draws (def: TRUE)}
   \item{...}{ standard graphics parameters }
 }
 \details{

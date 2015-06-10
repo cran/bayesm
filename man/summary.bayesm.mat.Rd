@@ -6,15 +6,16 @@
   array of draws
 }
 \usage{
-\method{summary}{bayesm.mat}(object, names, burnin = trunc(0.1 * nrow(X)), tvalues, QUANTILES = TRUE, TRAILER = TRUE,...)
+\method{summary}{bayesm.mat}(object, names, burnin = trunc(0.1 * nrow(X)), 
+  tvalues, QUANTILES = TRUE, TRAILER = TRUE,...)
 }
 \arguments{
   \item{object}{ \code{object} (hereafter \code{X}) is an array of draws, usually an object of class "bayesm.mat" }
   \item{names}{ optional character vector of names for the columns of \code{X}}
-  \item{burnin}{ number of draws to burn-in, def: .1*nrow(X) }
+  \item{burnin}{ number of draws to burn-in (def: .1*nrow(X))}
   \item{tvalues}{ optional vector of "true" values for use in simulation examples }
-  \item{QUANTILES}{ logical for should quantiles be displayed, def: TRUE }
-  \item{TRAILER}{ logical for should a trailer be displayed, def: TRUE }
+  \item{QUANTILES}{ logical for should quantiles be displayed (def: TRUE)}
+  \item{TRAILER}{ logical for should a trailer be displayed (def: TRUE)}
   \item{...}{ optional arguments for generic function }
 }
 \details{

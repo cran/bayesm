@@ -17,17 +17,17 @@ rmvpGibbs(Data, Prior, Mcmc)
 \arguments{
   \item{Data}{ list(p,y,X)}
   \item{Prior}{ list(betabar,A,nu,V) (optional)}
-  \item{Mcmc}{ list(beta0,sigma0,R,keep) (R required) }
+  \item{Mcmc}{ list(beta0,sigma0,R,keep,nprint) (R required) }
 }
 
 \details{
   model:  \cr
-    \eqn{w_i = X_i beta + e}.    \eqn{e} \eqn{\sim}{~} N(0,Sigma).     note: \eqn{w_i} is p x 1.\cr
+    \eqn{w_i = X_i\beta + e}.    \eqn{e} \eqn{\sim}{~} N(0,\eqn{\Sigma}).     note: \eqn{w_i} is p x 1.\cr
     \eqn{y_{ij} = 1},  if \eqn{w_{ij} > 0}, else \eqn{y_i=0}.  j=1,\ldots,p.   \cr
   
   priors:\cr
-    \eqn{beta} \eqn{\sim}{~} \eqn{N(betabar,A^{-1})}\cr
-    \eqn{Sigma} \eqn{\sim}{~} IW(nu,V)\cr
+    \eqn{\beta} \eqn{\sim}{~} \eqn{N(betabar,A^{-1})}\cr
+    \eqn{\Sigma} \eqn{\sim}{~} IW(nu,V)\cr
 
   to make up X matrix use \code{createX}
 
@@ -44,6 +44,7 @@ rmvpGibbs(Data, Prior, Mcmc)
     \item{\code{sigma0}}{ initial value for sigma }
     \item{\code{R}}{ number of MCMC draws }
     \item{\code{keep}}{ thinning parameter - keep every keepth draw (def: 1)}
+    \item{\code{nprint}}{ print the estimated time remaining for every nprint'th draw (def: 100)}
   }
 }
 

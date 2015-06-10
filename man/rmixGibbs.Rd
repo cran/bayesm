@@ -5,7 +5,7 @@
   \code{rmixGibbs} makes one draw using the Gibbs Sampler for a mixture of multivariate normals.
 }
 \usage{
-rmixGibbs(y, Bbar, A, nu, V, a, p, z, comps)
+rmixGibbs(y, Bbar, A, nu, V, a, p, z)
 }
 \arguments{
   \item{y}{ data array - rows are obs }
@@ -16,7 +16,6 @@ rmixGibbs(y, Bbar, A, nu, V, a, p, z, comps)
   \item{a}{ Dirichlet prior parms }
   \item{p}{ prior prob of each mixture component }
   \item{z}{ component identities for each observation -- "indicators"}
-  \item{comps}{ list of components for the normal mixture   }
 }
 \details{
   \code{rmixGibbs} is not designed to be called directly. Instead, use \code{rnmixGibbs} wrapper function.

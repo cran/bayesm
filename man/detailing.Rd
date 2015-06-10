@@ -4,7 +4,7 @@
 \title{ Physician Detailing Data from Manchanda et al (2004)}
 \description{
   Monthly data on detailing (sales calls) on 1000 physicians. 23 mos of data
-  for each Physician. Includes physician covariates. Dependent Variable (\code{scripts}) is the
+  for each physician. Includes physician covariates. Dependent variable (\code{scripts}) is the
   number of new prescriptions ordered by the physician for the drug detailed.
 }
 \usage{data(detailing)}
@@ -13,22 +13,22 @@
  
  List of 2:
 
- \$ counts:`data.frame':	23000 obs. of  4 variables:\cr
-  \ldots\$ id        : int [1:23000] 1 1 1 1 1 1 1 1 1 1 \cr
-  \ldots\$ scripts       : int [1:23000] 3 12 3 6 5 2 5 1 5 3 \cr
-  \ldots\$ detailing     : int [1:23000] 1 1 1 2 1 0 2 2 1 1 \cr
-  \ldots\$ lagged\_scripts: int [1:23000] 4 3 12 3 6 5 2 5 1 5 
+ $ counts:`data.frame':	23000 obs. of  4 variables:\cr
+  \ldots$ id        : int [1:23000] 1 1 1 1 1 1 1 1 1 1 \cr
+  \ldots$ scripts       : int [1:23000] 3 12 3 6 5 2 5 1 5 3 \cr
+  \ldots$ detailing     : int [1:23000] 1 1 1 2 1 0 2 2 1 1 \cr
+  \ldots$ lagged_scripts: int [1:23000] 4 3 12 3 6 5 2 5 1 5 
 
- \$ demo  :`data.frame':	1000 obs. of  4 variables:\cr
-  \ldots\$ id          : int [1:1000] 1 2 3 4 5 6 7 8 9 10 \cr
-  \ldots\$ generalphys : int [1:1000] 1 0 1 1 0 1 1 1 1 1 \cr
-  \ldots\$ specialist: int [1:1000] 0 1 0 0 1 0 0 0 0 0  \cr
-  \ldots\$ mean\_samples: num [1:1000] 0.722 0.491 0.339 3.196 0.348 
+ $ demo  :`data.frame':	1000 obs. of  4 variables:\cr
+  \ldots$ id          : int [1:1000] 1 2 3 4 5 6 7 8 9 10 \cr
+  \ldots$ generalphys : int [1:1000] 1 0 1 1 0 1 1 1 1 1 \cr
+  \ldots$ specialist: int [1:1000] 0 1 0 0 1 0 0 0 0 0  \cr
+  \ldots$ mean_samples: num [1:1000] 0.722 0.491 0.339 3.196 0.348 
 }
 \details{
   generalphys is dummy for if doctor is a "general practitioner," specialist is dummy for
   if the physician is a specialist in the theraputic class for which the drug is 
-  intended, mean\_samples is the mean number of free drug samples given the doctor
+  intended, mean_samples is the mean number of free drug samples given the doctor
   over the sample.
 }
 \source{

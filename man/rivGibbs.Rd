@@ -17,19 +17,19 @@ rivGibbs(Data, Prior, Mcmc)
 \arguments{
   \item{Data}{ list(z,w,x,y) }
   \item{Prior}{ list(md,Ad,mbg,Abg,nu,V) (optional) } 
-  \item{Mcmc}{ list(R,keep) (R required) }
+  \item{Mcmc}{ list(R,keep,nprint) (R required) }
 }
 \details{
   Model:\cr
-  \eqn{x=z'delta + e1}. \cr
-  \eqn{y=beta*x + w'gamma + e2}. \cr
-  \eqn{e1,e2} \eqn{\sim}{~} \eqn{N(0,Sigma)}. 
+  \eqn{x=z'\delta + e1}. \cr
+  \eqn{y=\beta*x + w'\gamma + e2}. \cr
+  \eqn{e1,e2} \eqn{\sim}{~} \eqn{N(0,\Sigma)}. 
   
   Note: if intercepts are desired in either equation, include vector of ones in z or w
 
   Priors:\cr
-  \eqn{delta} \eqn{\sim}{~} \eqn{N(md,Ad^{-1})}.  \eqn{vec(beta,gamma)} \eqn{\sim}{~} \eqn{N(mbg,Abg^{-1})} \cr
-  \eqn{Sigma} \eqn{\sim}{~} IW(nu,V)
+  \eqn{\delta} \eqn{\sim}{~} \eqn{N(md,Ad^{-1})}.  \eqn{vec(\beta,\gamma)} \eqn{\sim}{~} \eqn{N(mbg,Abg^{-1})} \cr
+  \eqn{\Sigma} \eqn{\sim}{~} IW(nu,V)
 
   List arguments contain:
   \itemize{
@@ -44,7 +44,8 @@ rivGibbs(Data, Prior, Mcmc)
     \item{\code{nu}}{ d.f. parm for IW prior on Sigma (def: 5)}
     \item{\code{V}}{ pds location matrix for IW prior on Sigma (def: nuI)}
     \item{\code{R}}{ number of MCMC draws}
-    \item{\code{keep}}{ MCMC thinning parm: keep every keepth draw (def: 1)} 
+    \item{\code{keep}}{ MCMC thinning parm: keep every keepth draw (def: 1)}
+    \item{\code{nprint}}{ print the estimated time remaining for every nprint'th draw (def: 100)}
   }
 }
 \value{

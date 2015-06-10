@@ -10,6 +10,7 @@ plot.bayesm.mat=function(x,names,burnin=trunc(.1*nrow(X)),tvalues,TRACEPLOT=TRUE
   if(mode(X) !="numeric") stop("Requires numeric argument \n")
   op=par(no.readonly=TRUE)
   on.exit(par(op))
+  on.exit(devAskNewPage(FALSE),add=TRUE)
   if(is.null(attributes(X)$dim)) X=as.matrix(X)
   nx=ncol(X)
   if(nrow(X) < 100 & CHECK_NDRAWS) {cat("fewer than 100 draws submitted \n"); return(invisible())}
@@ -26,6 +27,7 @@ plot.bayesm.mat=function(x,names,burnin=trunc(.1*nrow(X)),tvalues,TRACEPLOT=TRUE
 
   if(missing(names)) {names=as.character(1:nx)}
   if (DEN) ylabtxt="density" else ylabtxt="freq"
+  devAskNewPage(TRUE)
   for(index in 1:nx){
      hist(X[(burnin+1):nrow(X),index],xlab="",ylab=ylabtxt,main=names[index],freq=!DEN,col="magenta",...)
      if(!missing(tvalues)) abline(v=tvalues[index],lwd=2,col="blue")
@@ -39,7 +41,6 @@ plot.bayesm.mat=function(x,names,burnin=trunc(.1*nrow(X)),tvalues,TRACEPLOT=TRUE
      text(mean-2*semean,0,"|",cex=2,col="yellow")
      text(mean+2*semean,0,"|",cex=2,col="yellow")
      }
-     par(ask=dev.interactive())
   }
   if(TRACEPLOT){
      if(nx==1) par(mfrow=c(1,2)) 

@@ -17,7 +17,7 @@ llmnl(beta,y, X)
   \item{X}{ n*p x k Design matrix (use \code{createX} to make) }
 }
 \details{
-  Let \eqn{mu_i=X_i \beta}, then \eqn{Pr(y_i=j) = exp(mu_{i,j})/\sum_kexp(mu_{i,k})}.\cr
+  Let \eqn{\mu_i=X_i beta}, then \eqn{Pr(y_i=j) = exp(\mu_{i,j})/\sum_kexp(\mu_{i,k})}.\cr
   \eqn{X_i} is the submatrix of X corresponding to the
   ith observation.  X has n*p rows.  
   

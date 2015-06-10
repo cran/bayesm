@@ -13,13 +13,13 @@ runireg(Data, Prior, Mcmc)
 \arguments{
   \item{Data}{ list(y,X)}
   \item{Prior}{ list(betabar,A, nu, ssq) }
-  \item{Mcmc}{ list(R,keep)}
+  \item{Mcmc}{ list(R,keep,nprint)}
 }
 \details{
-  Model: \eqn{y = Xbeta + e}.  \eqn{e} \eqn{\sim}{~} \eqn{N(0,sigmasq)}. \cr
+  Model: \eqn{y = X\beta + e}.  \eqn{e} \eqn{\sim}{~} \eqn{N(0,\sigma^2)}. \cr
 
-  Priors: \eqn{beta} \eqn{\sim}{~} \eqn{N(betabar,sigmasq*A^{-1})}. 
- \eqn{sigmasq} \eqn{\sim}{~} \eqn{(nu*ssq)/chisq_{nu}}.
+  Priors: \eqn{\beta} \eqn{\sim}{~} \eqn{N(betabar,\sigma^2*A^{-1})}. 
+ \eqn{\sigma^2} \eqn{\sim}{~} \eqn{(nu*ssq)/\chi^2_{nu}}.
   List arguments contain  
   \itemize{
     \item{\code{X}}{n x k Design Matrix}
@@ -29,7 +29,8 @@ runireg(Data, Prior, Mcmc)
     \item{\code{nu}}{ d.f. parm for Inverted Chi-square prior (def: 3)}
     \item{\code{ssq}}{ scale parm for Inverted Chi-square prior (def: var(y))}
     \item{\code{R}}{ number of draws }
-    \item{\code{keep}}{ thinning parameter - keep every keepth draw }
+    \item{\code{keep}}{ thinning parameter - keep every keepth draw}
+    \item{\code{nprint}}{ print the estimated time remaining for every nprint'th draw (def: 100)}
   }
 }
 \value{

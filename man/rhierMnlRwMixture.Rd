@@ -19,24 +19,24 @@ rhierMnlRwMixture(Data, Prior, Mcmc)
 }
 \arguments{
   \item{Data}{ list(p,lgtdata,Z) ( Z is optional) }
-  \item{Prior}{ list(a,deltabar,Ad,mubar,Amu,nu,V,ncomp) (all but ncomp are optional)}
-  \item{Mcmc}{ list(s,w,R,keep) (R required)}
+  \item{Prior}{ list(a,deltabar,Ad,mubar,Amu,nu,V,a,ncomp) (all but ncomp are optional)}
+  \item{Mcmc}{ list(s,w,R,keep,nprint) (R required)}
 }
 \details{
   Model: \cr
-  \eqn{y_i} \eqn{\sim}{~} \eqn{MNL(X_i,beta_i)}.  i=1,\ldots, length(lgtdata). \eqn{theta_i} is nvar x 1.
+  \eqn{y_i} \eqn{\sim}{~} \eqn{MNL(X_i,\beta_i)}.  i=1,\ldots, length(lgtdata). \eqn{\beta_i} is nvar x 1.
 
-  \eqn{beta_i}= ZDelta[i,] + \eqn{u_i}. \cr
-  Note: here ZDelta refers to Z\%*\%D, ZDelta[i,] is ith row of this product.\cr
+  \eqn{\beta_i}= Z\eqn{\Delta}[i,] + \eqn{u_i}. \cr
+  Note:  Z\eqn{\Delta} is the matrix Z * \eqn{\Delta}; [i,] refers to ith row of this product.\cr
   Delta is an nz x nvar array. 
 
-  \eqn{u_i} \eqn{\sim}{~} \eqn{N(mu_{ind},Sigma_{ind})}. \eqn{ind} \eqn{\sim}{~} multinomial(pvec). \cr
+  \eqn{u_i} \eqn{\sim}{~} \eqn{N(\mu_{ind},\Sigma_{ind})}. \eqn{ind} \eqn{\sim}{~} multinomial(pvec). \cr
 
   Priors: \cr
   \eqn{pvec} \eqn{\sim}{~} dirichlet (a)\cr
-  \eqn{delta= vec(Delta)} \eqn{\sim}{~} \eqn{N(deltabar,A_d^{-1})}\cr
-  \eqn{mu_j} \eqn{\sim}{~} \eqn{N(mubar,Sigma_j (x) Amu^{-1})}\cr
-  \eqn{Sigma_j} \eqn{\sim}{~} IW(nu,V) \cr
+  \eqn{delta= vec(\Delta)} \eqn{\sim}{~} \eqn{N(deltabar,A_d^{-1})}\cr
+  \eqn{\mu_j} \eqn{\sim}{~} \eqn{N(mubar,\Sigma_j (x) Amu^{-1})}\cr
+  \eqn{\Sigma_j} \eqn{\sim}{~} IW(nu,V) \cr
 
   Lists contain:
   \itemize{
@@ -51,11 +51,13 @@ rhierMnlRwMixture(Data, Prior, Mcmc)
     \item{\code{Amu}}{ prior precision for normal comp mean (def: .01I)}
     \item{\code{nu}}{ d.f. parm for IW prior on norm comp Sigma (def: nvar+3)}
     \item{\code{V}}{ pds location parm for IW prior on norm comp Sigma (def: nuI)}
+    \item{\code{a}}{ Dirichlet prior parameter (def: 5)}
     \item{\code{ncomp}}{ number of components used in normal mixture }
     \item{\code{s}}{ scaling parm for RW Metropolis (def: 2.93/sqrt(nvar))}
     \item{\code{w}}{ fractional likelihood weighting parm (def: .1)}
     \item{\code{R}}{ number of MCMC draws}
     \item{\code{keep}}{ MCMC thinning parm: keep every keepth draw (def: 1)}
+    \item{\code{nprint}}{ print the estimated time remaining for every nprint'th draw (def: 100)}
   }
 }
 \value{
@@ -76,7 +78,7 @@ rhierMnlRwMixture(Data, Prior, Mcmc)
   \item{compdraw[[i]][[j]][[2]]}{ ith draw of jth normal mixture cov parm (rooti) }
   }
 
-  Note: Z should \strong{not} include an intercept and is centered for ease of interpretation.\cr
+  Note: Z should \strong{not} include an intercept and is centered for ease of interpretation. The mean of each of the \code{nlgt} \eqn{\beta} s is the mean of the normal mixture.  Use \code{summary()} to compute this mean from the \code{compdraw} output.\cr
   
   Be careful in assessing prior parameter, Amu.  .01 is too small for many applications. See 
   Rossi et al, chapter 5 for full discussion.\cr
@@ -85,7 +87,7 @@ rhierMnlRwMixture(Data, Prior, Mcmc)
   to a weight between 0 and 1.  w is the fractional weight on the normalized pooled likelihood.
   This differs from what is in Rossi et al chapter 5, i.e.
 
-  \eqn{like_i^(1-w) x like_pooled^((n_i/N)*w)}
+  \eqn{like_i^{(1-w)} x like_pooled^{((n_i/N)*w)}}
 
  
   Large R values may be required (>20,000).

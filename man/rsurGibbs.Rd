@@ -21,16 +21,16 @@ rsurGibbs(Data, Prior, Mcmc)
   \item{Mcmc}{ list(R,keep)}
 }
 \details{
-  Model: \eqn{y_i = X_ibeta_i + e_i}.  i=1,\ldots,m. m regressions. \cr
-  (e(1,k), \ldots, e(m,k)) \eqn{\sim}{~} \eqn{N(0,Sigma)}. k=1, \ldots, nobs. 
+  Model: \eqn{y_i = X_i\beta_i + e_i}.  i=1,\ldots,m. m regressions. \cr
+  (e(1,k), \ldots, e(m,k)) \eqn{\sim}{~} \eqn{N(0,\Sigma)}. k=1, \ldots, nobs. 
 
   We can also write as the stacked model: \cr
-  \eqn{y = Xbeta + e} where y is a nobs*m long vector and k=length(beta)=sum(length(betai)).
+  \eqn{y = X\beta + e} where y is a nobs*m long vector and k=length(beta)=sum(length(betai)).
 
   Note: we must have the same number of observations in each equation but we can have different numbers
   of X variables 
 
-  Priors: \eqn{beta} \eqn{\sim}{~} \eqn{N(betabar,A^{-1})}.  \eqn{Sigma} \eqn{\sim}{~} \eqn{IW(nu,V)}.
+  Priors: \eqn{\beta} \eqn{\sim}{~} \eqn{N(betabar,A^{-1})}.  \eqn{\Sigma} \eqn{\sim}{~} \eqn{IW(nu,V)}.
 
   List arguments contain  
   \itemize{
@@ -41,6 +41,7 @@ rsurGibbs(Data, Prior, Mcmc)
     \item{\code{V}}{ scale parm for Inverted Wishart prior (def: nu*I)}
     \item{\code{R}}{ number of MCMC draws }
     \item{\code{keep}}{ thinning parameter - keep every keepth draw }
+    \item{\code{nprint}}{ print the estimated time remaining for every nprint'th draw (def: 100)}
   }
 }
 \value{

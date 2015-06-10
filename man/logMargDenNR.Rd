@@ -22,7 +22,7 @@ logMargDenNR(ll)
 }
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
   by Rossi, Allenby and McCulloch, Chapter 6. \cr
-  \url{http://www.perossi.org/home/bsm-1l}
+  \url{http://www.perossi.org/home/bsm-1}
 }
 \author{ Peter Rossi, Anderson School, UCLA,
   \email{perossichi@gmail.com}.

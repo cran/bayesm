@@ -1,15 +1,19 @@
 useDynLib(bayesm)
+importFrom(Rcpp, evalCpp)
+## exportPattern("^[[:alpha:]]+") this line is automatically created when using package.skeleton but should be removed to prevent the _loop functions from exporting. Instead use the export() function (as is done here)
 
-export(breg,cgetC,createX,eMixMargDen,mixDen,fsh,llmnl,llmnp,llnhlogit,
-lndIChisq,lndIWishart,lndMvn,lndMvst,mnlHess,momMix,nmat,numEff,rdirichlet,
-rmixture,rmultireg,rwishart,rmvst,rtrun,rbprobitGibbs,runireg,
+export(breg,createX,eMixMargDen,mixDen,fsh,llmnl,llmnp,llnhlogit,
+lndIChisq,lndIWishart,lndMvn,lndMvst,mnlHess,momMix,nmat,numEff,rdirichlet, rmixture,rmultireg,
+rwishart,rmvst,rtrun,rbprobitGibbs,runireg,
 runiregGibbs,simnhlogit,rmnpGibbs,rmixGibbs,rnmixGibbs,
 rmvpGibbs,rhierLinearModel,rhierMnlRwMixture,rivGibbs,
 rmnlIndepMetrop,rscaleUsage,ghkvec,condMom,logMargDenNR,
 rhierBinLogit,rnegbinRw,rhierNegbinRw,rbiNormGibbs,clusterMix,rsurGibbs,
-mixDenBi,mnpProb,rhierLinearMixture,summary.bayesm.mat,plot.bayesm.mat,
-plot.bayesm.hcoef,plot.bayesm.nmix,rordprobitGibbs,rivGibbs,rivDP,rDPGibbs,
-rhierMnlDP)
+mixDenBi,mnpProb,rhierLinearMixture,
+summary.bayesm.mat,summary.bayesm.nmix,summary.bayesm.var,
+plot.bayesm.mat,plot.bayesm.hcoef,plot.bayesm.nmix,
+rordprobitGibbs,rivGibbs,rivDP,rDPGibbs,
+rhierMnlDP,cgetC,rbayesBLP)
 
 
 ## register S3 methods
@@ -19,10 +23,3 @@ S3method(plot, bayesm.hcoef)
 S3method(summary, bayesm.mat)
 S3method(summary, bayesm.var)
 S3method(summary, bayesm.nmix)
-
-
-
-
-
-
-

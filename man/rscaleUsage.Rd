@@ -16,7 +16,7 @@ rscaleUsage(Data,Prior, Mcmc)
 \arguments{
   \item{Data}{ list(k,x)}
   \item{Prior}{ list(nu,V,mubar,Am,gsigma,gl11,gl22,gl12,Lambdanu,LambdaV,ge) (optional) }
-  \item{Mcmc}{ list(R,keep,ndghk,printevery,e,y,mu,Sigma,sigma,tau,Lambda) (optional) }
+  \item{Mcmc}{ list(R,keep,ndghk,nprint,e,y,mu,Sigma,sigma,tau,Lambda) (optional) }
 }
 \details{
   Model: n=nrow(x) individuals respond to m=ncol(x) questions. all questions are on a scale 1, \ldots, k.
@@ -29,7 +29,7 @@ rscaleUsage(Data,Prior, Mcmc)
 
 
   Priors:\cr
-  \eqn{(tau_i,ln(sigma_i))} \eqn{\sim}{~} \eqn{N(phi,Lamda)}.  \eqn{phi=(0,lambda_{22})}. \cr
+  \eqn{(tau_i,ln(sigma_i))} \eqn{\sim}{~} \eqn{N(\phi,Lamda)}.  \eqn{\phi=(0,lambda_{22})}. \cr
   mu \eqn{\sim}{~} \eqn{N(mubar, Am{^-1})}.\cr
   Sigma \eqn{\sim}{~} IW(nu,V).\cr
   Lambda \eqn{\sim}{~} IW(Lambdanu,LambdaV).\cr

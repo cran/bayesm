@@ -14,22 +14,23 @@ rmnlIndepMetrop(Data, Prior, Mcmc)
 \arguments{
   \item{Data}{ list(p,y,X)}
   \item{Prior}{ list(A,betabar)  optional}
-  \item{Mcmc}{ list(R,keep,nu) }
+  \item{Mcmc}{ list(R,keep,nprint,nu) }
 }
 \details{
-  Model:   y \eqn{\sim}{~} MNL(X,beta). \eqn{Pr(y=j) = exp(x_j'beta)/\sum_k{e^{x_k'beta}}}. \cr
+  Model:   y \eqn{\sim}{~} MNL(X,\eqn{\beta}). \eqn{\Pr(y=j) = exp(x_j'\beta)/\sum_k{e^{x_k'\beta}}}. \cr
 
-  Prior:   \eqn{beta} \eqn{\sim}{~} \eqn{N(betabar,A^{-1})} \cr
+  Prior:   \eqn{\beta} \eqn{\sim}{~} \eqn{N(betabar,A^{-1})} \cr
 
   list arguments contain:
   \itemize{
-    \item{\code{p}}{number of alternatives}
+    \item{\code{p}}{ number of alternatives}
     \item{\code{y}}{ nobs vector of multinomial outcomes (1,\ldots, p)}
-    \item{\code{X}}{nobs*p x nvar matrix}
+    \item{\code{X}}{ nobs*p x nvar matrix}
     \item{\code{A}}{ nvar x nvar pds prior prec matrix (def: .01I)}
     \item{\code{betabar}}{ nvar x 1 prior mean (def: 0)}
     \item{\code{R}}{ number of MCMC draws}
     \item{\code{keep}}{ MCMC thinning parm: keep every keepth draw (def: 1)}
+    \item{\code{nprint}}{ print the estimated time remaining for every nprint'th draw (def: 100)}
     \item{\code{nu}}{ degrees of freedom parameter for independence t density (def: 6) }
   }
 }
@@ -41,7 +42,7 @@ rmnlIndepMetrop(Data, Prior, Mcmc)
 }
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
   by Rossi, Allenby and McCulloch, Chapter 5. \cr
-  \url{http://www.perossi.org/home/bsm-1l}
+  \url{http://www.perossi.org/home/bsm-1}
 }
 \author{ Peter Rossi, Anderson School, UCLA,
   \email{perossichi@gmail.com}.

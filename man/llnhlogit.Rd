@@ -5,7 +5,7 @@
 
 \title{ Evaluate Log Likelihood for non-homothetic Logit Model  }
 \description{
-  \code{llmnp} evaluates log-likelihood for the Non-homothetic Logit model.
+  \code{llnhlogit} evaluates log-likelihood for the Non-homothetic Logit model.
 }
 
 \usage{
@@ -20,11 +20,17 @@ llnhlogit(theta, choice, lnprices, Xexpend)
 }
 
 \details{
-  Non-homothetic logit model with: \eqn{ln(psi_i(U)) = alpha_i - e^{k_i}U} \cr
+  Non-homothetic logit model, \eqn{Pr(i) = exp(tau v_i)/sum_j(exp(tau v_j))} \cr
+  
+  \eqn{v_i = alpha_i - e^{kappaStar_i}u^i - lnp_i} 
+  tau is the scale parameter of extreme value error distribution.\cr
+  \eqn{u^i} solves \eqn{u^i = psi_i(u^i)E/p_i}.\cr
+  \eqn{ln(psi_i(U)) = alpha_i - e^{kappaStar_i}U}. \cr
+  \eqn{lnE = gamma'Xexpend}.\cr
 
   Structure of theta vector \cr
   alpha: (p x 1) vector of utility intercepts.\cr
-  k: (p x 1) vector of utility rotation parms. \cr
+  kappaStar: (p x 1) vector of utility rotation parms expressed on natural log scale. \cr
   gamma: (k x 1) -- expenditure variable coefs.\cr
   tau: (1 x 1) -- logit scale parameter.\cr
 }
@@ -50,6 +56,17 @@ llnhlogit(theta, choice, lnprices, Xexpend)
 \seealso{ \code{\link{simnhlogit}} }
 \examples{
 ##
-\dontrun{ll=llnhlogit(theta,choice,lnprices,Xexpend)}
+N=1000
+p=3
+k=1
+theta = c(rep(1,p),seq(from=-1,to=1,length=p),rep(2,k),.5)
+lnprices = matrix(runif(N*p),ncol=p)
+Xexpend = matrix(runif(N*k),ncol=k)
+simdata = simnhlogit(theta,lnprices,Xexpend)
+#
+# let's evaluate likelihood at true theta
+#
+llstar = llnhlogit(theta,simdata$y,simdata$lnprices,simdata$Xexpend)
 }
+
 \keyword{ models }

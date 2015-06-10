@@ -15,16 +15,16 @@ rnmixGibbs(Data, Prior, Mcmc)
 \arguments{
   \item{Data}{ list(y) }
   \item{Prior}{ list(Mubar,A,nu,V,a,ncomp) (only ncomp required)}
-  \item{Mcmc}{ list(R,keep,Loglike) (R required) }
+  \item{Mcmc}{ list(R,keep,nprint,Loglike) (R required) }
 }
 \details{
   Model: \cr
-        \eqn{y_i} \eqn{\sim}{~} \eqn{N(mu_{ind_i},Sigma_{ind_i})}. \cr
+        \eqn{y_i} \eqn{\sim}{~} \eqn{N(\mu_{ind_i},\Sigma_{ind_i})}. \cr
         ind \eqn{\sim}{~} iid multinomial(p).  p is a ncomp x 1 vector of probs. 
 
   Priors:\cr
-        \eqn{mu_j} \eqn{\sim}{~} \eqn{N(mubar,Sigma_j (x) A^{-1})}. \eqn{mubar=vec(Mubar)}. \cr
-        \eqn{Sigma_j} \eqn{\sim}{~} IW(nu,V).\cr
+        \eqn{\mu_j} \eqn{\sim}{~} \eqn{N(mubar,\Sigma_j (x) A^{-1})}. \eqn{mubar=vec(Mubar)}. \cr
+        \eqn{\Sigma_j} \eqn{\sim}{~} IW(nu,V).\cr
         note: this is the natural conjugate prior -- a special case of multivariate 
              regression.\cr
         \eqn{p} \eqn{\sim}{~} Dirchlet(a).
@@ -32,8 +32,8 @@ rnmixGibbs(Data, Prior, Mcmc)
   Output of the components is in the form of a list of lists. \cr
   compsdraw[[i]] is ith draw -- list of ncomp lists. \cr
   compsdraw[[i]][[j]] is list of parms for jth normal component. \cr
-  jcomp=compsdraw[[i]][j]]. Then jth comp \eqn{\sim}{~} \eqn{N(jcomp[[1]],Sigma)}, 
-  \eqn{Sigma} = t(R)\%*\%R, \eqn{R^{-1}} = jcomp[[2]].
+  jcomp=compsdraw[[i]][j]]. Then jth comp \eqn{\sim}{~} \eqn{N(jcomp[[1]],\Sigma)}, 
+  \eqn{\Sigma} = t(R)\%*\%R, \eqn{R^{-1}} = jcomp[[2]].
 
   List arguments contain:
   \itemize{
@@ -46,6 +46,7 @@ rnmixGibbs(Data, Prior, Mcmc)
     \item{ncomp}{ number of normal components to be included }
     \item{R}{ number of MCMC draws }
     \item{keep}{ MCMC thinning parm: keep every keepth draw (def: 1)}
+    \item{\code{nprint}}{ print the estimated time remaining for every nprint'th draw (def: 100)}
     \item{LogLike}{ logical flag for compute log-likelihood (def: FALSE)}
   }
 }

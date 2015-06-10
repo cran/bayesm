@@ -32,8 +32,7 @@ function(x,mu,rooti){
 z=as.vector(t(rooti)%*%(x-mu))
 (z%*%z)
 }
-#
-pandterm=function(message) {stop(message,call.=FALSE)}
+
 #
 # check input arguments
 #

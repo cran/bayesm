@@ -17,19 +17,19 @@ rmnpGibbs(Data, Prior, Mcmc)
 \arguments{
   \item{Data}{ list(p, y, X)}
   \item{Prior}{ list(betabar,A,nu,V) (optional)}
-  \item{Mcmc}{ list(beta0,sigma0,R,keep) (R required) }
+  \item{Mcmc}{ list(beta0,sigma0,R,keep,nprint) (R required) }
 }
 
 \details{
   model:  \cr
-    \eqn{w_i = X_i\beta + e}.    \eqn{e} \eqn{\sim}{~} \eqn{N(0,Sigma)}.     note: \eqn{w_i, e} are (p-1) x 1.\cr
+    \eqn{w_i = X_i\beta + e}.    \eqn{e} \eqn{\sim}{~} \eqn{N(0,\Sigma)}.     note: \eqn{w_i, e} are (p-1) x 1.\cr
     \eqn{y_i = j},  if \eqn{w_{ij} > max(0,w_{i,-j})}  j=1,\ldots,p-1.  \eqn{w_{i,-j}} means elements of \eqn{w_i}
      other than the jth. \cr
     \eqn{y_i = p},  if all \eqn{w_i < 0}.\cr
   
   priors:\cr
-    \eqn{beta} \eqn{\sim}{~} \eqn{N(betabar,A^{-1})} \cr
-    \eqn{Sigma} \eqn{\sim}{~} IW(nu,V)\cr
+    \eqn{\beta} \eqn{\sim}{~} \eqn{N(betabar,A^{-1})} \cr
+    \eqn{\Sigma} \eqn{\sim}{~} IW(nu,V)\cr
 
   to make up X matrix use \code{\link{createX}} with \code{DIFF=TRUE}.
 
@@ -46,6 +46,7 @@ rmnpGibbs(Data, Prior, Mcmc)
     \item{\code{sigma0}}{ initial value for sigma }
     \item{\code{R}}{ number of MCMC draws }
     \item{\code{keep}}{ thinning parameter - keep every keepth draw (def: 1)}
+    \item{\code{nprint}}{ print the estimated time remaining for every nprint'th draw (def: 100)}
   }
 }
 
@@ -55,13 +56,13 @@ rmnpGibbs(Data, Prior, Mcmc)
   \item{sigmadraw}{R/keep x (p-1)*(p-1) array of sigma draws -- each row is in vector form}
 }
 \note{
-  beta is not identified.  beta/sqrt(\eqn{sigma_{11}}) and Sigma/\eqn{sigma_{11}} are.  See Allenby et al or
+  \eqn{\beta} is not identified.  \eqn{\beta}/sqrt(\eqn{\sigma_{11}}) and \eqn{\Sigma}/\eqn{\sigma_{11}} are.  See Allenby et al or
   example below for details.
 }
 
 \references{ For further discussion, see \emph{Bayesian Statistics and Marketing}
   by Rossi, Allenby and McCulloch, Chapter 4. \cr
-  \url{http://www.perossi.org/home/bsm-1l}
+  \url{http://www.perossi.org/home/bsm-1}
 }
 
 \author{ Peter Rossi, Anderson School, UCLA,

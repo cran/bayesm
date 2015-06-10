@@ -16,22 +16,22 @@ rhierLinearModel(Data, Prior, Mcmc)
 \arguments{
   \item{Data}{ list(regdata,Z) (Z optional). }
   \item{Prior}{ list(Deltabar,A,nu.e,ssq,nu,V)  (optional).}
-  \item{Mcmc}{ list(R,keep) (R required).}
+  \item{Mcmc}{ list(R,keep,nprint) (R required).}
 }
 \details{
   Model: length(regdata) regression equations. \cr
-        \eqn{y_i = X_ibeta_i + e_i}. \eqn{e_i} \eqn{\sim}{~} \eqn{N(0,tau_i)}.  nvar X vars in each equation. 
+        \eqn{y_i = X_i\beta_i + e_i}. \eqn{e_i} \eqn{\sim}{~} \eqn{N(0,\tau_i)}.  nvar X vars in each equation. 
 
  Priors:\cr
-        \eqn{tau_i} \eqn{\sim}{~} nu.e*\eqn{ssq_i/\chi^2_{nu.e}}.  \eqn{tau_i} is the variance of \eqn{e_i}.\cr
-        \eqn{beta_i} \eqn{\sim}{~} N(ZDelta[i,],\eqn{V_{beta}}). \cr
-               Note:  ZDelta is the matrix Z * Delta; [i,] refers to ith row of this product.
+        \eqn{\tau_i} \eqn{\sim}{~} nu.e*\eqn{ssq_i/\chi^2_{nu.e}}.  \eqn{\tau_i} is the variance of \eqn{e_i}.\cr
+        \eqn{\beta_i} \eqn{\sim}{~} N(Z\eqn{\Delta}[i,],\eqn{V_{\beta}}). \cr
+               Note:  Z\eqn{\Delta} is the matrix Z * \eqn{\Delta}; [i,] refers to ith row of this product.\cr
 
-          \eqn{vec(Delta)} given \eqn{V_{beta}} \eqn{\sim}{~} \eqn{N(vec(Deltabar),V_{beta} (x) A^{-1})}.\cr
-          \eqn{V_{beta}} \eqn{\sim}{~} \eqn{IW(nu,V)}. \cr
-              \eqn{Delta, Deltabar} are nz x nvar.  \eqn{A} is nz x nz.  \eqn{V_{beta}} is nvar x nvar.
+          \eqn{vec(\Delta)} given \eqn{V_{\beta}} \eqn{\sim}{~} \eqn{N(vec(Deltabar),V_{\beta} (x) A^{-1})}.\cr
+          \eqn{V_{\beta}} \eqn{\sim}{~} \eqn{IW(nu,V)}. \cr
+              \eqn{Delta, Deltabar} are nz x nvar.  \eqn{A} is nz x nz.  \eqn{V_{\beta}} is nvar x nvar.
         
-          Note: if you don't have any z vars, set Z=iota (nreg x 1).
+          Note: if you don't have any Z vars, omit Z in the \code{Data} argument and a vector of ones will be inserted for you.  In this case (of no Z vars), the matrix \eqn{\Delta} will be 1 x nvar and should be interpreted as the mean of all unit \eqn{\beta} s.
 
   List arguments contain:
   \itemize{
@@ -46,6 +46,7 @@ rhierLinearModel(Data, Prior, Mcmc)
     \item{\code{V}}{ Scale location matrix for Vbeta prior (def: nu*I)}
     \item{\code{R}}{ number of MCMC draws}
     \item{\code{keep}}{ MCMC thinning parm: keep every keepth draw (def: 1)}
+    \item{\code{nprint}}{ print the estimated time remaining for every nprint'th draw (def: 100)}
    }
 }
 \value{

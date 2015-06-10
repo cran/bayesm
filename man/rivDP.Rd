@@ -19,54 +19,82 @@ rivDP(Data, Prior, Mcmc)
 }
 \arguments{
   \item{Data}{ list(z,w,x,y) }
-  \item{Prior}{ list(md,Ad,mbg,Abg,lambda,Prioralpha) (optional) } 
-  \item{Mcmc}{ list(R,keep,SCALE) (R required) }
+  \item{Prior}{ list(md,Ad,mbg,Abg,lambda,Prioralpha,lambda_hyper) (optional) } 
+  \item{Mcmc}{ list(R,keep,nprint,maxuniq,SCALE,gridsize) (R required) }
 }
 \details{
   Model:\cr
-  \eqn{x=z'delta + e1}. \cr
-  \eqn{y=beta*x + w'gamma + e2}. \cr
-  \eqn{e1,e2} \eqn{\sim}{~} \eqn{N(theta_{i})}.  \eqn{theta_{i}} represents \eqn{mu_{i},Sigma_{i}}
+  \eqn{x=z'\delta + e1}. \cr
+  \eqn{y=\beta*x + w'\gamma + e2}. \cr
+  \eqn{e1,e2} \eqn{\sim}{~} \eqn{N(\theta_{i})}.  \eqn{\theta_{i}} represents \eqn{\mu_{i},\Sigma_{i}}
   
   Note: Error terms have non-zero means.  DO NOT include intercepts in the z or w matrices.  This is different
         from \code{rivGibbs} which requires intercepts to be included explicitly.
 
   Priors:\cr
-  \eqn{delta} \eqn{\sim}{~} \eqn{N(md,Ad^{-1})}.  \eqn{vec(beta,gamma)} \eqn{\sim}{~} \eqn{N(mbg,Abg^{-1})} \cr
+  \eqn{\delta} \eqn{\sim}{~} \eqn{N(md,Ad^{-1})}.  \eqn{vec(\beta,\gamma)} \eqn{\sim}{~} \eqn{N(mbg,Abg^{-1})} \cr
 
-  \eqn{theta_{i}\sim{~}G} \cr
+  \eqn{\theta_{i}} \eqn{\sim}{~} \eqn{G} \cr
 
   \eqn{G} \eqn{\sim}{~} \eqn{DP(alpha,G_{0})} \cr
  
-  \eqn{G_{0}} is the natural conjugate prior for \eqn{(mu,Sigma)}: \cr
-  \eqn{Sigma} \eqn{\sim}{~} \eqn{IW(nu,vI)} and  \eqn{mu | Sigma} \eqn{\sim}{~} \eqn{N(0,1/amu Sigma)} \cr
-  These parameters are collected together in the list \code{lambda}.  It is highly
+  \eqn{G_{0}} is the natural conjugate prior for \eqn{(\mu,\Sigma)}: \cr
+  \eqn{\Sigma} \eqn{\sim}{~} \eqn{IW(nu,vI)} and  \eqn{\mu|\Sigma} \eqn{\sim}{~} \eqn{N(0,\Sigma (x) a^{-1})} \cr
+  These parameters are collected together in the list \eqn{\lambda}.  It is highly
        recommended that you use the default settings for these hyper-parameters.\cr
+  
+  \eqn{\lambda(a,nu,v):}\cr
+  
+      \eqn{a} \eqn{\sim}{~} uniform[alim[1],alimb[2]]\cr
+      \eqn{nu} \eqn{\sim}{~} dim(data)-1 + exp(z) \cr
+      \eqn{z} \eqn{\sim}{~} uniform[dim(data)-1+nulim[1],nulim[2]]\cr
+      \eqn{v} \eqn{\sim}{~} uniform[vlim[1],vlim[2]]
+       
 
   \eqn{alpha} \eqn{\sim}{~} \eqn{(1-(alpha-alpha_{min})/(alpha_{max}-alpha{min}))^{power}} \cr
    where \eqn{alpha_{min}} and \eqn{alpha_{max}} are set using the arguments in the reference
    below.  It is highly recommended that you use the default values for the hyperparameters
    of the prior on alpha
 
-  List arguments contain:
+List arguments contain:
+  
+Data:\cr
   \itemize{
     \item{\code{z}}{ matrix of obs on instruments}
     \item{\code{y}}{ vector of obs on lhs var in structural equation}
     \item{\code{x}}{ "endogenous" var in structural eqn}
-    \item{\code{w}}{ matrix of obs on "exogenous" vars in the structural eqn}
+    \item{\code{w}}{ matrix of obs on "exogenous" vars in the structural eqn}}
+Prior:\cr    
+  \itemize{
     \item{\code{md}}{ prior mean of delta (def: 0)}
     \item{\code{Ad}}{ pds prior prec for prior on delta (def: .01I)}
     \item{\code{mbg}}{ prior mean vector for prior on beta,gamma (def: 0)}
-    \item{\code{Abg}}{ pds prior prec  for prior on beta,gamma (def: .01I)}
-    \item{\code{lambda}}{ list of hyperparameters for theta prior- use default settings }
-    \item{\code{Prioralpha}}{ list of hyperparameters for theta prior- use default settings }
+    \item{\code{Abg}}{ pds prior prec  for prior on beta,gamma (def: .01I)}}
+Prioralpha:\cr
+ \itemize{
+  \item{\code{Istarmin}}{ expected number of components at lower bound of support of alpha (def: 1)}
+  \item{\code{Istarmax}}{ expected number of components at upper bound of support of alpha}
+  \item{\code{power}}{ power parameter for alpha prior (def: .8)}
+  }
+ 
+lambda_hyper:\cr
+  \itemize{
+   \item{\code{alim}}{ defines support of a distribution,def:c(.01,10) }
+   \item{\code{nulim}}{ defines support of nu distribution, def:c(.01,3)} 
+   \item{\code{vlim}}{ defines support of v distribution, def:c(.1,4)} 
+  }
+  
+MCMC:\cr  
+  \itemize{
     \item{\code{R}}{ number of MCMC draws}
-    \item{\code{keep}}{ MCMC thinning parm: keep every keepth draw (def: 1)} 
-    \item{\code{SCALE}}{ scale data, def: TRUE}
+    \item{\code{keep}}{ MCMC thinning parm: keep every keepth draw (def: 1)}
+    \item{\code{nprint}}{ print the estimated time remaining for every nprint'th draw (def: 100)}
+    \item{\code{maxuniq}}{ storage constraint on the number of unique components (def: 200)}
+    \item{\code{SCALE}}{ scale data (def: TRUE)}
     \item{\code{gridsize}}{ gridsize parm for alpha draws (def: 20)} 
   }
 
-  output includes object \code{nmix} of class "bayesm.nmix" which contains draws of predictive distribution of 
+output includes object \code{nmix} of class "bayesm.nmix" which contains draws of predictive distribution of 
   errors (a Bayesian analogue of a density estimate for the error terms).\cr
   nmix:\cr
   \itemize{

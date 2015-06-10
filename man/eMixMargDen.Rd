@@ -25,8 +25,8 @@ eMixMargDen(grid, probdraw, compdraw)
 \details{
   length(compdraw) is number of MCMC draws. \cr
   compdraw[[i]] is a list draws of mu and inv Chol root for each of mixture components. \cr
-  compdraw[[i]][[j]] is jth component.  compdraw[[i]][[j]]\$mu is mean vector; compdraw[[i]][[j]]\$rooti
-  is the UL decomp of \eqn{Sigma^{-1}}.
+  compdraw[[i]][[j]] is jth component.  compdraw[[i]][[j]]$mu is mean vector; compdraw[[i]][[j]]$rooti
+  is the UL decomp of \eqn{\Sigma^{-1}}.
 }
 
 \value{
