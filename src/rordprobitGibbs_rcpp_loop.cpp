@@ -138,10 +138,10 @@ List rordprobitGibbs_rcpp_loop(vec const& y, mat const& X, int k, mat const& A, 
   int ndstar = k-2;
   int ny = y.size();
 
-  mat betadraw(floor(R/keep), nvar);
-  mat cutdraw(floor(R/keep), ncuts);
-  mat dstardraw(floor(R/keep), ndstar);
-  vec staydraw(floor(R/keep));
+  mat betadraw(R/keep, nvar);
+  mat cutdraw(R/keep, ncuts);
+  mat dstardraw(R/keep, ndstar);
+  vec staydraw(R/keep);
   vec cutoff1(ny);
   vec cutoff2(ny);
   vec sigma(X.n_rows); sigma.ones();

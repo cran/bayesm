@@ -35,11 +35,11 @@ List rhierLinearMixture_rcpp_loop(List const& regdata, mat const& Z,
   
   // allocate space for draws
   mat oldbetas = zeros<mat>(nreg,nvar);
-  mat taudraw(floor(R/keep), nreg);
-  cube betadraw(nreg, nvar, floor(R/keep));
-  mat probdraw(floor(R/keep), oldprob.size());
-  mat Deltadraw(1,1); if(drawdelta) Deltadraw.zeros(floor(R/keep), nz*nvar);//enlarge Deltadraw only if the space is required
-  List compdraw(floor(R/keep));
+  mat taudraw(R/keep, nreg);
+  cube betadraw(nreg, nvar, R/keep);
+  mat probdraw(R/keep, oldprob.size());
+  mat Deltadraw(1,1); if(drawdelta) Deltadraw.zeros(R/keep, nz*nvar);//enlarge Deltadraw only if the space is required
+  List compdraw(R/keep);
   
   if (nprint>0) startMcmcTimer();
 

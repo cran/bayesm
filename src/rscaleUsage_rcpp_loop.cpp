@@ -234,7 +234,7 @@ List rscaleUsage_rcpp_loop(int k, mat const& x, int p, int n,
   List bs, rwout;
   
   rowvec onesp = ones<rowvec>(p);
-  int nk = floor(R/keep);
+  int nk = R/keep;
   int ndpost = nk*keep;
   
   mat drSigma = zeros<mat>(nk,pow(p,2));

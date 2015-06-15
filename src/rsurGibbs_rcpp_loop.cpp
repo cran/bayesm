@@ -67,8 +67,8 @@ List rsurGibbs_rcpp_loop(List const& regdata, vec const& indreg, vec const& cumn
   int nobs = (regdatai_struct.y).size();
   
   mat XtipXti = zeros<mat>(sum(nk), sum(nk));
-  mat Sigmadraw(floor(R/keep), nreg*nreg);
-  mat betadraw(floor(R/keep), nvar);
+  mat Sigmadraw(R/keep, nreg*nreg);
+  mat betadraw(R/keep, nvar);
 
   if (nprint>0) startMcmcTimer();
 

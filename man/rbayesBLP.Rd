@@ -7,7 +7,7 @@
 
 \title{ Bayesian Analysis of Random Coefficient Logit Models Using Aggregate Data }
 \description{
-  \code{rbayesBLP} implements a hybrid MCMC algorithm for aggregate level sales data in a market with differentiated products.
+  \code{rbayesBLP} implements a hybrid MCMC algorithm for aggregate level sales data in a market with differentiated products. Version 3.0-1 contains an error for use of instruments with this function. This will be fixed in version 3.0-2.
 }
 \usage{
 rbayesBLP(Data, Prior, Mcmc)

@@ -178,7 +178,7 @@ List rhierMnlDP_rcpp_loop(int R, int keep, int nprint,
   int mkeep, Istar;
   vec betabar, q0v;
   mat rootpi, ucholinv, incroot, V;
-  List compdraw(floor(R/keep)), nmix;
+  List compdraw(R/keep), nmix;
   DPOut mgout_struct;
   mnlMetropOnceOut metropout_struct;
   murooti thetaStarLgt_struct;
@@ -231,16 +231,16 @@ List rhierMnlDP_rcpp_loop(int R, int keep, int nprint,
     lambda_struct.V = lambda_struct.nu*eye(nvar,nvar);
   
   //allocate space for draws
-  mat Deltadraw(1,1); if(drawdelta) Deltadraw.zeros(floor(R/keep), nz*nvar);//enlarge Deltadraw only if the space is required
-  cube betadraw(nlgt, nvar, floor(R/keep));
-  vec probdraw = zeros<vec>(floor(R/keep));
+  mat Deltadraw(1,1); if(drawdelta) Deltadraw.zeros(R/keep, nz*nvar);//enlarge Deltadraw only if the space is required
+  cube betadraw(nlgt, nvar, R/keep);
+  vec probdraw = zeros<vec>(R/keep);
   vec oldll = zeros<vec>(nlgt);
-  vec loglike = zeros<vec>(floor(R/keep));
-  vec Istardraw = zeros<vec>(floor(R/keep));
-  vec alphadraw = zeros<vec>(floor(R/keep));
-  vec nudraw = zeros<vec>(floor(R/keep));
-  vec vdraw = zeros<vec>(floor(R/keep));
-  vec adraw = zeros<vec>(floor(R/keep));
+  vec loglike = zeros<vec>(R/keep);
+  vec Istardraw = zeros<vec>(R/keep);
+  vec alphadraw = zeros<vec>(R/keep);
+  vec nudraw = zeros<vec>(R/keep);
+  vec vdraw = zeros<vec>(R/keep);
+  vec adraw = zeros<vec>(R/keep);
   
   if (nprint>0) startMcmcTimer();
   

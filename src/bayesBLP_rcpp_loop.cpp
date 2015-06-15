@@ -331,15 +331,15 @@ List bayesBLP_rcpp_loop(bool IV, mat const& X, mat const& Z, vec const& share,
 
   // Allocate matrix for draws to be stored during MCMC
   if (IV==TRUE){
-    Omega_all = zeros<mat>(4, floor(R/keep));
-    delta_all = zeros<mat>(I, floor(R/keep));
+    Omega_all = zeros<mat>(4,R/keep);
+    delta_all = zeros<mat>(I,R/keep);
   }else{
-    tau_sq_all = zeros<vec>(floor(R/keep));
+    tau_sq_all = zeros<vec>(R/keep);
   }
-  mat theta_bar_all = zeros<mat>(K, floor(R/keep));
-  mat r_all = zeros<mat>(K*(K+1)/2, floor(R/keep));
-  mat Sigma_all = zeros<mat>(K*K, floor(R/keep));  
-  vec ll_all = zeros<vec>(floor(R/keep));
+  mat theta_bar_all = zeros<mat>(K,R/keep);
+  mat r_all = zeros<mat>(K*(K+1)/2,R/keep);
+  mat Sigma_all = zeros<mat>(K*K,R/keep);  
+  vec ll_all = zeros<vec>(R/keep);
 
   // list to be returned to R  
   List rtn;

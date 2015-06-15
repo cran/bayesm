@@ -48,13 +48,13 @@ List rDPGibbs_rcpp_loop(int R, int keep, int nprint,
   double nu;
 
   //allocate storage
-  vec alphadraw = zeros<vec>(floor(R/keep));
-  vec Istardraw = zeros<vec>(floor(R/keep));
-  vec adraw = zeros<vec>(floor(R/keep));
-  vec nudraw = zeros<vec>(floor(R/keep));
-  vec vdraw = zeros<vec>(floor(R/keep));
-  List thetaNp1draw(floor(R/keep));
-  imat inddraw = zeros<imat>(floor(R/keep),n);
+  vec alphadraw = zeros<vec>(R/keep);
+  vec Istardraw = zeros<vec>(R/keep);
+  vec adraw = zeros<vec>(R/keep);
+  vec nudraw = zeros<vec>(R/keep);
+  vec vdraw = zeros<vec>(R/keep);
+  List thetaNp1draw(R/keep);
+  imat inddraw = zeros<imat>(R/keep,n);
 
   //do scaling
   rowvec dvec, ybar;

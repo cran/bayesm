@@ -28,7 +28,7 @@ List rbprobitGibbs_rcpp_loop(vec const& y, mat const& X, vec const& Abetabar, ma
 
   int nvar = X.n_cols;
   
-  mat betadraw(floor(R/keep), nvar);
+  mat betadraw(R/keep, nvar);
   
   if (nprint>0) startMcmcTimer();
   

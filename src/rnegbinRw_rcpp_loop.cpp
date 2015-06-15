@@ -44,8 +44,8 @@ List rnegbinRw_rcpp_loop(vec const& y, mat const& X, vec const& betabar, mat con
   int nacceptbeta = 0;
   int nacceptalpha = 0;  
 
-  vec alphadraw(floor(R/keep));
-  mat betadraw(floor(R/keep), nvar);
+  vec alphadraw(R/keep);
+  mat betadraw(R/keep, nvar);
   
   if (nprint>0) startMcmcTimer();
   

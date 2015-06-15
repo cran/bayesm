@@ -331,15 +331,15 @@ List rivDP_rcpp_loop(int R, int keep, int nprint,
   double alpha = 1.0;
   
   //allocate space for draws
-  mat deltadraw = zeros<mat>(floor(R/keep),dimd);
-  vec betadraw = zeros<vec>(floor(R/keep));
-  vec alphadraw = zeros<vec>(floor(R/keep));
-  vec Istardraw = zeros<vec>(floor(R/keep));
-  mat gammadraw = zeros<mat>(floor(R/keep),dimg);
-  List thetaNp1draw(floor(R/keep));
-  vec nudraw = zeros<vec>(floor(R/keep));
-  vec vdraw = zeros<vec>(floor(R/keep));
-  vec adraw = zeros<vec>(floor(R/keep));
+  mat deltadraw = zeros<mat>(R/keep,dimd);
+  vec betadraw = zeros<vec>(R/keep);
+  vec alphadraw = zeros<vec>(R/keep);
+  vec Istardraw = zeros<vec>(R/keep);
+  mat gammadraw = zeros<mat>(R/keep,dimg);
+  List thetaNp1draw(R/keep);
+  vec nudraw = zeros<vec>(R/keep);
+  vec vdraw = zeros<vec>(R/keep);
+  vec adraw = zeros<vec>(R/keep);
 
   if(nprint>0) startMcmcTimer();
 

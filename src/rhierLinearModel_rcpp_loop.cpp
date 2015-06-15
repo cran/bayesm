@@ -82,10 +82,10 @@ List rhierLinearModel_rcpp_loop(List const& regdata, mat const& Z, mat const& De
   } 
   
   mat betas(nreg, nvar);
-  mat Vbetadraw(floor(R/keep), nvar*nvar);
-  mat Deltadraw(floor(R/keep), nz*nvar);
-  mat taudraw(floor(R/keep), nreg);
-  cube betadraw(nreg, nvar, floor(R/keep));
+  mat Vbetadraw(R/keep, nvar*nvar);
+  mat Deltadraw(R/keep, nz*nvar);
+  mat taudraw(R/keep, nreg);
+  cube betadraw(nreg, nvar, R/keep);
 
   if (nprint>0) startMcmcTimer();
   

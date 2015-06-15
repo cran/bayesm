@@ -35,8 +35,8 @@ List runireg_rcpp_loop(vec const& y, mat const& X, vec const& betabar, mat const
   int nvar = X.n_cols;
   int nobs = y.size();
   
-  vec sigmasqdraw(floor(R/keep));
-  mat betadraw(floor(R/keep), nvar);
+  vec sigmasqdraw(R/keep);
+  mat betadraw(R/keep, nvar);
   
   if (nprint>0) startMcmcTimer();
 

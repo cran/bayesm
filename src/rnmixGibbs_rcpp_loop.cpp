@@ -11,9 +11,9 @@ List rnmixGibbs_rcpp_loop(mat const& y, mat const& Mubar,
 
   int mkeep = 0;    
   
-  mat pdraw(floor(R/keep),p.size());
-  mat zdraw(floor(R/keep),z.size());
-  List compdraw(floor(R/keep));
+  mat pdraw(R/keep,p.size());
+  mat zdraw(R/keep,z.size());
+  List compdraw(R/keep);
   
   if(nprint>0) startMcmcTimer();
   

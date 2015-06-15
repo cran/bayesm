@@ -74,11 +74,11 @@ List rhierNegbinRw_rcpp_loop(List const& regdata, List const& hessdata, mat cons
   // allocate space for draws
   vec oldlpostbeta = zeros<vec>(nreg);
   vec clpostbeta = zeros<vec>(nreg);
-  cube Betadraw = zeros<cube>(nreg, nvar, floor(R/keep));
-  vec alphadraw = zeros<vec>(floor(R/keep));
-  vec llike = zeros<vec>(floor(R/keep));
-  mat Vbetadraw = zeros<mat>(floor(R/keep),nvar*nvar);
-  mat Deltadraw = zeros<mat>(floor(R/keep),nvar*nz);
+  cube Betadraw = zeros<cube>(nreg, nvar, R/keep);
+  vec alphadraw = zeros<vec>(R/keep);
+  vec llike = zeros<vec>(R/keep);
+  mat Vbetadraw = zeros<mat>(R/keep,nvar*nvar);
+  mat Deltadraw = zeros<mat>(R/keep,nvar*nz);
   
   // convert regdata and hessdata Lists to std::vector of struct
   std::vector<moments> regdata_vector;

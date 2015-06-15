@@ -49,10 +49,10 @@ List rivGibbs_rcpp_loop(vec const& y, vec const& x, mat const& z, mat const& w, 
   int dimd = z.n_cols;
   int dimg = w.n_cols;
 
-  mat deltadraw(floor(R/keep), dimd);
-  vec betadraw(floor(R/keep));
-  mat gammadraw(floor(R/keep), dimg);
-  mat Sigmadraw(floor(R/keep), 4);  
+  mat deltadraw(R/keep, dimd);
+  vec betadraw(R/keep);
+  mat gammadraw(R/keep, dimg);
+  mat Sigmadraw(R/keep, 4);  
   mat C = eye(2,2); //eye creates a diagonal matrix
 
   // set initial values

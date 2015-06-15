@@ -32,11 +32,11 @@ List rhierMnlRwMixture_rcpp_loop(List const& lgtdata, mat const& Z,
     
   // allocate space for draws
   vec oldll = zeros<vec>(nlgt);
-  cube betadraw(nlgt, nvar, floor(R/keep));
-  mat probdraw(floor(R/keep), oldprob.size());
-  vec loglike(floor(R/keep));
-  mat Deltadraw(1,1); if(drawdelta) Deltadraw.zeros(floor(R/keep), nz*nvar);//enlarge Deltadraw only if the space is required
-  List compdraw(floor(R/keep));
+  cube betadraw(nlgt, nvar, R/keep);
+  mat probdraw(R/keep, oldprob.size());
+  vec loglike(R/keep);
+  mat Deltadraw(1,1); if(drawdelta) Deltadraw.zeros(R/keep, nz*nvar);//enlarge Deltadraw only if the space is required
+  List compdraw(R/keep);
   
   if (nprint>0) startMcmcTimer();
     

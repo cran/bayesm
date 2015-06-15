@@ -1,9 +1,9 @@
 Package: bayesm
-Version: 3.0-0
+Version: 3.0-1
 Type: Package
 Title: Bayesian Inference for Marketing/Micro-Econometrics
 Depends: R (>= 2.10)
-Date: 2015-06-10
+Date: 2015-06-15
 Author: Peter Rossi <perossichi@gmail.com>
 Maintainer: Peter Rossi <perossichi@gmail.com>
 License: GPL (>= 2)
@@ -37,6 +37,6 @@ Description: Covers many important models used
   Marketing by Rossi, Allenby and McCulloch (Wiley 2005) and Bayesian Non- and Semi-Parametric
   Methods and Applications (Princeton U Press 2014).
 NeedsCompilation: yes
-Packaged: 2015-06-12 18:21:48 UTC; perossichi
+Packaged: 2015-06-15 18:36:10 UTC; perossichi
 Repository: CRAN
-Date/Publication: 2015-06-13 01:09:29
+Date/Publication: 2015-06-16 01:07:24

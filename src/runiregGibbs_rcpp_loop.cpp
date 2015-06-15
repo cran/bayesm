@@ -35,8 +35,8 @@ List runiregGibbs_rcpp_loop(vec const& y, mat const& X, vec const& betabar, mat 
   int nvar = X.n_cols;
   int nobs = y.size();
   
-  vec sigmasqdraw(floor(R/keep));
-  mat betadraw(floor(R/keep), nvar);
+  vec sigmasqdraw(R/keep);
+  mat betadraw(R/keep, nvar);
   
   mat XpX = trans(X)*X;
   vec Xpy = trans(X)*y;

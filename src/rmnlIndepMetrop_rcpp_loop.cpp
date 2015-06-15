@@ -12,8 +12,8 @@ List rmnlIndepMetrop_rcpp_loop(int R, int keep, int nu,
   int naccept = 0;    
   int ncolX = X.n_cols;
   
-  mat betadraw(floor(R/keep), ncolX);
-  vec loglike(floor(R/keep));
+  mat betadraw(R/keep, ncolX);
+  vec loglike(R/keep);
   vec betac = zeros<vec>(ncolX);
   rowvec beta = zeros<rowvec>(ncolX);
   double cloglike, clpost, climp, ldiff, alpha, unif, oldloglike;
