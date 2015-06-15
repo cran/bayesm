@@ -1,5 +1,5 @@
 Package: bayesm
-Version: 3.0-1
+Version: 3.0-2
 Type: Package
 Title: Bayesian Inference for Marketing/Micro-Econometrics
 Depends: R (>= 2.10)
@@ -37,6 +37,6 @@ Description: Covers many important models used
   Marketing by Rossi, Allenby and McCulloch (Wiley 2005) and Bayesian Non- and Semi-Parametric
   Methods and Applications (Princeton U Press 2014).
 NeedsCompilation: yes
-Packaged: 2015-06-15 18:36:10 UTC; perossichi
+Packaged: 2015-06-20 06:26:44 UTC; ripley
 Repository: CRAN
-Date/Publication: 2015-06-16 01:07:24
+Date/Publication: 2015-06-20 08:33:45

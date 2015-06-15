@@ -126,7 +126,7 @@ double rlpx(mat const& x, double e,int k, vec const& mu,vec const& tau,mat const
   vec cc = cgetC(e,k);
   mat L = trans(chol(Sigma));
   vec lpv = zeros<vec>(n);
-  double offset = p*log(k);
+  double offset = p*log((double)k);
 
   vec a,b;
   double ghkres,lghkres;
@@ -237,7 +237,7 @@ List rscaleUsage_rcpp_loop(int k, mat const& x, int p, int n,
   int nk = R/keep;
   int ndpost = nk*keep;
   
-  mat drSigma = zeros<mat>(nk,pow(p,2));
+  mat drSigma = zeros<mat>(nk,pow(p,2.0));
   mat drmu = zeros<mat>(nk,p);
   mat drtau = zeros<mat>(nk,n);
   mat drsigma = zeros<mat>(nk,n);

@@ -530,9 +530,9 @@ vec q0(mat const& y, lambda const& lambda_struct){
   
   if (k > 1) {
     vec km1(k-1); for(int i = 0; i < (k-1); i++) km1[i] = i+1; //vector of 1:k SEE SEQ_ALONG
-    lnk1k2 = (k/2.0)*log(2)+log((lambda_struct.nu-k)/2)+lgamma((lambda_struct.nu-k)/2)-lgamma(lambda_struct.nu/2)+sum(log(lambda_struct.nu/2-km1/2));
+    lnk1k2 = (k/2.0)*log(2.0)+log((lambda_struct.nu-k)/2)+lgamma((lambda_struct.nu-k)/2)-lgamma(lambda_struct.nu/2)+sum(log(lambda_struct.nu/2-km1/2));
   } else {
-    lnk1k2 = (k/2.0)*log(2)+log((lambda_struct.nu-k)/2)+lgamma((lambda_struct.nu-k)/2)-lgamma(lambda_struct.nu/2);
+    lnk1k2 = (k/2.0)*log(2.0)+log((lambda_struct.nu-k)/2)+lgamma((lambda_struct.nu-k)/2)-lgamma(lambda_struct.nu/2);
   }
   
   constant = -(k/2.0)*log(2*M_PI)+(k/2.0)*log(lambda_struct.Amu/(1+lambda_struct.Amu)) + lnk1k2 + lambda_struct.nu*logdetR;
@@ -722,7 +722,7 @@ lambda lambdaD(lambda const& lambda_struct, std::vector<murooti> const& thetaSta
   
   lnprob = zeros<vec>(gridsize);
   for(int i = 0; i<gridsize; i++){
-    lnprob[i] = -Istar*log(2)*d/2.0*nuseq[i] - Istar*rowSumslgammaarg[i] + Istar*d*log(sqrt(lambda_struct.V(0,0)))*nuseq[i] + sumlogdiag*nuseq[i];
+    lnprob[i] = -Istar*log(2.0)*d/2.0*nuseq[i] - Istar*rowSumslgammaarg[i] + Istar*d*log(sqrt(lambda_struct.V(0,0)))*nuseq[i] + sumlogdiag*nuseq[i];
   }
   
   lnprob = lnprob-max(lnprob)+200;

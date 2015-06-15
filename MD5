@@ -1,4 +1,4 @@
-8f8cc60c2bdc3218667bb81f81a20a3a *DESCRIPTION
+5e6b8ff59c55ec888fc23256f6a5edc5 *DESCRIPTION
 ea2da2fb3b1d8a3583ca145c403bfcbf *NAMESPACE
 ea81ddf03297bdab18de68ef0fce3434 *R/BayesmConstants.R
 750237445e7fb47a0c72db9038bad9b3 *R/BayesmFunctions.R
@@ -133,9 +133,9 @@ c32622825b8839daad7ffe3a7c202a03 *src/functionTiming.cpp
 379eb42a07c86700af57a4437cd66d27 *src/ghkvec_rcpp.cpp
 ae68b66eaf3c0b468904456d044925a4 *src/llmnl_rcpp.cpp
 607d592ac59d827b9132d7ca42abadc0 *src/lndIChisq_rcpp.cpp
-bdb8ada76caad853fa52f3a700411060 *src/lndIWishart_rcpp.cpp
+af19b27155010f25f4bbbba68b8f3d5c *src/lndIWishart_rcpp.cpp
 9760670d64f12c4739ad92caecd1f452 *src/lndMvn_rcpp.cpp
-f80e1340a33a6524d8114cea747d16fa *src/lndMvst_rcpp.cpp
+7cafc7daedb50ab544144792a17fdaef *src/lndMvst_rcpp.cpp
 a735b22374ad8921c1a75f5ed4268389 *src/rDPGibbs_rcpp_loop.cpp
 87da270b61e6675765e139c9d4c2f132 *src/rbprobitGibbs_rcpp_loop.cpp
 7e97c25a24da9ba262e5f49978e6a4ae *src/rcppexports.cpp
@@ -157,10 +157,10 @@ f44ce2e6bf67bf0e28fc9ebe4a634209 *src/rmultireg_rcpp.cpp
 53a7f3f125740e3ef7fc76e125c965ed *src/rnegbinRw_rcpp_loop.cpp
 0ac7a9acade4ba0bfa6516e058555f72 *src/rnmixGibbs_rcpp_loop.cpp
 65554b346373018519da4beb78784bd8 *src/rordprobitGibbs_rcpp_loop.cpp
-aeef8cc85cf34fdac066cbc2720abb1a *src/rscaleUsage_rcpp_loop.cpp
+21e4f4effb0614f635aeb9fa12d6348e *src/rscaleUsage_rcpp_loop.cpp
 fea764d71691a8c15b45005d568c365b *src/rsurGibbs_rcpp_loop.cpp
 efcf97fd8da23a7f47f60d8cc346c079 *src/rtrun_rcpp.cpp
 734a4038b98efc1439c2c080591a2bdb *src/runiregGibbs_rcpp_loop.cpp
 ba9cccc7a14e1640f4d7fcd61d9cf98b *src/runireg_rcpp_loop.cpp
 fa49ba36cfec5fe6cb7c93217346d36f *src/rwishart_rcpp.cpp
-02d45e19f25c138157856b6ac050649e *src/utilityFunctions.cpp
+d596ac72c0612ce2c887543ae0566c7b *src/utilityFunctions.cpp

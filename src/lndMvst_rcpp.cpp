@@ -14,7 +14,7 @@ double lndMvst(vec const& x, int nu, vec const& mu, mat const& rooti, bool NORMC
   double constant;
   
   if(NORMC){
-    constant = (nu/2.0)*log(nu)+lgamma((nu+dim)/2.0)-(dim/2.0)*log(M_PI)-lgamma(nu/2.0); //"2.0"" is used versus "2" so that the division is not truncated as an "int"
+    constant = (nu/2.0)*log((double)nu)+lgamma((nu+dim)/2.0)-(dim/2.0)*log(M_PI)-lgamma(nu/2.0); //"2.0"" is used versus "2" so that the division is not truncated as an "int"
   } else {
     constant = 0.0;
   }
