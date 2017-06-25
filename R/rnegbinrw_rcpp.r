@@ -110,15 +110,21 @@ cat("betabar",fill=TRUE)
 print(betabar)
 cat("A",fill=TRUE)
 print(A)
-cat("a",fill=TRUE)
-print(a)
-cat("b",fill=TRUE)
-print(b)
+if (!fixalpha) {
+    cat("a",fill=TRUE)
+    print(a)
+    cat("b",fill=TRUE)
+    print(b)
+}
 cat(" ",fill=TRUE)
 cat("MCMC Parms: ",fill=TRUE)
 cat("R= ",R," keep= ",keep," nprint= ",nprint,fill=TRUE)
 cat("s_alpha = ",s_alpha,fill=TRUE)
 cat("s_beta = ",s_beta,fill=TRUE)
+if (fixalpha) {
+    cat("alpha",fill=TRUE)
+    print(alpha)
+}
 cat(" ",fill=TRUE)
 
 par = rep(0,(nvar+1))

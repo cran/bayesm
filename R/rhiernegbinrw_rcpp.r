@@ -40,7 +40,7 @@ rhierNegbinRw= function(Data, Prior, Mcmc) {
 #           s_alpha - scaling parameter for alpha RW (def = 2.93)
 #           w - fractional weighting parameter (def = .1)
 #           Vbeta0, Delta0 - initial guesses for parameters, if not supplied default values are used
-#
+#           alpha - value of alpha fixed. If it is given, draw only beta
 
 
 #
@@ -80,15 +80,25 @@ if (is.null(Data$Z)) {
     Z = matrix(rep(1,nreg),ncol=1)
 }
 else {
-    if (nrow(Data$Z) != nreg) {
-        pandterm(paste("Nrow(Z) ", nrow(Z), "ne number units ",nreg))
+  if (!is.matrix(Data$Z)) {
+      pandterm("Z must be a matrix")
     }
     else {
-        Z = Data$Z
+      if (nrow(Data$Z) != nreg) {
+          pandterm(paste("Nrow(Z) ", nrow(Z), "ne number units ",nreg))
+      }
+      else {
+          Z = Data$Z
+      }
     }
 }
 nz = ncol(Z)
-
+for (i in 1:nreg) {
+  if(!is.matrix(regdata[[i]]$X)) {pandterm(paste0("regdata[[",i,"]]$X must be a matrix"))}
+  if(!is.vector(regdata[[i]]$y, mode = "numeric") & !is.vector(regdata[[i]]$y, mode = "logical") & !is.matrix(regdata[[i]]$y)) 
+    {pandterm(paste0("regdata[[",i,"]]$y must be a numeric or logical vector or matrix"))}
+  if(is.matrix(regdata[[i]]$y)) { if(ncol(regdata[[i]]$y)>1) {pandterm(paste0("regdata[[",i,"]]$y must be a vector or one-column matrix"))}}
+}
 dimfun = function(l) {
     c(length(l$y),dim(l$X))
 }
@@ -97,8 +107,8 @@ dims = t(dims)
 nvar = quantile(dims[,3],prob=0.5)
 for (i in 1:nreg) {
         if (dims[i, 1] != dims[i, 2] || dims[i, 3] != nvar) {
-            pandterm(paste("Bad Data dimensions for unit ", i, 
-                " dims(y,X) =", dims[i, ]))
+            pandterm(paste("Bad Data dimensions for unit", i, 
+                "dims(y,X) =", dims[i, ]))
         }
 }
 
@@ -172,15 +182,21 @@ cat("nu",fill=TRUE)
 print(nu)
 cat("V",fill=TRUE)
 print(V)
-cat("a",fill=TRUE)
-print(a)
-cat("b",fill=TRUE)
-print(b)
+if (!fixalpha) {
+    cat("a",fill=TRUE)
+    print(a)
+    cat("b",fill=TRUE)
+    print(b)
+}
 cat(" ",fill=TRUE)
 cat("MCMC Parameters:",fill=TRUE)
 cat("R= ",R," keep= ",keep," nprint= ",nprint,fill=TRUE)
 cat("s_alpha = ",s_alpha,fill=TRUE)
 cat("s_beta = ",s_beta,fill=TRUE)
+if (fixalpha) {
+    cat("alpha",fill=TRUE)
+    print(alpha)
+}
 cat("Fractional Likelihood Weight Parameter = ",w,fill=TRUE)
 cat(" ",fill=TRUE)
 
@@ -197,7 +213,7 @@ Delta = Delta0
 Beta = t(matrix(rep(beta_mle,nreg),ncol=nreg))
 Vbetainv = chol2inv(chol(Vbeta0)) #Wayne: replaced "solve" function
 Vbeta = Vbeta0
-alpha = alpha_mle
+if(!fixalpha) {alpha = alpha_mle} #Dan (7/16): add "if(!fixalpha)"
 alphacvar = s_alpha/varcovinv[nvar+1,nvar+1]
 alphacroot = sqrt(alphacvar)
 cat("beta_mle = ",beta_mle,fill=TRUE)

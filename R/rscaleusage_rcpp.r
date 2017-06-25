@@ -165,7 +165,8 @@ nu = p+BayesmConstant.nuInc
 V= nu*diag(p)
 mubar = matrix(rep(k/2,p),ncol=1)
 Am = BayesmConstant.A*diag(p)
-gs = 200
+gs = 100 #changed from 200 to 100 by Dan Yavorsky (dyavorsky@gmail.com) Oct 2016
+if(!missing(Prior)) { if(!is.null(Prior$gs)) { gs = Prior$gs } } #allow user to modify gs; Dan Yavorsky (dyavorsky@gmail.com) Oct 2016
 gsigma = 6*(1:gs)/gs
 gl11 = .1 + 5.9*(1:gs)/gs
 gl22 = .1 + 2.0*(1:gs)/gs

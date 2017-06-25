@@ -1,7 +1,7 @@
 #include "bayesm.h"
- 
+  
 // [[Rcpp::export]]
-List rwishart(int const& nu, mat const& V){
+List rwishart(double nu, mat const& V){
 
 // Wayne Taylor 4/7/2015
 

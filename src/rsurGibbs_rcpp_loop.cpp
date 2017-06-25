@@ -1,8 +1,8 @@
 #include "bayesm.h"
- 
+  
 // [[Rcpp::export]]
 List rsurGibbs_rcpp_loop(List const& regdata, vec const& indreg, vec const& cumnk, vec const& nk, mat const& XspXs, 
-                              mat Sigmainv, mat const& A, vec const& Abetabar, int nu, mat const& V, int nvar, 
+                              mat Sigmainv, mat const& A, vec const& Abetabar, double nu, mat const& V, int nvar, 
                               mat E, mat const& Y, int R, int keep, int nprint){
 
 // Keunwoo Kim 09/19/2014

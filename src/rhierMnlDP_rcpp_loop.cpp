@@ -1,17 +1,17 @@
 #include "bayesm.h"
- 
+
 //FUNCTIONS SPECIFIC TO MAIN FUNCTION------------------------------------------------------
 mat drawDelta(mat const& x,mat const& y,ivec const& z,std::vector<murooti> const& comps_vector,vec const& deltabar,mat const& Ad){
-
-// Wayne Taylor 2/21/2015
-
-// delta = vec(D)
-//  given z and comps (z[i] gives component indicator for the ith observation, 
-//   comps is a list of mu and rooti)
-// y is n x p
-// x is n x k
-// y = xD' + U , rows of U are indep with covs Sigma_i given by z and comps
-
+  
+  // Wayne Taylor 2/21/2015
+  
+  // delta = vec(D)
+  //  given z and comps (z[i] gives component indicator for the ith observation, 
+  //   comps is a list of mu and rooti)
+  // y is n x p
+  // x is n x k
+  // y = xD' + U , rows of U are indep with covs Sigma_i given by z and comps
+  
   int p = y.n_cols;
   int k = x.n_cols;
   int ncomp  = comps_vector.size();
@@ -28,7 +28,7 @@ mat drawDelta(mat const& x,mat const& y,ivec const& z,std::vector<murooti> const
     
     //Create an index vector ind, to be used like y[ind,]
     uvec ind = find(z == (compi+1));
-  
+    
     //If there are observations in this component
     if(ind.size()>0){
       mat yi = y.submat(ind,colAlly);
@@ -125,7 +125,7 @@ DPOut rDPGibbs1(mat y, lambda lambda_struct, std::vector<murooti> thetaStar_vect
     for(int j = 0; j < nunique; j++){
       ind = find(indic == (j+1));
       indsize = ind.size();
-      probs[j] = indsize/(alpha + n + 0.0);
+      probs[j] = indsize/(alpha+n+0.0);
       new_utheta_vector[0] = thetaD(y(ind,spanall),lambda_struct);
       thetaStar_vector[j] = new_utheta_vector[0];
     }
@@ -303,7 +303,7 @@ List rhierMnlDP_rcpp_loop(int R, int keep, int nprint,
       adraw[mkeep-1] = lambda_struct.Amu;
       nudraw[mkeep-1] = lambda_struct.nu;
       V = lambda_struct.V;
-      vdraw[mkeep-1] = V(0,0)/(lambda_struct.nu+0.0);
+      vdraw[mkeep-1] = V(0,0)/lambda_struct.nu;
       loglike[mkeep-1] = sum(oldll);
       if(drawdelta) Deltadraw(mkeep-1, span::all) = trans(vectorise(olddelta));
       thetaNp10_struct = mgout_struct.thetaNp1_vector[0];

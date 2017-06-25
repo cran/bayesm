@@ -8,6 +8,7 @@ rivDP = function(Data,Prior,Mcmc) {
 #   fixed initialization of theta 3/09
 #   fixed error in assigning user defined prior parms
 #   W. Taylor 4/15 - added nprint option to MCMC argument
+#   W. Taylor 7/16 - corrected bug for colAllw.set_size(ncolw) (see email to Peter and Keunwoo on 11/30/15 for more details)
 #
 # purpose: 
 #   draw from posterior for linear I.V. model with DP process for errors

@@ -1,8 +1,8 @@
 #include "bayesm.h"
- 
+
 // [[Rcpp::export]]
 List rivGibbs_rcpp_loop(vec const& y, vec const& x, mat const& z, mat const& w, vec const& mbg, mat const& Abg, 
-                  vec const& md, mat const& Ad, mat const& V, int nu, int R, int keep, int nprint){
+                  vec const& md, mat const& Ad, mat const& V, double nu, int R, int keep, int nprint){
 
 // Keunwoo Kim 09/09/2014
 
@@ -129,7 +129,3 @@ List rivGibbs_rcpp_loop(vec const& y, vec const& x, mat const& z, mat const& w, 
       Named("gammadraw") = gammadraw,
       Named("Sigmadraw") = Sigmadraw);   
 }
-
-
-
-

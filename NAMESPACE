@@ -1,8 +1,12 @@
 useDynLib(bayesm)
 importFrom(Rcpp, evalCpp)
+importFrom(utils, flush.console)
+importFrom(stats, acf, cov, dnbinom, dnorm, lm, median, optim, pnorm, qchisq, quantile, rmultinom, rnorm, runif, var)
+importFrom(graphics, abline, boxplot, bxp, contour, hist, image, lines, par, plot, plot.default, points, polygon, text, title)
+importFrom(grDevices, dev.interactive, devAskNewPage, terrain.colors)
 ## exportPattern("^[[:alpha:]]+") this line is automatically created when using package.skeleton but should be removed to prevent the _loop functions from exporting. Instead use the export() function (as is done here)
 
-export(breg,createX,eMixMargDen,mixDen,fsh,llmnl,llmnp,llnhlogit,
+export(breg,createX,eMixMargDen,mixDen,llmnl,llmnp,llnhlogit,
 lndIChisq,lndIWishart,lndMvn,lndMvst,mnlHess,momMix,nmat,numEff,rdirichlet, rmixture,rmultireg,
 rwishart,rmvst,rtrun,rbprobitGibbs,runireg,
 runiregGibbs,simnhlogit,rmnpGibbs,rmixGibbs,rnmixGibbs,

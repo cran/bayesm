@@ -99,14 +99,17 @@ beta=c(rep(0,nvar))
 sigma=c(rep(1,nrow(X)))
 root=chol(chol2inv(chol((crossprod(X,X)+A))))
 Abetabar=crossprod(A,betabar)
-        a=ifelse(y == 0,-100, 0)
-        b=ifelse(y == 0, 0, 100)
-
+        #a=ifelse(y == 0,-100, 0) 
+        #b=ifelse(y == 0, 0, 100)
+        above=ifelse(y == 0, 1, 0)
+        trunpt=0
+        
 ###################################################################
 # Keunwoo Kim
 # 08/05/2014
 ###################################################################
-draws=rbprobitGibbs_rcpp_loop(y,X,Abetabar,root,beta,sigma,a,b,R,keep,nprint)
+#draws=rbprobitGibbs_rcpp_loop(y,X,Abetabar,root,beta,sigma,a,b,R,keep,nprint)
+draws=rbprobitGibbs_rcpp_loop(y,X,Abetabar,root,beta,sigma,trunpt,above,R,keep,nprint)
 ###################################################################
 
 attributes(draws$betadraw)$class=c("bayesm.mat","mcmc")

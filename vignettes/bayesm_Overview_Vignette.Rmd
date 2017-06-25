@@ -1,0 +1,679 @@
+---
+title: "bayesm Overview"
+output: 
+  rmarkdown::html_document :
+    theme: spacelab
+    highlight: pygments
+    toc: true
+    toc_float: true
+    toc_depth: 3
+    number_sections: yes
+    fig_caption: yes
+vignette: >
+  %\VignetteIndexEntry{bayesm Overview}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, echo = FALSE}
+library(bayesm)
+knitr::opts_chunk$set(fig.align = "center",
+                      fig.height = 3.5,
+                      warning = FALSE,
+                      error = FALSE,
+                      message = FALSE)
+```
+
+*****
+
+# Introduction
+
+`bayesm` is an R package that facilitates statistical analysis using Bayesian methods. The package provides a set of functions for commonly used models in applied microeconomics and quantitative marketing. 
+
+The goal of this vignette is to make it easier for users to adopt `bayesm` by providing a comprehensive overview of the package's contents and detailed examples of certain functions. We begin with the overview, followed by a discussion of how to work with `bayesm`. The discussion covers the structure of function arguments, the required input data formats, and the various output formats. The final section provides detailed examples to demonstrate Bayesian inference with the linear normal, multinomial logit, and hierarchical multinomial logit regression models.
+
+# Package Contents
+
+For ease of exposition, we have grouped the package contents into:
+
+ - Posterior sampling functions
+ - Utility functions
+ - S3 methods^[For example, calling the generic function `summary(x)` on an object `x` with class `bayesm.mat` actually dispatches the method `summary.bayesm.mat` on `x`, which is equivalent to calling `summary.bayes.mat(x)`. For a nice introduction, see _Advanced R_ by Hadley Wickham, available [online](http://adv-r.had.co.nz/OO-essentials.html).]
+ - Datasets
+ 
+Because the first two groups contain many functions, we organize them into subgroups by purpose. Below, we display each group of functions in a table with one column per subgroup. 
+
+-----------------------------------------------------------------------------
+Linear Models   Limited Dependent    Hierarchical Models  Density Estimation 
+\               Variable Models      \                    \                  
+--------------- -------------------- -------------------- -------------------
+`runireg`*      `rbprobitGibbs`**    `rhierLinearModel`   `rnmixGibbs`*      
+
+`runiregGibbs`  `rmnpGibbs`          `rhierLinearMixture` `rDPGibbs`         
+
+`rsurGibbs`*    `rmvpGibbs`          `rhierMnlRwMixture`* \                  
+
+`rivGibbs`      `rmnlIndepMetrop`    `rhierMnlDP`         \                  
+
+`rivDP`         `rscaleUsage`        `rbayesBLP`          \                  
+
+\               `rnegbinRw`          `rhierNegbinRw`      \                  
+
+\               `rordprobitGibbs`    
+-----------------------------------------------------------------------------
+
+Table: Posterior Sampling Functions
+
+*`bayesm` offers the utility function `breg` with a related but limited set of capabilities as `runireg` --- similarly with `rmultireg` for `rsurGibbs`, `rmixGibbs` for `rnmixGibbs`, and `rhierBinLogit` for `rhierMnlRwMixture`. 
+
+**`rbiNormGibbs` provides a tutorial-like example of Gibbs Sampling from a bivariate normal distribution.
+
+------------------------------------------------------------------------------------
+Log-Likelihood\ \  Log Density     Random Draws  Mixture-of-Normals  Miscellaneous  
+(data vector)      (univariate)    \             \                   \              
+------------------ --------------- ------------- ------------------- ---------------
+`llmnl`            `lndIChisq`     `rdirichlet`  `clusterMix`        `cgetC`        
+
+`llmnp`            `lndIWishart`   `rmixture`    `eMixMargDen`       `condMom`      
+
+`llnhlogit`        `lndMvn`        `rmvst`       `mixDen`            `createX`      
+
+\                  `lndMvst`       `rtrun`       `mixDenBi`          `ghkvec`       
+
+\                  \               `rwishart`    `momMix`            `logMargDenNR` 
+
+\                  \               \             \                   `mnlHess`      
+
+\                  \               \             \                   `mnpProb`      
+
+\                  \               \             \                   `nmat`         
+
+\                  \               \             \                   `numEff`       
+
+\                  \               \             \                   `simnhlogit`   
+------------------------------------------------------------------------------------
+
+Table: Utility Functions
+
+-------------------------------------------
+Plot Methods         Summary Methods       
+-------------------- ----------------------
+`plot.bayesm.mat`    `summary.bayesm.mat`  
+
+`plot.bayesm.nmix`   `summary.bayesm.nmix` 
+
+`plot.bayesm.hcoef`  `summary.bayesm.var`  
+-------------------------------------------
+
+Table: S3 Methods
+
+---------------------------------------
+\         \              \             
+--------- -------------- --------------
+`bank`    `customerSat`  `orangeJuice` 
+
+`camera`  `detailing`    `Scotch`      
+
+`cheese`  `margarine`    `tuna`        
+---------------------------------------
+
+Table: Datasets
+
+Some discussion of the naming conventions may be warranted. All functions use CamelCase but begin lowercase. Posterior sampling functions begin with `r` to match R's style of naming random number generation functions since these functions all draw from (posterior) distributions. Common abbreviations include _DP_ for Dirichlet Process, _IV_ for instrumental variables, _MNL_ and _MNP_ for multinomial logit and probit, _SUR_ for seemingly unrelated regression, and _hier_ for hierarchical. Utility functions that begin with `ll` calculate the log-likelihood of a data vector, while those that begin with `lnd` provide the log-density. Other abbreviations should be straighforward; please see the help file for a specific function if its name is unclear.
+
+
+# Working with `bayesm`
+
+We expect most users of the package to interact primarily with the posterior sampling functions. These functions take a consistent set of arguments as inputs (`Data`, `Prior`, and `Mcmc` --- each is a list) and they return output in a consistent format (always a list). `summary` and `plot` generic functions can then be used to facilitate analysis of the output because of the classes and methods defined in `bayesm`. The following subsections describe the format of the standardized function arguments as well as the required format of the data inputs and the format of the output from `bayesm`'s posterior sampling functions.
+
+## Input: Function Arguments
+
+The posterior sampling functions take three arguments: `Data`, `Prior`, and `Mcmc`. Each argument is a **list**. 
+
+As a minimal example, assume you'd like to perform a linear regression and that you have in your work space `y` (a vector of length $n$) and `X` (a matrix of dimension $n \times p$). For this example, we utilize the default values for `Prior` and so we do not specify the `Prior` argument. These components (`Data`, `Prior`, and `Mcmc` as well as their arguments including `R` and `nprint`) are discussed in the subsections that follow. Then the `bayesm` syntax is simply:
+
+```{r, eval = FALSE}
+mydata <- list(y = y, X = X)
+mymcmc <- list(R = 1e6, nprint = 0)
+
+out <- runireg(Data = mydata, Mcmc = mymcmc)
+```
+
+The list elements of `Data`, `Prior`, and `Mcmc` must be named.  For example, you could not use the following code because the `Data` argument `mydata2` has unnamed elements.
+
+```{r, eval=FALSE}
+mydata2 <- list(y, X)
+out <- runireg(Data = mydata2, Mcmc = mymcmc)
+```
+
+
+### `Data` Argument
+
+`bayesm`'s posterior sampling functions do not accept data stored in dataframes; data must be stored as vectors or matrices.
+
+For **non-hierarchical** models, the list of input data simply contains the approprate data vectors or matrices from the set \{`y`, `X`, `w`, `z`\}^[Functions such as `rivGibbs` only permit one endogenous variable and so the function argument is lowercase: `x`.] and possibly a scalar (length one vector) from the set \{`k`, `p`\}. 
+
+- For functions that require only a single data argument (such as the two density estimation functions, `rnmixGibbs` and `rDPGibbs`), `y` is that argument. More typically, `y` is used for LHS^[LHS and RHS stand for left-hand side and right-hand side.] variable(s) and `X` for RHS variables. For estimation using instrumental variables, variables in the structural equation are separated into "exogenous" variables `w` and an "edogenous" variable `x`; `z` is a matrix of instruments. 
+
+- For the scalars, `p` indicates the number of choice alternatives in discrete choice models and `k` is used as the maximum ordinate in models for ordinal data (e.g., `rordprobitGibbs`). 
+
+For **hierarchical** models, the input data has up to 3 components. We'll discuss these components using the mixed logit model (`rhierMnlRwMixture`) as an example. For `rhierMnlRwMixture`, the `Data` argument is `list(lgtdata, Z, p)`.
+
+1. The first component for all hierarchical models is required. It is a list of lists named either `regdata` or `lgtdata`, depending on the function. In `rhierMnlRwMixture`, `lgtdata` is a list of lists, with each interior list containing a vector or one-column matrix of multinomial outcomes `y` and a design matrix of covariates `X`. In Example 3 below, we show how to convert data from a data frame to this required list-of-lists format.
+
+1. The second component, `Z`, is present but optional for all hierarchical models. `Z` is a matrix of cross-sectional unit characteristics that drive the mean responses; that is, a matrix of covariates for the individual parameters (e.g. $\beta_i$'s). For example, the model (omitting the priors) for `rhierMnlRwMixture` is:
+
+    $$ y_i \sim \text{MNL}(X_i'\beta_i) \hspace{1em} \text{with} \hspace{1em} \beta_i = Z \Delta_i + u_i  \hspace{1em} \text{and} \hspace{1em}  u_i \sim N(\mu_j, \Sigma_j) $$
+
+    where $i$ indexes individuals and $j$ indexes cross-sectional unit characteristics.
+
+1. The third component (if accepted) is a scalar, such as `p` or `k`, and like the arguments by the same names in the non-hierarchical models, is used to indicate the size of the choice set or the maximum value of a scale or count variable. In `rhierMnlRwMixture`, the argument is `p`, which is used to indicate the number of choice alternatives.
+
+Note that `rbayesBLP` (the hierarchical logit model with _aggregate_ data as in Berry, Levinsohn, and Pakes (1995) and Jiang, Manchanda, and Rossi (2009)) deviates slightly from the standard data input. `rbayesBLP` uses `j` instead of `p` to be consistent with the literature and calls the LHS variable `share` rather than `y` to emphasize that aggregate (market share instead of individual choice) data are required.
+
+### `Prior` Argument
+
+Specification of prior distributions is model-specific, so our discussion here is brief. 
+
+All posterior sampling functions offer default values for parameters of prior distributions. These defaults were selected to yield proper yet reasonably-diffuse prior distributions (assuming the data are in approximately unit scale). In addition, these defaults are consistent across functions. For example, normal priors have default values of mean 0 with value 0.01 for the scaling factor of the prior precision matrix. 
+
+Specification of the prior is important. Significantly more detail can be found in chapters 2--5 of BSM[^BSM] and the help files for the posterior sampling functions. We strongly recommend you consult them before accepting the default values.
+
+[^BSM]: Rossi, Peter, Greg Allenby and Robert McCulloch, _Bayesian Statistics and Marketing_, John Wiley \& Sons, 2005. [Website](http://www.perossi.org/home/bsm-1).
+
+### `Mcmc` Argument {#mcmcarg}
+
+The `Mcmc` argument controls parameters of the sampling algorithm. The most common components of this list include:
+
+- `R`: the number of MCMC draws
+- `keep`: a thinning parameter indicating that every `keep`$^\text{th}$ draw should be retained
+- `nprint`: an option to print the estimated time remaining to the console after each `nprint`$^\text{th}$ draw
+
+MCMC methods are non-iid. As a result, a large simulation size may be required to get reliable results. We recommend setting `R` large enough to yield an adequate effective sample size and letting `keep` default to the value 1 unless doing so imposes memory constraints. A careful reader of the `bayesm` help files will notice that many of the examples set `R` equal to 1000 or less. This low number of draws was chosen for speed, as the examples are meant to demonstrate _how_ to run the code and do not necessarily suggest best practices for a proper statistical analysis.
+
+`nprint` defaults to 100, but for large `R`, you may want to increase the `nprint` option. Alternatively, you can set `nprint=0`, in which case the priors will still be printed to the console, but the estimated time remaining will not. 
+
+Additional components of the `Mcmc` argument are function-specific, but typically include starting values for the algorithm. For example, the `Mcmc` argument for `runiregGibbs` takes `sigmasq` as a scalar element of the list. The Gibbs Sampler for `runiregGibbs` first draws $\beta | \sigma^2$, then draws $\sigma^2 | \beta$, and then repeats. For the first draw of $\beta$ in the MCMC chain, a value of $\sigma^2$ is required. The user can specify a value using `Mcmc$sigmasq`, or the user can omit the argument and the function will use its default (`sigmasq = var(Data$y)`).
+
+## Output: Returned Results
+
+`bayesm` posterior sampling functions return a consistent set of results and output to the user. At a minimum, this output includes draws from the posterior distribution. `bayesm` provides a set of `summary` and `plot` methods to facilitate analysis of this output, but the user is free to analyze the results as he or she sees fit.
+
+### Output Formats
+
+All `bayesm` posterior sampling functions return a list. The elements of that list include a set of vectors, matrices, and/or arrays (and possibly a list), the exact set of which depend on the function.
+
+- Vectors are returned for draws of parameters with no natural grouping. For example, `runireg` implements and iid sampler to draw from the posterior of a homoskedastic univariate regression with a conjugate prior (i.e., a Bayesian analog to OLS regression). One output list element is `sigmasqdraw`, a length `R/keep` vector for the scalar parameter $\sigma^2$.
+
+- Matrices are returned for draws of parameters with a natural grouping. Again using `runireg` as the example, the output list includes `betadraw`, an `R/keep` $\times$ `ncol(X)` matrix for the vector of $\beta$ parameters. 
+
+    Contrary to the next bullet, draws for the parameters in a variance-covariance matrix are returned in matrix form. For example, `rmnpGibbs` implements a Gibbs Sampler for a multinomial probit model where one set of parameters is the $(p-1) \times (p-1)$ matrix $\Sigma$. The output list for `rmnpGibbs` includes the list element `sigmadraw`, which is a matrix of dimension `R/keep`$\times (p-1)*(p-1)$ with each row containing a draw (in vector form) for all the elements of the matrix $\Sigma$. `bayesm`'s `summary` and `plot` methods (see below) are designed to handle this format.
+
+- Arrays are used when parameters have a natural matrix-grouping, such that the MCMC algorithm returns `R/keep` draws of the matrix. For example, `rsurGibbs` returns a list that includes `Sigmadraw`, an $m \times m \times$`R/keep` array, where $m$ is the number of regression equations. As a second example, `rhierLinearModel` estimates a hierarchical linear regression model with a normal prior, and returns a list that includes `betadraw`, an $n \times k \times$`R/keep` array, where $n$ signifies the number of individuals (each with their own $\beta_i$) and $k$ signifies the number of covariates (`ncol(X)` = $k$).
+
+- For functions that use a mixture-of-normals or Dirichlet Process prior, the output list includes a list (`nmix`) pertaining to that prior. `nmix` is itself a list with 3 components: `probdraw`, `zdraw`, and `compdraw`. `probdraw` reports the probability that each draw came from a particular normal component; `zdraw` indicates which mixture-of-normals component each draw is assigned to; and `compdraw` provides draws for the mixture-of-normals components (i.e., mean vectors and Cholesky roots of covariance matrices). Note that if you specify a "mixture" with only one normal component, there will be no useful information in `probdraw`. Also note that `zdraw` is not relevant for density estimation and will be null except in `rnmixGibbs` and `rDPGibbs`.
+
+### Classes and Methods
+
+In R generally, objects can be assigned a _class_ and then a _generic_ function can be used to run a _method_ on an object with that class. The list elements in the output from `bayesm` posterior sampling functions are assigned special `bayesm` classes. The `bayesm` package includes `summary` and `plot` methods for use with these classes (see the table in Section 2 above). This means you can call the generic function (e.g., `summary`) on individual list elements of `bayesm` output and it will return specially-formatted summary results, including the effective sample size. 
+
+To see this, the code below provides an example using `runireg`. Here the generic function `summary` dispatches the method `summary.bayesm.mat` because the `betadraw` element of `runireg`'s output has class `bayesm.mat`. This example also shows the information about the prior that is printed to the console during the call to a posterior sampling function. Notice, however, that no remaining time is printed because `nprint` is set to zero.
+
+```{r}
+set.seed(66)
+R <- 2000
+n <- 200
+X <- cbind(rep(1,n), runif(n))
+beta <- c(1,2)
+sigsq <- 0.25
+y <- X %*% beta + rnorm(n, sd = sqrt(sigsq))
+out <- runireg(Data = list(y = y, X = X), Mcmc = list(R = R, nprint = 0))
+
+summary(out$betadraw, tvalues = beta)
+```
+
+## Access to Code
+
+`bayesm` was originally created as a companion to BSM, at which time most functions were written in R. The package has since been expanded to include additional functionality and most code has been converted to C++ via `Rcpp` for faster performance. However, for users interested in obtaining the original implementation of a posterior sampling function (in R instead of C++), you may still access the last version (2.2-5) of `bayesm` prior to the C++/`Rcpp` conversion from the [package archive](https://cran.r-project.org/src/contrib/Archive/bayesm/) on CRAN. 
+
+To access the `R` code in the current version of `bayesm`, the user can simply call a function without parenthesis. For example, `bayesm::runireg`. However, most posterior sampling functions only perform basic checks in `R` and then call an unexported C++ function to do the heavy lifting (i.e., the MCMC draws). This C++ source code is not available to the user via the installed `bayesm` package because C++ code is compiled upon package installation on Linux machines and pre-compiled by CRAN for Mac and Windows. To access this source code, the user must download the "package source" from CRAN. This can be accomplished by clicking on the appropriate link at the `bayesm` [package archive](https://cran.r-project.org/src/contrib/Archive/bayesm/) or by executing the `R` command `download.packages(pkgs="bayesm", destdir=".", type="source")`.  Either of these methods will provide you with a compressed file "bayesm_version.tar.gz" that can be uncompressed. The C++ code can then be found in the "src" subdirectory.
+
+
+# Examples
+
+We begin with a brief introduction to regression and Bayesian estimation. This will help set the notation and provide background for the examples that follow. We do not claim that this will be a sufficient introduction to the reader for which these ideas are new. We refer that reader to excellent texts on regression analysis by Cameron \& Trivedi, Davidson \& MacKinnon, Goldberger, Greene, Wasserman, and Wooldridge.[^1] For Bayesian methods, we recommend Gelman et al., Jackman, Marin \& Robert, Rossi et al., and Zellner.[^2]
+
+[^1]: Cameron, Colin and Pravin Trivedi, _Microeconometrics: Methods and Applications_, Cambridge University Press, 2005. 
+
+    Davidson, Russell and James MacKinnon, _Estimation and Inference in Econometrics_, Oxford University Press, 1993. 
+
+    Goldberger, Arthur, _A Course in Econometrics_, Harvard University Press, 1991. 
+
+    Greene, William, _Econometric Analysis_, Prentice Hall, 2012 (7th edition). 
+
+    Wasserman, Larry, _All of Statistics: A Concise Course in Statistical Inferece_, Springer, 2004. 
+
+    Wooldridge, Jeffrey, _Econometric Analysis of Cross Section and Panel Data_, MIT Press, 2010 (2nd edition).
+
+[^2]: Gelman, Andrew, John Carlin, Hal Stern, David Dunson, Aki Vehtari, and Donald Rubin, _Bayesian Data Analysis_, CRC Press, 2013 (3rd edition). 
+
+    Jackman, Simon, _Bayesian Analysis for the Social Sciences_, Wiley, 2009. 
+
+    Marin, Jean-Michel and Christian Robert, _Bayesian Essentials with R_, Springer, 2014 (2nd edition). 
+
+    Rossi, Peter, Greg Allenby, and Robert McCulloch, _Bayesian Statistics and Marketing_, Wiley, 2005. 
+
+    Zellner, Arnold, _An Introduction to Bayesian Inference in Economics_, Wiley, 1971.
+
+## What is Regression
+
+Suppose you believe a variable $y$ varies with (or is caused by) a set of variables $x_1, x_2, \ldots, x_k$. For notational convenience, we'll collect the set of $x$ variables into $X$. These variables $y$ and $X$ have a joint distribution $f(y, X)$. Typically, interest will not fall on this joint distribution, but rather on the conditional distribution of the "outcome" variable $y$ given the "explanatory" variables (or "covariates") $x_1, x_2, \ldots, x_k$; this conditional distribution being $f(y|X)$. 
+
+To carry out inference on the relationship between $y$ and $X$, the researcher then often focuses attention on one aspect of the conditional distribution, most commonly its expected value. This conditional mean is assumed to be a function $g$ of the covariates such that $\mathbb{E}[y|X] = g(X, \beta)$ where $\beta$ is a vector of parameters. A function for the conditional mean is known as a "regression" function. 
+
+The canonical introductory regression model is the normal linear regression model, which assumes that $y \sim N(X\beta, \sigma^2)$. Most students of regression will have first encountered this model as a combination of deterministic and stochastic components. There, the stochastic component is defined as deviations from the conditional mean, $\varepsilon = y - \mathbb{E}[y|X]$, such that $y = \mathbb{E}[y|X] + \varepsilon$ or that $y = g(X, \beta) + \varepsilon$. The model is then augmented with the assumptions that $g(X, \beta) = X \beta$ and $\varepsilon \sim N(0,\sigma^2)$ so that the normal linear regression model is:
+
+$$ y = X \beta + \varepsilon \text{ with } \varepsilon \sim N(0,\sigma^2) \hspace{1em} \text{or} \hspace{1em} y \sim N(X\beta, \sigma^2) $$
+
+When taken to data, additional assumptions are made which include a full-rank condition on $X$ and often that $\varepsilon_i$ for $i=1,\ldots,n$ are independent and identically distributed.
+
+Our first example will demonstrate how to estimate the parameters of the normal linear regression model using Bayesian methods made available by the posterior sampling function `runireg`. We then provide an example to estimate the parameters of a model when $y$ is a categorical variable. This second example is called a multinomial logit model and uses the logistic "link" function $g(X, \beta) = [1 + exp(-X\beta)]^{-1}$. Our third and final example will extend the multinomial logit model to permit individual-level parameters. This is known as a hierarchical model and requires panel data to perform the estimation.
+
+Before launching into the examples, we briefly introduce Bayesian methodology and contrast it with classical methods. 
+
+## What is Bayesian Inference
+
+Under classical econometric methods, $\beta$ is most commonly estimated by minimizing the sum of squared residuals, maximizing the likelihood, or matching sample moments to population moments. The distribution of the estimators (e.g., $\hat{\beta}$) and test statistics derived from these methods rely on asymptotic concepts and are based on imaginary samples not observed.
+
+In contrast, Bayesian inference provides the benefits of (a) exact sample results, (b) integration of descision-making, estimation, testing, and model selection, and (c) a full accounting of uncertainty. These benefits from Bayesian inference rely heavily on probability theory and, in particular, distributional theory, some elements of which we now briefly review. 
+
+Recall the relationship between the joint and conditional densities for random variables $W$ and $Z$:
+
+$$ P_{A|B}(A=a|B=b) = \frac{P_{A,B}(A=a, B=b)}{P_B(B=b)} $$
+
+This relationship can be used to derive Bayes' Theorem, which we write with $D$ for "data" and $\theta$ as the parameters (and with implied subscripts):
+
+$$ P(\theta|D) = \frac{P(D|\theta)P(\theta)}{P(D)} $$
+
+Noticing that $P(D)$ does not contain the parameters of interest ($\theta$) and is therefore simply a normalizing constant, we can instead write:
+
+$$ P(\theta|D) \propto P(D|\theta)P(\theta) $$
+
+Introducing Bayesian terminology, we have that the "Posterior" is proportional to the Likelihood times the Prior.
+
+Thus, given (1) a dataset ($D$), (2) an assumption on the data generating process (the likelihood, $P(D|\theta)$), and (3) a specification of the prior distribution of the parameters ($P(\theta)$), we can find the _exact_ (posterior) distribution of the parameters given the observed data. This is in stark contrast to classical econometric methods, which typically only provide the _asymptotic_ distributions of estimators.
+
+However, for any problem of practical interest, the posterior distribution is a high-dimensional object. Additionally, it may not be possible to analytically calculate the posterior or its features (e.g., marginal distributions or moments such as the mean). To handle these issues, the modern approach to Bayesian inference relies on simulation methods to sample from the (high-dimensional) posterior distribution and then construct marginal distributions (or their features) from the sampled draws of the posterior. As a result, simulation and summaries of the posterior play important roles in modern Bayesian statistics. 
+
+`bayesm`'s posterior sampling functions (as their name suggests) sample from posterior distributions. `bayesm`'s `summary` and `plot` methods can be used to analyze those draws. Unlike most classical econometric methods, the MCMC methods implemented in `bayesm`'s posterior sampling functions provide an estimate of the entire posterior distribution, not just a few moments. Given this "rich" result from Bayesian methods, it is best to summarize posterior distributions using histograms or quantiles. We advise that you resist the temptation to simply report the posterior mean and standard deviation; for non-normal distributions, those moments may have little meaning.
+
+In the examples that follow, we will describe the data we use, present the model, demonstrate how to estimate it using the appropriate posterior sampling function, and provide various ways to summarize the output.
+
+## Example 1: Linear Normal Regression
+
+### Data
+
+For our first example, we will use the `cheese` dataset, which provides `r data(cheese); format(nrow(cheese), big.mark=",")` observations of weekly sales volume for a package of Borden sliced cheese, as well as a measure of promotional display activity and price. The data are aggregated to the "key" account (i.e., retailer-market) level. 
+
+```{r}
+data(cheese)
+names(cheese) <- tolower(names(cheese))
+str(cheese)
+```
+
+Suppose we want to assess the relationship between sales volume and price and promotional display activity. For this example, we will abstract from whether these relationships vary by retailer or whether prices are set endogenously. Simple statistics show a negative correlation between volume and price, and a positive correlation between volume and promotional activity, as we would expect.
+
+```{r}
+options(digits=3)
+cor(cheese$volume, cheese$price)
+cor(cheese$volume, cheese$disp)
+```
+
+### Model
+
+We model the expected log sales volume as a linear function of log(price) and promotional activity. Specifically, we assume $y_i$ to be iid with $p(y_i|x_i,\beta)$ normally distributed with a mean linear in $x$ and a variance of $\sigma^2$. We will denote observations with the index $i = 1, \ldots, n$ and covariates with the index $j = 1, \ldots, k$. The model can be written as:
+
+$$ y_i = \sum_{j=1}^k \beta_j x_{ij} + \varepsilon_i = x_i'\beta + \varepsilon_i \hspace{1em} \text{with} \hspace{1em} \varepsilon_i \sim iid\ N(0,\sigma^2) $$
+
+or equivalently but more compactly as:
+
+$$ y \sim MVN(X\beta,\ \sigma^2I_n) $$
+
+Here, the notation $N(0, \sigma^2)$ indicates a univariate normal distribution with mean $0$ and variance $\sigma^2$, while $MVN(X\beta,\ \sigma^2I_n)$ indicates a multivariate normal distribution with mean vector $X\beta$ and variance-covariance matrix $\sigma^2I_n$. In addition, $y_i$, $x_{ij}$, $\varepsilon_i$, and $\sigma^2$ are scalars while $x_i$ and $\beta$ are $k \times 1$ dimensional vectors. In the more compact notation, $y$ is an $n \times 1$ dimensional vector, $X$ is an $n \times k$ dimensional matrix with row $x_i$, and $I_n$ is an $n \times n$ dimensional identity matrix. With regard to the `cheese` dataset, $k = 2$ and $n = 5,555$.
+
+When employing Bayesian methods, the model is incomplete until the prior is specified. For our example, we elect to use natural conjugate priors, meaning the family of distributions for the prior is chosen such that, when combined with the likelihood, the posterior will be of the same distributional family. Specifically, we first factor the joint prior into marginal and conditional prior distributions:
+
+$$ p(\beta,\sigma^2) = p(\beta|\sigma^2)p(\sigma^2) $$
+
+We then specify the prior for $\sigma^2$ as inverse-gamma (written in terms of a chi-squared random variable) and the prior for $\beta|\sigma^2$ as multivariate normal:
+
+$$ \sigma^2 \sim \frac{\nu s^2}{\chi^2_{\nu}} \hspace{1em} \text{and} \hspace{1em} \beta|\sigma^2 \sim MVN(\bar{\beta},\sigma^2A^{-1}) $$
+
+Other than convenience, we have little reason to specify priors from these distributional families; however, we will select diffuse priors so as not to impose restrictions on the model. To do so, we must pick values for $\nu$ and $s^2$ (the degrees of freedom and scale parameters for the inverted chi-squared prior on $\sigma^2$) as well as $\bar{\beta}$ and $A^{-1}$ (the mean vector and variance-covariance matrix for the multivariate normal prior on the $\beta$ vector). The `bayesm` posterior sampling function for this model, `runireg`, defaults to the following values:
+
+- $\nu = 3$
+- $s^2 =$ `var(y)`
+- $\bar{\beta} = 0$
+- $A = 0.01*I$
+
+We will use these defaults, as they are chosen to be diffuse for data with a unit scale. Thus, for each $\beta_j | \sigma^2$ we have specified a normal prior with mean 0 and variance $100\sigma^2$, and for $\sigma^2$ we have specified an inverse-gamma prior with $\nu = 3$ and $s^2 = \text{var}(y)$. We graph these prior distributions below.
+
+```{r fig.show = "hold"}
+par(mfrow = c(1,2))
+
+curve(dnorm(x,0,10), xlab = "", ylab = "", xlim = c(-30,30),
+      main = expression(paste("Prior for ", beta[j])),
+      col = "dodgerblue4")
+
+nu  <- 3
+ssq <- var(log(cheese$volume))
+curve(nu*ssq/dchisq(x,nu), xlab = "", ylab = "", xlim = c(0,1),
+      main = expression(paste("Prior for ", sigma^2)), 
+      col = "darkred")
+
+par(mfrow = c(1,1))
+```
+
+### Bayesian Estimation
+
+Although this model involves nontrivial natural conjugate priors, the posterior is available in closed form:
+
+$$ p(\beta, \sigma^2 | y, X) \propto (\sigma^2)^{-k/2} \exp \left\{ -\frac{1}{2\sigma^2}(\beta - \bar{\beta})'(X'X+A)(\beta - \bar{\beta}) \right\} \times (\sigma^2)^{-((n+\nu_0)/2+1)} \exp \left\{ -\frac{\nu_0s_0^2 + ns^2}{2\sigma^2} \right\} $$
+
+or
+
+\begin{align*}
+  \beta | \sigma^2, y, X &\sim N(\bar{\beta}, \sigma^2(X'X+A)^{-1}) \\ \\ 
+  \sigma^2 | y, X        &\sim \frac{\nu_1s_1^2}{\chi^2_{\nu_1}}, \hspace{3em} \text{with} \> \nu_1 = \nu_0+n \hspace{1em} \text{and} \hspace{1em} s_1^2 = \frac{\nu_0s_0^2 + ns^2}{\nu_0+n}
+\end{align*}
+
+The latter representation suggests a simulation strategy for making draws from the posterior. We draw a value of $\sigma^2$ from its marginal posterior distribution, insert this value into the expression for the covariance matrix of the conditional normal distribution of $\beta|\{\sigma^2,y\}$ and draw from this multivariate normal. This simulation strategy is implemented by `runireg`, using the defaults for `Prior` specified above. The code is quite simple.
+
+<!-- code we want to run -- this is what is shown in the document to the reader -->
+```{r, eval = FALSE}
+dat <- list(y = log(cheese$volume), X = model.matrix( ~ price + disp, data = cheese))
+out <- runireg(Data = dat, Mcmc = list(R=1e4, nprint=1e3))
+```
+
+<!-- code actually run to suppress output during call to runireg -- not shown to the reader -->
+```{r, echo = FALSE}
+temp <- capture.output(
+          {set.seed(1234);
+           dat <- list(y = log(cheese$volume), X = model.matrix( ~ price + disp, data = cheese));
+           out <- runireg(Data = dat, Mcmc = list(R=1e4, nprint=1e3))}, 
+        file = NULL)
+```
+
+Note that `bayesm` posterior sampling functions print out information about the prior and about MCMC progress during the function call (unless `nprint` is set to 0), but for presentation purposes we suppressed that output here.
+
+`runireg` returns a list that we have saved in `out`. The list contains two elements, `betadraw` and `sigmasqdraw`, which you can verify by running `str(out)`. `betadraw` is an `R/keep` $\times$ `ncol(X)` ($10,000 \times 3$ with a column for each of the intercept, price, and display) dimension matrix with class `bayesm.mat`. We can analyze or summarize the marginal posterior distributions for any $\beta$ parameter or the $\sigma^2$ parameter. For example, we can plot histograms of the price coefficient (even though it is known to follow a t-distrbution, see BSM Ch. 2.8) and for $\sigma^2$. Notice how concentrated the posterior distributions are compared to their priors above.
+
+```{r, fig.show = "hold"}
+B <- 1000+1 #burn in draws to discard 
+R <- 10000
+
+par(mfrow = c(1,2))
+hist(out$betadraw[B:R,2], breaks = 30, 
+     main = "Posterior Dist. of Price Coef.", 
+     yaxt = "n", yaxs="i",
+     xlab = "", ylab = "", 
+     col = "dodgerblue4", border = "gray")
+hist(out$sigmasqdraw[B:R], breaks = 30, 
+     main = "Posterior Dist. of Sigma2", 
+     yaxt = "n", yaxs="i",
+     xlab = "", ylab = "", 
+     col = "darkred", border = "gray")
+par(mfrow = c(1,1))
+```
+
+Additionally, we can compute features of these posterior distributions. For example, the posterior means price and display are:
+
+```{r}
+apply(out$betadraw[B:R,2:3], 2, mean)
+```
+
+Conveniently, `bayesm` offers this functionality (and more) with its `summary` and `plot` methods. Notice that `bayesm`'s methods use a default burn-in length, calculated as `trunc(0.1*nrow(X))`. You can override the default by specifying the `burnin` argument. We see that the means for the first few retail fixed effects in the summary information below match those calculated "by hand" above.
+
+```{r}
+summary(out$betadraw)
+```
+
+The same can be done with the `plot` generic function. However, we reference the method directly (`plot.bayesm.mat`) to plot a subset of the `bayesm` output -- specifically we plot the price coefficient. In the histogram, note that the green bars delimit a 95\% Bayesian credibility interval, yellow bars shows +/- 2 numerical standard errors for the posterior mean, and the red bar indicates the posterior mean. Also notice that this pink histogram of the posterior distribution on price, which was created by calling the `plot` generic, matches the blue one we created "by hand" above.
+
+The `plot` generic function also provides a trace plot and and ACF plot. In many applications (although not in this simple model), we cannot be certain that our draws from the posterior distribution adequately represent all areas of the posterior with nontrivial mass. This may occur, for instance, when using a "slow mixing" Markov Chain Monte Carlo (MCMC) algorithm to draw from the posterior. In such a case, we might see patterns in the trace plot and non-zero autocorrelations in the ACF plot; these will coincide with values for the Effective Sample Size less than `R`. (Effective Sample Size prints out with the `summary` generic function, as above.) Here, however, we are able to sample from the posterior distribution by taking iid draws, and so we see large Effective Sample Sizes in the `summary` output above, good mixing the trace plot below, and virtually no autocorrelation between draws in the ACF plot below.
+
+```{r}
+plot.bayesm.mat(out$betadraw[,2])
+```
+
+
+## Example 2: Multinomial Logistic Regression
+
+### Data
+
+Linear regression models like the one in the previous example are best suited for continuous outcome variables. Different models (known as limited dependent variable models) have been developed for binary or multinomial outcome variables, the most popular of which --- the multinomial logit --- will be the subject of this section.
+
+For this example, we analyze the `margarine` dataset, which provides panel data on purchases of margarine. The data are stored in two dataframes. The first, `choicePrice`, lists the outcome of `r data(margarine); format(nrow(margarine$choicePrice), big.mark=",")` choice occasions as well as the choosing household and the prices of the `r max(margarine$choicePrice[,2])` choice alternatives. The second, `demos`, provides demographic information about the choosing households, such as their income and family size. We begin by merging the information from these two dataframes:
+
+```{r, results = "hold"}
+data(margarine)
+str(margarine)
+marg <- merge(margarine$choicePrice, margarine$demos, by = "hhid")
+```
+
+Compared to the standard $n \times k$ rectangular format for data to be used in a linear regression model, choice data may be stored in various formats, including a rectangular format where the $p$ choice alternatives are allocated across columns or rows, or a list-of-lists format as used in `bayesm`'s hierarchical models, which we demonstrate in Example 3 below. For all functions --- and notably those that implement multinomial logit and probit models --- the data must be in the format expected by the function, and `bayesm`'s posterior sampling funtions are no exception. 
+
+In this example, we will implement a multinomial logit model using `rmnlIndepMetrop`. This posterior sampling function requires `y` to be a length-$n$ vector (or an $n \times 1$ matrix) of multinomial outcomes ($1, \dots, p$). That is, each element of `y` corresponds to a choice occasion $i$ with the value of the element $y_i$ indicating the choice that was made. So if the fourth alternative was chosen on the seventh choice occasion, then $y_7 = 4$. The `margarine` data are stored in that format, and so we easily specify `y` with the following code:
+
+```{r}
+y <- marg[,2]
+```
+
+`rmnlIndepMetrop` requires `X` to be an $np \times k$ matrix. That is, each alternative is listed on its own row, with a group of $p$ rows together corresponding to the alternatives available on one choice occasion. However, the `margarine` data are stored with the various choice alternatives in columns rather than rows, so reformatting is necessary. `bayesm` provides the utility function `createX` to assist with the conversion. `createX` requires the user to specify the number of choice alternatives `p` as well as the number of alternative-specific variables `na` and an $n \times$ `na` matrix of alternative-specific data `Xa` ("a" for alternative-specific). Here, we have $p=10$ choice alternatives with `na` $=1$ alternative-specific variable (price). If we were only interested in using price as a covariate, we would code:
+
+```{r}
+X1 <- createX(p=10, na=1, Xa=marg[,3:12], nd=NULL, Xd=NULL, base=1)
+colnames(X1) <- c(names(marg[,3:11]), "price")
+head(X1, n=10)
+```
+
+Notice that `createX` uses $p-1$ dummy variables to distinguish the $p$ choice alternatives. As with factor variables in linear regression, one factor must be the base; the coefficients on the other factors report deviations from the base. The user may specify the base alternative using the `base` argument (as we have done above), or let it default to the alternative with the highest index. 
+
+For our example, we might also like to include some "demographic" variables. These are variables that do not vary with the choice alternatives. For example, with the `margarine` data we might want to include family size. Here again we turn to `createX`, this time specifying the `nd` and `Xd` arguments ("d" for demographic):
+
+```{r, results = "hold"}
+X2 <- createX(p=10, na=NULL, Xa=NULL, nd=2, Xd=as.matrix(marg[,c(13,16)]), base=1)
+print(X2[1:10,1:9]); cat("\n")
+print(X2[1:10,10:18])
+```
+
+Notice that `createX` again uses $p-1$ dummy variables to distinguish the $p$ choice alternatives. However, for demographic variables, the value of the demographic variable is spread across $p-1$ columns and $p-1$ rows.  
+
+### Model
+
+The logit specification was originally derived by Luce (1959) from assumptions on characteristics of choice probabilities. McFadden (1974) tied the model to rational economic theory by showing how the multinomial logit specification models choices made by a utility-maximizing consumer, assuming that the unobserved utility component is distributed Type I Extreme Value. We motivate use of this model following McFadden by assuming the decision maker chooses the alternative providing him with the highest utility, where the utility $U_{ij}$ from the choice $y_{ij}$ made by a decision maker in choice situation $i$ for product $j = 1, \ldots, p$ is modeled as the sum of a deterministic and a stochastic component:
+
+\[ U_{ij} = V_{ij} + \varepsilon_{ij} \hspace{2em} \text{with } \varepsilon_{ij}\ \sim \text{ iid T1EV} \]
+
+Regressors (both demographic and alternative-specific) are included in the model by assuming $V_{ij} = x_{ij}'\beta$. These assumptions result in choice probabilities of:
+
+$$
+\text{Pr}(y_i=j) = \frac{\exp \{x_{ij}'\beta\}}{\sum_{k=1}^p\exp\{x_{ik}'\beta\}} 
+$$
+
+Independent priors for the components of the `beta` vector are specified as normal distributions. Using notation for the multivariate normal distribution, we have:
+
+$$ \beta \sim MVN(\bar{\beta},\ A^{-1}) $$
+
+We use `bayesm`'s default values for the parameters of the priors: $\bar{\beta} = 0$ and $A = 0.01I$.
+
+### Bayesian Estimation
+
+Experience with the MNL likelihood is that the asymptotic normal approximation is excellent. `rmnlIndepMetrop` implements an independent Metropolis algorithm to sample from the normal approximation to the posterior distribution of $\beta$:
+
+$$ p(\beta | X, y) \overset{\cdot}{\propto} |H|^{1/2} \exp \left\{ \frac{1}{2}(\beta - \hat{\beta})'H(\beta - \hat{\beta}) \right\} $$
+
+where $\hat{\beta}$ is the MLE, $H = \sum_i x_i A_i x_i'$, and the candidate distribution used in the Metropolis algorithm is the multivariate student t. For more detail, see Section 11 of BSM Chapter 3.
+
+We sample from the normal approximation to the posterior as follows:
+
+<!-- code we want to run -- this is what is shown in the document to the reader -->
+```{r, eval = FALSE}
+X <- cbind(X1, X2[,10:ncol(X2)])
+out <- rmnlIndepMetrop(Data = list(y=y, X=X, p=10), 
+                       Mcmc = list(R=1e4, nprint=1e3))
+```
+
+<!-- code actually run to suppress cat output during call to runireg -- not shown to the reader -->
+```{r, echo = FALSE}
+temp <- capture.output(
+          {set.seed(1234);
+           X <- cbind(X1, X2[,10:ncol(X2)]);
+           out <- rmnlIndepMetrop(Data = list(y=y, X=X, p=10), 
+                                  Mcmc = list(R=1e4, nprint=1e3))}, 
+        file = NULL)
+```
+
+`rmnlIndepMetrop` returns a list that we have saved in `out`. The list contains 3 elements, `betadraw`, `loglike`, and `acceptr`, which you can verify by running `str(out)`. `betadraw` is a $10,000 \times 28$ dimension matrix with class `bayesm.mat`. As with the linear regression of Example 1 above, we can plot or summarize features of the the posterior distribution in many ways. For information on each marginal posterior distribution, call `summary(out)` or `plot(out)`. Because we have 28 covariates (intercepts and demographic variables make up 9 columns each and there is one column for the price variable) we omit the full set of results to save space and instead, we only present summary statistics for the marginal posterior distribution for $\beta_\text{price}$:
+
+```{r}
+summary.bayesm.mat(out$betadraw[,10], names = "Price")
+```
+
+In addition to summary information for a marginal posterior distribution, we can plot it. We use `bayesm`'s `plot` generic function (calling `plot(out$betadraw)` would provide the same plots for all 28 $X$ variables). In the histogram, the green bars delimit a 95\% Bayesian credibility interval, yellow bars shows +/- 2 numerical standard errors for the posterior mean, and the red bar indicates the posterior mean. The subsequent two plots are a trace plot and and ACF plot.
+
+```{r}
+plot.bayesm.mat(out$betadraw[,10], names = "Price")
+```
+
+We see that the posterior is approximately normally distributed with a mean of `r format(round(mean(out$betadraw[,10]),1), big.mark=",")` and a standard deviation of `r round(sd(out$betadraw[,10]), 2)`. The trace plot shows good mixing. The ACF plot shows a fair amount of correlation such that, even though the algorithm took `R = 10,000` draws, the Effective Sample Size (as reported in the summary stats above) is only `r format(round(summary.bayesm.mat(out$betadraw[,10])[1,5],0), big.mark = ",")`.
+
+Because of the nonlinearity in this model, interpreting the results is more difficult than with linear regression models. We do not elaborate further on the interpretation of coefficients and methods of displaying results from multinomial logit models, but for the uninitiated reader, we refer you to excellent sources for this information authored by Kenneth Train and Gary King.[^3] 
+
+[^3]: Train, Kenneth, _Discrete Choice Models with Simulation_ Cambridge University Press, 2009. 
+
+    King, Gary _Unifying Political Methodlogy: The Likelihood Theory of Statistical Inference_, University of Michigan Press (1998) p. 108. 
+
+    King, Gary, Michael Tomz, and Jason Wittenberg, "Making the Most of Statistical Analyses: Improving Interpretation and Presentation" American Journal of Political Science, Vol. 44 (April 2000) pp. 347--361 at p. 355.
+
+
+## Example 3: Hierarchical Logit
+
+### Data
+
+While we could add individual-specific parameters to the previous model and use the same dataset, we elect to provide the reader with greater variety. For this example, we use the `camera` dataset in `bayesm`, which contains conjoint choice data for 332 respondents who evaluated digital cameras. These data have already been processed to exclude respondents that always answered "none", always picked the same brand, always selected the highest priced offering, or who appeared to be answering randomly. 
+
+```{r}
+data(camera)
+length(camera)
+str(camera[[1]])
+colnames(camera[[1]]$X)
+```
+
+The `camera` data is stored in a list-of-lists format, which is the format required by `bayesm`'s posterior sampling functions for hierarchical models. This format has one list per individual with each list containing a vector `y` of choice outcomes and a matrix `X` of covariates. As with the multinomial logit model of the last example, `y` is a length-$n_i$ vector (or one-column matrix) and `X` has dimensions $n_ij \times k$ where $n_i$ is the number of choice occasions faced by individual $i$, $j$ is the number of choice alternatives, and $k$ is the number of covariates. For the `camera` data, $N=332$, $n_i=16$ for all $i$, $j=5$, and $k=10$.
+
+If your data were not in this format, it could be easily converted with a `for` loop and `createX`. For example, we can format `margarine` data from Example 2 above into a list-of-lists format with the following code, which simply loops over individuals, extracting and storing their `y` and `X` data one individual at a time:
+
+```{r, eval = FALSE}
+data(margarine)
+chpr <- margarine$choicePrice
+chpr$hhid <- as.factor(chpr$hhid)
+N <- nlevels(chpr$hhid)
+dat <- vector(mode = "list", length = N)
+for (i in 1:N) {
+  dat[[i]]$y <- chpr[chpr$hhid==levels(chpr$hhid)[i], "choice"]
+  dat[[i]]$X <- createX(p=10, na=1, Xa=chpr[chpr$hhid==levels(chpr$hhid)[i],3:12], nd=NULL, Xd=NULL)
+}
+```
+
+Returning to the `camera` data, the first 4 covariates are binary indicators for the brands Canon, Sony, Nikon, and Panasonic. These correspond to choice (`y`) values of 1, 2, 3, and 4. `y` can also take the value 5, indicating that the respondent chose "none". The data include binary indicators for two levels of pixel count, zoom strength, swivel video display capability, and wifi connectivity. The last covaritate is price, recorded in hundreds of U.S. dollars (we leave price in these units so that we do not need to adjust the default prior settings).
+
+When we look at overall choice outcomes, we see that the brands and the outside alternative ("none") are chosen roughly in fifths, with specific implied market shares ranging from 17\%--25\%:
+
+```{r}
+N <- length(camera)
+dat <- matrix(NA, N*16, 2)
+for (i in 1:length(camera)) {
+  Ni <- length(camera[[i]]$y)
+  dat[((i-1)*Ni+1):(i*Ni),1] <- i
+  dat[((i-1)*Ni+1):(i*Ni),2] <- camera[[i]]$y
+}
+round(prop.table(table(dat[,2])), 3)
+```
+
+However, when we look at a few individuals' choices, we see much greater variability:
+
+```{r}
+round(prop.table(table(dat[,1], dat[,2])[41:50,], 1), 3)
+```
+
+It is this heterogeneity in individual choice that motivates us to employ a hierarchical model.
+
+### Model
+
+Hierarchical (also known as multi-level, random-coefficient, or mixed) models allow each respondent to have his or her own coefficients. Different people have different preferences, and models that estimate individual-level coefficients can fit data better and make more accurate predictions than single-level models. These models are quite popular in marketing, as they allow, for example, promotions to be targeted to individuals with high promotional part worths --- meaning those inviduals who are most likely to respond to the promotion. For more information, see Rossi et al. (1996).^[Rossi, McCulloch, and Allenby "The Value of Purchase History Data in Target Marketing" Marketing Science (1996).]
+
+The model follows the multinomial logit specification given in Example 2 above where individuals are assumed to be rational economic agents that make utility-maximizing choices. Now, however, the model includes individual-level parameters ($\beta_i$) assumed to be drawn from a normal distribution and with mean values driven by cross-sectional unit characteristics $Z$:
+
+$$ y_i \sim \text{MNL}(x_i'\beta_i) \hspace{1em} \text{with} \hspace{1em} \beta_i = z_i' \Delta + u_i  \hspace{1em} \text{and} \hspace{1em}  u_i \sim MVN(\mu, \Sigma) $$
+
+$x_i$ is $n_i \times k$ and $i = 1, \ldots, N$. 
+
+We can alternatively write the middle equation as $B=Z\Delta + U$ where $\beta_i$, $z_i$, and $u_i$ are the $i^\text{th}$ rows of $B$, $Z$, and $U$. $B$ is $N \times k$, $Z$ is $N \times m$, $\Delta$ is $m \times k$, and $U$ is $N \times k$.
+
+Note that we do not have any cross-sectional unit characteristics in the `camera` dataset and thus $Z$ will be omitted.
+
+The priors are:
+
+$$ \text{vec}(\Delta) = \delta \sim MVN(\bar{\delta}, A_\delta^{-1}) \hspace{2em} \mu \sim MVN(\bar{\mu}, \Sigma \otimes a^{-1}) \hspace{2em} \Sigma \sim IW(\nu, V) $$
+
+This specification of priors assumes that, conditional on the hyperparameters (that is, the parameters of the prior distribution), the $\beta$'s are _a priori_ independent. This means that inference for each unit can be conducted independently of all other units, conditional on the hyperparameters, which is the Bayesian analogue of the fixed effects approach in classical statistics.
+
+Note also that we have assumed a normal "first-stage" prior distribution over the $\beta$'s. `rhierMnlRwMixture` permits a more-flexible mixture-of-normals first-stage prior (hence the "mixture" in the function name). However, for our example, we will not include this added flexibility (`Prior$ncomp = 1` below).
+
+### Bayesian Estimation
+
+Although the model is more complex than the models used in the two previous examples, the increased programming difficulty for the researcher is minimal. As before, we specify `Data`, `Prior`, and `Mcmc` arguments, and call the posterior sampling function: 
+
+```{r}
+data  <- list(lgtdata = camera, p = 5)
+prior <- list(ncomp = 1)
+mcmc  <- list(R = 1e4, nprint = 0)
+
+out <- rhierMnlRwMixture(Data = data, Prior = prior, Mcmc = mcmc)
+```
+
+We store the results in `out`, which is a list of length 4. The list elements are `betadraw`, `nmix`, `loglike`, and `SignRes`. 
+
+- `betadraw` is a $332 \times 10 \times 10,000$ array. These dimensions correspond to the number of individuals, the number of covariates, and the number of MCMC draws.
+
+- `nmix` is a list with elements `probdraw`, `zdraw`, and `compdraw`. 
+
+    - `probdraw` tells us the probability that each draw came from a particular normal component. This is relevant when there is a mixture-of-normals first-stage prior. However, since our specified prior over the $\beta$ vector is one normal distribution, `probdraw` is a $10,000 \times 1$ vector of all 1's.
+    
+    - `zdraw` is `NULL` as it is not relevant for this function.
+    
+    - `compdraw` provides draws for the mixture-of-normals components. Here, `compdraw` is a list of 10,000 lists. The $r^\text{th}$ of the 10,000 lists contains the $r^\text{th}$ draw of the $\mu$ vector (dim $1 \times 10$) and the Cholesky root of the $r^\text{th}$ draw for the $10 \times 10$ covariance matrix.
+
+- `loglike` is a $10,000 \times 1$ vector that provides the log-likelihood of each draw.
+
+- `SignRes` relates to whether any sign restrictions were placed on the model. This is discussed in detail in a separate vignette detailing a contrainsted hierarchical multinomial logit model; it is not relevant here.
+
+We can summarize results as before. `plot(out$betadraw)` provides plots for each variable that summarize the distributions of the individual parameters. For brevity, we provide just a histogram of posterior means for the 332 individual coefficients on wifi capability. 
+
+```{r}
+hist(apply(out$betadraw, 1:2, mean)[,9], col = "dodgerblue4", 
+     xlab = "", ylab = "", yaxt="n", xlim = c(-4,6), breaks = 20,
+     main = "Histogram of Posterior Means For Individual Wifi Coefs")
+```
+
+We see that the distribution of individual posterior means is skewed, suggesting that our assumption of a normal first-stage prior may be incorrect. We could improve this model by using the more flexible mixture-of-normals prior or, if we believe all consumers value wifi connectivity positively, we could impose a sign constraint on that set of parameters --- both of which are demonstrated in the vignette for sign-constrained hierarchical multinomial logit.
+
+# Conclusion
+
+We hope that this vignette has provided the reader with a thorough introduction to the `bayesm` package and is sufficient to enable immediate use of its posterior sampling functions for bayesian estimation. Comments or edits can be sent to the vignette authors at the email addresses below.
+
+*****
+  
+_Authored by [Dan Yavorsky](dyavorsky@gmail.com) and [Peter Rossi](perossichi@gmail.com). Last updated June 2017._
+

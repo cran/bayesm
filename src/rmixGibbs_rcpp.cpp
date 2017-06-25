@@ -1,10 +1,10 @@
 #include "bayesm.h"
- 
+  
 //W. Taylor: we considered moving the output to struct formats but the efficiency
 //  gains were limited and the conversions back and forth between Lists and struct were cumbersome
 
 List drawCompsFromLabels(mat const& y,  mat const& Bbar, 
-                         mat const& A, int nu, 
+                         mat const& A, double nu, 
                          mat const& V,  int ncomp,
                          vec const& z){
                            
@@ -133,7 +133,7 @@ vec drawPFromLabels(vec const& a, vec const& z) {
 
 //[[Rcpp::export]]
 List rmixGibbs( mat const& y,  mat const& Bbar, 
-                mat const& A, int nu, 
+                mat const& A, double nu, 
                 mat const& V,  vec const& a, 
                 vec const& p,  vec const& z) {
 

@@ -1,5 +1,5 @@
 #include "bayesm.h"
- 
+  
 //EXTRA FUNCTIONS SPECIFIC TO THE MAIN FUNCTION--------------------------------------------
 double llnegbinpooled(std::vector<moments> regdata_vector, mat Beta, double alpha){
   
@@ -20,7 +20,7 @@ double llnegbinpooled(std::vector<moments> regdata_vector, mat Beta, double alph
 
 // [[Rcpp::export]]
 List rhierNegbinRw_rcpp_loop(List const& regdata, List const& hessdata, mat const& Z, mat Beta, mat Delta,
-                             mat const& Deltabar, mat const& Adelta, int nu, mat const& V, double a, double b,
+                             mat const& Deltabar, mat const& Adelta, double nu, mat const& V, double a, double b,
                              int R, int keep, double sbeta, double alphacroot, int nprint, mat rootA,
                              double alpha, bool fixalpha){
                             
@@ -60,6 +60,8 @@ List rhierNegbinRw_rcpp_loop(List const& regdata, List const& hessdata, mat cons
 //           s_alpha - scaling parameter for alpha RW (def = 2.93)
 //           w - fractional weighting parameter (def = .1)
 //           Vbeta0, Delta0 - initial guesses for parameters, if not supplied default values are used
+//           alpha - initial guess for alpha
+//           fixalpha - if TRUE, fix alpha and draw only beta
 
   double ldiff, acc, unif, logalphac, oldlpostalpha, clpostalpha;
   int mkeep, rep;

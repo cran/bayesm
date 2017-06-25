@@ -1,9 +1,9 @@
 #include "bayesm.h"
- 
+
 //[[Rcpp::export]]
 List rhierLinearMixture_rcpp_loop(List const& regdata, mat const& Z,
                                   vec const& deltabar, mat const& Ad, mat const& mubar, mat const& Amu,
-                                  int const& nu, mat const& V, int nu_e, vec const& ssq,
+                                  double nu, mat const& V, double nu_e, vec const& ssq,
                                   int R, int keep, int nprint, bool drawdelta,
                                   mat olddelta,  vec const& a, vec oldprob, vec ind, vec tau){
 

@@ -1,5 +1,5 @@
 #include "bayesm.h"
- 
+  
 //Used in rmvpGibbs and rmnpGibbs---------------------------------------------------------------------------------
 vec condmom(vec const& x, vec const& mu, mat const& sigmai, int p, int j){
   
@@ -13,7 +13,7 @@ vec condmom(vec const& x, vec const& mu, mat const& sigmai, int p, int j){
   int jm1 = j-1;
   int ind = p*jm1;
   
-  double csigsq = 1./sigmai(ind+jm1);
+  double csigsq = 1/sigmai(ind+jm1);
   double m = 0.0;
   
   for(int i = 0; i<p; i++) if (i!=jm1) m += - csigsq*sigmai(ind+i)*(x[i]-mu[i]);
@@ -24,7 +24,7 @@ vec condmom(vec const& x, vec const& mu, mat const& sigmai, int p, int j){
   return (out);
 }
 
-double rtrun1(double mu, double sigma,double trunpt, int above) {
+double rtrun1(double mu, double sigma, double trunpt, int above) {
 
 // Wayne Taylor 9/8/2014
   
@@ -51,16 +51,16 @@ double rtrun1(double mu, double sigma,double trunpt, int above) {
 
 //Used in rhierLinearModel, rhierLinearMixture and rhierMnlRWMixture------------------------------------------------------
 mat drawDelta(mat const& x,mat const& y,vec const& z,List const& comps,vec const& deltabar,mat const& Ad){
-
-// Wayne Taylor 10/01/2014
-
-// delta = vec(D)
-//  given z and comps (z[i] gives component indicator for the ith observation, 
-//   comps is a list of mu and rooti)
-// y is n x p
-// x is n x k
-// y = xD' + U , rows of U are indep with covs Sigma_i given by z and comps
-
+  
+  // Wayne Taylor 10/01/2014
+  
+  // delta = vec(D)
+  //  given z and comps (z[i] gives component indicator for the ith observation, 
+  //   comps is a list of mu and rooti)
+  // y is n x p
+  // x is n x k
+  // y = xD' + U , rows of U are indep with covs Sigma_i given by z and comps
+  
   int p = y.n_cols;
   int k = x.n_cols;
   int ncomp  = comps.length();
@@ -77,7 +77,7 @@ mat drawDelta(mat const& x,mat const& y,vec const& z,List const& comps,vec const
     
     //Create an index vector ind, to be used like y[ind,]
     uvec ind = find(z == (compi+1));
-  
+    
     //If there are observations in this component
     if(ind.size()>0){
       mat yi = y.submat(ind,colAlly);
@@ -103,7 +103,7 @@ mat drawDelta(mat const& x,mat const& y,vec const& z,List const& comps,vec const
 }
 
 unireg runiregG(vec const& y, mat const& X, mat const& XpX, vec const& Xpy, double sigmasq, mat const& A, 
-              vec const& Abetabar, int nu, double ssq) {
+              vec const& Abetabar, double nu, double ssq) {
 
 // Keunwoo Kim 09/16/2014
 

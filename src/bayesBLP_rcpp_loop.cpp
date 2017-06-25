@@ -1,5 +1,5 @@
 #include "bayesm.h"
- 
+  
 //SUPPORT FUNCTIONS SPECIFIC TO MAIN FUNCTION--------------------------------------------------------------------------------------
 mat r2Sigma(vec const& r, int K){
 //
@@ -137,7 +137,7 @@ mat share2mu(mat const& Sigma, mat const& X, mat const& v, vec const& share, int
 }
 
 List rivDraw(vec const& mu, vec const& Xend, mat const& z, mat const& Xexo, vec const& theta_hat, mat const& A, 
-                  vec const& deltabar, mat const& Ad, mat const& V, int nu, vec const& delta_old, mat const& Omega_old){
+                  vec const& deltabar, mat const& Ad, mat const& V, double nu, vec const& delta_old, mat const& Omega_old){
 //
 // Keunwoo Kim 05/21/2015
 //
@@ -255,7 +255,7 @@ List bayesBLP_rcpp_loop(bool IV, mat const& X, mat const& Z, vec const& share,
                         vec const& sigmasqR, 
                         mat const& A, vec const& theta_hat, 
                         vec const& deltabar, mat const& Ad,
-                        int nu0, double s0_sq, mat const& VOmega, 
+                        double nu0, double s0_sq, mat const& VOmega, 
                         double ssq, mat const& cand_cov, 
                         vec const& theta_bar_initial, vec const& r_initial, 
                         double tau_sq_initial, mat const& Omega_initial, vec const& delta_initial,
@@ -310,11 +310,11 @@ List bayesBLP_rcpp_loop(bool IV, mat const& X, mat const& Z, vec const& share,
 // Model & Prior: 
 //      shown in the below comments.
 
-  int nu1, mkeep, I, jt;
+  int mkeep, I, jt;
   mat prob_t, Sigma_new, b, S, Sigma, Sigma_inv, rel, expU, share_hat, choiceProb, expSum, L, ucholinv, XXAinv, out_cont,
       Xexo, Xend, Omega_all, delta_all, zetaeta_old, zetaeta_new, rootiOmega;
   vec r_new, mu_new, theta_tilde, z, mu, err, mu0, mu1, eta_new, eta_old, tau_sq_all, zeta;
-  double alpha, ll_new, ll_old, sumLogJaco_new, prior_new, prior_old, s1_sq, acceptrate;
+  double nu1, alpha, ll_new, ll_old, sumLogJaco_new, prior_new, prior_old, s1_sq, acceptrate;
   List ivout;
   
   double pi = M_PI;

@@ -1,7 +1,7 @@
 #include "bayesm.h"
- 
+  
 //[[Rcpp::export]]
-List rmnlIndepMetrop_rcpp_loop(int R, int keep, int nu,
+List rmnlIndepMetrop_rcpp_loop(int R, int keep, double nu,
                                 vec const& betastar, mat const& root,vec const& y,mat const& X,
                                 vec const& betabar,mat const& rootpi,mat const& rooti,
                                 double oldlimp,double oldlpost,int nprint) {

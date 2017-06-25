@@ -1,8 +1,8 @@
 #include "bayesm.h"
-
+ 
 // [[Rcpp::export]]
-List rhierLinearModel_rcpp_loop(List const& regdata, mat const& Z, mat const& Deltabar, mat const& A, int nu, 
-                          mat const& V, int nu_e, vec const& ssq, vec tau, mat Delta, mat Vbeta, int R, int keep, int nprint){
+List rhierLinearModel_rcpp_loop(List const& regdata, mat const& Z, mat const& Deltabar, mat const& A, double nu, 
+                          mat const& V, double nu_e, vec const& ssq, vec tau, mat Delta, mat Vbeta, int R, int keep, int nprint){
 
 // Keunwoo Kim 09/16/2014
 

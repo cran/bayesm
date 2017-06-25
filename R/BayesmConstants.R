@@ -8,8 +8,8 @@ BayesmConstant.w = .1               #fractional likelihood weighting parameter
 BayesmConstant.A = .01              #scaling factor for the prior precision matrix
 BayesmConstant.nuInc = 3            #Increment for nu
 BayesmConstant.a = 5                #Dirichlet parameter for mixture models
-BayesmConstant.nu.e = 3             #degrees of freedom parameter for regression error variance prior
-BayesmConstant.nu = 3               #degrees of freedom parameter for Inverted Wishart prior
+BayesmConstant.nu.e = 3.0           #degrees of freedom parameter for regression error variance prior
+BayesmConstant.nu = 3.0             #degrees of freedom parameter for Inverted Wishart prior
 BayesmConstant.agammaprior = .5     #Gamma prior parameter
 BayesmConstant.bgammaprior = .1     #Gamma prior parameter
 

@@ -1,5 +1,5 @@
 #include "bayesm.h"
- 
+
 // [[Rcpp::export]]
 vec rdirichlet(vec const& alpha){
   
@@ -17,3 +17,5 @@ vec rdirichlet(vec const& alpha){
   
   return(y/sum(y));
 }
+
+

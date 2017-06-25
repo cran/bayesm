@@ -1,8 +1,9 @@
 #
 # -----------------------------------------------------------------------------
 #
-rhierBinLogit=
+rhierBinLogit =
 function(Data,Prior,Mcmc){
+.Deprecated(msg = "'rhierBinLogit' is depricated \nUse 'rhierMnlRwMixture' instead")
 #
 # revision history: 
 #	changed 5/12/05 by Rossi to add error checking
@@ -38,7 +39,7 @@ function(Data,Prior,Mcmc){
 #
 loglike=
 function(y,X,beta) {
-# function computer log likelihood of data for binomial logit model
+# function computes log likelihood of data for binomial logit model
 # Pr(y=1) = 1 - Pr(y=0) = exp[X'beta]/(1+exp[X'beta])
 prob = exp(X%*%beta)/(1+exp(X%*%beta))
 prob = prob*y + (1-prob)*(1-y)
@@ -48,13 +49,14 @@ sum(log(prob))
 #
 #  check arguments
 #
-if(missing(Data)) {pandterm("Requires Data argument -- list of m,lgtdata, and (possibly) Z")}
+if(missing(Data)) {pandterm("Requires Data argument -- list of m, lgtdata, and (possibly) Z")}
   if(is.null(Data$lgtdata)) {pandterm("Requires Data element lgtdata (list of data for each unit)")}
   lgtdata=Data$lgtdata
   nlgt=length(lgtdata)
 if(is.null(Data$Z)) { cat("Z not specified -- putting in iota",fill=TRUE); fsh() ; Z=matrix(rep(1,nlgt),ncol=1)}
-  else {if (nrow(Data$Z) != nlgt) {pandterm(paste("Nrow(Z) ",nrow(Z),"ne number logits ",nlgt))}
-      else {Z=Data$Z}}
+  else {if (!is.matrix(Data$Z)) {pandterm("Z must be a matrix")}
+    else {if (nrow(Data$Z) != nlgt) {pandterm(paste("nrow(Z) ",nrow(Z),"ne number logits ",nlgt))}
+      else {Z=Data$Z}}}
   nz=ncol(Z)
 #
 # check lgtdata for validity
@@ -62,11 +64,15 @@ if(is.null(Data$Z)) { cat("Z not specified -- putting in iota",fill=TRUE); fsh()
 m=2  # set two choice alternatives for Greg's code
 ypooled=NULL
 Xpooled=NULL
-if(!is.null(lgtdata[[1]]$X)) {oldncol=ncol(lgtdata[[1]]$X)}
+if(!is.null(lgtdata[[1]]$X & is.matrix(lgtdata[[1]]$X))) {oldncol=ncol(lgtdata[[1]]$X)}
 for (i in 1:nlgt) 
 {
-    if(is.null(lgtdata[[i]]$y)) {pandterm(paste("Requires element y of lgtdata[[",i,"]]"))}
-    if(is.null(lgtdata[[i]]$X)) {pandterm(paste("Requires element X of lgtdata[[",i,"]]"))}
+    if(is.null(lgtdata[[i]]$y)) {pandterm(paste0("Requires element y of lgtdata[[",i,"]]"))}
+    if(is.null(lgtdata[[i]]$X)) {pandterm(paste0("Requires element X of lgtdata[[",i,"]]"))}
+    if(!is.matrix(lgtdata[[i]]$X)) {pandterm(paste0("lgtdata[[",i,"]]$X must be a matrix"))}
+    if(!is.vector(lgtdata[[i]]$y, mode = "numeric") & !is.vector(lgtdata[[i]]$y, mode = "logical") & !is.matrix(lgtdata[[i]]$y)) 
+      {pandterm(paste0("lgtdata[[",i,"]]$y must be a numeric or logical vector or matrix"))}
+    if(is.matrix(lgtdata[[i]]$y) & ncol(lgtdata[[i]]$y)>1) {pandterm(paste0("lgtdata[[",i,"]]$y must be a vector or one-column matrix"))}
     ypooled=c(ypooled,lgtdata[[i]]$y)
     nrowX=nrow(lgtdata[[i]]$X)
     if((nrowX) !=length(lgtdata[[i]]$y)) {pandterm(paste("nrow(X) ne length(yi); exception at unit",i))}

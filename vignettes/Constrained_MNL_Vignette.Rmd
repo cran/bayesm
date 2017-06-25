@@ -1,0 +1,297 @@
+---
+title: "Hierarchical Multinomial Logit with Sign Constraints"
+output: 
+  rmarkdown::html_document:
+    theme: spacelab
+    highlight: pygments
+    toc: true
+    toc_float: true
+    toc_depth: 3
+    number_sections: no
+    fig_caption: yes
+vignette: >
+  %\VignetteIndexEntry{Hierarchical Multinomial Logit with Sign Constraints}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, echo = FALSE}
+library(bayesm)
+knitr::opts_chunk$set(fig.align = "center",
+                      fig.height = 3.5,
+                      warning = FALSE,
+                      error = FALSE,
+                      message = FALSE)
+```
+
+*****
+
+
+# Introduction
+
+`bayesm`'s posterior sampling function `rhierMnlRwMixture` permits the imposition of sign constraints on the individual-specific parameters of a hierarchical multinomial logit model. This may be desired if, for example, the researcher believes there are heterogenous effects from, say, price, but that all responses should be negative (i.e., sign-constrained). This vignette provides exposition of the model, discussion of prior specification, and an example.
+
+# Model
+
+The model follows the hierarchical multinomial logit specification given in Example 3 of the "`bayesm` Overview" Vignette, but will be repeated here succinctly. Individuals are assumed to be rational economic agents that make utility-maximizing choices. Utility is modeled as the sum of deterministic and stochastic components, where the inverse-logit of the probability of chosing an alternative is linear in the parameters and the error is assumed to follow a Type I Extreme Value distribution:
+
+$$ U_{ij} = X_{ij}\beta_i + \varepsilon_{ij} 
+\hspace{0.8em} \text{with} \hspace{0.8em} 
+\varepsilon_{ij}\ \sim \text{ iid Type I EV} $$
+
+These assumptions yield choice probabilities of:
+
+$$ \text{Pr}(y_i=j) = \frac{\exp \{x_{ij}'\beta_i\}}{\sum_{k=1}^p\exp\{x_{ik}'\beta_i\}} $$
+
+$x_i$ is $n_i \times k$ and $i = 1, \ldots, N$. There are $p$ alternatives, $j = 1, \ldots, p$. An outside option, often denoted $j=0$ can be introduced by assigning $0$'s to that option's covariate ($x$) values.
+
+We impose sign constraints by defining a $k$-length constraint vector `SignRes` that takes values from the set $\{-1, 0, 1\}$ to define $\beta_{ik} = f(\beta_{ik}^*)$ where $f(\cdot)$ is as follows:
+
+$$ \beta_{ik} = f(\beta_{ik}^*) = \left\{
+                \begin{array}{lcl}
+                  \exp(\beta_{ik}^*) & \text{if} & \texttt{SignRes[k]} = 1 \\
+                  \beta_{ik}^* & \text{if} & \texttt{SignRes[k]} = 0 \\
+                  -\exp(\beta_{ik}^*) & \text{if} & \texttt{SignRes[k]} = -1 \\
+                \end{array}
+              \right. $$
+
+The "deep" individual-specific parameters ($\beta_i^*$) are assumed to be drawn from a mixture of $M$ normal distributions with mean values driven by cross-sectional unit characteristics $Z$. That is, $\beta_i^* = z_i' \Delta + u_i$ where $u_i$ has a mixture-of-normals distribution.^[As documented in the helpfile for this function (accessible by `?bayesm::rhierMnlRwMixture`), draws from the posterior of the constrained parameters ($\beta$) can be found in the output `$betadraw` while draws from the posterior of the unconstrained parameters ($\beta^*$) are available in `$nmix$compdraw`.]
+
+Considering $\beta_i^*$ a length-$k$ row vector, we will stack the $N$ $\beta_i^*$'s vertically and write:
+
+$$ B=Z\Delta + U $$
+Thus we have $\beta_i$, $z_i$, and $u_i$ as the $i^\text{th}$ rows of $B$, $Z$, and $U$. $B$ is $N \times k$, $Z$ is $N \times M$, $\Delta$ is $M \times k$, and $U$ is $N \times k$ where the distribution on $U$ is such that:
+
+$$ \Pr(\beta_{ik}^*) = \sum_{m=1}^M \pi_m \phi(z_i' \Delta \vert \mu_j, \Sigma_j) $$
+
+$\phi$ is the normal pdf.
+
+
+# Priors
+
+Natural conjugate priors are specified:
+
+$$ \pi \sim \text{Dirichlet}(a) $$
+$$ \text{vec}(\Delta) = \delta \sim MVN(\bar{\delta}, A_\delta^{-1}) $$
+$$ \mu_m \sim MVN(\bar{\mu}, \Sigma_m \otimes a_\mu^{-1}) $$
+$$ \Sigma_m \sim IW(\nu, V) $$
+
+This specification of priors assumes that $\mu_m$ is independent of $\Sigma_m$ and that, conditional on the hyperparameters, the $\beta_i$'s are _a priori_ independent. 
+
+$a$ implements prior beliefs on the number of normal components in the mixture with a default of 5.  $\nu$ is a "tightness" parameter of the inverted-Wishart distribution and $V$ is its location matrix. Without sign constraints, they default to $\nu=k+3$ and $V=\nu I$, which has the effect of centering the prior on $I$ and making it "barely proper". $a_\mu$ is a tightness parameter for the priors on $\mu$, and when no sign constraints are imposed it defaults to an extremely diffuse prior of 0.01.
+
+These defaults assume the logit coefficients ($\beta_{ik}$'s) are on the order of approximately 1 and, if so, are typically reasonable hyperprior values. However, when sign constraints are imposed, say, `SignRes[k]=-1` such that $\beta_{ik} = -\exp\{\beta_{ik}^*\}$, then these hyperprior defults pile up mass near zero --- a result that follows from the nature of the exponential function and the fact that the $\beta_{ik}^*$'s are on the log scale. Let's show this graphically.
+
+```{r}
+# define function
+drawprior <- function (mubar_betak, nvar, ncomp, a, nu, Amu, V, ndraw) {
+  betakstar <- double(ndraw)
+  betak     <- double(ndraw)
+  otherbeta <- double(ndraw)
+  mubar     <- c(rep(0, nvar-1), mubar_betak)
+  
+  for(i in 1:ndraw) {
+    comps=list()
+    for(k in 1:ncomp) {
+      Sigma <- rwishart(nu,chol2inv(chol(V)))$IW
+      comps[[k]] <- list(mubar + t(chol(Sigma/Amu)) %*% rnorm(nvar), 
+                         backsolve(chol(Sigma), diag(1,nvar)) )
+    }
+    pvec         <- rdirichlet(a)
+    beta         <- rmixture(1,pvec,comps)$x
+    betakstar[i] <- beta[nvar]
+    betak[i]     <- -exp(beta[nvar])
+    otherbeta[i] <- beta[1]
+  }
+  
+  return(list(betakstar=betakstar, betak=betak, otherbeta=otherbeta))
+}
+set.seed(1234)
+```
+
+```{r}
+# specify rhierMnlRwMixture defaults
+mubar_betak <- 0
+nvar  <- 10
+ncomp <- 3
+a     <- rep(5, ncomp)
+nu    <- nvar + 3
+Amu   <- 0.01
+V     <- nu*diag(c(rep(1,nvar-1),1))
+ndraw <- 10000
+defaultprior <- drawprior(mubar_betak, nvar, ncomp, a, nu, Amu, V, ndraw)
+```
+
+```{r, fig.align='center', fig.height=3.5, results='hold'}
+# plot priors under defaults
+par(mfrow=c(1,3))
+trimhist <- -20
+hist(defaultprior$betakstar, breaks=40, col="magenta", 
+     main="Beta_k_star", xlab="", ylab="", yaxt="n")
+hist(defaultprior$betak[defaultprior$betak>trimhist],
+     breaks=40, col="magenta", main="Beta_k",
+     xlab="", ylab="", yaxt="n", xlim=c(trimhist,0))
+hist(defaultprior$otherbeta, breaks=40, col="magenta",
+     main="Other Beta", xlab="", ylab="", yaxt="n")
+```
+
+We see that the hyperprior values for constrained logit parameters are far from uninformative. As a result, `rhierMnlRwMixture` implements different default priors for parameters when sign constraints are imposed. In particular, $a_\mu=0.1$, $\nu = k + 15$, and $V = \nu*\text{diag}(d)$ where $d_i=4$ if $\beta_{ik}$ is unconstrained and $d_i=0.1$ if $\beta_{ik}$ is constrained. Additionally, $\bar{\mu}_m = 0$ if unconstrained and $\bar{\mu}_m = 2$ otherwise. As the following plots show, this yields substantially less informative hyperpriors on $\beta_{ik}^*$ without significantly affecting the hyperpriors on $\beta_{ik}$ or $\beta_{ij}$ ($j \ne k$).
+
+```{r}
+# adjust priors for constraints
+mubar_betak <- 2
+nvar  <- 10
+ncomp <- 3 
+a     <- rep(5, ncomp)
+nu    <- nvar + 15
+Amu   <- 0.1 
+V     <- nu*diag(c(rep(4,nvar-1),0.1))
+ndraw <- 10000
+tightprior <- drawprior(mubar_betak, nvar, ncomp, a, nu, Amu, V, ndraw)
+```
+
+```{r, fig.align='center', fig.height=3.5, results='hold'}
+# plot priors under adjusted values
+par(mfrow=c(1,3))
+trimhist <- -20
+hist(tightprior$betakstar, breaks=40, col="magenta", 
+     main="Beta_k_star", xlab="", ylab="", yaxt="n")
+hist(tightprior$betak[tightprior$betak>trimhist],
+     breaks=40, col="magenta", main="Beta_k",
+     xlab="", ylab="", yaxt="n", xlim=c(trimhist,0))
+hist(tightprior$otherbeta, breaks=40, col="magenta", 
+     main="Other Beta", xlab="", ylab="", yaxt="n")
+```
+
+
+# Example
+
+Here we demonstrate the implementation of the hierarchical multinomial logit model with sign-constrained parameters. We return to the `camera` data used in Example 3 of the "`bayesm` Overview" Vignette. This dataset contains conjoint choice data for 332 respondents who evaluated digital cameras. The data are stored in a lists-of-lists format with one list per respondent, and each respondent's list having two elements: a vector of choices (`y`) and a matrix of covariates (`X`). Notice the dimensions: there is one value for each choice occasion in each individual's `y` vector but one row per alternative in each individual's `X` matrix, making `nrow(x)` = 5 $\times$ `length(y)` because there are 5 alternatives per choice occasion.
+
+```{r}
+library(bayesm)
+data(camera)
+length(camera)
+str(camera[[1]])
+```
+
+As shown next, the first 4 covariates are binary indicators for the brands Canon, Sony, Nikon, and Panasonic. These correspond to choice (`y`) values of 1, 2, 3, and 4. `y` can also take the value 5, indicating that the respondent chose "none". The data include binary indicators for two levels of pixel count, zoom strength, swivel video display capability, and wifi connectivity. The last covaritate is price, recorded in hundreds of U.S. dollars so that the magnitude of the expected price coefficient is such that the default prior settings in `rhierMnlRwMixture` do not need to be adjusted. 
+
+```{r}
+str(camera[[1]]$y)
+str(as.data.frame(camera[[1]]$X))
+```
+
+Let's say we would like to estimate the part-worths of the various attributes of these digital cameras using a multinomial logit model. To incorporate individual-level heterogeneous effects, we elect to use a hierarchical (i.e., random coefficient) specification. Further, we believe that despite the heterogeneity, each consumer's estimate price response ($\beta_{i,\text{price}}$) should be negative, which we will impose with a sign constraint. Following the above discussion, we use the default priors, which "adjust" automatically when sign constraints are imposed.
+
+```{r, echo = FALSE}
+nvar  <- 10
+mubar <- c(rep(0,nvar-1),2)
+Amu   <- 0.1 
+ncomp <- 5 
+a     <- rep(5, ncomp)
+nu    <- 25
+V     <- nu*diag(c(rep(4,nvar-1),0.1))
+```
+
+<!-- code we want to run -- this is what is shown in the document to the reader -->
+```{r, eval = FALSE}
+SignRes <- c(rep(0,nvar-1),-1)
+
+data  <- list(lgtdata=camera, p=5)
+prior <- list(mubar=mubar, Amu=Amu, ncomp=ncomp, a=a, nu=nu, V=V, SignRes=SignRes)
+mcmc  <- list(R=1e4, nprint=0)
+
+out <- rhierMnlRwMixture(Data=data, Prior=prior, Mcmc=mcmc)
+```
+
+<!-- code actually run -- not shown to the reader, done to suppress output -->
+```{r, echo = FALSE}
+temp <- capture.output(
+          {SignRes <- c(rep(0,nvar-1),-1);
+           data  <- list(lgtdata = camera, p = 5);
+           prior <- list(mubar=mubar, Amu=Amu, ncomp=ncomp, a=a, nu=nu, V=V, SignRes=SignRes);
+           mcmc  <- list(R = 1e4, nprint = 0);
+           out <- rhierMnlRwMixture(Data = data, Prior = prior, Mcmc = mcmc)}, 
+        file = NULL)
+```
+
+While much can be done to analyze the output, we will focus here on the constrained parameters on price. We first plot the posterior distributions for the price parameter for individuals $i=1,2,3$. Notice that the posterior distributions for the selected individual's price parameters lie entirely below zero.
+
+\begin{center} \textbf{Posterior Distributions for beta\_price} \end{center}
+
+```{r}
+par(mfrow=c(1,3))
+ind_hist <- function(mod, i) {
+  hist(mod$betadraw[i , 10, ], breaks = seq(-14,0,0.5), 
+     col = "dodgerblue3", border = "grey", yaxt = "n",
+     xlim = c(-14,0), xlab = "", ylab = "", main = paste("Ind.",i))
+}
+ind_hist(out,1)
+ind_hist(out,2)
+ind_hist(out,3)
+```
+
+Next we plot a histogram of the posterior means for the 332 individual price paramters ($\beta_{i,\text{price}}$):
+
+```{r}
+par(mfrow=c(1,1))
+hist(apply(out$betadraw[ , 10, ], 1, mean), 
+     xlim = c(-20,0), breaks = 20, 
+     col = "firebrick2", border = "gray", xlab = "", ylab = "",
+     main = "Posterior Means for Ind. Price Params, 
+             With Sign Constraint")
+
+```
+
+As a point of comparison, we re-run the model without the sign constraint using the default priors (output omitted) and provide the same set of plots. Note now that the right tail of the posterior distribution of $\beta_2^\text{price}$ extends to the right of zero.
+
+```{r}
+data0  <- list(lgtdata = camera, p = 5)
+prior0 <- list(ncomp = 5)
+mcmc0  <- list(R = 1e4, nprint = 0)
+```
+
+<!-- code we want to run -- this is what is shown in the document to the reader -->
+```{r, eval = FALSE}
+out0 <- rhierMnlRwMixture(Data = data0, Prior = prior0, Mcmc = mcmc0)
+```
+
+<!-- code actually run -- not shown to the reader, done to suppress output -->
+```{r, echo = FALSE}
+temp <- capture.output(
+          {out0 <- rhierMnlRwMixture(Data = data0, Prior = prior0, Mcmc = mcmc0)}, 
+        file = NULL)
+```
+
+```{r}
+par(mfrow=c(1,3))
+ind_hist <- function(mod, i) {
+  hist(mod$betadraw[i , 10, ], breaks = seq(-12,2,0.5), 
+     col = "dodgerblue4", border = "grey", yaxt = "n",
+     xlim = c(-12,2), xlab = "", ylab = "", main = paste("Ind.",i))
+}
+ind_hist(out0,1)
+ind_hist(out0,2)
+ind_hist(out0,3)
+```
+
+
+```{r}
+par(mfrow=c(1,1))
+hist(apply(out0$betadraw[ , 10, ], 1, mean), 
+     xlim = c(-15,5), breaks = 20, 
+     col = "firebrick3", border = "gray", 
+     xlab = "", ylab = "",
+     main = "Posterior Means for Ind. Price Params, 
+             No Sign Constraint")
+```
+
+
+*****
+  
+_Authored by [Dan Yavorsky](dyavorsky@gmail.com) and [Peter Rossi](perossichi@gmail.com). Last updated June 2017._
+
+
+
+

@@ -1,6 +1,6 @@
 #include "bayesm.h"
 #include <RcppArmadilloExtensions/sample.h> //used for "sample" function
- 
+  
 //SUPPORT FUNCTIONS SPECIFIC TO MAIN FUNCTION--------------------------------------------------------------------------------------
 double ghk(mat const& L, vec const& a, vec const& b, int const& n, int const& dim){
 
@@ -190,20 +190,20 @@ mat getS(mat const& Lam, int n, vec const& moms){
   
   mat S = zeros<mat>(2,2);
   
-  S(0,0) = (n-1)*moms[2] + n*pow(moms[0],2);
+  S(0,0) = (n-1)*moms[2] + n*pow(moms[0],2.0);
   S(0,1) = (n-1)*moms[3] + n*moms[0]*(moms[1]-Lam(1,1));
   S(1,0) = S(0,1);
-  S(1,1) = (n-1)*moms[4] + n*pow(moms[1]-Lam(1,1),2);
+  S(1,1) = (n-1)*moms[4] + n*pow(moms[1]-Lam(1,1),2.0);
 
   return(S);
 }
 
-double llL(mat const& Lam, int n, mat const& S, mat const& V,int nu){
+double llL(mat const& Lam, int n, mat const& S, mat const& V,double nu){
   
 //Wayne Taylor 4/29/15  
 
   int d = Lam.n_cols;
-  double dlam = Lam(0,0)*Lam(1,1)-pow(Lam(0,1),2);
+  double dlam = Lam(0,0)*Lam(1,1)-pow(Lam(0,1),2.0);
   mat M = (S+V) *  solve(Lam,eye(d,d));
   double ll = -.5*(n+nu+3)*log(dlam) -.5*sum(M.diag());
   
@@ -216,7 +216,7 @@ List rscaleUsage_rcpp_loop(int k, mat const& x, int p, int n,
                            int R, int keep, int ndghk, int nprint,
                            mat y, vec mu, mat Sigma, vec tau, vec sigma, mat Lambda, double e,
                            bool domu, bool doSigma, bool dosigma, bool dotau, bool doLambda, bool doe,
-                           int nu, mat const& V, mat const& mubar, mat const& Am,
+                           double nu, mat const& V, mat const& mubar, mat const& Am,
                            vec const& gsigma, vec const& gl11,vec const& gl22, vec const& gl12,
                            int nuL, mat const& VL, vec const& ge){
 
@@ -269,17 +269,17 @@ List rscaleUsage_rcpp_loop(int k, mat const& x, int p, int n,
       yd = y;
       yd.each_col() -= tau;
       Si = solve(Sigma,eye(p,p));
-      Vmi = as_scalar(sum(1/pow(sigma,2)))*Si + Am;
+      Vmi = as_scalar(sum(1/pow(sigma,2.0)))*Si + Am;
       Rm = chol(Vmi);
       Ri = solve(trimatu(Rm),eye(p,p));
       Vm = solve(Vmi,eye(p,p));
-      mm = Vm * (Si * (trans(yd) * (1/pow(sigma,2))) + Am * mubar);
+      mm = Vm * (Si * (trans(yd) * (1/pow(sigma,2.0))) + Am * mubar);
       mu = vectorise(mm + Ri * as<vec>(rnorm(p)));
     }
       
     //draw tau
     if(dotau) {
-      Ai = Lambda(0,0) - pow(Lambda(0,1),2)/Lambda(1,1);
+      Ai = Lambda(0,0) - pow(Lambda(0,1),2.0)/Lambda(1,1);
       A = 1.0/Ai;
       onev = ones<mat>(p,1);
       Rm = chol(Sigma);
@@ -287,14 +287,14 @@ List rscaleUsage_rcpp_loop(int k, mat const& x, int p, int n,
       ytemp = trans(y);
       ytemp.each_col() -= mu;
       yy = trans(solve(trans(Rm),ytemp));
-      xtx = accu(pow(xx,2)); //To get a sum of all the elements regardless of the argument type (ie. matrix or vector), use accu()
+      xtx = accu(pow(xx,2.0)); //To get a sum of all the elements regardless of the argument type (ie. matrix or vector), use accu()
       xty = vectorise(xx*trans(yy));
       beta = A*Lambda(0,1)/Lambda(1,1);
       
       for(int j = 0; j<n; j++){
-        s2 = xtx/pow(sigma[j],2) + A;
+        s2 = xtx/pow(sigma[j],2.0) + A;
         s2 = 1.0/s2;
-        m = s2*((xty[j]/pow(sigma[j],2)) + beta*(log(sigma[j])-Lambda(1,1)));
+        m = s2*((xty[j]/pow(sigma[j],2.0)) + beta*(log(sigma[j])-Lambda(1,1)));
         tau[j] = m + sqrt(s2)*rnorm(1)[0];
       }
     }
@@ -308,14 +308,14 @@ List rscaleUsage_rcpp_loop(int k, mat const& x, int p, int n,
       ytemp.each_col() -= mu;
       eps = solve(trans(Rm),ytemp);
       onesp = ones<rowvec>(p);
-      ete = vectorise(onesp * pow(eps,2));
+      ete = vectorise(onesp * pow(eps,2.0));
       
       a = Lambda(1,1);
       b = Lambda(0,1)/Lambda(0,0);
-      s = sqrt(Lambda(1,1)-pow(Lambda(0,1),2)/Lambda(0,0));
+      s = sqrt(Lambda(1,1)-pow(Lambda(0,1),2.0)/Lambda(0,0));
 
       for(int j = 0; j<n; j++){
-        pv = -(p+1)*log(gsigma) -.5*ete[j]/pow(gsigma,2) -.5*pow((log(gsigma)-(a+b*tau[j]))/s,2);
+        pv = -(p+1)*log(gsigma) -.5*ete[j]/pow(gsigma,2.0) -.5*pow((log(gsigma)-(a+b*tau[j]))/s,2.0);
   	    pv = exp(pv-max(pv));
   	    pv = pv/sum(pv);
         //see http://gallery.rcpp.org/articles/using-the-Rcpp-based-sample-implementation/ for using sample
@@ -331,7 +331,7 @@ List rscaleUsage_rcpp_loop(int k, mat const& x, int p, int n,
       moms << mean(tau) << mean(h) << temp(0,0) << temp(0,1) << temp(1,1); //element intialization
      
       SS = getS(Lambda,n,moms);
-      rgl11 = gl11.elem(find(gl11 > pow(Lambda(0,1),2)/Lambda(1,1)));
+      rgl11 = gl11.elem(find(gl11 > pow(Lambda(0,1),2.0)/Lambda(1,1)));
       ng = rgl11.size();
       pv = zeros<vec>(ng);
       
@@ -362,7 +362,7 @@ List rscaleUsage_rcpp_loop(int k, mat const& x, int p, int n,
       Lambda(0,1) = Rcpp::RcppArmadillo::sample(NumericVector(rgl12.begin(),rgl12.end()),1,false,NumericVector(pv.begin(),pv.end()))[0];
       Lambda(1,0) = Lambda(0,1);
       
-      rgl22 = gl22.elem(find(gl22 > pow(Lambda(0,1),2)/Lambda(0,0)));
+      rgl22 = gl22.elem(find(gl22 > pow(Lambda(0,1),2.0)/Lambda(0,0)));
       ng = rgl22.size();
       pv = zeros<vec>(ng);
       

@@ -89,8 +89,9 @@ if(missing(Data)) {pandterm("Requires Data argument -- list of p,lgtdata, and (p
   nlgt=length(lgtdata)
   drawdelta=TRUE
 if(is.null(Data$Z)) { cat("Z not specified",fill=TRUE); fsh() ; drawdelta=FALSE}
-  else {if (nrow(Data$Z) != nlgt) {pandterm(paste("Nrow(Z) ",nrow(Z),"ne number logits ",nlgt))}
-      else {Z=Data$Z}}
+  else {if (!is.matrix(Data$Z)) {pandterm("Z must be a matrix")}
+    else {if (nrow(Data$Z) != nlgt) {pandterm(paste("Nrow(Z) ",nrow(Z),"ne number logits ",nlgt))}
+      else {Z=Data$Z}}}
   if(drawdelta) {
      nz=ncol(Z)
      colmeans=apply(Z,2,mean)
@@ -102,11 +103,15 @@ if(is.null(Data$Z)) { cat("Z not specified",fill=TRUE); fsh() ; drawdelta=FALSE}
 #
 ypooled=NULL
 Xpooled=NULL
-if(!is.null(lgtdata[[1]]$X)) {oldncol=ncol(lgtdata[[1]]$X)}
+if(!is.null(lgtdata[[1]]$X & is.matrix(lgtdata[[1]]$X))) {oldncol=ncol(lgtdata[[1]]$X)}
 for (i in 1:nlgt) 
 {
-    if(is.null(lgtdata[[i]]$y)) {pandterm(paste("Requires element y of lgtdata[[",i,"]]"))}
-    if(is.null(lgtdata[[i]]$X)) {pandterm(paste("Requires element X of lgtdata[[",i,"]]"))}
+    if(is.null(lgtdata[[i]]$y)) {pandterm(paste0("Requires element y of lgtdata[[",i,"]]"))}
+    if(is.null(lgtdata[[i]]$X)) {pandterm(paste0("Requires element X of lgtdata[[",i,"]]"))}
+    if(!is.matrix(lgtdata[[i]]$X)) {pandterm(paste0("lgtdata[[",i,"]]$X must be a matrix"))}
+    if(!is.vector(lgtdata[[i]]$y, mode = "numeric") & !is.vector(lgtdata[[i]]$y, mode = "logical") & !is.matrix(lgtdata[[i]]$y)) 
+      {pandterm(paste0("lgtdata[[",i,"]]$y must be a numeric or logical vector or matrix"))}
+    if(is.matrix(lgtdata[[i]]$y)){ if(ncol(lgtdata[[i]]$y)>1) {pandterm(paste0("lgtdata[[",i,"]]$y must be a vector or one-column matrix"))}}
     ypooled=c(ypooled,lgtdata[[i]]$y)
     nrowX=nrow(lgtdata[[i]]$X)
     if((nrowX/p) !=length(lgtdata[[i]]$y)) {pandterm(paste("nrow(X) ne p*length(yi); exception at unit",i))}

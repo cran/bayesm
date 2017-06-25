@@ -1,15 +1,15 @@
 #include "bayesm.h"
- 
+
 //FUNCTIONS SPECIFIC TO MAIN FUNCTION------------------------------------------------------
 struct ytxtxtd{
   vec yt;
-  vec xt;
+  mat xt;
   mat xtd;
 };
 
 ytxtxtd get_ytxt(vec const& y, mat const& z, mat const& delta, mat const& x, mat const& w,
-                              int ncomp,ivec const& indic, std::vector<murooti> const& thetaStar_vector){
-
+                 int ncomp,ivec const& indic, std::vector<murooti> const& thetaStar_vector){
+  
   // Wayne Taylor 3/14/2015
   
   int dimz = z.n_cols;
@@ -20,16 +20,16 @@ ytxtxtd get_ytxt(vec const& y, mat const& z, mat const& delta, mat const& x, mat
   mat wk, zk, xk, rooti, Sigma, xt;
   vec yk, mu, e1, ee2, yt;
   uvec ind, colAllw, colAllz(dimz), colAllx(dimx);
-
+  
   //Create the index vectors, the colAll vectors are equal to span::all but with uvecs (as required by .submat)
   for(int i = 0; i<dimz; i++) colAllz(i) = i;
   for(int i = 0; i<dimx; i++) colAllx(i) = i;
-
+  
   bool isw = false;
   if(!w.is_empty()){
     isw = true;
     int ncolw = w.n_cols;
-    uvec colAllw(ncolw);
+    colAllw.set_size(ncolw);
     for(int i = 0; i<ncolw; i++) colAllw(i) = i;
   }
   
@@ -37,7 +37,7 @@ ytxtxtd get_ytxt(vec const& y, mat const& z, mat const& delta, mat const& x, mat
     
     //Create an index vector ind, to be used like y[ind,]
     ind = find(indic == (k+1));
-  
+    
     //If there are observations in this component
     if(ind.size()>0){
       
@@ -52,7 +52,7 @@ ytxtxtd get_ytxt(vec const& y, mat const& z, mat const& delta, mat const& x, mat
       
       Sigma = solve(rooti,eye(2,2));
       Sigma = trans(Sigma)*Sigma;
-    
+      
       e1 = xk-zk*delta;  
       ee2 = mu[1] + (Sigma(0,1)/Sigma(0,0))*(e1-mu[0]);
       sig = sqrt(Sigma(1,1)-pow(Sigma(0,1),2.0)/Sigma(0,0));
@@ -67,25 +67,25 @@ ytxtxtd get_ytxt(vec const& y, mat const& z, mat const& delta, mat const& x, mat
   }
   
   ytxtxtd out_struct;
-    out_struct.yt = yt;
-    out_struct.xt = xt;
-    
+  out_struct.yt = yt;
+  out_struct.xt = xt;
+  
   return(out_struct);
 }
 
 ytxtxtd get_ytxtd(vec const& y, mat const& z, double beta, vec const& gamma, mat const& x, mat const& w,
-                              int ncomp, ivec const& indic,std::vector<murooti> const& thetaStar_vector, int dimd){
-
+                  int ncomp, ivec const& indic,std::vector<murooti> const& thetaStar_vector, int dimd){
+  
   // Wayne Taylor 3/14/2015
-
+  
   int dimx = x.n_cols;
-
+  
   //variable type initializaion
   int indsize, indicsize;
   vec zveck, yk, mu, ytk, u, yt;
   mat C, wk, zk, xk, rooti, Sigma, B, L, Li, z2, zt1, zt2, xtd;
   uvec colAllw, colAllz(dimd), colAllx(dimx), ind, seqindk, negseqindk;
-
+  
   //Create index vectors (uvec) for submatrix views
   indicsize = indic.size();
   //here the uvecs are declared once, and within each loop the correctly sized vector is extracted as needed
@@ -100,20 +100,20 @@ ytxtxtd get_ytxtd(vec const& y, mat const& z, double beta, vec const& gamma, mat
   if(!w.is_empty()){
     isw = true;
     int ncolw = w.n_cols;
-    uvec colAllw(ncolw);
+    colAllw.set_size(ncolw);
     for(int i = 0; i<ncolw; i++) colAllw(i) = i;
   }
   
   C = eye(2,2); C(1,0) = beta;
   
   for(int k = 0;k<ncomp;k++){
-      //Create an index vector ind, to be used like y[ind,]
+    //Create an index vector ind, to be used like y[ind,]
     ind = find(indic == (k+1));
     indsize = ind.size();
-  
+    
     //If there are observations in this component
     if(indsize>0){
-  
+      
       mat xtdk(2*indsize,dimd);    
       
       //extract the properly sized vector section
@@ -125,11 +125,11 @@ ytxtxtd get_ytxtd(vec const& y, mat const& z, double beta, vec const& gamma, mat
       zveck = vectorise(trans(zk));
       yk = y(ind);
       xk = x.submat(ind,colAllx);
-  
+      
       murooti thetaStark_struct = thetaStar_vector[k];
       mu = thetaStark_struct.mu;
       rooti = thetaStark_struct.rooti;
-
+      
       Sigma = solve(rooti,eye(2,2));
       Sigma = trans(Sigma)*Sigma;
       
@@ -161,50 +161,50 @@ ytxtxtd get_ytxtd(vec const& y, mat const& z, double beta, vec const& gamma, mat
       xtd = join_cols(xtd,xtdk);    
     }
   }
-
+  
   ytxtxtd out_struct;
-    out_struct.yt = yt;
-    out_struct.xtd = xtd;
-    
+  out_struct.yt = yt;
+  out_struct.xtd = xtd;
+  
   return(out_struct);  
 }
 
 DPOut rthetaDP(int maxuniq, double alpha, lambda lambda_struct, priorAlpha const& priorAlpha_struct, 
-                              std::vector<murooti> thetaStar_vector, ivec indic, vec const& q0v, mat const& y, int gridsize,
-                              List lambda_hyper){
- 
+               std::vector<murooti> thetaStar_vector, ivec indic, vec const& q0v, mat const& y, int gridsize,
+               List lambda_hyper){
+  
   // Wayne Taylor 3/14/2015
-
-//  function to make one draw from DP process 
-
-//  P. Rossi 1/06
-//  added draw of alpha 2/06
-//  removed lambdaD,etaD and function arguments 5/06
-//  removed thetaStar argument to .Call and creation of newthetaStar 7/06
-//  removed q0 computations as eta is not drawn  7/06
-//  changed for new version of thetadraw and removed calculation of thetaStar before
-//    .Call  7/07
-
-//      y(i) ~ f(y|theta[[i]],eta)
-//      theta ~ DP(alpha,G(lambda))
-
-//output:
-//   list with components:
-//      thetaDraws: list, [[i]] is a list of the ith draw of the n theta's
-//                  where n is the length of the input theta and nrow(y)
-//      thetaNp1Draws: list, [[i]] is ith draw of theta_{n+1}
-//args:
-//   maxuniq: the maximum number of unique thetaStar values -- an error will be raised
-//            if this is exceeded
-//   alpha,lambda: starting values (or fixed DP prior values if not drawn).
-//   Prioralpha: list of hyperparms of alpha prior
-//   theta: list of starting value for theta's
-//   thetaStar: list of unique values of theta, thetaStar[[i]]
-//   indic:  n vector of indicator for which unique theta (in thetaStar)
-//   y: is a matrix nxk
-//         thetaStar: list of unique values of theta, thetaStar[[i]]
-//   q0v:a double vector with the same number of rows as y, giving \Int f(y(i)|theta,eta) dG_{lambda}(theta).
-
+  
+  //  function to make one draw from DP process 
+  
+  //  P. Rossi 1/06
+  //  added draw of alpha 2/06
+  //  removed lambdaD,etaD and function arguments 5/06
+  //  removed thetaStar argument to .Call and creation of newthetaStar 7/06
+  //  removed q0 computations as eta is not drawn  7/06
+  //  changed for new version of thetadraw and removed calculation of thetaStar before
+  //    .Call  7/07
+  
+  //      y(i) ~ f(y|theta[[i]],eta)
+  //      theta ~ DP(alpha,G(lambda))
+  
+  //output:
+  //   list with components:
+  //      thetaDraws: list, [[i]] is a list of the ith draw of the n theta's
+  //                  where n is the length of the input theta and nrow(y)
+  //      thetaNp1Draws: list, [[i]] is ith draw of theta_{n+1}
+  //args:
+  //   maxuniq: the maximum number of unique thetaStar values -- an error will be raised
+  //            if this is exceeded
+  //   alpha,lambda: starting values (or fixed DP prior values if not drawn).
+  //   Prioralpha: list of hyperparms of alpha prior
+  //   theta: list of starting value for theta's
+  //   thetaStar: list of unique values of theta, thetaStar[[i]]
+  //   indic:  n vector of indicator for which unique theta (in thetaStar)
+  //   y: is a matrix nxk
+  //         thetaStar: list of unique values of theta, thetaStar[[i]]
+  //   q0v:a double vector with the same number of rows as y, giving \Int f(y(i)|theta,eta) dG_{lambda}(theta).
+  
   int n = y.n_rows;
   int dimy = y.n_cols;
   
@@ -221,30 +221,30 @@ DPOut rthetaDP(int maxuniq, double alpha, lambda lambda_struct, priorAlpha const
   vec p(n);
   p[n-1] =  alpha/(alpha+(n-1));
   for(int i = 0; i<(n-1); i++){
-   p[i] = 1/(alpha+(n-1));
+    p[i] = 1/(alpha+(n-1));
   }
-
+  
   nunique = thetaStar_vector.size();
   
   if(nunique > maxuniq) stop("maximum number of unique thetas exceeded");
-   
+  
   //ydenmat is a length(thetaStar) x n array of density values given f(y[j,] | thetaStar[[i]]
   //  note: due to remix step (below) we must recompute ydenmat each time!
   ydenmat = zeros<mat>(maxuniq,n);
   
   ydenmat(span(0,nunique-1),span::all) = yden(thetaStar_vector,y);
-
+  
   thetaStarDrawOut_struct = thetaStarDraw(indic, thetaStar_vector, y, ydenmat, q0v, alpha, lambda_struct, maxuniq);
   thetaStar_vector = thetaStarDrawOut_struct.thetaStar_vector;
   indic = thetaStarDrawOut_struct.indic;
   nunique = thetaStar_vector.size();
-
+  
   //thetaNp1 and remix
   probs = zeros<vec>(nunique+1);
   for(int j = 0; j < nunique; j++){
     ind = find(indic == (j+1));
     indsize = ind.size();
-    probs[j] = indsize/(alpha + n + 0.0);
+    probs[j] = indsize/(alpha+n+0.0);
     new_utheta[0] = thetaD(y(ind,spanall),lambda_struct);
     thetaStar_vector[j] = new_utheta[0];
   }
@@ -263,21 +263,21 @@ DPOut rthetaDP(int maxuniq, double alpha, lambda lambda_struct, priorAlpha const
     thetaNp10_struct.rooti = outGD.rooti;
     thetaNp1_vector[0] = thetaNp10_struct;
   }
-    
+  
   //draw alpha
   alpha = alphaD(priorAlpha_struct,nunique,gridsize);
-
+  
   //draw lambda
   lambda_struct = lambdaD(lambda_struct,thetaStar_vector,lambda_hyper["alim"],lambda_hyper["nulim"],lambda_hyper["vlim"],gridsize);
-
+  
   DPOut out_struct;
-    out_struct.indic = indic;
-    out_struct.thetaStar_vector = thetaStar_vector;
-    out_struct.thetaNp1_vector = thetaNp1_vector;
-    out_struct.alpha = alpha;
-    out_struct.Istar = nunique;
-    out_struct.lambda_struct = lambda_struct;
-    
+  out_struct.indic = indic;
+  out_struct.thetaStar_vector = thetaStar_vector;
+  out_struct.thetaNp1_vector = thetaNp1_vector;
+  out_struct.alpha = alpha;
+  out_struct.Istar = nunique;
+  out_struct.lambda_struct = lambda_struct;
+  
   return(out_struct);
 }
 
@@ -288,13 +288,13 @@ List rivDP_rcpp_loop(int R, int keep, int nprint,
                      vec const& y, bool isgamma, mat const& z, vec const& x, mat const& w, vec delta,
                      List const& PrioralphaList, int gridsize, bool SCALE, int maxuniq, double scalex, double scaley,
                      List const& lambda_hyper,double BayesmConstantA, int BayesmConstantnu){
-
+  
   // Wayne Taylor 3/14/2015
-
+  
   int n = y.size();
   int dimg = 1;
   if(isgamma) dimg = w.n_cols;
-
+  
   //variable type initializaion
   int Istar, bgsize, mkeep;
   double beta;
@@ -305,26 +305,26 @@ List rivDP_rcpp_loop(int R, int keep, int nprint,
   
   //initialize indicator vector, thetaStar, ncomp, alpha
   ivec indic = ones<ivec>(n);
-
+  
   std::vector<murooti> thetaStar_vector(1), thetaNp1_vector(1);
   murooti thetaNp10_struct, thetaStar0_struct;
-    thetaStar0_struct.mu = zeros<vec>(2);
-    thetaStar0_struct.rooti = eye(2,2);
+  thetaStar0_struct.mu = zeros<vec>(2);
+  thetaStar0_struct.rooti = eye(2,2);
   thetaStar_vector[0] = thetaStar0_struct;
   
   //Initialize lambda
   lambda lambda_struct;
-    lambda_struct.mubar = zeros<vec>(2);
-    lambda_struct.Amu = BayesmConstantA;
-    lambda_struct.nu = BayesmConstantnu;
-    lambda_struct.V = lambda_struct.nu*eye(2,2);  
-    
+  lambda_struct.mubar = zeros<vec>(2);
+  lambda_struct.Amu = BayesmConstantA;
+  lambda_struct.nu = BayesmConstantnu;
+  lambda_struct.V = lambda_struct.nu*eye(2,2);  
+  
   //convert Prioralpha from List to struct
   priorAlpha priorAlpha_struct;
-    priorAlpha_struct.power = PrioralphaList["power"];
-    priorAlpha_struct.alphamin = PrioralphaList["alphamin"];
-    priorAlpha_struct.alphamax = PrioralphaList["alphamax"];
-    priorAlpha_struct.n = PrioralphaList["n"];  
+  priorAlpha_struct.power = PrioralphaList["power"];
+  priorAlpha_struct.alphamin = PrioralphaList["alphamin"];
+  priorAlpha_struct.alphamax = PrioralphaList["alphamax"];
+  priorAlpha_struct.n = PrioralphaList["n"];  
   
   int ncomp = 1;
   
@@ -340,9 +340,9 @@ List rivDP_rcpp_loop(int R, int keep, int nprint,
   vec nudraw = zeros<vec>(R/keep);
   vec vdraw = zeros<vec>(R/keep);
   vec adraw = zeros<vec>(R/keep);
-
+  
   if(nprint>0) startMcmcTimer();
-
+  
   for(int rep = 0; rep < R; rep++) {
     
     //draw beta and gamma
@@ -356,16 +356,16 @@ List rivDP_rcpp_loop(int R, int keep, int nprint,
     beta = bg[0];
     bgsize = bg.size()-1;
     if(isgamma) gammaVec = bg.subvec(1,bgsize);
-
+    
     //draw delta
     if(isgamma){
       out_struct=get_ytxtd(y,z,beta,gammaVec,x,w,ncomp,indic,thetaStar_vector,dimd);
     } else {
       out_struct=get_ytxtd(y,z,beta,gammaVec,x,wEmpty,ncomp,indic,thetaStar_vector,dimd);
     }
-  
+    
     delta = breg(out_struct.yt,out_struct.xtd,md,Ad);
-        
+    
     //DP process stuff- theta | lambda
     if(isgamma) {
       errMat = join_rows(x-z*delta,y-beta*x-w*gammaVec);
@@ -400,7 +400,7 @@ List rivDP_rcpp_loop(int R, int keep, int nprint,
       adraw[mkeep-1] = lambda_struct.Amu;
       nudraw[mkeep-1] = lambda_struct.nu;
       V = lambda_struct.V;
-      vdraw[mkeep-1] = V(0,0)/(lambda_struct.nu+0.0);
+      vdraw[mkeep-1] = V(0,0)/lambda_struct.nu;
     }
   }
   

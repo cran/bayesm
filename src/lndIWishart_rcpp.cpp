@@ -4,6 +4,11 @@
 double lndIWishart(double nu, mat const& V, mat const& IW){
 
 // Keunwoo Kim 07/24/2014
+// Wayne Taylor 7/19/2016 corrected bug: replaced:
+//      return (...*sum((V*IWi.diag()))); 
+//    with 
+//      mat VIWi = V*IWi;
+//      return (...*sum((VIWi.diag())));
 
 // Purpose: evaluate log-density of inverted Wishart with normalizing constant
 
@@ -32,5 +37,6 @@ double lndIWishart(double nu, mat const& V, mat const& IW){
     cnst = cnst+lgamma(arg[i]);
   }
   
-  return (-cnst+nu*lndetVd2-(nu+k+1)*lndetIWd2-.5*sum((V*IWi.diag())));
+  mat VIWi = V*IWi;
+  return (-cnst+nu*lndetVd2-(nu+k+1)*lndetIWd2-.5*sum((VIWi.diag())));
 }

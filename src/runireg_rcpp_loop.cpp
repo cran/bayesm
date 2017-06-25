@@ -1,7 +1,7 @@
 #include "bayesm.h"
- 
+  
 // [[Rcpp::export]]
-List runireg_rcpp_loop(vec const& y, mat const& X, vec const& betabar, mat const& A, int nu, double ssq, 
+List runireg_rcpp_loop(vec const& y, mat const& X, vec const& betabar, mat const& A, double nu, double ssq, 
                   int R, int keep, int nprint) {
 
 // Keunwoo Kim 09/09/2014

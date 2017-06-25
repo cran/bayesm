@@ -1,7 +1,7 @@
 #include "bayesm.h"
- 
+  
 // [[Rcpp::export]]
-vec rmvst(int nu, vec const& mu, mat const& root){
+vec rmvst(double nu, vec const& mu, mat const& root){
   
 // Wayne Taylor 9/7/2014
 

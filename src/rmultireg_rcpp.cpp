@@ -1,7 +1,7 @@
 #include "bayesm.h"
- 
+  
 // [[Rcpp::export]]
-List rmultireg(mat const& Y, mat const& X, mat const& Bbar, mat const& A, int nu, mat const& V) {
+List rmultireg(mat const& Y, mat const& X, mat const& Bbar, mat const& A, double nu, mat const& V) {
 
 // Keunwoo Kim 09/09/2014
 

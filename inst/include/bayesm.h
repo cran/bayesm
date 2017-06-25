@@ -71,9 +71,9 @@ struct DPOut{
 };
 
 //EXPOSED FUNCTIONS-----------------------------------------------------------------------------------------------
-List rwishart(int const& nu, mat const& V);
+List rwishart(double nu, mat const& V);
 
-List rmultireg(mat const& Y, mat const& X, mat const& Bbar, mat const& A, int nu, mat const& V);
+List rmultireg(mat const& Y, mat const& X, mat const& Bbar, mat const& A, double nu, mat const& V);
 
 vec rdirichlet(vec const& alpha);
 
@@ -81,31 +81,33 @@ double llmnl(vec const& beta, vec const& y, mat const& X);
 
 mat lndIChisq(double nu, double ssq, mat const& X);
 
-double lndMvst(vec const& x, int nu, vec const& mu, mat const& rooti, bool NORMC);
+double lndMvst(vec const& x, double nu, vec const& mu, mat const& rooti, bool NORMC);
 
 double lndMvn(vec const& x, vec const& mu, mat const& rooti);
 
 double lndIWishart(double nu, mat const& V, mat const& IW);
 
-vec rmvst(int nu, vec const& mu, mat const& root);
+vec rmvst(double nu, vec const& mu, mat const& root);
 
 vec breg(vec const& y, mat const& X, vec const& betabar, mat const& A);
 
 vec cgetC(double e, int k);
 
-List rmixGibbs( mat const& y,  mat const& Bbar, mat const& A, int nu, mat const& V,  vec const& a, vec const& p,  vec const& z);
+List rmixGibbs( mat const& y,  mat const& Bbar, mat const& A, double nu, mat const& V,  vec const& a, vec const& p,  vec const& z);
   //rmixGibbs contains the following support functions, which are called ONLY THROUGH rmixGibbs: drawCompsFromLabels, drawLabelsFromComps, and drawPFromLabels
 
-//SUPPORT FUNCTIONS (contained in utilityFunctions.cpp)-----------------------------------------------------------
+//SUPPORT FUNCTIONS (contained in utilityFunctions.cpp and trunNorm.cpp)-----------------------------------------------------------
 //Used in rmvpGibbs and rmnpGibbs
 vec condmom(vec const& x, vec const& mu, mat const& sigmai, int p, int j);
 
-double rtrun1(double mu, double sigma,double trunpt, int above);
+//double rtrun1(double mu, double sigma,double trunpt, int above); <--NO LONGER USED
+
+double trunNorm(double mu,double sig, double trunpt, int above);
 
 //Used in rhierLinearModel, rhierLinearMixture and rhierMnlRWMixture
 mat drawDelta(mat const& x,mat const& y,vec const& z,List const& comps,vec const& deltabar,mat const& Ad);
 
-unireg runiregG(vec const& y, mat const& X, mat const& XpX, vec const& Xpy, double sigmasq, mat const& A, vec const& Abetabar, int nu, double ssq);
+unireg runiregG(vec const& y, mat const& X, mat const& XpX, vec const& Xpy, double sigmasq, mat const& A, vec const& Abetabar, double nu, double ssq);
 
 //Used in rnegbinRW and rhierNegbinRw
 double llnegbin(vec const& y, vec const& lambda, double alpha, bool constant);
@@ -114,10 +116,12 @@ double lpostbeta(double alpha, vec const& beta, mat const& X, vec const& y, vec 
 
 double lpostalpha(double alpha, vec const& beta, mat const& X, vec const& y, double a, double b);
 
-//Used in rbprobitGibbs and rordprobitGibbs
+//Used in rbprobitGibbs (uses breg1 and trunNorm_vec) and rordprobitGibbs (uses breg1 and rtrunVec)
 vec breg1(mat const& root, mat const& X, vec const& y, vec const& Abetabar);
 
 vec rtrunVec(vec const& mu,vec const& sigma, vec const& a, vec const& b);
+
+vec trunNorm_vec(vec const& mu, vec const& sig, vec const& trunpt, vec const& above);
 
 //Used in rhierMnlDP and rhierMnlRwMixture
 mnlMetropOnceOut mnlMetropOnce(vec const& y, mat const& X, vec const& oldbeta, double oldll,double s, mat const& incroot, vec const& betabar, mat const& rootpi);

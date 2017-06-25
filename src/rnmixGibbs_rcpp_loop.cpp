@@ -2,7 +2,7 @@
  
 //[[Rcpp::export]]
 List rnmixGibbs_rcpp_loop(mat const& y, mat const& Mubar, 
-                     mat const& A, int nu, 
+                     mat const& A, double nu, 
                      mat const& V, vec const& a, 
                      vec p, vec z,
                      int const& R, int const& keep, int const& nprint) {

@@ -33,14 +33,19 @@ function(beta,Sigma,X,y,r)
 #
 # for p, e < - mu
 #
-#
-# define functions needed
-#
-ghkvec = function(L,trunpt,above,r){
-   dim=length(above)
-   n=length(trunpt)/dim
-   .C('ghk_vec',as.integer(n),as.double(L),as.double(trunpt),as.integer(above),as.integer(dim),
-   as.integer(r),res=double(n))$res}
+####################################################################################
+# 08/2016
+# Keunwoo Kim
+#   We do not use this anymore, do call directly from rcpp ghkvec function.
+# #
+# # define functions needed
+# #
+# ghkvec = function(L,trunpt,above,r){
+#    dim=length(above)
+#    n=length(trunpt)/dim
+#    .C('ghk_vec',as.integer(n),as.double(L),as.double(trunpt),as.integer(above),as.integer(dim),
+#    as.integer(r),res=double(n))$res}
+####################################################################################
 #   
 # compute means for each observation
 #
@@ -56,7 +61,13 @@ for (j in 1:pm1) {
    trunpt=as.vector(-Aj%*%muj)
    Lj=t(chol(Aj%*%Sigma%*%t(Aj)))
 #     note: rob's routine expects lower triangular root
-   logl=logl + sum(log(ghkvec(Lj,trunpt,above,r)+1.0e-50))
+####################################################################################
+# 08/2016
+# Keunwoo Kim
+# now refers rcpp version directly.
+   #logl=logl + sum(log(ghkvec(Lj,trunpt,above,r)+1.0e-50))
+   logl=logl + sum(log(ghkvec(Lj,trunpt,above,r,HALTON=FALSE,0)+1.0e-50))
+####################################################################################
 #     note:  ghkvec does an entire vector of n probs each with different truncation points but the
 #            same cov matrix.  
 }
@@ -66,7 +77,13 @@ for (j in 1:pm1) {
 trunpt=as.vector(-mu[,y==(pm1+1)])
 Lj=t(chol(Sigma))
 above=rep(1,pm1)
-logl=logl+sum(log(ghkvec(Lj,trunpt,above,r)+1.0e-50))
+####################################################################################
+# 08/2016
+# Keunwoo Kim
+# now refers rcpp version directly.
+#logl=logl + sum(log(ghkvec(Lj,trunpt,above,r)+1.0e-50))
+logl=logl + sum(log(ghkvec(Lj,trunpt,above,r,HALTON=FALSE,0)+1.0e-50))
+####################################################################################
 return(logl)
 
 }

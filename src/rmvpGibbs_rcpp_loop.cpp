@@ -1,5 +1,5 @@
 #include "bayesm.h"
- 
+  
 //EXTRA FUNCTIONS SPECIFIC TO THE MAIN FUNCTION--------------------------------------------
 vec drawwi_mvp(vec const& w, vec const& mu, mat const& sigmai, int p, ivec y){
   
@@ -18,7 +18,8 @@ vec drawwi_mvp(vec const& w, vec const& mu, mat const& sigmai, int p, ivec y){
 	  }
   
   vec CMout = condmom(outwi,mu,sigmai,p,i+1);
-  outwi[i] = rtrun1(CMout[0],CMout[1],0.0,above);
+  // outwi[i] = rtrun1(CMout[0],CMout[1],0.0,above);
+  outwi[i] = trunNorm(CMout[0],CMout[1],0.0,above);
   }
 
   return (outwi);
@@ -47,7 +48,7 @@ vec draww_mvp(vec const& w, vec const& mu, mat const& sigmai, ivec const& y){
 //[[Rcpp::export]]
 List rmvpGibbs_rcpp_loop(int R, int keep, int nprint, int p, 
                          ivec const& y, mat const& X, vec const& beta0, mat const& sigma0, 
-                         mat const& V, int nu, vec const& betabar, mat const& A) {
+                         mat const& V, double nu, vec const& betabar, mat const& A) {
                            
 // Wayne Taylor 9/24/2014
 

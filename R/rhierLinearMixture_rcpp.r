@@ -69,8 +69,9 @@ if(missing(Data)) {pandterm("Requires Data argument -- list of regdata, and (pos
   nreg=length(regdata)
   drawdelta=TRUE
 if(is.null(Data$Z)) { cat("Z not specified",fill=TRUE); fsh() ; drawdelta=FALSE}
-  else {if (nrow(Data$Z) != nreg) {pandterm(paste("Nrow(Z) ",nrow(Z),"ne number regressions ",nreg))}
-      else {Z=Data$Z}}
+  else {if (!is.matrix(Data$Z)) {pandterm("Z must be a matrix")}
+    else {if (nrow(Data$Z) != nreg) {pandterm(paste("Nrow(Z) ",nrow(Z),"ne number regressions ",nreg))}
+      else {Z=Data$Z}}}
   if(drawdelta) {
      nz=ncol(Z)
      colmeans=apply(Z,2,mean)
@@ -80,6 +81,13 @@ if(is.null(Data$Z)) { cat("Z not specified",fill=TRUE); fsh() ; drawdelta=FALSE}
 #
 # check regdata for validity
 #
+for (i in 1:nreg) {
+  if(!is.matrix(regdata[[i]]$X)) {pandterm(paste0("regdata[[",i,"]]$X must be a matrix"))}
+  if(!is.vector(regdata[[i]]$y, mode = "numeric") & !is.vector(regdata[[i]]$y, mode = "logical") & !is.matrix(regdata[[i]]$y)) 
+    {pandterm(paste0("regdata[[",i,"]]$y must be a numeric or logical vector or matrix"))}
+  if(is.matrix(regdata[[i]]$y)){ if(ncol(regdata[[i]]$y)>1) {pandterm(paste0("regdata[[",i,"]]$y must be a vector or one-column matrix"))}}
+}
+
 dimfun=function(l) {c(length(l$y),dim(l$X))}
 dims=sapply(regdata,dimfun)
 dims=t(dims)

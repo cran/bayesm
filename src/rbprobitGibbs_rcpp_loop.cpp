@@ -2,7 +2,7 @@
  
 // [[Rcpp::export]]
 List rbprobitGibbs_rcpp_loop(vec const& y, mat const& X, vec const& Abetabar, mat const& root, 
-                        vec beta, vec const& sigma, vec const& a, vec const& b, int R, int keep, int nprint){
+                        vec beta, vec const& sigma, vec const& trunpt, vec const& above, int R, int keep, int nprint){
 
 // Keunwoo Kim 09/09/2014
 
@@ -37,7 +37,7 @@ List rbprobitGibbs_rcpp_loop(vec const& y, mat const& X, vec const& Abetabar, ma
     
     // draw z given beta(i-1)
     mu = X*beta;
-    z = rtrunVec(mu, sigma, a, b);
+    z = trunNorm_vec(mu, sigma, trunpt, above);
     beta = breg1(root, X, z, Abetabar);
 
     // print time to completion and draw # every nprint'th draw

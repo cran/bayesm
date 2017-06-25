@@ -3,7 +3,7 @@
 // [[Rcpp::export]]
 List rnegbinRw_rcpp_loop(vec const& y, mat const& X, vec const& betabar, mat const& rootA, double a, double b, 
                           vec beta, double alpha, bool fixalpha,
-                          mat const& betaroot, double const& alphacroot, int R, int keep, int nprint){
+                          mat const& betaroot, double alphacroot, int R, int keep, int nprint){
 
 // Keunwoo Kim 11/02/2014
 

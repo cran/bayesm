@@ -55,6 +55,12 @@ if(is.null(Data$X)) {pandterm("Requires Data element X")} else {X=Data$X}
 if(is.null(Data$share)) {pandterm("Requires Data element share")} else {share=Data$share}
 if(is.null(Data$J)) {pandterm("Requires Data element J")} else {J=Data$J}
 if(is.null(Data$Z)) {IV=FALSE; Z=matrix(0); I=1} else {IV=TRUE; I=ncol(Z)}
+
+if(!is.matrix(X)) {pandterm("X must be a matrix")}
+if(!is.vector(share, mode = "numeric")) {pandterm("share must be a numeric vector")}
+if(!is.matrix(Z)) {pandterm("Z must be a matrix")}
+if(length(J) > 1 | floor(J) != J) {pandterm("J must be an integer")}
+
 K=ncol(X)
   
 if (length(share) != nrow(X)) {pandterm("Mismatch in the number of observations in X and share")}

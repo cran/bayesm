@@ -1,5 +1,5 @@
 #include "bayesm.h"
- 
+
 //[[Rcpp::export]]
 List rDPGibbs_rcpp_loop(int R, int keep, int nprint,
                         mat y, List const& lambda_hyper, bool SCALE, int maxuniq, List const& PrioralphaList, int gridsize,
@@ -102,7 +102,7 @@ List rDPGibbs_rcpp_loop(int R, int keep, int nprint,
     for(int j = 0; j < nunique; j++){
       ind = find(indic == (j+1));
       indsize = ind.size();
-      probs[j] = indsize/(alpha + n + 0.0);
+      probs[j] = indsize/(alpha+n+0.0);
       new_utheta_vector[0] = thetaD(y(ind,spanall),lambda_struct);
       thetaStar_vector[j] = new_utheta_vector[0];
     }
@@ -140,7 +140,7 @@ List rDPGibbs_rcpp_loop(int R, int keep, int nprint,
       nu = lambda_struct.nu;
       nudraw[mkeep-1] = nu;
       mat V = lambda_struct.V;
-      vdraw[mkeep-1] = V(0,0)/(nu+0.0);
+      vdraw[mkeep-1] = V(0,0)/nu;
       inddraw(mkeep-1,span::all) = trans(indic);
       
       thetaNp10_struct = thetaNp1_vector[0];

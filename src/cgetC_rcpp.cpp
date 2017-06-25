@@ -16,7 +16,7 @@ vec cgetC(double e, int k){
   vec temp = zeros<vec>(k-1);
   for(int i = 0; i<(k-1); i++) temp[i] = i + 1.5;
   double m1 = sum(temp);
-  temp = pow(temp,2);
+  temp = pow(temp,2.0);
   double m2 = sum(temp);
     
   vec c = zeros<vec>(k+1);
