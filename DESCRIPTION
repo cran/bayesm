@@ -1,5 +1,5 @@
 Package: bayesm
-Version: 3.1-0
+Version: 3.1-0.1
 Type: Package
 Title: Bayesian Inference for Marketing/Micro-Econometrics
 Depends: R (>= 3.2.0)
@@ -40,6 +40,6 @@ Description: Covers many important models used
   Methods and Applications (Princeton U Press 2014).
 RoxygenNote: 6.0.1
 NeedsCompilation: yes
-Packaged: 2017-06-23 21:41:58 UTC; perossichi
+Packaged: 2017-07-21 14:37:52 UTC; ripley
 Repository: CRAN
-Date/Publication: 2017-06-25 07:08:48 UTC
+Date/Publication: 2017-07-21 15:05:52 UTC

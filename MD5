@@ -1,4 +1,4 @@
-bce71d38f267e967dec8df8e11ef2184 *DESCRIPTION
+8c81678af6546a1c2ef87e249e6de183 *DESCRIPTION
 21a335b1d91a250bd8e5ca7a97774e78 *NAMESPACE
 722ef18fc061d3605cf687388e4be2a1 *R/BayesmConstants.R
 750237445e7fb47a0c72db9038bad9b3 *R/BayesmFunctions.R
@@ -151,7 +151,7 @@ b05f091395ad4570ce822dbe62c47d9d *src/rbprobitGibbs_rcpp_loop.cpp
 d16f181a8b010ef48c8b99b92f796c44 *src/rhierLinearMixture_rcpp_loop.cpp
 675918add3060f982f45c40bb3c42e34 *src/rhierLinearModel_rcpp_loop.cpp
 2a6c4e09e078e40768659cb69e940c49 *src/rhierMnlDP_rcpp_loop.cpp
-2a5e581e5253df8220f803f31a2d5cc2 *src/rhierMnlRwMixture_rcpp_loop.cpp
+56e81ad73fc758bad5c694bca2a59623 *src/rhierMnlRwMixture_rcpp_loop.cpp
 df282cc42237495151715b946e719577 *src/rhierNegbinRw_rcpp_loop.cpp
 ec21162ad271a9adf1f05ea6c91fd877 *src/rivDP_rcpp_loop.cpp
 87a21cd755d2f3461bbb6ae4e1552b35 *src/rivgibbs_rcpp_loop.cpp
