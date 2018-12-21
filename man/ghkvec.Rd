@@ -15,7 +15,7 @@
 \arguments{
   \item{L     }{ lower triangular Cholesky root of covariance matrix }
   \item{trunpt}{ vector of truncation points}
-  \item{above }{ vector of indicators for truncation above(1) or below(0) }
+  \item{above }{ vector of indicators for truncation above(1) or below(0) on an element by element basis }
   \item{r     }{ number of draws to use in GHK }
   \item{HALTON}{ if \code{TRUE}, uses Halton sequence. If \code{FALSE}, uses \code{R::runif} random number generator (def: \code{TRUE})}
   \item{pn    }{ prime number used for Halton sequence (def: the smallest prime numbers, i.e. 2, 3, 5, ...)}  
@@ -24,7 +24,8 @@
 \value{Approximation to integral}
 
 \note{
-\code{ghkvec} can accept a vector of truncations and compute more than one integral. That is, \code{length(trunpt)/length(above)} number of different integrals, each with the same variance and mean 0 but different truncation points. See 'examples' below for an example with two integrals at different truncation points. 
+\code{ghkvec} can accept a vector of truncations and compute more than one integral. That is, \code{length(trunpt)/length(above)} number of different integrals, each with the same variance and mean 0 but different truncation points. See 'examples' below for an example with two integrals at different truncation points. The \code{above}
+argument specifies truncation from above (1) or below (0) on an element by element basis. Only one vector of above is allowed but multiple truncation points are allowed. 
 
 The user can choose between two random number generators for the numerical integration: psuedo-random numbers by \code{R::runif} or quasi-random numbers by a Halton sequence. Generally, the quasi-random (Halton) sequence is more uniformly distributed within domain, so it shows lower error and improved convergence than the psuedo-random (\code{runif}) sequence (Morokoff and Caflisch, 1995). 
 
@@ -48,7 +49,11 @@ For Halton sequence, see Halton (1960, Numerische Mathematik), Morokoff and Cafl
 Sigma = matrix(c(1, 0.5, 0.5, 1), ncol=2)
 L = t(chol(Sigma))
 trunpt = c(0,0,1,1)
-above = c(1,1)
+above = c(1,1) 
+# here we have a two dimensional integral with two different truncation points
+#    (0,0) and (1,1)
+# however, there is only one vector of "above" indicators for each integral
+#     above=c(1,1) is applied to both integrals.  
 
 # drawn by Halton sequence
 ghkvec(L, trunpt, above, r=100)

@@ -225,7 +225,7 @@ List rhierMnlRwMixture_rcpp_loop(List const& lgtdata, mat const& Z,
       
       //if there is a constraint loop through each slice of betadraw
       if(SignRes[i] != 0){
-        for(int s = 0;s < (R/keep); s++){
+        for(int s = 0;s < R/keep; s++){
           betadraw(span(),span(i),span(s)) = SignRes[i] * exp(betadraw(span(),span(i),span(s)));
         }
       }

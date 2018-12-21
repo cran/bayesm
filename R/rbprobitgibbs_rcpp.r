@@ -6,8 +6,9 @@ function(Data,Prior,Mcmc)
 #   p. rossi 1/05
 #   3/07 added validity check of values of y and classes
 #   3/07 fixed error with betabar supplied
+#   12/18 fixed error - trunpt must be a vector
 #   W. Taylor 4/15 - added nprint option to MCMC argument
-#
+# 
 # purpose: 
 #   draw from posterior for binary probit using Gibbs Sampler
 #
@@ -102,7 +103,7 @@ Abetabar=crossprod(A,betabar)
         #a=ifelse(y == 0,-100, 0) 
         #b=ifelse(y == 0, 0, 100)
         above=ifelse(y == 0, 1, 0)
-        trunpt=0
+        trunpt= c(rep(0,nobs))
         
 ###################################################################
 # Keunwoo Kim

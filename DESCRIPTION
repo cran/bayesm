@@ -1,9 +1,9 @@
 Package: bayesm
-Version: 3.1-0.1
+Version: 3.1-1
 Type: Package
 Title: Bayesian Inference for Marketing/Micro-Econometrics
 Depends: R (>= 3.2.0)
-Date: 2017-06-23
+Date: 2018-12-20
 Author: Peter Rossi <perossichi@gmail.com>
 Maintainer: Peter Rossi <perossichi@gmail.com>
 License: GPL (>= 2)
@@ -40,6 +40,6 @@ Description: Covers many important models used
   Methods and Applications (Princeton U Press 2014).
 RoxygenNote: 6.0.1
 NeedsCompilation: yes
-Packaged: 2017-07-21 14:37:52 UTC; ripley
+Packaged: 2018-12-20 19:37:45 UTC; perossichi
 Repository: CRAN
-Date/Publication: 2017-07-21 15:05:52 UTC
+Date/Publication: 2018-12-21 07:20:49 UTC

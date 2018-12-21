@@ -49,7 +49,7 @@
   \emph{\code{Data  = list(lgtdata, Z, p)} [\code{Z} optional]}
   \tabular{ll}{
     \code{lgtdata:        } \tab list of \code{nlgt=length(lgtdata)} lists with each cross-section unit MNL data \cr
-    \code{lgtdata[[i]]$y: } \tab \eqn{n_i x 1} vector of multinomial outcomes (1, \ldots, m) \cr
+    \code{lgtdata[[i]]$y: } \tab \eqn{n_i x 1} vector of multinomial outcomes (1, \ldots, p) \cr
     \code{lgtdata[[i]]$X: } \tab \eqn{n_i*p x nvar} design matrix for \eqn{i}th unit \cr
     \code{Z:              } \tab \eqn{nreg x nz} matrix of unit chars (def: vector of ones) \cr
     \code{p:              } \tab number of choice alternatives 

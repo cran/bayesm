@@ -3,6 +3,7 @@ plot.bayesm.hcoef=function(x,names,burnin=trunc(.1*R),...){
 # S3 method to plot arrays of draws of coefs in hier models
 #   3 dimensional arrays:  unit x var x draw
 #   P. Rossi 2/07
+#   P. Rossi 12/18 - added median to boxplots
 #
   X=x
   if(mode(X) == "list") stop("list entered \n Possible Fixup: extract from list \n")
@@ -29,7 +30,7 @@ plot.bayesm.hcoef=function(x,names,burnin=trunc(.1*R),...){
        ext=X[rsam,var,(burnin+1):R]; ext=data.frame(t(ext))
        colnames(ext)=as.character(rsam)
        out=boxplot(ext,plot=FALSE,...)
-       out$stats=apply(ext,2,quantile,probs=c(0,.05,.95,1))
+       out$stats=apply(ext,2,quantile,probs=c(0,.05,.5,.95,1))
        bxp(out,xlab="Cross-sectional Unit",main=paste("Coefficients on Var ",names[var],sep=""),boxfill="magenta",...)
   }
   #

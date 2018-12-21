@@ -9,7 +9,7 @@ using namespace Rcpp;
 
 // bayesBLP_rcpp_loop
 List bayesBLP_rcpp_loop(bool IV, mat const& X, mat const& Z, vec const& share, int J, int T, mat const& v, int R, vec const& sigmasqR, mat const& A, vec const& theta_hat, vec const& deltabar, mat const& Ad, double nu0, double s0_sq, mat const& VOmega, double ssq, mat const& cand_cov, vec const& theta_bar_initial, vec const& r_initial, double tau_sq_initial, mat const& Omega_initial, vec const& delta_initial, double tol, int keep, int nprint);
-RcppExport SEXP bayesm_bayesBLP_rcpp_loop(SEXP IVSEXP, SEXP XSEXP, SEXP ZSEXP, SEXP shareSEXP, SEXP JSEXP, SEXP TSEXP, SEXP vSEXP, SEXP RSEXP, SEXP sigmasqRSEXP, SEXP ASEXP, SEXP theta_hatSEXP, SEXP deltabarSEXP, SEXP AdSEXP, SEXP nu0SEXP, SEXP s0_sqSEXP, SEXP VOmegaSEXP, SEXP ssqSEXP, SEXP cand_covSEXP, SEXP theta_bar_initialSEXP, SEXP r_initialSEXP, SEXP tau_sq_initialSEXP, SEXP Omega_initialSEXP, SEXP delta_initialSEXP, SEXP tolSEXP, SEXP keepSEXP, SEXP nprintSEXP) {
+RcppExport SEXP _bayesm_bayesBLP_rcpp_loop(SEXP IVSEXP, SEXP XSEXP, SEXP ZSEXP, SEXP shareSEXP, SEXP JSEXP, SEXP TSEXP, SEXP vSEXP, SEXP RSEXP, SEXP sigmasqRSEXP, SEXP ASEXP, SEXP theta_hatSEXP, SEXP deltabarSEXP, SEXP AdSEXP, SEXP nu0SEXP, SEXP s0_sqSEXP, SEXP VOmegaSEXP, SEXP ssqSEXP, SEXP cand_covSEXP, SEXP theta_bar_initialSEXP, SEXP r_initialSEXP, SEXP tau_sq_initialSEXP, SEXP Omega_initialSEXP, SEXP delta_initialSEXP, SEXP tolSEXP, SEXP keepSEXP, SEXP nprintSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -45,7 +45,7 @@ END_RCPP
 }
 // breg
 vec breg(vec const& y, mat const& X, vec const& betabar, mat const& A);
-RcppExport SEXP bayesm_breg(SEXP ySEXP, SEXP XSEXP, SEXP betabarSEXP, SEXP ASEXP) {
+RcppExport SEXP _bayesm_breg(SEXP ySEXP, SEXP XSEXP, SEXP betabarSEXP, SEXP ASEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -59,7 +59,7 @@ END_RCPP
 }
 // cgetC
 vec cgetC(double e, int k);
-RcppExport SEXP bayesm_cgetC(SEXP eSEXP, SEXP kSEXP) {
+RcppExport SEXP _bayesm_cgetC(SEXP eSEXP, SEXP kSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -71,7 +71,7 @@ END_RCPP
 }
 // clusterMix_rcpp_loop
 List clusterMix_rcpp_loop(mat const& zdraw, double cutoff, bool SILENT, int nprint);
-RcppExport SEXP bayesm_clusterMix_rcpp_loop(SEXP zdrawSEXP, SEXP cutoffSEXP, SEXP SILENTSEXP, SEXP nprintSEXP) {
+RcppExport SEXP _bayesm_clusterMix_rcpp_loop(SEXP zdrawSEXP, SEXP cutoffSEXP, SEXP SILENTSEXP, SEXP nprintSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -85,7 +85,7 @@ END_RCPP
 }
 // ghkvec
 vec ghkvec(mat const& L, vec const& trunpt, vec const& above, int r, bool HALTON, vec pn);
-RcppExport SEXP bayesm_ghkvec(SEXP LSEXP, SEXP trunptSEXP, SEXP aboveSEXP, SEXP rSEXP, SEXP HALTONSEXP, SEXP pnSEXP) {
+RcppExport SEXP _bayesm_ghkvec(SEXP LSEXP, SEXP trunptSEXP, SEXP aboveSEXP, SEXP rSEXP, SEXP HALTONSEXP, SEXP pnSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -101,7 +101,7 @@ END_RCPP
 }
 // llmnl
 double llmnl(vec const& beta, vec const& y, mat const& X);
-RcppExport SEXP bayesm_llmnl(SEXP betaSEXP, SEXP ySEXP, SEXP XSEXP) {
+RcppExport SEXP _bayesm_llmnl(SEXP betaSEXP, SEXP ySEXP, SEXP XSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -114,7 +114,7 @@ END_RCPP
 }
 // lndIChisq
 mat lndIChisq(double nu, double ssq, mat const& X);
-RcppExport SEXP bayesm_lndIChisq(SEXP nuSEXP, SEXP ssqSEXP, SEXP XSEXP) {
+RcppExport SEXP _bayesm_lndIChisq(SEXP nuSEXP, SEXP ssqSEXP, SEXP XSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -127,7 +127,7 @@ END_RCPP
 }
 // lndIWishart
 double lndIWishart(double nu, mat const& V, mat const& IW);
-RcppExport SEXP bayesm_lndIWishart(SEXP nuSEXP, SEXP VSEXP, SEXP IWSEXP) {
+RcppExport SEXP _bayesm_lndIWishart(SEXP nuSEXP, SEXP VSEXP, SEXP IWSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -140,7 +140,7 @@ END_RCPP
 }
 // lndMvn
 double lndMvn(vec const& x, vec const& mu, mat const& rooti);
-RcppExport SEXP bayesm_lndMvn(SEXP xSEXP, SEXP muSEXP, SEXP rootiSEXP) {
+RcppExport SEXP _bayesm_lndMvn(SEXP xSEXP, SEXP muSEXP, SEXP rootiSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -153,7 +153,7 @@ END_RCPP
 }
 // lndMvst
 double lndMvst(vec const& x, double nu, vec const& mu, mat const& rooti, bool NORMC);
-RcppExport SEXP bayesm_lndMvst(SEXP xSEXP, SEXP nuSEXP, SEXP muSEXP, SEXP rootiSEXP, SEXP NORMCSEXP) {
+RcppExport SEXP _bayesm_lndMvst(SEXP xSEXP, SEXP nuSEXP, SEXP muSEXP, SEXP rootiSEXP, SEXP NORMCSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -166,9 +166,31 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rDPGibbs_rcpp_loop
+List rDPGibbs_rcpp_loop(int R, int keep, int nprint, mat y, List const& lambda_hyper, bool SCALE, int maxuniq, List const& PrioralphaList, int gridsize, double BayesmConstantA, int BayesmConstantnuInc, double BayesmConstantDPalpha);
+RcppExport SEXP _bayesm_rDPGibbs_rcpp_loop(SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP, SEXP ySEXP, SEXP lambda_hyperSEXP, SEXP SCALESEXP, SEXP maxuniqSEXP, SEXP PrioralphaListSEXP, SEXP gridsizeSEXP, SEXP BayesmConstantASEXP, SEXP BayesmConstantnuIncSEXP, SEXP BayesmConstantDPalphaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type R(RSEXP);
+    Rcpp::traits::input_parameter< int >::type keep(keepSEXP);
+    Rcpp::traits::input_parameter< int >::type nprint(nprintSEXP);
+    Rcpp::traits::input_parameter< mat >::type y(ySEXP);
+    Rcpp::traits::input_parameter< List const& >::type lambda_hyper(lambda_hyperSEXP);
+    Rcpp::traits::input_parameter< bool >::type SCALE(SCALESEXP);
+    Rcpp::traits::input_parameter< int >::type maxuniq(maxuniqSEXP);
+    Rcpp::traits::input_parameter< List const& >::type PrioralphaList(PrioralphaListSEXP);
+    Rcpp::traits::input_parameter< int >::type gridsize(gridsizeSEXP);
+    Rcpp::traits::input_parameter< double >::type BayesmConstantA(BayesmConstantASEXP);
+    Rcpp::traits::input_parameter< int >::type BayesmConstantnuInc(BayesmConstantnuIncSEXP);
+    Rcpp::traits::input_parameter< double >::type BayesmConstantDPalpha(BayesmConstantDPalphaSEXP);
+    rcpp_result_gen = Rcpp::wrap(rDPGibbs_rcpp_loop(R, keep, nprint, y, lambda_hyper, SCALE, maxuniq, PrioralphaList, gridsize, BayesmConstantA, BayesmConstantnuInc, BayesmConstantDPalpha));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rbprobitGibbs_rcpp_loop
 List rbprobitGibbs_rcpp_loop(vec const& y, mat const& X, vec const& Abetabar, mat const& root, vec beta, vec const& sigma, vec const& trunpt, vec const& above, int R, int keep, int nprint);
-RcppExport SEXP bayesm_rbprobitGibbs_rcpp_loop(SEXP ySEXP, SEXP XSEXP, SEXP AbetabarSEXP, SEXP rootSEXP, SEXP betaSEXP, SEXP sigmaSEXP, SEXP trunptSEXP, SEXP aboveSEXP, SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP) {
+RcppExport SEXP _bayesm_rbprobitGibbs_rcpp_loop(SEXP ySEXP, SEXP XSEXP, SEXP AbetabarSEXP, SEXP rootSEXP, SEXP betaSEXP, SEXP sigmaSEXP, SEXP trunptSEXP, SEXP aboveSEXP, SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -189,7 +211,7 @@ END_RCPP
 }
 // rdirichlet
 vec rdirichlet(vec const& alpha);
-RcppExport SEXP bayesm_rdirichlet(SEXP alphaSEXP) {
+RcppExport SEXP _bayesm_rdirichlet(SEXP alphaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -198,31 +220,9 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rDPGibbs_rcpp_loop
-List rDPGibbs_rcpp_loop(int R, int keep, int nprint, mat y, List const& lambda_hyper, bool SCALE, int maxuniq, List const& PrioralphaList, int gridsize, double BayesmConstantA, int BayesmConstantnuInc, double BayesmConstantDPalpha);
-RcppExport SEXP bayesm_rDPGibbs_rcpp_loop(SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP, SEXP ySEXP, SEXP lambda_hyperSEXP, SEXP SCALESEXP, SEXP maxuniqSEXP, SEXP PrioralphaListSEXP, SEXP gridsizeSEXP, SEXP BayesmConstantASEXP, SEXP BayesmConstantnuIncSEXP, SEXP BayesmConstantDPalphaSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type R(RSEXP);
-    Rcpp::traits::input_parameter< int >::type keep(keepSEXP);
-    Rcpp::traits::input_parameter< int >::type nprint(nprintSEXP);
-    Rcpp::traits::input_parameter< mat >::type y(ySEXP);
-    Rcpp::traits::input_parameter< List const& >::type lambda_hyper(lambda_hyperSEXP);
-    Rcpp::traits::input_parameter< bool >::type SCALE(SCALESEXP);
-    Rcpp::traits::input_parameter< int >::type maxuniq(maxuniqSEXP);
-    Rcpp::traits::input_parameter< List const& >::type PrioralphaList(PrioralphaListSEXP);
-    Rcpp::traits::input_parameter< int >::type gridsize(gridsizeSEXP);
-    Rcpp::traits::input_parameter< double >::type BayesmConstantA(BayesmConstantASEXP);
-    Rcpp::traits::input_parameter< int >::type BayesmConstantnuInc(BayesmConstantnuIncSEXP);
-    Rcpp::traits::input_parameter< double >::type BayesmConstantDPalpha(BayesmConstantDPalphaSEXP);
-    rcpp_result_gen = Rcpp::wrap(rDPGibbs_rcpp_loop(R, keep, nprint, y, lambda_hyper, SCALE, maxuniq, PrioralphaList, gridsize, BayesmConstantA, BayesmConstantnuInc, BayesmConstantDPalpha));
-    return rcpp_result_gen;
-END_RCPP
-}
 // rhierLinearMixture_rcpp_loop
 List rhierLinearMixture_rcpp_loop(List const& regdata, mat const& Z, vec const& deltabar, mat const& Ad, mat const& mubar, mat const& Amu, double nu, mat const& V, double nu_e, vec const& ssq, int R, int keep, int nprint, bool drawdelta, mat olddelta, vec const& a, vec oldprob, vec ind, vec tau);
-RcppExport SEXP bayesm_rhierLinearMixture_rcpp_loop(SEXP regdataSEXP, SEXP ZSEXP, SEXP deltabarSEXP, SEXP AdSEXP, SEXP mubarSEXP, SEXP AmuSEXP, SEXP nuSEXP, SEXP VSEXP, SEXP nu_eSEXP, SEXP ssqSEXP, SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP, SEXP drawdeltaSEXP, SEXP olddeltaSEXP, SEXP aSEXP, SEXP oldprobSEXP, SEXP indSEXP, SEXP tauSEXP) {
+RcppExport SEXP _bayesm_rhierLinearMixture_rcpp_loop(SEXP regdataSEXP, SEXP ZSEXP, SEXP deltabarSEXP, SEXP AdSEXP, SEXP mubarSEXP, SEXP AmuSEXP, SEXP nuSEXP, SEXP VSEXP, SEXP nu_eSEXP, SEXP ssqSEXP, SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP, SEXP drawdeltaSEXP, SEXP olddeltaSEXP, SEXP aSEXP, SEXP oldprobSEXP, SEXP indSEXP, SEXP tauSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -251,7 +251,7 @@ END_RCPP
 }
 // rhierLinearModel_rcpp_loop
 List rhierLinearModel_rcpp_loop(List const& regdata, mat const& Z, mat const& Deltabar, mat const& A, double nu, mat const& V, double nu_e, vec const& ssq, vec tau, mat Delta, mat Vbeta, int R, int keep, int nprint);
-RcppExport SEXP bayesm_rhierLinearModel_rcpp_loop(SEXP regdataSEXP, SEXP ZSEXP, SEXP DeltabarSEXP, SEXP ASEXP, SEXP nuSEXP, SEXP VSEXP, SEXP nu_eSEXP, SEXP ssqSEXP, SEXP tauSEXP, SEXP DeltaSEXP, SEXP VbetaSEXP, SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP) {
+RcppExport SEXP _bayesm_rhierLinearModel_rcpp_loop(SEXP regdataSEXP, SEXP ZSEXP, SEXP DeltabarSEXP, SEXP ASEXP, SEXP nuSEXP, SEXP VSEXP, SEXP nu_eSEXP, SEXP ssqSEXP, SEXP tauSEXP, SEXP DeltaSEXP, SEXP VbetaSEXP, SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -275,7 +275,7 @@ END_RCPP
 }
 // rhierMnlDP_rcpp_loop
 List rhierMnlDP_rcpp_loop(int R, int keep, int nprint, List const& lgtdata, mat const& Z, vec const& deltabar, mat const& Ad, List const& PrioralphaList, List const& lambda_hyper, bool drawdelta, int nvar, mat oldbetas, double s, int maxuniq, int gridsize, double BayesmConstantA, int BayesmConstantnuInc, double BayesmConstantDPalpha);
-RcppExport SEXP bayesm_rhierMnlDP_rcpp_loop(SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP, SEXP lgtdataSEXP, SEXP ZSEXP, SEXP deltabarSEXP, SEXP AdSEXP, SEXP PrioralphaListSEXP, SEXP lambda_hyperSEXP, SEXP drawdeltaSEXP, SEXP nvarSEXP, SEXP oldbetasSEXP, SEXP sSEXP, SEXP maxuniqSEXP, SEXP gridsizeSEXP, SEXP BayesmConstantASEXP, SEXP BayesmConstantnuIncSEXP, SEXP BayesmConstantDPalphaSEXP) {
+RcppExport SEXP _bayesm_rhierMnlDP_rcpp_loop(SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP, SEXP lgtdataSEXP, SEXP ZSEXP, SEXP deltabarSEXP, SEXP AdSEXP, SEXP PrioralphaListSEXP, SEXP lambda_hyperSEXP, SEXP drawdeltaSEXP, SEXP nvarSEXP, SEXP oldbetasSEXP, SEXP sSEXP, SEXP maxuniqSEXP, SEXP gridsizeSEXP, SEXP BayesmConstantASEXP, SEXP BayesmConstantnuIncSEXP, SEXP BayesmConstantDPalphaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -303,7 +303,7 @@ END_RCPP
 }
 // llmnl_con
 double llmnl_con(vec const& betastar, vec const& y, mat const& X, vec const& SignRes);
-RcppExport SEXP bayesm_llmnl_con(SEXP betastarSEXP, SEXP ySEXP, SEXP XSEXP, SEXP SignResSEXP) {
+RcppExport SEXP _bayesm_llmnl_con(SEXP betastarSEXP, SEXP ySEXP, SEXP XSEXP, SEXP SignResSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -317,7 +317,7 @@ END_RCPP
 }
 // rhierMnlRwMixture_rcpp_loop
 List rhierMnlRwMixture_rcpp_loop(List const& lgtdata, mat const& Z, vec const& deltabar, mat const& Ad, mat const& mubar, mat const& Amu, double nu, mat const& V, double s, int R, int keep, int nprint, bool drawdelta, mat olddelta, vec const& a, vec oldprob, mat oldbetas, vec ind, vec const& SignRes);
-RcppExport SEXP bayesm_rhierMnlRwMixture_rcpp_loop(SEXP lgtdataSEXP, SEXP ZSEXP, SEXP deltabarSEXP, SEXP AdSEXP, SEXP mubarSEXP, SEXP AmuSEXP, SEXP nuSEXP, SEXP VSEXP, SEXP sSEXP, SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP, SEXP drawdeltaSEXP, SEXP olddeltaSEXP, SEXP aSEXP, SEXP oldprobSEXP, SEXP oldbetasSEXP, SEXP indSEXP, SEXP SignResSEXP) {
+RcppExport SEXP _bayesm_rhierMnlRwMixture_rcpp_loop(SEXP lgtdataSEXP, SEXP ZSEXP, SEXP deltabarSEXP, SEXP AdSEXP, SEXP mubarSEXP, SEXP AmuSEXP, SEXP nuSEXP, SEXP VSEXP, SEXP sSEXP, SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP, SEXP drawdeltaSEXP, SEXP olddeltaSEXP, SEXP aSEXP, SEXP oldprobSEXP, SEXP oldbetasSEXP, SEXP indSEXP, SEXP SignResSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -346,7 +346,7 @@ END_RCPP
 }
 // rhierNegbinRw_rcpp_loop
 List rhierNegbinRw_rcpp_loop(List const& regdata, List const& hessdata, mat const& Z, mat Beta, mat Delta, mat const& Deltabar, mat const& Adelta, double nu, mat const& V, double a, double b, int R, int keep, double sbeta, double alphacroot, int nprint, mat rootA, double alpha, bool fixalpha);
-RcppExport SEXP bayesm_rhierNegbinRw_rcpp_loop(SEXP regdataSEXP, SEXP hessdataSEXP, SEXP ZSEXP, SEXP BetaSEXP, SEXP DeltaSEXP, SEXP DeltabarSEXP, SEXP AdeltaSEXP, SEXP nuSEXP, SEXP VSEXP, SEXP aSEXP, SEXP bSEXP, SEXP RSEXP, SEXP keepSEXP, SEXP sbetaSEXP, SEXP alphacrootSEXP, SEXP nprintSEXP, SEXP rootASEXP, SEXP alphaSEXP, SEXP fixalphaSEXP) {
+RcppExport SEXP _bayesm_rhierNegbinRw_rcpp_loop(SEXP regdataSEXP, SEXP hessdataSEXP, SEXP ZSEXP, SEXP BetaSEXP, SEXP DeltaSEXP, SEXP DeltabarSEXP, SEXP AdeltaSEXP, SEXP nuSEXP, SEXP VSEXP, SEXP aSEXP, SEXP bSEXP, SEXP RSEXP, SEXP keepSEXP, SEXP sbetaSEXP, SEXP alphacrootSEXP, SEXP nprintSEXP, SEXP rootASEXP, SEXP alphaSEXP, SEXP fixalphaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -375,7 +375,7 @@ END_RCPP
 }
 // rivDP_rcpp_loop
 List rivDP_rcpp_loop(int R, int keep, int nprint, int dimd, vec const& mbg, mat const& Abg, vec const& md, mat const& Ad, vec const& y, bool isgamma, mat const& z, vec const& x, mat const& w, vec delta, List const& PrioralphaList, int gridsize, bool SCALE, int maxuniq, double scalex, double scaley, List const& lambda_hyper, double BayesmConstantA, int BayesmConstantnu);
-RcppExport SEXP bayesm_rivDP_rcpp_loop(SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP, SEXP dimdSEXP, SEXP mbgSEXP, SEXP AbgSEXP, SEXP mdSEXP, SEXP AdSEXP, SEXP ySEXP, SEXP isgammaSEXP, SEXP zSEXP, SEXP xSEXP, SEXP wSEXP, SEXP deltaSEXP, SEXP PrioralphaListSEXP, SEXP gridsizeSEXP, SEXP SCALESEXP, SEXP maxuniqSEXP, SEXP scalexSEXP, SEXP scaleySEXP, SEXP lambda_hyperSEXP, SEXP BayesmConstantASEXP, SEXP BayesmConstantnuSEXP) {
+RcppExport SEXP _bayesm_rivDP_rcpp_loop(SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP, SEXP dimdSEXP, SEXP mbgSEXP, SEXP AbgSEXP, SEXP mdSEXP, SEXP AdSEXP, SEXP ySEXP, SEXP isgammaSEXP, SEXP zSEXP, SEXP xSEXP, SEXP wSEXP, SEXP deltaSEXP, SEXP PrioralphaListSEXP, SEXP gridsizeSEXP, SEXP SCALESEXP, SEXP maxuniqSEXP, SEXP scalexSEXP, SEXP scaleySEXP, SEXP lambda_hyperSEXP, SEXP BayesmConstantASEXP, SEXP BayesmConstantnuSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -408,7 +408,7 @@ END_RCPP
 }
 // rivGibbs_rcpp_loop
 List rivGibbs_rcpp_loop(vec const& y, vec const& x, mat const& z, mat const& w, vec const& mbg, mat const& Abg, vec const& md, mat const& Ad, mat const& V, double nu, int R, int keep, int nprint);
-RcppExport SEXP bayesm_rivGibbs_rcpp_loop(SEXP ySEXP, SEXP xSEXP, SEXP zSEXP, SEXP wSEXP, SEXP mbgSEXP, SEXP AbgSEXP, SEXP mdSEXP, SEXP AdSEXP, SEXP VSEXP, SEXP nuSEXP, SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP) {
+RcppExport SEXP _bayesm_rivGibbs_rcpp_loop(SEXP ySEXP, SEXP xSEXP, SEXP zSEXP, SEXP wSEXP, SEXP mbgSEXP, SEXP AbgSEXP, SEXP mdSEXP, SEXP AdSEXP, SEXP VSEXP, SEXP nuSEXP, SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -431,7 +431,7 @@ END_RCPP
 }
 // rmixGibbs
 List rmixGibbs(mat const& y, mat const& Bbar, mat const& A, double nu, mat const& V, vec const& a, vec const& p, vec const& z);
-RcppExport SEXP bayesm_rmixGibbs(SEXP ySEXP, SEXP BbarSEXP, SEXP ASEXP, SEXP nuSEXP, SEXP VSEXP, SEXP aSEXP, SEXP pSEXP, SEXP zSEXP) {
+RcppExport SEXP _bayesm_rmixGibbs(SEXP ySEXP, SEXP BbarSEXP, SEXP ASEXP, SEXP nuSEXP, SEXP VSEXP, SEXP aSEXP, SEXP pSEXP, SEXP zSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -449,7 +449,7 @@ END_RCPP
 }
 // rmixture
 List rmixture(int n, vec pvec, List comps);
-RcppExport SEXP bayesm_rmixture(SEXP nSEXP, SEXP pvecSEXP, SEXP compsSEXP) {
+RcppExport SEXP _bayesm_rmixture(SEXP nSEXP, SEXP pvecSEXP, SEXP compsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -462,7 +462,7 @@ END_RCPP
 }
 // rmnlIndepMetrop_rcpp_loop
 List rmnlIndepMetrop_rcpp_loop(int R, int keep, double nu, vec const& betastar, mat const& root, vec const& y, mat const& X, vec const& betabar, mat const& rootpi, mat const& rooti, double oldlimp, double oldlpost, int nprint);
-RcppExport SEXP bayesm_rmnlIndepMetrop_rcpp_loop(SEXP RSEXP, SEXP keepSEXP, SEXP nuSEXP, SEXP betastarSEXP, SEXP rootSEXP, SEXP ySEXP, SEXP XSEXP, SEXP betabarSEXP, SEXP rootpiSEXP, SEXP rootiSEXP, SEXP oldlimpSEXP, SEXP oldlpostSEXP, SEXP nprintSEXP) {
+RcppExport SEXP _bayesm_rmnlIndepMetrop_rcpp_loop(SEXP RSEXP, SEXP keepSEXP, SEXP nuSEXP, SEXP betastarSEXP, SEXP rootSEXP, SEXP ySEXP, SEXP XSEXP, SEXP betabarSEXP, SEXP rootpiSEXP, SEXP rootiSEXP, SEXP oldlimpSEXP, SEXP oldlpostSEXP, SEXP nprintSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -485,7 +485,7 @@ END_RCPP
 }
 // rmnpGibbs_rcpp_loop
 List rmnpGibbs_rcpp_loop(int R, int keep, int nprint, int pm1, ivec const& y, mat const& X, vec const& beta0, mat const& sigma0, mat const& V, double nu, vec const& betabar, mat const& A);
-RcppExport SEXP bayesm_rmnpGibbs_rcpp_loop(SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP, SEXP pm1SEXP, SEXP ySEXP, SEXP XSEXP, SEXP beta0SEXP, SEXP sigma0SEXP, SEXP VSEXP, SEXP nuSEXP, SEXP betabarSEXP, SEXP ASEXP) {
+RcppExport SEXP _bayesm_rmnpGibbs_rcpp_loop(SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP, SEXP pm1SEXP, SEXP ySEXP, SEXP XSEXP, SEXP beta0SEXP, SEXP sigma0SEXP, SEXP VSEXP, SEXP nuSEXP, SEXP betabarSEXP, SEXP ASEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -507,7 +507,7 @@ END_RCPP
 }
 // rmultireg
 List rmultireg(mat const& Y, mat const& X, mat const& Bbar, mat const& A, double nu, mat const& V);
-RcppExport SEXP bayesm_rmultireg(SEXP YSEXP, SEXP XSEXP, SEXP BbarSEXP, SEXP ASEXP, SEXP nuSEXP, SEXP VSEXP) {
+RcppExport SEXP _bayesm_rmultireg(SEXP YSEXP, SEXP XSEXP, SEXP BbarSEXP, SEXP ASEXP, SEXP nuSEXP, SEXP VSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -523,7 +523,7 @@ END_RCPP
 }
 // rmvpGibbs_rcpp_loop
 List rmvpGibbs_rcpp_loop(int R, int keep, int nprint, int p, ivec const& y, mat const& X, vec const& beta0, mat const& sigma0, mat const& V, double nu, vec const& betabar, mat const& A);
-RcppExport SEXP bayesm_rmvpGibbs_rcpp_loop(SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP, SEXP pSEXP, SEXP ySEXP, SEXP XSEXP, SEXP beta0SEXP, SEXP sigma0SEXP, SEXP VSEXP, SEXP nuSEXP, SEXP betabarSEXP, SEXP ASEXP) {
+RcppExport SEXP _bayesm_rmvpGibbs_rcpp_loop(SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP, SEXP pSEXP, SEXP ySEXP, SEXP XSEXP, SEXP beta0SEXP, SEXP sigma0SEXP, SEXP VSEXP, SEXP nuSEXP, SEXP betabarSEXP, SEXP ASEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -545,7 +545,7 @@ END_RCPP
 }
 // rmvst
 vec rmvst(double nu, vec const& mu, mat const& root);
-RcppExport SEXP bayesm_rmvst(SEXP nuSEXP, SEXP muSEXP, SEXP rootSEXP) {
+RcppExport SEXP _bayesm_rmvst(SEXP nuSEXP, SEXP muSEXP, SEXP rootSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -558,7 +558,7 @@ END_RCPP
 }
 // rnegbinRw_rcpp_loop
 List rnegbinRw_rcpp_loop(vec const& y, mat const& X, vec const& betabar, mat const& rootA, double a, double b, vec beta, double alpha, bool fixalpha, mat const& betaroot, double alphacroot, int R, int keep, int nprint);
-RcppExport SEXP bayesm_rnegbinRw_rcpp_loop(SEXP ySEXP, SEXP XSEXP, SEXP betabarSEXP, SEXP rootASEXP, SEXP aSEXP, SEXP bSEXP, SEXP betaSEXP, SEXP alphaSEXP, SEXP fixalphaSEXP, SEXP betarootSEXP, SEXP alphacrootSEXP, SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP) {
+RcppExport SEXP _bayesm_rnegbinRw_rcpp_loop(SEXP ySEXP, SEXP XSEXP, SEXP betabarSEXP, SEXP rootASEXP, SEXP aSEXP, SEXP bSEXP, SEXP betaSEXP, SEXP alphaSEXP, SEXP fixalphaSEXP, SEXP betarootSEXP, SEXP alphacrootSEXP, SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -582,7 +582,7 @@ END_RCPP
 }
 // rnmixGibbs_rcpp_loop
 List rnmixGibbs_rcpp_loop(mat const& y, mat const& Mubar, mat const& A, double nu, mat const& V, vec const& a, vec p, vec z, int const& R, int const& keep, int const& nprint);
-RcppExport SEXP bayesm_rnmixGibbs_rcpp_loop(SEXP ySEXP, SEXP MubarSEXP, SEXP ASEXP, SEXP nuSEXP, SEXP VSEXP, SEXP aSEXP, SEXP pSEXP, SEXP zSEXP, SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP) {
+RcppExport SEXP _bayesm_rnmixGibbs_rcpp_loop(SEXP ySEXP, SEXP MubarSEXP, SEXP ASEXP, SEXP nuSEXP, SEXP VSEXP, SEXP aSEXP, SEXP pSEXP, SEXP zSEXP, SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -603,7 +603,7 @@ END_RCPP
 }
 // rordprobitGibbs_rcpp_loop
 List rordprobitGibbs_rcpp_loop(vec const& y, mat const& X, int k, mat const& A, vec const& betabar, mat const& Ad, double s, mat const& inc_root, vec const& dstarbar, vec const& betahat, int R, int keep, int nprint);
-RcppExport SEXP bayesm_rordprobitGibbs_rcpp_loop(SEXP ySEXP, SEXP XSEXP, SEXP kSEXP, SEXP ASEXP, SEXP betabarSEXP, SEXP AdSEXP, SEXP sSEXP, SEXP inc_rootSEXP, SEXP dstarbarSEXP, SEXP betahatSEXP, SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP) {
+RcppExport SEXP _bayesm_rordprobitGibbs_rcpp_loop(SEXP ySEXP, SEXP XSEXP, SEXP kSEXP, SEXP ASEXP, SEXP betabarSEXP, SEXP AdSEXP, SEXP sSEXP, SEXP inc_rootSEXP, SEXP dstarbarSEXP, SEXP betahatSEXP, SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -626,7 +626,7 @@ END_RCPP
 }
 // rscaleUsage_rcpp_loop
 List rscaleUsage_rcpp_loop(int k, mat const& x, int p, int n, int R, int keep, int ndghk, int nprint, mat y, vec mu, mat Sigma, vec tau, vec sigma, mat Lambda, double e, bool domu, bool doSigma, bool dosigma, bool dotau, bool doLambda, bool doe, double nu, mat const& V, mat const& mubar, mat const& Am, vec const& gsigma, vec const& gl11, vec const& gl22, vec const& gl12, int nuL, mat const& VL, vec const& ge);
-RcppExport SEXP bayesm_rscaleUsage_rcpp_loop(SEXP kSEXP, SEXP xSEXP, SEXP pSEXP, SEXP nSEXP, SEXP RSEXP, SEXP keepSEXP, SEXP ndghkSEXP, SEXP nprintSEXP, SEXP ySEXP, SEXP muSEXP, SEXP SigmaSEXP, SEXP tauSEXP, SEXP sigmaSEXP, SEXP LambdaSEXP, SEXP eSEXP, SEXP domuSEXP, SEXP doSigmaSEXP, SEXP dosigmaSEXP, SEXP dotauSEXP, SEXP doLambdaSEXP, SEXP doeSEXP, SEXP nuSEXP, SEXP VSEXP, SEXP mubarSEXP, SEXP AmSEXP, SEXP gsigmaSEXP, SEXP gl11SEXP, SEXP gl22SEXP, SEXP gl12SEXP, SEXP nuLSEXP, SEXP VLSEXP, SEXP geSEXP) {
+RcppExport SEXP _bayesm_rscaleUsage_rcpp_loop(SEXP kSEXP, SEXP xSEXP, SEXP pSEXP, SEXP nSEXP, SEXP RSEXP, SEXP keepSEXP, SEXP ndghkSEXP, SEXP nprintSEXP, SEXP ySEXP, SEXP muSEXP, SEXP SigmaSEXP, SEXP tauSEXP, SEXP sigmaSEXP, SEXP LambdaSEXP, SEXP eSEXP, SEXP domuSEXP, SEXP doSigmaSEXP, SEXP dosigmaSEXP, SEXP dotauSEXP, SEXP doLambdaSEXP, SEXP doeSEXP, SEXP nuSEXP, SEXP VSEXP, SEXP mubarSEXP, SEXP AmSEXP, SEXP gsigmaSEXP, SEXP gl11SEXP, SEXP gl22SEXP, SEXP gl12SEXP, SEXP nuLSEXP, SEXP VLSEXP, SEXP geSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -668,7 +668,7 @@ END_RCPP
 }
 // rsurGibbs_rcpp_loop
 List rsurGibbs_rcpp_loop(List const& regdata, vec const& indreg, vec const& cumnk, vec const& nk, mat const& XspXs, mat Sigmainv, mat const& A, vec const& Abetabar, double nu, mat const& V, int nvar, mat E, mat const& Y, int R, int keep, int nprint);
-RcppExport SEXP bayesm_rsurGibbs_rcpp_loop(SEXP regdataSEXP, SEXP indregSEXP, SEXP cumnkSEXP, SEXP nkSEXP, SEXP XspXsSEXP, SEXP SigmainvSEXP, SEXP ASEXP, SEXP AbetabarSEXP, SEXP nuSEXP, SEXP VSEXP, SEXP nvarSEXP, SEXP ESEXP, SEXP YSEXP, SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP) {
+RcppExport SEXP _bayesm_rsurGibbs_rcpp_loop(SEXP regdataSEXP, SEXP indregSEXP, SEXP cumnkSEXP, SEXP nkSEXP, SEXP XspXsSEXP, SEXP SigmainvSEXP, SEXP ASEXP, SEXP AbetabarSEXP, SEXP nuSEXP, SEXP VSEXP, SEXP nvarSEXP, SEXP ESEXP, SEXP YSEXP, SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -694,7 +694,7 @@ END_RCPP
 }
 // rtrun
 NumericVector rtrun(NumericVector const& mu, NumericVector const& sigma, NumericVector const& a, NumericVector const& b);
-RcppExport SEXP bayesm_rtrun(SEXP muSEXP, SEXP sigmaSEXP, SEXP aSEXP, SEXP bSEXP) {
+RcppExport SEXP _bayesm_rtrun(SEXP muSEXP, SEXP sigmaSEXP, SEXP aSEXP, SEXP bSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -706,28 +706,9 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// runireg_rcpp_loop
-List runireg_rcpp_loop(vec const& y, mat const& X, vec const& betabar, mat const& A, double nu, double ssq, int R, int keep, int nprint);
-RcppExport SEXP bayesm_runireg_rcpp_loop(SEXP ySEXP, SEXP XSEXP, SEXP betabarSEXP, SEXP ASEXP, SEXP nuSEXP, SEXP ssqSEXP, SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< vec const& >::type y(ySEXP);
-    Rcpp::traits::input_parameter< mat const& >::type X(XSEXP);
-    Rcpp::traits::input_parameter< vec const& >::type betabar(betabarSEXP);
-    Rcpp::traits::input_parameter< mat const& >::type A(ASEXP);
-    Rcpp::traits::input_parameter< double >::type nu(nuSEXP);
-    Rcpp::traits::input_parameter< double >::type ssq(ssqSEXP);
-    Rcpp::traits::input_parameter< int >::type R(RSEXP);
-    Rcpp::traits::input_parameter< int >::type keep(keepSEXP);
-    Rcpp::traits::input_parameter< int >::type nprint(nprintSEXP);
-    rcpp_result_gen = Rcpp::wrap(runireg_rcpp_loop(y, X, betabar, A, nu, ssq, R, keep, nprint));
-    return rcpp_result_gen;
-END_RCPP
-}
 // runiregGibbs_rcpp_loop
 List runiregGibbs_rcpp_loop(vec const& y, mat const& X, vec const& betabar, mat const& A, double nu, double ssq, double sigmasq, int R, int keep, int nprint);
-RcppExport SEXP bayesm_runiregGibbs_rcpp_loop(SEXP ySEXP, SEXP XSEXP, SEXP betabarSEXP, SEXP ASEXP, SEXP nuSEXP, SEXP ssqSEXP, SEXP sigmasqSEXP, SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP) {
+RcppExport SEXP _bayesm_runiregGibbs_rcpp_loop(SEXP ySEXP, SEXP XSEXP, SEXP betabarSEXP, SEXP ASEXP, SEXP nuSEXP, SEXP ssqSEXP, SEXP sigmasqSEXP, SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -745,9 +726,28 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// runireg_rcpp_loop
+List runireg_rcpp_loop(vec const& y, mat const& X, vec const& betabar, mat const& A, double nu, double ssq, int R, int keep, int nprint);
+RcppExport SEXP _bayesm_runireg_rcpp_loop(SEXP ySEXP, SEXP XSEXP, SEXP betabarSEXP, SEXP ASEXP, SEXP nuSEXP, SEXP ssqSEXP, SEXP RSEXP, SEXP keepSEXP, SEXP nprintSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< vec const& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< mat const& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< vec const& >::type betabar(betabarSEXP);
+    Rcpp::traits::input_parameter< mat const& >::type A(ASEXP);
+    Rcpp::traits::input_parameter< double >::type nu(nuSEXP);
+    Rcpp::traits::input_parameter< double >::type ssq(ssqSEXP);
+    Rcpp::traits::input_parameter< int >::type R(RSEXP);
+    Rcpp::traits::input_parameter< int >::type keep(keepSEXP);
+    Rcpp::traits::input_parameter< int >::type nprint(nprintSEXP);
+    rcpp_result_gen = Rcpp::wrap(runireg_rcpp_loop(y, X, betabar, A, nu, ssq, R, keep, nprint));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rwishart
 List rwishart(double nu, mat const& V);
-RcppExport SEXP bayesm_rwishart(SEXP nuSEXP, SEXP VSEXP) {
+RcppExport SEXP _bayesm_rwishart(SEXP nuSEXP, SEXP VSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -759,7 +759,7 @@ END_RCPP
 }
 // callroot
 vec callroot(vec const& c1, vec const& c2, double tol, int iterlim);
-RcppExport SEXP bayesm_callroot(SEXP c1SEXP, SEXP c2SEXP, SEXP tolSEXP, SEXP iterlimSEXP) {
+RcppExport SEXP _bayesm_callroot(SEXP c1SEXP, SEXP c2SEXP, SEXP tolSEXP, SEXP iterlimSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -773,44 +773,44 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"bayesm_bayesBLP_rcpp_loop", (DL_FUNC) &bayesm_bayesBLP_rcpp_loop, 26},
-    {"bayesm_breg", (DL_FUNC) &bayesm_breg, 4},
-    {"bayesm_cgetC", (DL_FUNC) &bayesm_cgetC, 2},
-    {"bayesm_clusterMix_rcpp_loop", (DL_FUNC) &bayesm_clusterMix_rcpp_loop, 4},
-    {"bayesm_ghkvec", (DL_FUNC) &bayesm_ghkvec, 6},
-    {"bayesm_llmnl", (DL_FUNC) &bayesm_llmnl, 3},
-    {"bayesm_lndIChisq", (DL_FUNC) &bayesm_lndIChisq, 3},
-    {"bayesm_lndIWishart", (DL_FUNC) &bayesm_lndIWishart, 3},
-    {"bayesm_lndMvn", (DL_FUNC) &bayesm_lndMvn, 3},
-    {"bayesm_lndMvst", (DL_FUNC) &bayesm_lndMvst, 5},
-    {"bayesm_rbprobitGibbs_rcpp_loop", (DL_FUNC) &bayesm_rbprobitGibbs_rcpp_loop, 11},
-    {"bayesm_rdirichlet", (DL_FUNC) &bayesm_rdirichlet, 1},
-    {"bayesm_rDPGibbs_rcpp_loop", (DL_FUNC) &bayesm_rDPGibbs_rcpp_loop, 12},
-    {"bayesm_rhierLinearMixture_rcpp_loop", (DL_FUNC) &bayesm_rhierLinearMixture_rcpp_loop, 19},
-    {"bayesm_rhierLinearModel_rcpp_loop", (DL_FUNC) &bayesm_rhierLinearModel_rcpp_loop, 14},
-    {"bayesm_rhierMnlDP_rcpp_loop", (DL_FUNC) &bayesm_rhierMnlDP_rcpp_loop, 18},
-    {"bayesm_llmnl_con", (DL_FUNC) &bayesm_llmnl_con, 4},
-    {"bayesm_rhierMnlRwMixture_rcpp_loop", (DL_FUNC) &bayesm_rhierMnlRwMixture_rcpp_loop, 19},
-    {"bayesm_rhierNegbinRw_rcpp_loop", (DL_FUNC) &bayesm_rhierNegbinRw_rcpp_loop, 19},
-    {"bayesm_rivDP_rcpp_loop", (DL_FUNC) &bayesm_rivDP_rcpp_loop, 23},
-    {"bayesm_rivGibbs_rcpp_loop", (DL_FUNC) &bayesm_rivGibbs_rcpp_loop, 13},
-    {"bayesm_rmixGibbs", (DL_FUNC) &bayesm_rmixGibbs, 8},
-    {"bayesm_rmixture", (DL_FUNC) &bayesm_rmixture, 3},
-    {"bayesm_rmnlIndepMetrop_rcpp_loop", (DL_FUNC) &bayesm_rmnlIndepMetrop_rcpp_loop, 13},
-    {"bayesm_rmnpGibbs_rcpp_loop", (DL_FUNC) &bayesm_rmnpGibbs_rcpp_loop, 12},
-    {"bayesm_rmultireg", (DL_FUNC) &bayesm_rmultireg, 6},
-    {"bayesm_rmvpGibbs_rcpp_loop", (DL_FUNC) &bayesm_rmvpGibbs_rcpp_loop, 12},
-    {"bayesm_rmvst", (DL_FUNC) &bayesm_rmvst, 3},
-    {"bayesm_rnegbinRw_rcpp_loop", (DL_FUNC) &bayesm_rnegbinRw_rcpp_loop, 14},
-    {"bayesm_rnmixGibbs_rcpp_loop", (DL_FUNC) &bayesm_rnmixGibbs_rcpp_loop, 11},
-    {"bayesm_rordprobitGibbs_rcpp_loop", (DL_FUNC) &bayesm_rordprobitGibbs_rcpp_loop, 13},
-    {"bayesm_rscaleUsage_rcpp_loop", (DL_FUNC) &bayesm_rscaleUsage_rcpp_loop, 32},
-    {"bayesm_rsurGibbs_rcpp_loop", (DL_FUNC) &bayesm_rsurGibbs_rcpp_loop, 16},
-    {"bayesm_rtrun", (DL_FUNC) &bayesm_rtrun, 4},
-    {"bayesm_runireg_rcpp_loop", (DL_FUNC) &bayesm_runireg_rcpp_loop, 9},
-    {"bayesm_runiregGibbs_rcpp_loop", (DL_FUNC) &bayesm_runiregGibbs_rcpp_loop, 10},
-    {"bayesm_rwishart", (DL_FUNC) &bayesm_rwishart, 2},
-    {"bayesm_callroot", (DL_FUNC) &bayesm_callroot, 4},
+    {"_bayesm_bayesBLP_rcpp_loop", (DL_FUNC) &_bayesm_bayesBLP_rcpp_loop, 26},
+    {"_bayesm_breg", (DL_FUNC) &_bayesm_breg, 4},
+    {"_bayesm_cgetC", (DL_FUNC) &_bayesm_cgetC, 2},
+    {"_bayesm_clusterMix_rcpp_loop", (DL_FUNC) &_bayesm_clusterMix_rcpp_loop, 4},
+    {"_bayesm_ghkvec", (DL_FUNC) &_bayesm_ghkvec, 6},
+    {"_bayesm_llmnl", (DL_FUNC) &_bayesm_llmnl, 3},
+    {"_bayesm_lndIChisq", (DL_FUNC) &_bayesm_lndIChisq, 3},
+    {"_bayesm_lndIWishart", (DL_FUNC) &_bayesm_lndIWishart, 3},
+    {"_bayesm_lndMvn", (DL_FUNC) &_bayesm_lndMvn, 3},
+    {"_bayesm_lndMvst", (DL_FUNC) &_bayesm_lndMvst, 5},
+    {"_bayesm_rDPGibbs_rcpp_loop", (DL_FUNC) &_bayesm_rDPGibbs_rcpp_loop, 12},
+    {"_bayesm_rbprobitGibbs_rcpp_loop", (DL_FUNC) &_bayesm_rbprobitGibbs_rcpp_loop, 11},
+    {"_bayesm_rdirichlet", (DL_FUNC) &_bayesm_rdirichlet, 1},
+    {"_bayesm_rhierLinearMixture_rcpp_loop", (DL_FUNC) &_bayesm_rhierLinearMixture_rcpp_loop, 19},
+    {"_bayesm_rhierLinearModel_rcpp_loop", (DL_FUNC) &_bayesm_rhierLinearModel_rcpp_loop, 14},
+    {"_bayesm_rhierMnlDP_rcpp_loop", (DL_FUNC) &_bayesm_rhierMnlDP_rcpp_loop, 18},
+    {"_bayesm_llmnl_con", (DL_FUNC) &_bayesm_llmnl_con, 4},
+    {"_bayesm_rhierMnlRwMixture_rcpp_loop", (DL_FUNC) &_bayesm_rhierMnlRwMixture_rcpp_loop, 19},
+    {"_bayesm_rhierNegbinRw_rcpp_loop", (DL_FUNC) &_bayesm_rhierNegbinRw_rcpp_loop, 19},
+    {"_bayesm_rivDP_rcpp_loop", (DL_FUNC) &_bayesm_rivDP_rcpp_loop, 23},
+    {"_bayesm_rivGibbs_rcpp_loop", (DL_FUNC) &_bayesm_rivGibbs_rcpp_loop, 13},
+    {"_bayesm_rmixGibbs", (DL_FUNC) &_bayesm_rmixGibbs, 8},
+    {"_bayesm_rmixture", (DL_FUNC) &_bayesm_rmixture, 3},
+    {"_bayesm_rmnlIndepMetrop_rcpp_loop", (DL_FUNC) &_bayesm_rmnlIndepMetrop_rcpp_loop, 13},
+    {"_bayesm_rmnpGibbs_rcpp_loop", (DL_FUNC) &_bayesm_rmnpGibbs_rcpp_loop, 12},
+    {"_bayesm_rmultireg", (DL_FUNC) &_bayesm_rmultireg, 6},
+    {"_bayesm_rmvpGibbs_rcpp_loop", (DL_FUNC) &_bayesm_rmvpGibbs_rcpp_loop, 12},
+    {"_bayesm_rmvst", (DL_FUNC) &_bayesm_rmvst, 3},
+    {"_bayesm_rnegbinRw_rcpp_loop", (DL_FUNC) &_bayesm_rnegbinRw_rcpp_loop, 14},
+    {"_bayesm_rnmixGibbs_rcpp_loop", (DL_FUNC) &_bayesm_rnmixGibbs_rcpp_loop, 11},
+    {"_bayesm_rordprobitGibbs_rcpp_loop", (DL_FUNC) &_bayesm_rordprobitGibbs_rcpp_loop, 13},
+    {"_bayesm_rscaleUsage_rcpp_loop", (DL_FUNC) &_bayesm_rscaleUsage_rcpp_loop, 32},
+    {"_bayesm_rsurGibbs_rcpp_loop", (DL_FUNC) &_bayesm_rsurGibbs_rcpp_loop, 16},
+    {"_bayesm_rtrun", (DL_FUNC) &_bayesm_rtrun, 4},
+    {"_bayesm_runiregGibbs_rcpp_loop", (DL_FUNC) &_bayesm_runiregGibbs_rcpp_loop, 10},
+    {"_bayesm_runireg_rcpp_loop", (DL_FUNC) &_bayesm_runireg_rcpp_loop, 9},
+    {"_bayesm_rwishart", (DL_FUNC) &_bayesm_rwishart, 2},
+    {"_bayesm_callroot", (DL_FUNC) &_bayesm_callroot, 4},
     {NULL, NULL, 0}
 };
 
