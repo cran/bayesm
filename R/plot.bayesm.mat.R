@@ -14,6 +14,8 @@ plot.bayesm.mat=function(x,names,burnin=trunc(.1*nrow(X)),tvalues,TRACEPLOT=TRUE
   if(is.null(attributes(X)$dim)) X=as.matrix(X)
   nx=ncol(X)
   if(nrow(X) < 100 & CHECK_NDRAWS) {cat("fewer than 100 draws submitted \n"); return(invisible())}
+  if(burnin > nrow(X)) {cat("burnin set larger than number of draws submitted (chk keep) \n");
+    return(invisible())}
   if(!missing(tvalues)){ 
         if(mode(tvalues) !="numeric") {stop("tvalues must be a numeric vector \n")} 
       else 

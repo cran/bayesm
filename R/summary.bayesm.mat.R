@@ -10,6 +10,8 @@ summary.bayesm.mat=function(object,names,burnin=trunc(.1*nrow(X)),tvalues,QUANTI
   nx=ncol(X)
   if(missing(names)) names=as.character(1:nx)
   if(nrow(X) < 100) {cat("fewer than 100 draws submitted \n"); return(invisible())}
+  if(burnin > nrow(X)) {cat("burnin set larger than number of draws submitted (chk keep) \n");
+    return(invisible())}
   X=X[(burnin+1):nrow(X),,drop=FALSE]
   mat=matrix(apply(X,2,mean),nrow=1)
   mat=rbind(mat,sqrt(matrix(apply(X,2,var),nrow=1)))

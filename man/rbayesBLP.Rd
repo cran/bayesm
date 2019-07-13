@@ -142,7 +142,7 @@
    }
 }
 
-\references{For further discussion, see \emph{Bayesian Analysis of Random Coefficient Logit Models Using Aggregate Data} by Jiang, Manchanda, and Rossi, \emph{Journal of Econometrics}, 2009. \cr \url{http://www.sciencedirect.com/science/article/pii/S0304407608002297}
+\references{For further discussion, see \emph{Bayesian Analysis of Random Coefficient Logit Models Using Aggregate Data} by Jiang, Manchanda, and Rossi, \emph{Journal of Econometrics}, 2009. \cr 
 }
 
 \author{Keunwoo Kim, Anderson School, UCLA, \email{keunwoo.kim@gmail.com}.}

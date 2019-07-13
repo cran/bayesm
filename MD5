@@ -1,4 +1,4 @@
-8a121ab1baae6641a553ad19cef9e7d7 *DESCRIPTION
+4dd75a18ae55ead58d456526cd702bfe *DESCRIPTION
 a7ac4733ceca5b46a0a1dfd391e6e72a *NAMESPACE
 722ef18fc061d3605cf687388e4be2a1 *R/BayesmConstants.R
 750237445e7fb47a0c72db9038bad9b3 *R/BayesmFunctions.R
@@ -18,9 +18,9 @@ b707216d4a165cafcfd77ff74ca32d4e *R/mnlHess.R
 e8c68b7db1d51d1ce270e09648db3112 *R/momMix.R
 dd4a04551d37b77645a4cb38b3feb114 *R/nmat.R
 72dbf320a442a6ee65a3de8bc4e6f238 *R/numEff.R
-c459d8fd4c6fec89b2e76914813750ca *R/plot.bayesm.hcoef.R
-2761d0e0e3bc3b97179790616880c5e1 *R/plot.bayesm.mat.R
-d14eae20edc467e1557775af62c45eb0 *R/plot.bayesm.nmix.R
+619d57282ea1b86194c9df581cc3267f *R/plot.bayesm.hcoef.R
+5953e4441411fec59bf0346af0a9dc27 *R/plot.bayesm.mat.R
+ca6a8109a8bfe57cd53bd34b9772edfd *R/plot.bayesm.nmix.R
 3b35e7b69751438d7c06ed92717892c2 *R/rbayesBLP_rcpp.R
 e7be9effe9226ccf40154f86491d3e89 *R/rbiNormGibbs.R
 4fb5551547c7a4b043243381832983e6 *R/rbprobitgibbs_rcpp.r
@@ -29,7 +29,7 @@ b51fe0e4c2a296988a3847bdc23f14d7 *R/rhierBinLogit.R
 d6f886dd9321369927df7167ebd966ba *R/rhierLinearMixture_rcpp.r
 ca0ff52fd2ef0ea9eb6a1055e67fa37f *R/rhierLinearModel_rcpp.R
 d2b0844bb4cede20ba0a1880013b0c78 *R/rhierMnlDP_rcpp.r
-197cd52a3d0111781e1028724f92d6ff *R/rhierMnlRwMixture_rcpp.r
+8a5f8c2c4f90e26fd73ff008a4448461 *R/rhierMnlRwMixture_rcpp.r
 185015f355711febecec70841089280a *R/rhiernegbinrw_rcpp.r
 ec71cae23dc6dc1a5d23bccaa4eefaa2 *R/rivDP_rcpp.R
 f4903ad0daae8987f84926f1aff5a034 *R/rivGibbs_rcpp.R
@@ -44,10 +44,10 @@ a91df673c2d3a496d059f0aeda8abd2b *R/rordprobitgibbs_rcpp.r
 2c1b75af6274d8843d626d5492db68db *R/runireg_rcpp.r
 55d3a319658b97ea46997f392d992fe2 *R/runireggibbs_rcpp.r
 88c70d97e33d665f93f08e5c5a7e31e8 *R/simnhlogit.R
-f6bbbc1dd104aa996c7ba62f17c1460b *R/summary.bayesm.mat.R
-14b1a1bf0cd8784439a7c16d2408ddde *R/summary.bayesm.nmix.R
-8fa4d18ae9076fb6a474d7483386f432 *R/summary.bayesm.var.R
-e43ef4743fb0a51e3203d382b643cad6 *build/vignette.rds
+f6f4d9259ad3d8a75f64ee7e0adaf2a8 *R/summary.bayesm.mat.R
+bfd00f530a84f72512a93261eedd3ef7 *R/summary.bayesm.nmix.R
+38be681c0f7971a9a253395e8a56bb53 *R/summary.bayesm.var.R
+2c721c2ddc851edbd4dc5f5357ef16fb *build/vignette.rds
 fa58bfb68b79925644d958bdd659b14c *data/Scotch.rda
 8233d19a217afa65d03bbd5e1f95cec8 *data/bank.rda
 b95835dcc2899199080a62c9c5b5cd90 *data/camera.RData
@@ -58,12 +58,12 @@ b64a79aed4d1f4e6f64593aba5aba322 *data/detailing.rda
 506ede0b22d91973c03085ca17ba9d8e *data/orangeJuice.rda
 dbce99be695403a0df5c8874b8f6ddcd *data/tuna.rda
 53e5c8b98d6b710c656fd969bf6d71b6 *inst/doc/Constrained_MNL_Vignette.R
-7dd837d812cf03c9a5c260d5334ff525 *inst/doc/Constrained_MNL_Vignette.Rmd
-ae0c78a91939d4f5b82ba495603748bf *inst/doc/Constrained_MNL_Vignette.html
+9e127ae004b468c5feb3341bfe7794ac *inst/doc/Constrained_MNL_Vignette.Rmd
+950e3d80728580d8055433a94edb6c6c *inst/doc/Constrained_MNL_Vignette.html
 6072b88a2b44bb212e221fe47a977045 *inst/doc/bayesm_Overview_Vignette.R
-6b8bc3010578ff01c1fa1240035bdfcc *inst/doc/bayesm_Overview_Vignette.Rmd
-9f6d8e55ad4930d8dec47474894c0ca0 *inst/doc/bayesm_Overview_Vignette.html
-f6ce98a7f6aa9e853a3b4cb4d3db254f *inst/include/bayesm.h
+b9488fb44d97ec4bf8d1bac0a2094c65 *inst/doc/bayesm_Overview_Vignette.Rmd
+56dee5fdbb5ad784a3d5ba8d5718a9a0 *inst/doc/bayesm_Overview_Vignette.html
+5aa8cada5375ea39eb2ce67359df88c3 *inst/include/bayesm.h
 c702dda44e13952523d39224e34928f6 *man/Scotch.Rd
 73c5d32b59a0824091f6a8f104826943 *man/bank.Rd
 c06c7bff1ae48639df2df727f1d70861 *man/breg.Rd
@@ -98,7 +98,7 @@ b914f7b0ae5577aa7025bb873fbc8543 *man/plot.bayesm.hcoef.Rd
 378003d8aeceeb033be1855c4fc9f006 *man/plot.bayesm.mat.Rd
 d6194bc76d2014e7937a62e1d77d1ca3 *man/plot.bayesm.nmix.Rd
 ff56b11aea220dd888c6ba8c49c136b4 *man/rDPGibbs.Rd
-b8658b4e2e44c44dfe4b3d23d34fe9ae *man/rbayesBLP.Rd
+7dc25f80ccf1f7207ed16dd3a0ddb65f *man/rbayesBLP.Rd
 8604546a510dd5fb9f1c8644fbc6c533 *man/rbiNormGibbs.Rd
 5ff1b6bc2e6c0cba3c3f25cece7f70c8 *man/rbprobitGibbs.Rd
 b5d6cd8b9c59f80ad749ca0fc4f9b605 *man/rdirichlet.Rd
@@ -173,5 +173,5 @@ e0dc5bd40feb6ba71b1a6dd4e0dbd84a *src/runireg_rcpp_loop.cpp
 1524fe60c6fea0029759326afe3a163c *src/rwishart_rcpp.cpp
 f00ee55ec4e2ec8ebf0e33ca555f8c6f *src/trunNorm.cpp
 28301b73be4deb83a4955b68bfc8371f *src/utilityFunctions.cpp
-7dd837d812cf03c9a5c260d5334ff525 *vignettes/Constrained_MNL_Vignette.Rmd
-6b8bc3010578ff01c1fa1240035bdfcc *vignettes/bayesm_Overview_Vignette.Rmd
+9e127ae004b468c5feb3341bfe7794ac *vignettes/Constrained_MNL_Vignette.Rmd
+b9488fb44d97ec4bf8d1bac0a2094c65 *vignettes/bayesm_Overview_Vignette.Rmd

@@ -18,6 +18,8 @@ plot.bayesm.nmix=function(x,names,burnin=trunc(.1*nrow(probdraw)),Grid,bi.sel,ns
   on.exit(par(op))
   R=nrow(probdraw)
   if(R < 100) {cat(" fewer than 100 draws submitted \n"); return(invisible())}
+  if(burnin > R) {cat("burnin set larger than number of draws submitted (chk keep) \n");
+    return(invisible())}
   datad=length(compdraw[[1]][[1]]$mu)
   OneDimData=(datad==1)
   if(missing(bi.sel)) bi.sel=list(c(1,2))  # default to the first pair of variables

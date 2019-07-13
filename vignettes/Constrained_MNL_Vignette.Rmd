@@ -76,7 +76,7 @@ $$ \text{vec}(\Delta) = \delta \sim MVN(\bar{\delta}, A_\delta^{-1}) $$
 $$ \mu_m \sim MVN(\bar{\mu}, \Sigma_m \otimes a_\mu^{-1}) $$
 $$ \Sigma_m \sim IW(\nu, V) $$
 
-This specification of priors assumes that $\mu_m$ is independent of $\Sigma_m$ and that, conditional on the hyperparameters, the $\beta_i$'s are _a priori_ independent. 
+This specification of priors assumes that the $(\mu_m,\Sigma_m)$ are independent and that, conditional on the hyperparameters, the $\beta_i$'s are independent. 
 
 $a$ implements prior beliefs on the number of normal components in the mixture with a default of 5.  $\nu$ is a "tightness" parameter of the inverted-Wishart distribution and $V$ is its location matrix. Without sign constraints, they default to $\nu=k+3$ and $V=\nu I$, which has the effect of centering the prior on $I$ and making it "barely proper". $a_\mu$ is a tightness parameter for the priors on $\mu$, and when no sign constraints are imposed it defaults to an extremely diffuse prior of 0.01.
 
@@ -290,7 +290,7 @@ hist(apply(out0$betadraw[ , 10, ], 1, mean),
 
 *****
   
-_Authored by [Dan Yavorsky](dyavorsky@gmail.com) and [Peter Rossi](perossichi@gmail.com). Last updated June 2017._
+_ Last updated July 2019._
 
 
 

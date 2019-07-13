@@ -9,6 +9,7 @@ rhierMnlRwMixture=function(Data,Prior,Mcmc){
 #   04/15 by Wayne Taylor: added nprint option to MCMC argument
 #   07/16 by Wayne Taylor: added sign restrictions
 #   10/10 by Dan Yavorsky: changed default priors when sign restrictions imposed
+#   12/12 by Peter Rossi: print out vector of sign-restrictions
 #
 # purpose: run hierarchical mnl logit model with mixture of normals 
 #   using RW and cov(RW inc) = (hess_i + Vbeta^-1)^-1
@@ -205,6 +206,11 @@ if(drawdelta)
    cat("Ad",fill=TRUE)
    print(Ad)
 }
+if(sum(abs(SignRes)) != 0){
+  cat("Sign Restrictions Vector (0: unconstrained, 1: positive, -1: negative",fill=TRUE)
+  print(cbind(c(1:length(SignRes)),SignRes))
+}
+
 cat(" ",fill=TRUE)
 cat("MCMC Parms: ",fill=TRUE)
 cat(paste("s=",round(s,3)," w= ",w," R= ",R," keep= ",keep," nprint= ",nprint),fill=TRUE)

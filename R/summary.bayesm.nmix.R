@@ -12,6 +12,8 @@ summary.bayesm.nmix=function(object,names,burnin=trunc(.1*nrow(probdraw)),...){
 #
 R=nrow(probdraw)
 if(R < 100) {cat("fewer than 100 draws submitted \n"); return(invisible())}
+if(burnin > R) {cat("burnin set larger than number of draws submitted (chk keep) \n");
+  return(invisible())}
 datad=length(compdraw[[1]][[1]]$mu)
 mumat=matrix(0,nrow=R,ncol=datad)
 sigmat=matrix(0,nrow=R,ncol=(datad*datad))

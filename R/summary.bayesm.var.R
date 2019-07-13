@@ -9,6 +9,8 @@ summary.bayesm.var=function(object,names,burnin=trunc(.1*nrow(Vard)),tvalues,QUA
   if(!is.matrix(Vard)) stop("Requires matrix argument \n")
   if(trunc(sqrt(ncol(Vard)))!=sqrt(ncol(Vard))) stop("Argument cannot be draws from a square matrix \n")
   if(nrow(Vard) < 100) {cat("fewer than 100 draws submitted \n"); return(invisible())}
+  if(burnin > nrow(Vard)) {cat("burnin set larger than number of draws submitted (chk keep) \n");
+    return(invisible())}
   d=sqrt(ncol(Vard))
   corrd=t(apply(Vard[(burnin+1):nrow(Vard),],1,nmat))
   pmeancorr=apply(corrd,2,mean)

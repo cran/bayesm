@@ -671,9 +671,9 @@ We see that the distribution of individual posterior means is skewed, suggesting
 
 # Conclusion
 
-We hope that this vignette has provided the reader with a thorough introduction to the `bayesm` package and is sufficient to enable immediate use of its posterior sampling functions for bayesian estimation. Comments or edits can be sent to the vignette authors at the email addresses below.
+We hope that this vignette has provided the reader with an introduction to the `bayesm` package and is sufficient to enable immediate use of its posterior sampling functions for bayesian estimation.
 
 *****
   
-_Authored by [Dan Yavorsky](dyavorsky@gmail.com) and [Peter Rossi](perossichi@gmail.com). Last updated June 2017._
+_ Last updated July 2019._
 

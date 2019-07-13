@@ -18,6 +18,8 @@ plot.bayesm.hcoef=function(x,names,burnin=trunc(.1*R),...){
   R=d[3]
   if(missing(names)) {names=as.character(1:nvar)}
   if(R < 100) {cat("fewer than 100 draws submitted \n"); return(invisible())}
+  if(burnin > R) {cat("burnin set larger than number of draws submitted (chk keep) \n");
+                  return(invisible())}
   #
   #  plot posterior distributions of nvar coef for 30 rand units
   #
