@@ -9,7 +9,14 @@ rhierMnlRwMixture=function(Data,Prior,Mcmc){
 #   04/15 by Wayne Taylor: added nprint option to MCMC argument
 #   07/16 by Wayne Taylor: added sign restrictions
 #   10/10 by Dan Yavorsky: changed default priors when sign restrictions imposed
-#   12/12 by Peter Rossi: print out vector of sign-restrictions
+#   12/18 by Peter Rossi: print out vector of sign-restrictions
+#   12/18 by Peter Rossi: changed Hessian for constrained parameters to reflect
+#                         reparameterization
+#   7/19 by Peter Rossi: further fixes for reparameterization of constrained parms
+#                        fixed Hessian as well as problems with initial values to find
+#                        constrained optima used to tune Metropolis. 
+#                        switched to Nelder-Mead to find constrained pooled optimum
+#                         BFGS sometimes has trouble with reparameterized model 
 #
 # purpose: run hierarchical mnl logit model with mixture of normals 
 #   using RW and cov(RW inc) = (hess_i + Vbeta^-1)^-1
@@ -207,8 +214,8 @@ if(drawdelta)
    print(Ad)
 }
 if(sum(abs(SignRes)) != 0){
-  cat("Sign Restrictions Vector (0: unconstrained, 1: positive, -1: negative",fill=TRUE)
-  print(cbind(c(1:length(SignRes)),SignRes))
+  cat("Sign Restrictions Vector (0: unconstrained, 1: positive, -1: negative)",fill=TRUE)
+  print(matrix(SignRes,ncol=1))
 }
 
 cat(" ",fill=TRUE)
@@ -230,9 +237,9 @@ llmnlFract=
 
 mnlHess_con=function (betastar, y, X, SignRes = rep(0,ncol(X))) {     
   
-  #Reparameterize beta to betastar to allow for sign restrictions
+  #Reparameterize betastar to beta to allow for sign restrictions
   beta = betastar
-  beta[SignRes!=0] = SignRes[SignRes!=0]*exp(beta[SignRes!=0])
+  beta[SignRes!=0] = SignRes[SignRes!=0]*exp(betastar[SignRes!=0])
   
   n = length(y)
   j = nrow(X)/n
@@ -250,6 +257,18 @@ mnlHess_con=function (betastar, y, X, SignRes = rep(0,ncol(X))) {
     Xt = X[(j * (i - 1) + 1):(j * i), ]
     Hess = Hess + crossprod(Xt, A) %*% Xt
   }
+  # modify Hessian for reparameterization
+  #  Hess above is the hessian in the constrained parms (beta)
+  #  we must express obtain hessian in betastar (unconstrained parms)
+  #  Hess_beta = J^t Hess_betastar J
+  #  Hess_betastar = (J^-1)t Hess_beta J^-1
+  #  J: jacobian from beta to betastar
+  #  J^-1: jacobian from  betastar to beta  -- see notes
+  lambda = c(rep(1,length(SignRes)))
+  lambda[SignRes == 1]= beta[SignRes == 1]
+  lambda[SignRes == -1]= - beta[SignRes == -1]
+  Hess=Hess * crossprod(t(lambda))
+  # hess[i,j] = hess[i,j]*lambda[i]*lambda[j]
   return(Hess)
 }
 
@@ -267,12 +286,35 @@ fsh()
 #       fraction loglike = (1-w)*loglike_i + w*Lbar
 #
 betainit=c(rep(0,nvar))
+noRes=c(rep(0,nvar))
+# run unconstrainted opt first
+out=optim(betainit,llmnl_con,method="BFGS",control=list( fnscale=-1,trace=0,reltol=1e-6), 
+          X=Xpooled,y=ypooled,SignRes=noRes)
+
+betainit=out$par
+betainit[SignRes!=0] = 0  # set constrained terms to zero -- implies setting "beta" to either 1, -1
 #
 #  compute pooled optimum
 #
-out=optim(betainit,llmnl_con,method="BFGS",control=list( fnscale=-1,trace=0,reltol=1e-6), 
-          X=Xpooled,y=ypooled,SignRes=SignRes)                                            
+# changed to default method - Nelder-Mead for more robust optimization- sometimes BFGS
+#  fails to find optimum using exponential reparameterization
+out=optim(betainit,llmnl_con,control=list( fnscale=-1,trace=0,reltol=1e-6), 
+          X=Xpooled,y=ypooled,SignRes=SignRes)
+
 betapooled=out$par
+#
+# warn user if the constrained pooled model has unreasonably small coefficients
+#
+if(sum(abs(betapooled[SignRes])>10))
+{
+  cat("In tuning Metropolis algorithm, constrained pooled parameter estimates contain very small values",
+      fill=TRUE)
+  print(cbind(betapooled,SignRes))
+  cat("check any constrained values with absolute value > 10 above - implies abs(beta) > exp(10)",
+      fill=TRUE)
+}
+
+
 H=mnlHess_con(betapooled,ypooled,Xpooled,SignRes)                                         
 rootH=chol(H)
 for (i in 1:nlgt) 

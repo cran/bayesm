@@ -33,7 +33,7 @@ plot.bayesm.hcoef=function(x,names,burnin=trunc(.1*R),...){
        colnames(ext)=as.character(rsam)
        out=boxplot(ext,plot=FALSE,...)
        out$stats=apply(ext,2,quantile,probs=c(0,.05,.5,.95,1))
-       bxp(out,xlab="Cross-sectional Unit",main=paste("Coefficients on Var ",names[var],sep=""),boxfill="magenta",...)
+       bxp(out,xlab="Cross-sectional Unit",main=paste("Var ",names[var]," Coefficient",sep=""),boxfill="magenta",...)
   }
   #
   # plot posterior means for each var 

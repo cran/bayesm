@@ -1,4 +1,4 @@
-4dd75a18ae55ead58d456526cd702bfe *DESCRIPTION
+1f10482492ae2ede0127e8d6bbd46248 *DESCRIPTION
 a7ac4733ceca5b46a0a1dfd391e6e72a *NAMESPACE
 722ef18fc061d3605cf687388e4be2a1 *R/BayesmConstants.R
 750237445e7fb47a0c72db9038bad9b3 *R/BayesmFunctions.R
@@ -18,7 +18,7 @@ b707216d4a165cafcfd77ff74ca32d4e *R/mnlHess.R
 e8c68b7db1d51d1ce270e09648db3112 *R/momMix.R
 dd4a04551d37b77645a4cb38b3feb114 *R/nmat.R
 72dbf320a442a6ee65a3de8bc4e6f238 *R/numEff.R
-619d57282ea1b86194c9df581cc3267f *R/plot.bayesm.hcoef.R
+de723d422e8c22336df4ab23220e7bfe *R/plot.bayesm.hcoef.R
 5953e4441411fec59bf0346af0a9dc27 *R/plot.bayesm.mat.R
 ca6a8109a8bfe57cd53bd34b9772edfd *R/plot.bayesm.nmix.R
 3b35e7b69751438d7c06ed92717892c2 *R/rbayesBLP_rcpp.R
@@ -29,7 +29,7 @@ b51fe0e4c2a296988a3847bdc23f14d7 *R/rhierBinLogit.R
 d6f886dd9321369927df7167ebd966ba *R/rhierLinearMixture_rcpp.r
 ca0ff52fd2ef0ea9eb6a1055e67fa37f *R/rhierLinearModel_rcpp.R
 d2b0844bb4cede20ba0a1880013b0c78 *R/rhierMnlDP_rcpp.r
-8a5f8c2c4f90e26fd73ff008a4448461 *R/rhierMnlRwMixture_rcpp.r
+cbfbe99308bae0d6ad294cddecb2390c *R/rhierMnlRwMixture_rcpp.R
 185015f355711febecec70841089280a *R/rhiernegbinrw_rcpp.r
 ec71cae23dc6dc1a5d23bccaa4eefaa2 *R/rivDP_rcpp.R
 f4903ad0daae8987f84926f1aff5a034 *R/rivGibbs_rcpp.R
@@ -59,7 +59,7 @@ b64a79aed4d1f4e6f64593aba5aba322 *data/detailing.rda
 dbce99be695403a0df5c8874b8f6ddcd *data/tuna.rda
 53e5c8b98d6b710c656fd969bf6d71b6 *inst/doc/Constrained_MNL_Vignette.R
 9e127ae004b468c5feb3341bfe7794ac *inst/doc/Constrained_MNL_Vignette.Rmd
-950e3d80728580d8055433a94edb6c6c *inst/doc/Constrained_MNL_Vignette.html
+6dd96d3541ef61d9d8e4c4844cf7cc6f *inst/doc/Constrained_MNL_Vignette.html
 6072b88a2b44bb212e221fe47a977045 *inst/doc/bayesm_Overview_Vignette.R
 b9488fb44d97ec4bf8d1bac0a2094c65 *inst/doc/bayesm_Overview_Vignette.Rmd
 56dee5fdbb5ad784a3d5ba8d5718a9a0 *inst/doc/bayesm_Overview_Vignette.html
