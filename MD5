@@ -1,4 +1,4 @@
-1f10482492ae2ede0127e8d6bbd46248 *DESCRIPTION
+3610850c99084795336e75205b745b24 *DESCRIPTION
 a7ac4733ceca5b46a0a1dfd391e6e72a *NAMESPACE
 722ef18fc061d3605cf687388e4be2a1 *R/BayesmConstants.R
 750237445e7fb47a0c72db9038bad9b3 *R/BayesmFunctions.R
@@ -164,7 +164,7 @@ a33cf7ed340dbb759dba2cca369fbd44 *src/rmvpGibbs_rcpp_loop.cpp
 1015db5ea007f193c9b3e010ab2551d3 *src/rmvst_rcpp.cpp
 d98f8385126b91ba2044ca09ede98339 *src/rnegbinRw_rcpp_loop.cpp
 756517253a6b9d509255ddc93138d80c *src/rnmixGibbs_rcpp_loop.cpp
-65554b346373018519da4beb78784bd8 *src/rordprobitGibbs_rcpp_loop.cpp
+321b35329fd0e616254557f3d660510d *src/rordprobitGibbs_rcpp_loop.cpp
 b250e5ef3755130722e0e42233543ccb *src/rscaleUsage_rcpp_loop.cpp
 f8bb2a7066819e4498e8202464e934b7 *src/rsurGibbs_rcpp_loop.cpp
 efcf97fd8da23a7f47f60d8cc346c079 *src/rtrun_rcpp.cpp

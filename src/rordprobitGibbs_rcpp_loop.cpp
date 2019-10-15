@@ -1,5 +1,6 @@
 #include "bayesm.h"
  
+// fixed defintion of epsilon in lldstar 10/19 P. Rossi
 //EXTRA FUNCTIONS SPECIFIC TO THE MAIN FUNCTION--------------------------------------------
 //dstartoc is a fuction to transfer dstar to its cut-off value    
 vec dstartoc(vec const& dstar){
@@ -26,7 +27,8 @@ double lldstar(vec const& dstar, vec const& y, vec const& mu){
   }
   NumericVector temp = pnorm(gamma1-as<NumericVector>(wrap(mu)))-pnorm(gamma2-as<NumericVector>(wrap(mu))); //pnorm takes Rcpp type NumericVector, NOT arma objects of type vec
   vec arg = as<vec>(temp);
-  double epsilon = 1.0/(10^-50);
+  // fix definition of epsilon
+  double epsilon = 1e-50;
   for (int j=0; j<ny; j++){
     if (arg[j]<epsilon){
       arg[j] = epsilon;
