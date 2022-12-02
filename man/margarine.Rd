@@ -52,7 +52,7 @@ All prices are in U.S. dollars.
 }
 
 \references{
-Chapter 5, \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch. \cr \url{http://www.perossi.org/home/bsm-1}}
+Chapter 5, \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch.}
 
 \examples{
 data(margarine)

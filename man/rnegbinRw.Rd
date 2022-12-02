@@ -70,7 +70,7 @@ The NBD regression encompasses Poisson regression in the sense that as alpha goe
 
 \author{Sridhar Narayanan (Stanford GSB) and Peter Rossi (Anderson School, UCLA), \email{perossichi@gmail.com}.}
 
-\references{For further discussion, see \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, McCulloch. \cr \url{http://www.perossi.org/home/bsm-1}}
+\references{For further discussion, see \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, McCulloch.}
 
 \seealso{ \code{\link{rhierNegbinRw}} }
 

@@ -145,7 +145,7 @@
 \references{For further discussion, see \emph{Bayesian Analysis of Random Coefficient Logit Models Using Aggregate Data} by Jiang, Manchanda, and Rossi, \emph{Journal of Econometrics}, 2009. \cr 
 }
 
-\author{Keunwoo Kim, Anderson School, UCLA, \email{keunwoo.kim@gmail.com}.}
+\author{Peter Rossi and K. Kim, Anderson School, UCLA, \email{perossichi@gmail.com}.}
 
 \examples{
 if(nchar(Sys.getenv("LONG_TEST")) != 0) {

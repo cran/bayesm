@@ -48,7 +48,7 @@ In the \code{demo} data frame:
 
 \source{Allenby, Gregg and James Ginter (1995), "Using Extremes to Design Products and Segment Markets," \emph{Journal of Marketing Research}, 392--403.}
 
-\references{Appendix A, \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch. \cr \url{http://www.perossi.org/home/bsm-1}}
+\references{Appendix A, \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch.}
 
 \examples{
 data(bank)

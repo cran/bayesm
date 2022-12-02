@@ -24,7 +24,7 @@ A data frame with 5555 observations on the following 4 variables:
 
 \source{Boatwright, Peter, Robert McCulloch, and Peter Rossi (1999), "Account-Level Modeling for Trade Promotion," \emph{Journal of the American Statistical Association} 94, 1063--1073.}
 
-\references{Chapter 3, \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch. \cr \url{http://www.perossi.org/home/bsm-1}}
+\references{Chapter 3, \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch. }
 
 \examples{
 data(cheese)

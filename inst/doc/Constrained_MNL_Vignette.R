@@ -1,4 +1,4 @@
-## ---- echo = FALSE-------------------------------------------------------
+## ---- echo = FALSE------------------------------------------------------------
 library(bayesm)
 knitr::opts_chunk$set(fig.align = "center",
                       fig.height = 3.5,
@@ -6,7 +6,7 @@ knitr::opts_chunk$set(fig.align = "center",
                       error = FALSE,
                       message = FALSE)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 # define function
 drawprior <- function (mubar_betak, nvar, ncomp, a, nu, Amu, V, ndraw) {
   betakstar <- double(ndraw)
@@ -32,7 +32,7 @@ drawprior <- function (mubar_betak, nvar, ncomp, a, nu, Amu, V, ndraw) {
 }
 set.seed(1234)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 # specify rhierMnlRwMixture defaults
 mubar_betak <- 0
 nvar  <- 10
@@ -44,7 +44,7 @@ V     <- nu*diag(c(rep(1,nvar-1),1))
 ndraw <- 10000
 defaultprior <- drawprior(mubar_betak, nvar, ncomp, a, nu, Amu, V, ndraw)
 
-## ---- fig.align='center', fig.height=3.5, results='hold'-----------------
+## ---- fig.align='center', fig.height=3.5, results='hold'----------------------
 # plot priors under defaults
 par(mfrow=c(1,3))
 trimhist <- -20
@@ -56,7 +56,7 @@ hist(defaultprior$betak[defaultprior$betak>trimhist],
 hist(defaultprior$otherbeta, breaks=40, col="magenta",
      main="Other Beta", xlab="", ylab="", yaxt="n")
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 # adjust priors for constraints
 mubar_betak <- 2
 nvar  <- 10
@@ -68,7 +68,7 @@ V     <- nu*diag(c(rep(4,nvar-1),0.1))
 ndraw <- 10000
 tightprior <- drawprior(mubar_betak, nvar, ncomp, a, nu, Amu, V, ndraw)
 
-## ---- fig.align='center', fig.height=3.5, results='hold'-----------------
+## ---- fig.align='center', fig.height=3.5, results='hold'----------------------
 # plot priors under adjusted values
 par(mfrow=c(1,3))
 trimhist <- -20
@@ -80,17 +80,17 @@ hist(tightprior$betak[tightprior$betak>trimhist],
 hist(tightprior$otherbeta, breaks=40, col="magenta", 
      main="Other Beta", xlab="", ylab="", yaxt="n")
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 library(bayesm)
 data(camera)
 length(camera)
 str(camera[[1]])
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 str(camera[[1]]$y)
 str(as.data.frame(camera[[1]]$X))
 
-## ---- echo = FALSE-------------------------------------------------------
+## ---- echo = FALSE------------------------------------------------------------
 nvar  <- 10
 mubar <- c(rep(0,nvar-1),2)
 Amu   <- 0.1 
@@ -99,7 +99,7 @@ a     <- rep(5, ncomp)
 nu    <- 25
 V     <- nu*diag(c(rep(4,nvar-1),0.1))
 
-## ---- eval = FALSE-------------------------------------------------------
+## ---- eval = FALSE------------------------------------------------------------
 #  SignRes <- c(rep(0,nvar-1),-1)
 #  
 #  data  <- list(lgtdata=camera, p=5)
@@ -108,7 +108,7 @@ V     <- nu*diag(c(rep(4,nvar-1),0.1))
 #  
 #  out <- rhierMnlRwMixture(Data=data, Prior=prior, Mcmc=mcmc)
 
-## ---- echo = FALSE-------------------------------------------------------
+## ---- echo = FALSE------------------------------------------------------------
 temp <- capture.output(
           {SignRes <- c(rep(0,nvar-1),-1);
            data  <- list(lgtdata = camera, p = 5);
@@ -117,7 +117,7 @@ temp <- capture.output(
            out <- rhierMnlRwMixture(Data = data, Prior = prior, Mcmc = mcmc)}, 
         file = NULL)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 par(mfrow=c(1,3))
 ind_hist <- function(mod, i) {
   hist(mod$betadraw[i , 10, ], breaks = seq(-14,0,0.5), 
@@ -128,7 +128,7 @@ ind_hist(out,1)
 ind_hist(out,2)
 ind_hist(out,3)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 par(mfrow=c(1,1))
 hist(apply(out$betadraw[ , 10, ], 1, mean), 
      xlim = c(-20,0), breaks = 20, 
@@ -137,20 +137,20 @@ hist(apply(out$betadraw[ , 10, ], 1, mean),
              With Sign Constraint")
 
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 data0  <- list(lgtdata = camera, p = 5)
 prior0 <- list(ncomp = 5)
 mcmc0  <- list(R = 1e4, nprint = 0)
 
-## ---- eval = FALSE-------------------------------------------------------
+## ---- eval = FALSE------------------------------------------------------------
 #  out0 <- rhierMnlRwMixture(Data = data0, Prior = prior0, Mcmc = mcmc0)
 
-## ---- echo = FALSE-------------------------------------------------------
+## ---- echo = FALSE------------------------------------------------------------
 temp <- capture.output(
           {out0 <- rhierMnlRwMixture(Data = data0, Prior = prior0, Mcmc = mcmc0)}, 
         file = NULL)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 par(mfrow=c(1,3))
 ind_hist <- function(mod, i) {
   hist(mod$betadraw[i , 10, ], breaks = seq(-12,2,0.5), 
@@ -161,7 +161,7 @@ ind_hist(out0,1)
 ind_hist(out0,2)
 ind_hist(out0,3)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 par(mfrow=c(1,1))
 hist(apply(out0$betadraw[ , 10, ], 1, mean), 
      xlim = c(-15,5), breaks = 20, 

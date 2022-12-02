@@ -18,7 +18,7 @@ All variables are numeric vectors that are coded 1 if consumed in last year, 0 i
 \source{Edwards, Yancy and Greg Allenby (2003), "Multivariate Analysis of Multiple Response Data," \emph{Journal of Marketing Research}  40, 321--334.}
 
 \references{
-Chapter 4, \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch\cr \url{http://www.perossi.org/home/bsm-1}}
+Chapter 4, \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch.}
 
 \examples{
 data(Scotch)

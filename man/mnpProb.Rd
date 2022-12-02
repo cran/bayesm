@@ -28,7 +28,7 @@ See \code{\link{rmnpGibbs}} for definition of the model and the interpretation o
 
 \author{ Peter Rossi, Anderson School, UCLA, \email{perossichi@gmail.com}.}
 
-\references{ For further discussion, see Chapters 2 and 4, \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch. \cr \url{http://www.perossi.org/home/bsm-1}}
+\references{ For further discussion, see Chapters 2 and 4, \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch.}
 
 \seealso{ \code{\link{rmnpGibbs}}, \code{\link{createX}} }
 

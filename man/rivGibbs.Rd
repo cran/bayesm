@@ -69,7 +69,7 @@
 
 \author{Rob McCulloch and Peter Rossi, Anderson School, UCLA, \email{perossichi@gmail.com}.}
 
-\references{ For further discussion, see Chapter 5, \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch. \cr \url{http://www.perossi.org/home/bsm-1}}
+\references{ For further discussion, see Chapter 5, \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch.}
 
 \examples{
 if(nchar(Sys.getenv("LONG_TEST")) != 0) {R=2000} else {R=10}

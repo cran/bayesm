@@ -60,7 +60,7 @@ The \code{orangeJuice} object is a list containing two data frames, \code{yx} an
 
 \source{Alan L. Montgomery (1997), "Creating Micro-Marketing Pricing Strategies Using Supermarket Scanner Data," \emph{Marketing Science} 16(4) 315--337.}
 
-\references{Chapter 5, \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch\cr \url{http://www.perossi.org/home/bsm-1}}
+\references{Chapter 5, \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch.}
 
 \examples{
 ## load data

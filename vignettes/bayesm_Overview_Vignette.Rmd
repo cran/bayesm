@@ -179,7 +179,7 @@ All posterior sampling functions offer default values for parameters of prior di
 
 Specification of the prior is important. Significantly more detail can be found in chapters 2--5 of BSM[^BSM] and the help files for the posterior sampling functions. We strongly recommend you consult them before accepting the default values.
 
-[^BSM]: Rossi, Peter, Greg Allenby and Robert McCulloch, _Bayesian Statistics and Marketing_, John Wiley \& Sons, 2005. [Website](http://www.perossi.org/home/bsm-1).
+[^BSM]: Rossi, Peter, Greg Allenby and Robert McCulloch, _Bayesian Statistics and Marketing_, John Wiley \& Sons, 2005.
 
 ### `Mcmc` Argument {#mcmcarg}
 
@@ -675,5 +675,5 @@ We hope that this vignette has provided the reader with an introduction to the `
 
 *****
   
-_ Last updated July 2019._
+_ Last updated November 2022 _
 

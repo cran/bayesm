@@ -33,7 +33,7 @@ This routine is a utility routine that does \strong{not} check theinput argument
 
 \author{Peter Rossi, Anderson School, UCLA, \email{perossichi@gmail.com}.}
 
-\references{For further discussion, see \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch. \cr \url{http://www.perossi.org/home/bsm-1}}
+\references{For further discussion, see \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch. }
 
 \examples{
 if(nchar(Sys.getenv("LONG_TEST")) != 0) {R=1000} else {R=10}

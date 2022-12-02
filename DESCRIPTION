@@ -1,9 +1,9 @@
 Package: bayesm
-Version: 3.1-4
+Version: 3.1-5
 Type: Package
 Title: Bayesian Inference for Marketing/Micro-Econometrics
 Depends: R (>= 3.2.0)
-Date: 2019-10-14
+Date: 2022-11-30
 Author: Peter Rossi <perossichi@gmail.com>
 Maintainer: Peter Rossi <perossichi@gmail.com>
 License: GPL (>= 2)
@@ -11,7 +11,6 @@ Imports: Rcpp (>= 0.12.0), utils, stats, graphics, grDevices
 LinkingTo: Rcpp, RcppArmadillo
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
-URL: http://www.perossi.org/home/bsm-1
 Description: Covers many important models used
   in marketing and micro-econometrics applications. 
   The package includes:
@@ -40,6 +39,6 @@ Description: Covers many important models used
   Methods and Applications (Princeton U Press 2014).
 RoxygenNote: 6.0.1
 NeedsCompilation: yes
-Packaged: 2019-10-14 23:11:26 UTC; perossichi
+Packaged: 2022-12-01 18:07:23 UTC; perossichi
 Repository: CRAN
-Date/Publication: 2019-10-15 07:50:03 UTC
+Date/Publication: 2022-12-02 10:10:02 UTC

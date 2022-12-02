@@ -30,7 +30,7 @@
 
 \author{Peter Rossi, Anderson School, UCLA, \email{perossichi@gmail.com}.}
 
-\references{For further discussion, see Chapters 2 and 3, \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch. \cr \url{http://www.perossi.org/home/bsm-1}}
+\references{For further discussion, see Chapters 2 and 3, \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch.}
 
 \examples{
 \dontrun{out=rbiNormGibbs(rho=0.95)}

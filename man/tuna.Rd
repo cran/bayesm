@@ -35,7 +35,7 @@ The brands are:
 
 \source{Chevalier, Judith, Anil Kashyap, and Peter Rossi (2003), "Why Don't Prices Rise During Periods of Peak Demand? Evidence from Scanner Data," \emph{The American Economic Review} , 93(1), 15--37.}
 
-\references{Chapter 7, \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch. \cr \url{http://www.perossi.org/home/bsm-1}}
+\references{Chapter 7, \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch.}
 
 \examples{
 data(tuna)

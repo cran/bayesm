@@ -33,7 +33,7 @@
 
 \author{Peter Rossi, Anderson School, UCLA, \email{perossichi@gmail.com}.}
 
-\references{ For further discussion, see \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch. \cr \url{http://www.perossi.org/home/bsm-1}}
+\references{ For further discussion, see \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch. }
 
 \seealso{\code{\link{rmnlIndepMetrop}}, \code{\link{rmnpGibbs}} }
 

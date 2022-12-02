@@ -281,7 +281,9 @@ List rhierMnlDP_rcpp_loop(int R, int keep, int nprint,
       if (rep == 0) oldll[lgt] = llmnl(vectorise(oldbetas(lgt,span::all)),lgtdata_vector[lgt].y,lgtdata_vector[lgt].X);
       
       //compute inc.root
-      ucholinv = solve(trimatu(chol(lgtdata_vector[lgt].hess+rootpi*trans(rootpi))), eye(nvar,nvar)); //trimatu interprets the matrix as upper triangular and makes solve more efficient
+      ucholinv = solve(trimatu(chol(.5*lgtdata_vector[lgt].hess + .5*trans(lgtdata_vector[lgt].hess)
+                                      + rootpi*trans(rootpi))), eye(nvar,nvar)); 
+      //trimatu interprets the matrix as upper triangular and makes solve more efficient
       incroot = chol(ucholinv*trans(ucholinv));
       
       metropout_struct = mnlMetropOnce(lgtdata_vector[lgt].y,lgtdata_vector[lgt].X,vectorise(oldbetas(lgt,span::all)),

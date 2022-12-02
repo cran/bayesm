@@ -28,7 +28,7 @@ A data frame with 1811 observations on the following 10 variables:
 
 \source{Rossi, Peter, Zvi Gilula, and Greg Allenby (2001), "Overcoming Scale Usage Heterogeneity," \emph{Journal of the American Statistical Association} 96, 20--31.}
 
-\references{Case Study 3, \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch.\cr \url{http://www.perossi.org/home/bsm-1}}
+\references{Case Study 3, \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch.}
 
 \examples{
 data(customerSat)

@@ -17,6 +17,7 @@ rhierMnlRwMixture=function(Data,Prior,Mcmc){
 #                        constrained optima used to tune Metropolis. 
 #                        switched to Nelder-Mead to find constrained pooled optimum
 #                         BFGS sometimes has trouble with reparameterized model 
+#   6/20 by Peter Rossi: fixed check on size of betapooled to correct indexing
 #
 # purpose: run hierarchical mnl logit model with mixture of normals 
 #   using RW and cov(RW inc) = (hess_i + Vbeta^-1)^-1
@@ -303,15 +304,15 @@ out=optim(betainit,llmnl_con,control=list( fnscale=-1,trace=0,reltol=1e-6),
 
 betapooled=out$par
 #
-# warn user if the constrained pooled model has unreasonably small coefficients
+# warn user if the constrained pooled model has unreasonably small/large coefficients
 #
-if(sum(abs(betapooled[SignRes])>10))
+if(sum(abs(betapooled[as.logical(SignRes)])>10))
 {
-  cat("In tuning Metropolis algorithm, constrained pooled parameter estimates contain very small values",
+  cat("In tuning Metropolis algorithm, constrained pooled parameter estimates contain very small/large values",
       fill=TRUE)
   print(cbind(betapooled,SignRes))
-  cat("check any constrained values with absolute value > 10 above - implies abs(beta) > exp(10)",
-      fill=TRUE)
+  cat("check any constrained values with absolute value > 10 above",fill=TRUE)
+  cat("      - implies abs(beta) > exp(10) or abs(beta) < exp(-10)",fill=TRUE)
 }
 
 
@@ -323,7 +324,7 @@ for (i in 1:nlgt)
    out=optim(betapooled,llmnlFract,method="BFGS",control=list( fnscale=-1,trace=0,reltol=1e-4), 
              X=lgtdata[[i]]$X,y=lgtdata[[i]]$y,betapooled=betapooled,rootH=rootH,w=w,wgt=wgt,SignRes=SignRes)
    if(out$convergence == 0) { 
-     hess=mnlHess_con(out$par,lgtdata[[i]]$y,lgtdata[[i]]$X,SignRes)                              
+     hess=mnlHess_con(out$par,lgtdata[[i]]$y,lgtdata[[i]]$X,SignRes)                          
      lgtdata[[i]]=c(lgtdata[[i]],list(converge=1,betafmle=out$par,hess=hess)) }
    else
      { lgtdata[[i]]=c(lgtdata[[i]],list(converge=0,betafmle=c(rep(0,nvar)),

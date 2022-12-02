@@ -27,7 +27,7 @@ rmixGibbs(y, Bbar, A, nu, V, a, p, z)
 
 \author{Rob McCulloch (Arizona State University) and Peter Rossi (Anderson School, UCLA), \email{perossichi@gmail.com}.}
 
-\references{For further discussion, see Chapter 5 \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch. \cr \url{http://www.perossi.org/home/bsm-1}}
+\references{For further discussion, see Chapter 5 \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch.}
 
 \section{Warning}{
 This routine is a utility routine that does \strong{not} check the input arguments for proper dimensions and type.

@@ -36,7 +36,7 @@ vec Simtoz(mat const& Sim){
   for (i=0; i<n; i++){
     count = 0;
     for (j=0; j<n; j++){    
-      if ((z[j]==0) & (Sim(j,i)==1)){
+      if ((z[j]==0) && (Sim(j,i)==1)){
         z[j] = groupn;
         count = count + 1;
       }      
@@ -96,7 +96,8 @@ List clusterMix_rcpp_loop(mat const& zdraw, double cutoff, bool SILENT, int npri
     Pmean = Pmean + ztoSim(trans(zdraw(rep,span::all)));
     if (!SILENT){
       if ((rep+1)%nprint==0){        
-        sprintf(buf, "  %d\n", rep+1);
+ //       sprintf(buf, "  %d\n", rep+1); changed 11/30/22 p.rossi
+        snprintf(buf,32, "  %d\n", rep+1);
         Rcout <<  buf;
       }
     }
@@ -118,7 +119,8 @@ List clusterMix_rcpp_loop(mat const& zdraw, double cutoff, bool SILENT, int npri
     loss[rep] = accu(abs(Pmean-ztoSim(trans(zdraw(rep,span::all)))));
     if (!SILENT){
       if ((rep+1)%nprint==0){
-        sprintf(buf, "  %d\n", rep+1);
+  //      sprintf(buf, "  %d\n", rep+1); changed 11/30 P. Rossi
+        snprintf(buf,32, "  %d\n", rep+1);
         Rcout <<  buf;
       }
     }

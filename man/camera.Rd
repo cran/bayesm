@@ -37,8 +37,7 @@ Allenby, Greg, Jeff Brazell, John Howell, and Peter Rossi (2014), "Valuation of 
 }
 
 \references{
-For analysis of a similar dataset, see Case Study 4, \emph{Bayesian Statistics and Marketing} Rossi, Allenby, and McCulloch 
-\url{http://www.perossi.org/home/bsm-1}
+For analysis of a similar dataset, see Case Study 4, \emph{Bayesian Statistics and Marketing} Rossi, Allenby, and McCulloch.
 }
 
 \keyword{datasets}

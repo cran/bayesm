@@ -71,7 +71,7 @@
    c[k] = c[k-1] + exp(dstar[k-2]) 
 } 
 
-\references{\emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch \cr \url{http://www.perossi.org/home/bsm-1}}
+\references{\emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch.}
 
 \author{ Peter Rossi, Anderson School, UCLA, \email{perossichi@gmail.com}.}
 

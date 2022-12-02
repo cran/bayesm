@@ -40,7 +40,7 @@ Note: For a high dimensional integration (10 or more dimension), we suggest use 
 }
 
 \references{ 
-For further discussion, see \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch,  Chapter 2. \cr \url{http://www.perossi.org/home/bsm-1}
+For further discussion, see \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch,  Chapter 2.
   
 For Halton sequence, see Halton (1960, Numerische Mathematik), Morokoff and Caflisch (1995, Journal of Computational Physics), and Kocis and Whiten (1997, ACM Transactions on Mathematical Software).
 }

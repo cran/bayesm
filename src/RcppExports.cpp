@@ -7,6 +7,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // bayesBLP_rcpp_loop
 List bayesBLP_rcpp_loop(bool IV, mat const& X, mat const& Z, vec const& share, int J, int T, mat const& v, int R, vec const& sigmasqR, mat const& A, vec const& theta_hat, vec const& deltabar, mat const& Ad, double nu0, double s0_sq, mat const& VOmega, double ssq, mat const& cand_cov, vec const& theta_bar_initial, vec const& r_initial, double tau_sq_initial, mat const& Omega_initial, vec const& delta_initial, double tol, int keep, int nprint);
 RcppExport SEXP _bayesm_bayesBLP_rcpp_loop(SEXP IVSEXP, SEXP XSEXP, SEXP ZSEXP, SEXP shareSEXP, SEXP JSEXP, SEXP TSEXP, SEXP vSEXP, SEXP RSEXP, SEXP sigmasqRSEXP, SEXP ASEXP, SEXP theta_hatSEXP, SEXP deltabarSEXP, SEXP AdSEXP, SEXP nu0SEXP, SEXP s0_sqSEXP, SEXP VOmegaSEXP, SEXP ssqSEXP, SEXP cand_covSEXP, SEXP theta_bar_initialSEXP, SEXP r_initialSEXP, SEXP tau_sq_initialSEXP, SEXP Omega_initialSEXP, SEXP delta_initialSEXP, SEXP tolSEXP, SEXP keepSEXP, SEXP nprintSEXP) {

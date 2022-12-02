@@ -38,7 +38,7 @@ This routine is a utility routine that does \strong{not} check the input argumen
 
 \author{ Peter Rossi, Anderson School, UCLA, \email{perossichi@gmail.com}.}
 
-\references{For further discussion, see Chapter 3, \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch. \cr \url{http://www.perossi.org/home/bsm-1}}
+\references{For further discussion, see Chapter 3, \emph{Bayesian Statistics and Marketing} by Rossi, Allenby, and McCulloch. }
 
 \seealso{ \code{\link{rnmixGibbs}}, \code{\link{mixDen}}  }
 
