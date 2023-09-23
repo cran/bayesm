@@ -77,14 +77,15 @@ mnlMetropOnceOut mnlMetropOnce_con(vec const& y, mat const& X, vec const& oldbet
   mnlMetropOnceOut out_struct;
   
   double unif;
-  vec betadraw, alphaminv;
+  vec betadraw, alphaminv(2);
   
   int stay = 0;
   vec betac = oldbeta + s*trans(incroot)*as<vec>(rnorm(X.n_cols));
   double cll = llmnl_con(betac,y,X,SignRes);
   double clpost = cll+lndMvn(betac,betabar,rootpi);
   double ldiff = clpost-oldll-lndMvn(oldbeta,betabar,rootpi);
-  alphaminv << 1 << exp(ldiff);
+  //alphaminv << 1 << exp(ldiff);
+  alphaminv = { 1, exp(ldiff) };
   double alpha = min(alphaminv);
   
   if(alpha < 1) {

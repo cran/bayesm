@@ -1,9 +1,9 @@
 Package: bayesm
-Version: 3.1-5
+Version: 3.1-6
 Type: Package
 Title: Bayesian Inference for Marketing/Micro-Econometrics
 Depends: R (>= 3.2.0)
-Date: 2022-11-30
+Date: 2023-09-22
 Author: Peter Rossi <perossichi@gmail.com>
 Maintainer: Peter Rossi <perossichi@gmail.com>
 License: GPL (>= 2)
@@ -35,10 +35,10 @@ Description: Covers many important models used
   Bayesian Analysis of Aggregate Random Coefficient Logit Models as in BLP (see
   Jiang, Manchanda, Rossi 2009)
   For further reference, consult our book, Bayesian Statistics and
-  Marketing by Rossi, Allenby and McCulloch (Wiley 2005) and Bayesian Non- and Semi-Parametric
+  Marketing by Rossi, Allenby and McCulloch (Wiley first edition 2005 and second forthcoming) and Bayesian Non- and Semi-Parametric
   Methods and Applications (Princeton U Press 2014).
 RoxygenNote: 6.0.1
 NeedsCompilation: yes
-Packaged: 2022-12-01 18:07:23 UTC; perossichi
+Packaged: 2023-09-22 19:26:59 UTC; perossichi
 Repository: CRAN
-Date/Publication: 2022-12-02 10:10:02 UTC
+Date/Publication: 2023-09-23 23:20:06 UTC

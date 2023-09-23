@@ -17,7 +17,7 @@ List rmnlIndepMetrop_rcpp_loop(int R, int keep, double nu,
   vec betac = zeros<vec>(ncolX);
   rowvec beta = zeros<rowvec>(ncolX);
   double cloglike, clpost, climp, ldiff, alpha, unif, oldloglike;
-  vec alphaminv;
+  vec alphaminv(2);
   
   if(nprint>0) startMcmcTimer();
   
@@ -29,7 +29,8 @@ List rmnlIndepMetrop_rcpp_loop(int R, int keep, double nu,
     clpost = cloglike+lndMvn(betac,betabar,rootpi);
     climp = lndMvst(betac,nu,betastar,rooti,false);
     ldiff = clpost+oldlimp-oldlpost-climp;
-    alphaminv << 1 << exp(ldiff); //intializes variables in the alphaminv vec: c(1,exp(ldiff))
+    //alphaminv << 1 << exp(ldiff); //intializes variables in the alphaminv vec: c(1,exp(ldiff))
+    alphaminv = { 1, exp(ldiff) };
     alpha = min(alphaminv);
   
     if(alpha < 1.0) {

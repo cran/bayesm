@@ -228,7 +228,7 @@ List rscaleUsage_rcpp_loop(int k, mat const& x, int p, int n,
   int mkeep, ng, ei, pi;
   double eprop, eold;
   double Ai, A, xtx, beta, s2, m, a, b, s, qr, llold, llprop, lrat, paccept;
-  vec cc, xty, ete, pv, h, moms(5),rgl11, rgl12a, rgl12, rgl22, absege, minvec;
+  vec cc, xty, ete, pv, h, moms(5),rgl11, rgl12a, rgl12, rgl22, absege, minvec(2);
   uvec eiu;
   mat Res, S, yd, Si, Vmi, Rm, Ri, Vm, mm, onev, xx, ytemp, yy, eps, dat, temp, SS;
   List bs, rwout;
@@ -328,7 +328,8 @@ List rscaleUsage_rcpp_loop(int k, mat const& x, int p, int n,
       h = log(sigma);
       dat = join_rows(tau,h);        
       temp = cov(dat);
-      moms << mean(tau) << mean(h) << temp(0,0) << temp(0,1) << temp(1,1); //element intialization
+      // moms << mean(tau) << mean(h) << temp(0,0) << temp(0,1) << temp(1,1); //element intialization
+      moms = { mean(tau), mean(h), temp(0,0), temp(0,1), temp(1,1) }; //element intialization
      
       SS = getS(Lambda,n,moms);
       rgl11 = gl11.elem(find(gl11 > pow(Lambda(0,1),2.0)/Lambda(1,1)));
@@ -405,7 +406,8 @@ List rscaleUsage_rcpp_loop(int k, mat const& x, int p, int n,
       if(lrat>0) {
         e = eprop;
       } else {
-        minvec << 1 << exp(lrat);
+        //minvec << 1 << exp(lrat);
+        minvec = { 1, exp(lrat) };
         paccept = min(minvec);
         
         if(rbinom(1,1,paccept)[0]==1){
